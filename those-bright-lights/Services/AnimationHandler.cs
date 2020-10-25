@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SE_Praktikum.Models;
 
-namespace SE_Praktikum.Services.Factories
+namespace SE_Praktikum.Services
 {
     public class AnimationHandler
     {
@@ -69,10 +69,10 @@ namespace SE_Praktikum.Services.Factories
             if (_timer > _settings.UpdateInterval)
             {
                 _timer = 0f;
-                if(_currentFrame < _animation.FrameCount)
+                if(_currentFrame < _animation.FrameCount-1)
                     _currentFrame++;
 
-                if (_currentFrame >= _animation.FrameCount)
+                if (_currentFrame >= _animation.FrameCount-1)
                 {
                     if(_settings.IsLooping)
                         _currentFrame = 0;
