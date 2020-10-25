@@ -25,6 +25,12 @@ namespace SE_Praktikum.Services.Factories
 
         public float Layer { get; set; }
 
+        public Rectangle Frame =>
+            new Rectangle(_currentFrame * _animation.FrameWidth,
+                0,
+                _animation.FrameWidth,
+                _animation.FrameHeight);
+
         public event EventHandler OnAnimationComplete;
 
         public AnimationHandler(Animation animation, AnimationSettings settings)
@@ -44,10 +50,7 @@ namespace SE_Praktikum.Services.Factories
 
             spriteBatch.Draw(_animation.Texture,
                 Position,
-                new Rectangle(_currentFrame * _animation.FrameWidth,
-                    0,
-                    _animation.FrameWidth,
-                    _animation.FrameHeight),
+                Frame,
                 Color.White,
                 0f,
                 new Vector2(0, 0),

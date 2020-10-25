@@ -42,14 +42,8 @@ namespace SE_Praktikum.Services.ParticleEmitter
             
             
             var settings = new AnimationSettings(updateInterval: animation_duration);
-            
-            ExplosionsParticle sprite;
-            if(Animation != null)
-                sprite = _factory.BuildExplosionParticle(Animation, settings);
-            else if (Texture != null)
-                sprite = _factory.BuildExplosionParticle(Texture);
-            else
-                return null;
+
+            var sprite = _factory.BuildExplosionParticle(Animation, settings);
             
             sprite.Position = new Vector2(xPosition, yPosition);
             sprite.Opacity = (float) _random.NextDouble();

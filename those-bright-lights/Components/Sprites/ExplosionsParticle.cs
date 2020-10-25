@@ -7,11 +7,7 @@ using SE_Praktikum.Services.Factories;
 namespace SE_Praktikum.Components.Sprites
 {
     public class ExplosionsParticle : Particle
-    {
-        public ExplosionsParticle(Texture2D texture, IScreen Parent) : base(texture, Parent)
-        {
-        }
-
+    { 
         public ExplosionsParticle(AnimationHandler animationHandler, IScreen Parent) : base(animationHandler, Parent)
         {
             _animationHandler.OnAnimationComplete += AnimationHandlerOnOnAnimationComplete;

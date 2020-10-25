@@ -19,10 +19,6 @@ namespace SE_Praktikum.Services.Factories
         {
             return new ExplosionsParticle(_factory.GetAnimationHandler(animations, settings), _screen);
         }
-        public ExplosionsParticle BuildExplosionParticle(Texture2D texture)
-        {
-            return new ExplosionsParticle(texture, _screen);
-        }
         
     }
 }

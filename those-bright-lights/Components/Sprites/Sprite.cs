@@ -14,8 +14,6 @@ namespace SE_Praktikum.Components.Sprites
     // #################################################################################################################
     protected AnimationHandler _animationHandler;
     
-    protected Texture2D _texture;
-
     protected Vector2 _position;
 
     protected IScreen _parent;
@@ -23,23 +21,6 @@ namespace SE_Praktikum.Components.Sprites
     // #################################################################################################################
     // Constructor
     // #################################################################################################################
-    public Sprite(Texture2D texture)
-    {
-      _texture = texture;
-      
-      Rotation = 0;
-
-      Opacity = 1f;
-
-      Scale = 1f;
-
-      Origin = new Vector2(0, 0);
-
-      Colour = Color.White;
-
-      TextureData = new Color[_texture.Width * _texture.Height];
-      _texture.GetData(TextureData);
-    }
 
     public Sprite(AnimationHandler animationHandler)
     {
@@ -112,20 +93,9 @@ namespace SE_Praktikum.Components.Sprites
     {
       get
       {
-        int width = 0;
-        int height = 0;
-
-        if (_texture != null)
-        {
-          width = _texture.Width;
-          height = _texture.Height;
-        }
-        else if (_animationHandler != null)
-        {
-          width = _animationHandler.FrameWidth;
-          height = _animationHandler.FrameHeight;
-        }
-
+        var width = _animationHandler.FrameWidth;
+        var height = _animationHandler.FrameHeight;
+        
         return new Rectangle((int) (Position.X - Origin.X), (int) (Position.Y - Origin.Y), (int) (width * Scale),
           (int) (height * Scale));
       }
@@ -188,10 +158,6 @@ namespace SE_Praktikum.Components.Sprites
 
     public virtual void Draw(GameTime gameTime, SpriteBatch spriteBatch)
     {
-      if (_texture != null)
-        spriteBatch.Draw(_texture, Position, null, Colour * Opacity, Rotation, Origin, Scale, SpriteEffects.None,
-          Layer);
-
       _animationHandler?.Draw(spriteBatch);
     }
     
