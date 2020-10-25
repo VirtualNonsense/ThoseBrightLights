@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SE_Praktikum.Models;
-using SE_Praktikum.Services;
+using SE_Praktikum.Services.Factories;
 
 namespace SE_Praktikum.Components.Sprites
 {
@@ -13,10 +12,8 @@ namespace SE_Praktikum.Components.Sprites
     // #################################################################################################################
     // Fields
     // #################################################################################################################
-    protected readonly AnimationHandler _animationManager;
-
-    protected readonly Dictionary<string, Animation> _animations;
-
+    protected AnimationHandler _animationHandler;
+    
     protected Texture2D _texture;
 
     protected Vector2 _position;
@@ -44,10 +41,9 @@ namespace SE_Praktikum.Components.Sprites
       _texture.GetData(TextureData);
     }
 
-    public Sprite(Dictionary<string, Animation> animations)
+    public Sprite(AnimationHandler animationHandler)
     {
-      _animations = animations;
-      _animationManager = new AnimationHandler(_animations.First().Value);
+      _animationHandler = animationHandler;
       
       Rotation = 0;
 
@@ -66,6 +62,7 @@ namespace SE_Praktikum.Components.Sprites
     public float Opacity { get; set; }
     public Vector2 Origin { get; set; }
     public float Rotation { get; set; }
+    
 
 
     public readonly Color[] TextureData;
@@ -78,8 +75,8 @@ namespace SE_Praktikum.Components.Sprites
       {
         _position = value;
 
-        if (_animationManager != null)
-          _animationManager.Position = _position;
+        if (_animationHandler != null)
+          _animationHandler.Position = _position;
       }
     }
 
@@ -102,8 +99,8 @@ namespace SE_Praktikum.Components.Sprites
       {
         _layer = value;
 
-        if (_animationManager != null)
-          _animationManager.Layer = _layer;
+        if (_animationHandler != null)
+          _animationHandler.Layer = _layer;
       }
     }
     public Matrix Transform =>
@@ -123,10 +120,10 @@ namespace SE_Praktikum.Components.Sprites
           width = _texture.Width;
           height = _texture.Height;
         }
-        else if (_animationManager != null)
+        else if (_animationHandler != null)
         {
-          width = _animationManager.FrameWidth;
-          height = _animationManager.FrameHeight;
+          width = _animationHandler.FrameWidth;
+          height = _animationHandler.FrameHeight;
         }
 
         return new Rectangle((int) (Position.X - Origin.X), (int) (Position.Y - Origin.Y), (int) (width * Scale),
@@ -177,14 +174,16 @@ namespace SE_Praktikum.Components.Sprites
 
     public bool IsRemoveAble { get; set; }
     public Vector2 Velocity { get; set; }
+    
+    public bool HasAnimation => _animationHandler != null;
 
 
     // #################################################################################################################
     // Methods
     // #################################################################################################################
     public virtual void Update(GameTime gameTime)
-    {
-
+    { 
+      _animationHandler?.Update(gameTime);
     }
 
     public virtual void Draw(GameTime gameTime, SpriteBatch spriteBatch)
@@ -193,7 +192,7 @@ namespace SE_Praktikum.Components.Sprites
         spriteBatch.Draw(_texture, Position, null, Colour * Opacity, Rotation, Origin, Scale, SpriteEffects.None,
           Layer);
 
-      _animationManager?.Draw(spriteBatch);
+      _animationHandler?.Draw(spriteBatch);
     }
     
     // TODO: Maybe Introduce event for that as well
@@ -291,7 +290,11 @@ namespace SE_Praktikum.Components.Sprites
 
     public object Clone()
     {
-      return MemberwiseClone();
+      
+      var m = MemberwiseClone() as Sprite;
+      if (m == null) return MemberwiseClone();
+      m._animationHandler = (AnimationHandler)_animationHandler?.Clone();
+      return m;
     }
   }
 }

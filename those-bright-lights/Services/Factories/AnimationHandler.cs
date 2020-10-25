@@ -3,52 +3,48 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SE_Praktikum.Models;
 
-namespace SE_Praktikum.Services
+namespace SE_Praktikum.Services.Factories
 {
     public class AnimationHandler
     {
         
         private Animation _animation;
+        private readonly AnimationSettings _settings;
 
         private float _timer;
 
         private bool _updated;
 
-        public int FrameWidth
-        {
-            get
-            {
-                return _animation.FrameWidth;
-            }
-        }
+        private int _currentFrame;
 
-        public int FrameHeight
-        {
-            get
-            {
-                return _animation.FrameHeight;
-            }
-        }
+        public int FrameWidth => _animation.FrameWidth;
+
+        public int FrameHeight => _animation.FrameHeight;
 
         public Vector2 Position { get; set; }
 
         public float Layer { get; set; }
 
-        public AnimationHandler(Animation animation)
+        public event EventHandler OnAnimationComplete;
+
+        public AnimationHandler(Animation animation, AnimationSettings settings)
         {
             _animation = animation;
+            _settings = settings;
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
             if (!_updated)
+            {
                 throw new Exception("Need to call 'Update' first");
+            }
 
             _updated = false;
 
             spriteBatch.Draw(_animation.Texture,
                 Position,
-                new Rectangle(_animation.CurrentFrame * _animation.FrameWidth,
+                new Rectangle(_currentFrame * _animation.FrameWidth,
                     0,
                     _animation.FrameWidth,
                     _animation.FrameHeight),
@@ -60,24 +56,6 @@ namespace SE_Praktikum.Services
                 Layer);
         }
 
-        public void Play(Animation animation)
-        {
-            if (_animation == animation)
-                return;
-
-            _animation = animation;
-
-            _animation.CurrentFrame = 0;
-
-            _timer = 0;
-        }
-
-        public void Stop()
-        {
-            _timer = 0f;
-
-            _animation.CurrentFrame = 0;
-        }
 
         public void Update(GameTime gameTime)
         {
@@ -85,15 +63,29 @@ namespace SE_Praktikum.Services
 
             _timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            if (_timer > _animation.FrameSpeed)
+            if (_timer > _settings.UpdateInterval)
             {
                 _timer = 0f;
+                if(_currentFrame < _animation.FrameCount)
+                    _currentFrame++;
 
-                _animation.CurrentFrame++;
-
-                if (_animation.CurrentFrame >= _animation.FrameCount)
-                    _animation.CurrentFrame = 0;
+                if (_currentFrame >= _animation.FrameCount)
+                {
+                    if(_settings.IsLooping)
+                        _currentFrame = 0;
+                    OnOnAnimationComplete();
+                }
             }
+        }
+
+        public object Clone()
+        {
+            return MemberwiseClone();
+        }
+
+        protected virtual void OnOnAnimationComplete()
+        {
+            OnAnimationComplete?.Invoke(this, EventArgs.Empty);
         }
     }
 }

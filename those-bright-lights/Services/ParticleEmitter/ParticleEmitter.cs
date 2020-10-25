@@ -1,20 +1,24 @@
 ﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using NLog;
 using SE_Praktikum.Components;
 using SE_Praktikum.Components.Sprites;
+using SE_Praktikum.Models;
 
-namespace SE_Praktikum.Services
+namespace SE_Praktikum.Services.ParticleEmitter
 {
     public abstract class ParticleEmitter : IComponent
     {
         private float _generateTimer;
 
-        private float _swayTimer;
-
-        protected Sprite _particlePrefab;
 
         protected List<Sprite> _particles;
+
+        private ILogger _logger;
+
+        public Animation Animation { get; set; }
+        public Texture2D Texture { get; set; }
 
         /// <summary>
         /// How often a particle is produced
@@ -24,30 +28,21 @@ namespace SE_Praktikum.Services
         /// <summary>
         /// How often we apply the "GlobalVelociy" to our particles
         /// </summary>
-        public float GlobalVelocitySpeed = 1;
 
         public int MaxParticles = 1000;
+        
 
-        public ParticleEmitter(Sprite particle)
+        public ParticleEmitter()
         {
-            _particlePrefab = particle;
-
+            _logger = LogManager.GetCurrentClassLogger();
             _particles = new List<Sprite>();
         }
 
         public virtual void Update(GameTime gameTime)
         {
             _generateTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
-            _swayTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             AddParticle();
-
-            if (_swayTimer > GlobalVelocitySpeed)
-            {
-                _swayTimer = 0;
-
-                ApplyGlobalVelocity();
-            }
 
             foreach (var particle in _particles)
                 particle.Update(gameTime);
@@ -55,7 +50,7 @@ namespace SE_Praktikum.Services
             RemovedFinishedParticles();
         }
 
-        private void AddParticle()
+        protected virtual void AddParticle()
         {
             if (_generateTimer > GenerateSpeed)
             {
@@ -67,15 +62,14 @@ namespace SE_Praktikum.Services
                 }
             }
         }
-
-        protected abstract void ApplyGlobalVelocity();
-
-        private void RemovedFinishedParticles()
+        
+        protected virtual void RemovedFinishedParticles()
         {
             for (int i = 0; i < _particles.Count; i++)
             {
                 if (_particles[i].IsRemoveAble)
                 {
+                    _logger.Trace("particle removed");
                     _particles.RemoveAt(i);
                     i--;
                 }

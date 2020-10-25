@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -6,33 +7,38 @@ namespace SE_Praktikum.Core.GameStates
 {
     public abstract class GameState
     {
-        public GameStateMachine Machine;
+        public event EventHandler OnStateComplete;
 
-        public abstract void LoadContent(SpriteBatch batch);
+        protected GameState()
+        {
+        }
+
+        public abstract void LoadContent(ContentManager contentManager);
+
+        public abstract void UnloadContent();
         
         /// <summary>
         /// Updates every component within state
         /// </summary>
         /// <param name="gameTime"></param>
-        /// <param name="game"></param>
-        /// <param name="manager"></param>
-        /// <param name="graphicsDevice"></param>
-        public abstract void Update(GameTime gameTime, Game game, ContentManager manager, GraphicsDevice graphicsDevice);
+        public abstract void Update(GameTime gameTime);
 
         /// <summary>
         /// For cleanup;
         /// </summary>
-        /// <param name="game"></param>
-        /// <param name="manager"></param>
-        /// <param name="graphicsDevice"></param>
-        public abstract void PostUpdate(Game game, ContentManager manager, GraphicsDevice graphicsDevice);
+        public abstract void PostUpdate();
 
         /// <summary>
         /// Draw everything within specific state;
         /// </summary>
-        /// <param name="game"></param>
-        /// <param name="manager"></param>
-        /// <param name="graphicsDevice"></param>
-        public abstract void Draw(Game game, ContentManager manager, GraphicsDevice graphicsDevice);
+        /// <param name="gameTime"></param>
+        /// <param name="spriteBatch"></param>
+        public abstract void Draw(GameTime gameTime, SpriteBatch spriteBatch);
+
+        protected virtual void OnStateCompleted(EventArgs e)
+        {
+            EventHandler handler = OnStateComplete;
+            handler?.Invoke(this, e);
+        }
     }
 }

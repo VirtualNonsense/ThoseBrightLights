@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reactive.Subjects;
-using System.Runtime.Serialization;
-using Microsoft.Xna.Framework;
 using NLog;
+using SE_Praktikum.Core.GameStates;
 using Stateless;
 
-namespace SE_Praktikum.Core.GameStates
+namespace SE_Praktikum.Services
 {
     public class GameStateMachine : IObservable<GameState>
     {
@@ -15,13 +14,13 @@ namespace SE_Praktikum.Core.GameStates
         private readonly StateMachine<State, StateTrigger> _machine;
         private readonly Dictionary<State, GameState> _stateMap;
         
-        public GameStateMachine()
+        public GameStateMachine(Splashscreen splashscreen)
         {
             _logger = LogManager.GetCurrentClassLogger();
             _subject = new Subject<GameState>();
             _stateMap = new Dictionary<State, GameState>
             {
-                {State.SplashScreen, new Splashscreen()}
+                 {State.SplashScreen, splashscreen}
             };
             _machine = new StateMachine<State, StateTrigger>(State.Init);
             _machine.Configure(State.Init).Permit(StateTrigger.InitFinished, State.SplashScreen).OnEntry(onEntry);
@@ -49,6 +48,12 @@ namespace SE_Praktikum.Core.GameStates
         private void onEntry()
         {
             _subject.OnNext(_stateMap[_machine.State]);
+        }
+
+        
+        private void Skip()
+        {
+            _machine.Fire(StateTrigger.Next);
         }
 
 

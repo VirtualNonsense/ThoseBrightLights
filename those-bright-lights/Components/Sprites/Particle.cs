@@ -1,13 +1,12 @@
-﻿using System.Collections.Generic;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SE_Praktikum.Models;
+using SE_Praktikum.Services.Factories;
 
 namespace SE_Praktikum.Components.Sprites
 {
     public class Particle : Sprite
     {
-        public Vector2 Velocity;
         
         public Particle(Texture2D texture, IScreen Parent) : base(texture)
         {
@@ -15,12 +14,9 @@ namespace SE_Praktikum.Components.Sprites
             Origin = new Vector2(_texture.Width / 2f, _texture.Height / 2f);
         }
 
-        public Particle(Dictionary<string, Animation> animations, IScreen Parent) : base(animations)
+        public Particle(AnimationHandler animationHandler, IScreen Parent) : base(animationHandler)
         {
-            Position += Velocity;
             _parent = Parent;
-            if (Position.Y > (Parent.ScreenHeight + _texture.Height))
-                IsRemoveAble = true;
         }
     }
 }
