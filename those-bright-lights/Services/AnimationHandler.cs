@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using NLog;
 using SE_Praktikum.Models;
 
 namespace SE_Praktikum.Services
@@ -17,6 +18,8 @@ namespace SE_Praktikum.Services
 
         private int _currentFrame;
 
+        private ILogger _logger;
+        
         public int FrameWidth => _animation.FrameWidth;
 
         public int FrameHeight => _animation.FrameHeight;
@@ -35,6 +38,7 @@ namespace SE_Praktikum.Services
 
         public AnimationHandler(Animation animation, AnimationSettings settings)
         {
+            _logger = LogManager.GetCurrentClassLogger();
             _animation = animation;
             _settings = settings;
         }
@@ -43,6 +47,7 @@ namespace SE_Praktikum.Services
         {
             if (!_updated)
             {
+                _logger.Error("Need to call 'Update' first");
                 throw new Exception("Need to call 'Update' first");
             }
 
