@@ -30,7 +30,8 @@ namespace SE_Praktikum.Services.ParticleEmitter
         /// </summary>
 
         public int MaxParticles = 1000;
-        
+
+        public static int ParticleCount = 0;
 
         public ParticleEmitter()
         {
@@ -48,6 +49,7 @@ namespace SE_Praktikum.Services.ParticleEmitter
                 particle.Update(gameTime);
 
             RemovedFinishedParticles();
+            _logger.Trace($"Total amount of particles: {ParticleCount}");
         }
 
         protected virtual void AddParticle()
@@ -59,6 +61,7 @@ namespace SE_Praktikum.Services.ParticleEmitter
                 if (_particles.Count < MaxParticles)
                 {
                     _particles.Add(GenerateParticle());
+                    ParticleCount++;
                 }
             }
         }
@@ -72,6 +75,7 @@ namespace SE_Praktikum.Services.ParticleEmitter
                     _logger.Trace("particle removed");
                     _particles.RemoveAt(i);
                     i--;
+                    ParticleCount--;
                 }
             }
         }
