@@ -9,7 +9,7 @@ namespace SE_Praktikum.Services.ParticleEmitter
 {
     public class ExplosionEmitter : ParticleEmitter
     {
-        private Random _random;
+        private readonly Random _random;
         private readonly ParticleFactory _factory;
 
 
