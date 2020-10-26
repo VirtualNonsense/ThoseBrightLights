@@ -23,9 +23,12 @@ namespace SE_Praktikum.Models
         public Color Color;
 
         public float Opacity;
+
+        public bool IsPlaying;
+
         
         public AnimationSettings(bool isLooping = false, float updateInterval = 1f, Color? color = null, 
-                                 float rotation = 0f, float scale = 1f, float opacity = 1)
+                                 float rotation = 0f, float scale = 1f, float opacity = 1, bool isPlaying = true)
         {
             IsLooping = isLooping;
             UpdateInterval = updateInterval;
@@ -34,6 +37,7 @@ namespace SE_Praktikum.Models
             Rotation = rotation;
             Scale = scale;
             Opacity = opacity;
+            IsLooping = isPlaying;
         }
     }
 }
