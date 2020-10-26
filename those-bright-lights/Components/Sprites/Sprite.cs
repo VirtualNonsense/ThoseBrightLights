@@ -8,7 +8,7 @@ using SE_Praktikum.Services.Factories;
 
 namespace SE_Praktikum.Components.Sprites
 {
-  public class Sprite : IComponent, ICloneable
+  public abstract class Sprite : IComponent, ICloneable
   {
     // #################################################################################################################
     // Fields
