@@ -27,6 +27,8 @@ namespace SE_Praktikum.Services
         public Vector2 Position { get; set; }
         
         public Vector2 Origin { get; set; }
+        
+        public bool IsPlaying { get; set; }
 
         public Rectangle Frame =>
             new Rectangle(_currentFrame * _animation.FrameWidth,
@@ -78,6 +80,7 @@ namespace SE_Praktikum.Services
             if (_timer > Settings.UpdateInterval)
             {
                 _timer = 0f;
+                if (!IsPlaying) return;
                 if(_currentFrame < _animation.FrameCount-1)
                     _currentFrame++;
 
