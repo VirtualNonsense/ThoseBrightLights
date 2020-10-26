@@ -15,8 +15,6 @@ namespace SE_Praktikum.Components.Sprites
     // #################################################################################################################
     protected AnimationHandler _animationHandler;
     
-    protected Vector2 _position;
-
     protected IScreen _parent;
     
     // #################################################################################################################
@@ -27,39 +25,21 @@ namespace SE_Praktikum.Components.Sprites
     {
       _animationHandler = animationHandler;
       
-      Rotation = 0;
-
-      Opacity = 1f;
-
-      Scale = 1f;
-
-      Colour = Color.White;
     }
     // #################################################################################################################
     // Properties
     // #################################################################################################################
-    protected float _layer { get; set; }
-
-    public Color Colour { get; set; }
-    public float Opacity { get; set; }
-    public Vector2 Origin { get; set; }
-    public float Rotation { get; set; }
-    
-
+    public Vector2 Origin { 
+      get => _animationHandler.Origin;
+      set => _animationHandler.Origin = value; 
+    }
 
     public readonly Color[] TextureData;
-    public float Scale { get; set; }
 
     public Vector2 Position
     {
-      get => _position;
-      set
-      {
-        _position = value;
-
-        if (_animationHandler != null)
-          _animationHandler.Position = _position;
-      }
+      get => _animationHandler.Position;
+      set => _animationHandler.Position = value;
     }
 
     public float X
@@ -76,14 +56,26 @@ namespace SE_Praktikum.Components.Sprites
 
     public float Layer
     {
-      get => _layer;
-      set
-      {
-        _layer = value;
+      get => _animationHandler.Settings.Layer;
+      set => _animationHandler.Settings.Layer = value;
+    }
 
-        if (_animationHandler != null)
-          _animationHandler.Layer = _layer;
-      }
+    public float Rotation
+    {
+      get => _animationHandler.Settings.Rotation;
+      set => _animationHandler.Settings.Rotation = value;
+    }
+
+    public float Scale
+    {
+      get => _animationHandler.Settings.Scale;
+      set => _animationHandler.Settings.Scale = value;
+    }
+
+    public float Opacity
+    {
+      get => _animationHandler.Settings.Opacity;
+      set => _animationHandler.Settings.Opacity = value;
     }
     public Matrix Transform =>
       Matrix.CreateTranslation(new Vector3(-Origin, 0)) *
@@ -101,6 +93,7 @@ namespace SE_Praktikum.Components.Sprites
           (int) (height * Scale));
       }
     }
+    
 
     #region VectorShortcuts
 
@@ -145,8 +138,6 @@ namespace SE_Praktikum.Components.Sprites
 
     public bool IsRemoveAble { get; set; }
     public Vector2 Velocity { get; set; }
-    
-    public bool HasAnimation => _animationHandler != null;
 
 
     // #################################################################################################################

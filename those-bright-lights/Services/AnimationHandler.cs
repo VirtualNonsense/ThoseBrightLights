@@ -10,7 +10,7 @@ namespace SE_Praktikum.Services
     {
         
         private Animation _animation;
-        private readonly AnimationSettings _settings;
+        public AnimationSettings Settings { get; }
 
         private float _timer;
 
@@ -25,8 +25,8 @@ namespace SE_Praktikum.Services
         public int FrameHeight => _animation.FrameHeight;
 
         public Vector2 Position { get; set; }
-
-        public float Layer { get; set; }
+        
+        public Vector2 Origin { get; set; }
 
         public Rectangle Frame =>
             new Rectangle(_currentFrame * _animation.FrameWidth,
@@ -36,11 +36,13 @@ namespace SE_Praktikum.Services
 
         public event EventHandler OnAnimationComplete;
 
-        public AnimationHandler(Animation animation, AnimationSettings settings)
+        public AnimationHandler(Animation animation, AnimationSettings settings, Vector2? position = null, Vector2? origin = null)
         {
             _logger = LogManager.GetCurrentClassLogger();
             _animation = animation;
-            _settings = settings;
+            Settings = settings;
+            Position = position ?? new Vector2(0,0);
+            Origin = origin ?? new Vector2(0,0);
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -53,15 +55,17 @@ namespace SE_Praktikum.Services
 
             _updated = false;
 
-            spriteBatch.Draw(_animation.Texture,
+            spriteBatch.Draw(
+                _animation.Texture,
                 Position,
                 Frame,
-                Color.White,
-                0f,
-                new Vector2(0, 0),
-                1f,
-                SpriteEffects.None,
-                Layer);
+                Settings.Color * Settings.Opacity,
+                Settings.Rotation,
+                Origin,
+                Settings.Scale,
+                Settings.SpriteEffects,
+                Settings.Layer
+                );
         }
 
 
@@ -71,7 +75,7 @@ namespace SE_Praktikum.Services
 
             _timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            if (_timer > _settings.UpdateInterval)
+            if (_timer > Settings.UpdateInterval)
             {
                 _timer = 0f;
                 if(_currentFrame < _animation.FrameCount-1)
@@ -79,7 +83,7 @@ namespace SE_Praktikum.Services
 
                 if (_currentFrame >= _animation.FrameCount-1)
                 {
-                    if(_settings.IsLooping)
+                    if(Settings.IsLooping)
                         _currentFrame = 0;
                     OnOnAnimationComplete();
                 }
