@@ -145,12 +145,12 @@ namespace SE_Praktikum.Components.Sprites
     // #################################################################################################################
     public virtual void Update(GameTime gameTime)
     { 
-      _animationHandler?.Update(gameTime);
+      _animationHandler.Update(gameTime);
     }
 
     public virtual void Draw(GameTime gameTime, SpriteBatch spriteBatch)
     {
-      _animationHandler?.Draw(spriteBatch);
+      _animationHandler.Draw(spriteBatch);
     }
     
     // TODO: Maybe Introduce event for that as well
