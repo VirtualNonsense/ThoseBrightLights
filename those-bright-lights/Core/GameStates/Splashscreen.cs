@@ -42,7 +42,7 @@ namespace SE_Praktikum.Core.GameStates
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            spriteBatch.Begin();
+            spriteBatch.Begin(SpriteSortMode.FrontToBack);
             _explosionEmitter.Draw(gameTime, spriteBatch);
             spriteBatch.End();
         }
