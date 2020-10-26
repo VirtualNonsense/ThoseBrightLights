@@ -158,42 +158,6 @@ namespace SE_Praktikum.Components.Sprites
 
     }
     
-    protected virtual bool IsTouchingLeft(Sprite sprite)
-    {
-      if (Math.Abs(sprite.Layer - Layer) > float.Epsilon) return false;
-      return Rectangle.Right  > sprite.Rectangle.Left &&
-             Rectangle.Left < sprite.Rectangle.Left &&
-             Rectangle.Bottom > sprite.Rectangle.Top &&
-             Rectangle.Top < sprite.Rectangle.Bottom;
-    }
-
-    protected virtual  bool IsTouchingRight(Sprite sprite)
-    {
-      if (Math.Abs(sprite.Layer - Layer) > float.Epsilon) return false;
-      return Rectangle.Left  < sprite.Rectangle.Right &&
-             Rectangle.Right > sprite.Rectangle.Right &&
-             Rectangle.Bottom > sprite.Rectangle.Top &&
-             Rectangle.Top < sprite.Rectangle.Bottom;
-    }
-
-    protected virtual  bool IsTouchingTop(Sprite sprite)
-    {
-      if (Math.Abs(sprite.Layer - Layer) > float.Epsilon) return false;
-      return Rectangle.Bottom  > sprite.Rectangle.Top &&
-             Rectangle.Top < sprite.Rectangle.Top &&
-             Rectangle.Right > sprite.Rectangle.Left &&
-             Rectangle.Left < sprite.Rectangle.Right;
-    }
-
-    protected virtual bool IsTouchingBottom(Sprite sprite)
-    {
-      if (Math.Abs(sprite.Layer - Layer) > float.Epsilon) return false;
-      return Rectangle.Top  < sprite.Rectangle.Bottom &&
-             Rectangle.Bottom > sprite.Rectangle.Bottom &&
-             Rectangle.Right > sprite.Rectangle.Left &&
-             Rectangle.Left < sprite.Rectangle.Right;
-    }
-    
     // TODO: Return Coordinate for effect Placement
     public bool Intersects(Sprite sprite)
     {
