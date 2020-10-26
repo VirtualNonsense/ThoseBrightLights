@@ -16,6 +16,8 @@ namespace SE_Praktikum.Components.Sprites
     protected AnimationHandler _animationHandler;
     
     protected IScreen _parent;
+
+    public bool CollisionEnabled = true;
     
     // #################################################################################################################
     // Constructor
@@ -161,7 +163,8 @@ namespace SE_Praktikum.Components.Sprites
     // TODO: Return Coordinate for effect Placement
     public bool Intersects(Sprite sprite)
     {
-      if (Math.Abs(sprite.Layer - Layer) > float.Epsilon) return false;
+      if (!CollisionEnabled || !sprite.CollisionEnabled) return false;
+      if (Math.Abs(sprite.Layer - Layer) > float.Epsilon ) return false;
       // Calculate a matrix which transforms from A's local space into
       // world space and then into B's local space
       var transformAToB = Transform * Matrix.Invert(sprite.Transform);
