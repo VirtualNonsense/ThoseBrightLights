@@ -161,6 +161,7 @@ namespace SE_Praktikum.Components.Sprites
     
     protected virtual bool IsTouchingLeft(Sprite sprite)
     {
+      if (Math.Abs(sprite.Layer - Layer) > float.Epsilon) return false;
       return Rectangle.Right  > sprite.Rectangle.Left &&
              Rectangle.Left < sprite.Rectangle.Left &&
              Rectangle.Bottom > sprite.Rectangle.Top &&
@@ -169,6 +170,7 @@ namespace SE_Praktikum.Components.Sprites
 
     protected virtual  bool IsTouchingRight(Sprite sprite)
     {
+      if (Math.Abs(sprite.Layer - Layer) > float.Epsilon) return false;
       return Rectangle.Left  < sprite.Rectangle.Right &&
              Rectangle.Right > sprite.Rectangle.Right &&
              Rectangle.Bottom > sprite.Rectangle.Top &&
@@ -177,6 +179,7 @@ namespace SE_Praktikum.Components.Sprites
 
     protected virtual  bool IsTouchingTop(Sprite sprite)
     {
+      if (Math.Abs(sprite.Layer - Layer) > float.Epsilon) return false;
       return Rectangle.Bottom  > sprite.Rectangle.Top &&
              Rectangle.Top < sprite.Rectangle.Top &&
              Rectangle.Right > sprite.Rectangle.Left &&
@@ -185,6 +188,7 @@ namespace SE_Praktikum.Components.Sprites
 
     protected virtual bool IsTouchingBottom(Sprite sprite)
     {
+      if (Math.Abs(sprite.Layer - Layer) > float.Epsilon) return false;
       return Rectangle.Top  < sprite.Rectangle.Bottom &&
              Rectangle.Bottom > sprite.Rectangle.Bottom &&
              Rectangle.Right > sprite.Rectangle.Left &&
@@ -194,6 +198,7 @@ namespace SE_Praktikum.Components.Sprites
     // TODO: Return Coordinate for effect Placement
     public bool Intersects(Sprite sprite)
     {
+      if (Math.Abs(sprite.Layer - Layer) > float.Epsilon) return false;
       // Calculate a matrix which transforms from A's local space into
       // world space and then into B's local space
       var transformAToB = Transform * Matrix.Invert(sprite.Transform);
