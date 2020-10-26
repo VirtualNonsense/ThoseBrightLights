@@ -37,7 +37,7 @@ namespace SE_Praktikum.Models
             Rotation = rotation;
             Scale = scale;
             Opacity = opacity;
-            IsLooping = isPlaying;
+            IsPlaying = isPlaying;
         }
     }
 }
