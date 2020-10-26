@@ -8,7 +8,7 @@ using SE_Praktikum.Services.Factories;
 
 namespace SE_Praktikum.Components.Sprites
 {
-  public abstract class Sprite : IComponent, ICloneable
+  public abstract class Sprite : IComponent
   {
     // #################################################################################################################
     // Fields
@@ -215,15 +215,6 @@ namespace SE_Praktikum.Components.Sprites
 
       // No intersection found
       return false;
-    }
-
-    public object Clone()
-    {
-      
-      var m = MemberwiseClone() as Sprite;
-      if (m == null) return MemberwiseClone();
-      m._animationHandler = (AnimationHandler)_animationHandler?.Clone();
-      return m;
     }
   }
 }
