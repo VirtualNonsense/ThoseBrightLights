@@ -21,10 +21,9 @@ namespace SE_Praktikum.Components.Sprites
     // Constructor
     // #################################################################################################################
 
-    public Sprite(AnimationHandler animationHandler)
+    protected Sprite(AnimationHandler animationHandler)
     {
       _animationHandler = animationHandler;
-      
     }
     // #################################################################################################################
     // Properties
