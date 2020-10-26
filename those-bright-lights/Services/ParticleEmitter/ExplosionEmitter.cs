@@ -50,6 +50,7 @@ namespace SE_Praktikum.Services.ParticleEmitter
             sprite.Rotation = MathHelper.ToRadians(_random.Next(0, 360));
             sprite.Scale = (float) _random.NextDouble() + _random.Next(0, 3);
             sprite.Velocity = new Vector2(0, ySpeed);
+            sprite.Layer = sprite.Opacity;
 
 
             return sprite;
