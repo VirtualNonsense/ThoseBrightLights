@@ -14,7 +14,7 @@ namespace SE_Praktikum.Components.Sprites
             _animationHandler.OnAnimationComplete += AnimationHandlerOnOnAnimationComplete;
         }
 
-        private void AnimationHandlerOnOnAnimationComplete(object? sender, EventArgs e)
+        private void AnimationHandlerOnOnAnimationComplete(object sender, EventArgs e)
         {
             IsRemoveAble = true;
         }
