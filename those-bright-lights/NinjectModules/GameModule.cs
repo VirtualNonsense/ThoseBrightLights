@@ -6,6 +6,7 @@ using SE_Praktikum.Core.GameStates;
 using SE_Praktikum.Models;
 using SE_Praktikum.Services;
 using SE_Praktikum.Services.ParticleEmitter;
+using SE_Praktikum.Services.StateMachines;
 
 namespace SE_Praktikum.NinjectModules
 {

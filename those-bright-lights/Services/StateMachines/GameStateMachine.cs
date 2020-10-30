@@ -5,7 +5,7 @@ using NLog;
 using SE_Praktikum.Core.GameStates;
 using Stateless;
 
-namespace SE_Praktikum.Services
+namespace SE_Praktikum.Services.StateMachines
 {
     public class GameStateMachine : IObservable<GameState>
     {
@@ -24,8 +24,8 @@ namespace SE_Praktikum.Services
             };
             _machine = new StateMachine<State, StateTrigger>(State.Init);
             _machine.Configure(State.Init).Permit(StateTrigger.InitFinished, State.SplashScreen).OnEntry(onEntry);
-            _machine.Configure(State.SplashScreen).Permit(StateTrigger.Next, State.MainMenu).OnEntry(onEntry);
-            _machine.Configure(State.MainMenu).Permit(StateTrigger.Quit, State.Quit).OnEntry(onEntry);
+            _machine.Configure(State.SplashScreen).Permit(StateTrigger.Next, State.Menu).OnEntry(onEntry);
+            _machine.Configure(State.Menu).Permit(StateTrigger.Quit, State.Quit).OnEntry(onEntry);
             _machine.Fire(StateTrigger.InitFinished);
         }
         
@@ -61,8 +61,7 @@ namespace SE_Praktikum.Services
         {
             Init,
             SplashScreen,
-            MainMenu,
-            SettingsMenu,
+            Menu,
             Quit
         }
 
