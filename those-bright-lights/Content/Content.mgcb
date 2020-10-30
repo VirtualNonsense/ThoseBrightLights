@@ -31,6 +31,24 @@
 /processorParam:Quality=Best
 /build:Audio/Music/Death.wav
 
+#begin Audio/Music/Song2_remaster2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Music/Song2_remaster2.wav
+
+#begin Audio/Music/Song3_remaster2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Music/Song3_remaster2.wav
+
+#begin Audio/Music/Song4_remaster.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Music/Song4_remaster.wav
+
 #begin Audio/Sound_Effects/Savepoint (1).wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
