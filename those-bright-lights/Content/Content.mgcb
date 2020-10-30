@@ -25,6 +25,12 @@
 /processorParam:TextureFormat=Color
 /build:Artwork/Effects/explosion_45_45.png
 
+#begin Audio/Music/Death.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Music/Death.wav
+
 #begin NWWP.png
 /importer:TextureImporter
 /processor:TextureProcessor
