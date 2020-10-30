@@ -4,34 +4,39 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using NLog;
 using SE_Praktikum.Core.GameStates;
+using SE_Praktikum.Models;
 
 namespace SE_Praktikum
 {
-    public class SE_Praktikum_Game : Game, IObserver<GameState>
+    public class SE_Praktikum_Game : Game, IScreen, IObserver<GameState>
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private readonly ILogger _logger;
-        private readonly IDisposable _statePublisherTicket;
         private GameState _currentState;
         private GameState _nextState;
-        
 
-        public SE_Praktikum_Game(IObservable<GameState> statePublisher)
+        public SE_Praktikum_Game()
         {
             // init logger
             _logger = LogManager.GetCurrentClassLogger();
-            _statePublisherTicket = statePublisher.Subscribe(this);
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            IsMouseVisible = true;
+
+            ScreenHeight = 720;
+            ScreenWidth = 1280;
+            
             _logger.Debug("Constructor finished");
         }
+
+        public IDisposable StatePublisherTicket { get; set; }
 
         protected override void Initialize()
         {
             _logger.Debug("Start Initialisiation");
-
+            _graphics.PreferredBackBufferWidth = ScreenWidth;
+            _graphics.PreferredBackBufferHeight = ScreenHeight;
+            _graphics.ApplyChanges();
             base.Initialize();
         }
 
@@ -39,9 +44,7 @@ namespace SE_Praktikum
         {
             _logger.Debug("loading content");
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-            
-
-            // TODO: use this.Content to load your game content here
+            _currentState?.LoadContent(Content);
         }
 
         protected override void UnloadContent()
@@ -59,13 +62,16 @@ namespace SE_Praktikum
 
             if (_nextState != null)
             {
+                _logger.Debug("Performing Reload");
+                _currentState?.UnloadContent();
                 _currentState = _nextState;
+                _currentState.LoadContent(Content);
                 _nextState = null;
+                
             }
+            //_logger.Debug("Update!");
 
-            if (_currentState != null)
-            {
-            }
+            _currentState?.Update(gameTime);
             base.Update(gameTime);
             
         }
@@ -73,8 +79,7 @@ namespace SE_Praktikum
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-
-            // TODO: Add your drawing code here
+            _currentState.Draw(gameTime, _spriteBatch);
 
             base.Draw(gameTime);
         }
@@ -95,5 +100,8 @@ namespace SE_Praktikum
             _logger.Error($"{error.Message}");
             throw error;
         }
+
+        public int ScreenHeight { get; }
+        public int ScreenWidth { get; }
     }
 }
