@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Media;
 using SE_Praktikum.Models;
 using SE_Praktikum.Services.ParticleEmitter;
 
@@ -10,6 +11,7 @@ namespace SE_Praktikum.Core.GameStates
     {
         private IScreen _screen;
         private readonly ExplosionEmitter _explosionEmitter;
+        public Song _song;
 
         public Splashscreen(IScreen parent, ExplosionEmitter explosionEmitter)
         {
@@ -23,6 +25,8 @@ namespace SE_Praktikum.Core.GameStates
             _explosionEmitter.Animation = p;
             //_explosionEmitter.SpawnArea = new Rectangle(500, 100, 500, 100);
 
+            _song = contentManager.Load<Song>("Audio/Music/Death_mp3");
+            MediaPlayer.Play(_song);
         }
 
         public override void UnloadContent()
