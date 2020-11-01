@@ -49,6 +49,12 @@
 /processorParam:Quality=Best
 /build:Audio/Music/Song3_remaster2.wav
 
+#begin Audio/Music/Song3_remaster2_mp3.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Audio/Music/Song3_remaster2_mp3.mp3
+
 #begin Audio/Music/Song4_remaster.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

@@ -25,8 +25,9 @@ namespace SE_Praktikum.Core.GameStates
             _explosionEmitter.Animation = p;
             //_explosionEmitter.SpawnArea = new Rectangle(500, 100, 500, 100);
 
-            _song = contentManager.Load<Song>("Audio/Music/Death_mp3");
+            _song = contentManager.Load<Song>("Audio/Music/Song3_remaster2_mp3");
             MediaPlayer.Play(_song);
+            MediaPlayer.IsRepeating = true;
         }
 
         public override void UnloadContent()
