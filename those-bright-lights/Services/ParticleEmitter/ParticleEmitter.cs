@@ -58,7 +58,7 @@ namespace SE_Praktikum.Services.ParticleEmitter
             {
                 _generateTimer = 0;
 
-                if (_particles.Count < MaxParticles)
+                if (ParticleCount < MaxParticles)
                 {
                     _particles.Add(GenerateParticle());
                     ParticleCount++;
