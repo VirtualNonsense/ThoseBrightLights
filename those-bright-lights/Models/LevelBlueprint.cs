@@ -6,28 +6,28 @@ namespace SE_Praktikum.Models
 {
     class LevelBlueprint
     {
-        int compressionlevel;
-        int height;
-        bool infinite;
-        List<LevelLayer> layers;
-        int nextlayerid;
-        int nextobjectid;
-        string orientation;
-        string renderorder;
-        string tiledversion;
-        int tileheight;
-        List<Tileset> tilesets;
-        int tilewidth;
-        string type;
-        float version;
-        int width;
+        public int compressionlevel;
+        public int height;
+        public bool infinite;
+        public List<LevelLayer> layers;
+        public int nextlayerid;
+        public int nextobjectid;
+        public string orientation;
+        public string renderorder;
+        public string tiledversion;
+        public int tileheight;
+        public List<Tileset> tilesets;
+        public int tilewidth;
+        public string type;
+        public float version;
+        public int width;
 
     }
 
     internal class Tileset
     {
-        int firstgid;
-        string source;
+       public int firstgid;
+       public string source;
         
     }
 }
