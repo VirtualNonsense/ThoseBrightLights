@@ -6,7 +6,7 @@ namespace SE_Praktikum.Models
 {
     class LevelLayer
     {
-        public List<int> data;
+        public List<uint> data;
         public int height;
         public int id;
         public string name;
