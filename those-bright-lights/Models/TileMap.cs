@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 
 namespace SE_Praktikum.Models
@@ -15,6 +16,8 @@ namespace SE_Praktikum.Models
 
         int tilewidth, tileheight;
 
+        public int Tiles =>  collums* rows;
+
 
         public TileMap(Texture2D texture, int collums, int rows)
         {
@@ -26,8 +29,15 @@ namespace SE_Praktikum.Models
 
             
         }
-        public Rectangle Frame(int x, int y)
+        public Rectangle? Frame(int index)
         {
+            if (index <= 0)
+                return null;
+            else if (index > rows * collums)
+                return null;
+            
+            int x = (index % collums) - 1;
+            int y = index / rows;
             var r = new Rectangle(x * tilewidth, y * tileheight, tilewidth, tileheight);
             return r;
 
