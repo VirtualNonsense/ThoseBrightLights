@@ -10,13 +10,13 @@ using System.Data;
 
 namespace SE_Praktikum.Components
 {
-    class Level: IComponent
+    class Map: IComponent
     {
 
         LevelBlueprint _blueprint;
         List<TileMap> _tilemaps;
 
-        public Level (LevelBlueprint blueprint, List<TileMap> tilemaps)
+        public Map (LevelBlueprint blueprint, List<TileMap> tilemaps)
         {
             this._tilemaps = tilemaps;
             this._blueprint = blueprint;
