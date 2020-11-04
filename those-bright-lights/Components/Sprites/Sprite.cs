@@ -30,6 +30,9 @@ namespace SE_Praktikum.Components.Sprites
     // #################################################################################################################
     // Properties
     // #################################################################################################################
+    
+    public List<Sprite> Children { get; set; }
+    
     public Vector2 Origin { 
       get => _animationHandler.Origin;
       set => _animationHandler.Origin = value; 
