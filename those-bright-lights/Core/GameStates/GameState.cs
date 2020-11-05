@@ -26,7 +26,7 @@ namespace SE_Praktikum.Core.GameStates
         /// <summary>
         /// For cleanup;
         /// </summary>
-        public abstract void PostUpdate();
+        public abstract void PostUpdate(GameTime gameTime);
 
         /// <summary>
         /// Draw everything within specific state;
