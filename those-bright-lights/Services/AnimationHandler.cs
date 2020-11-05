@@ -9,7 +9,7 @@ namespace SE_Praktikum.Services
     public class AnimationHandler
     {
         
-        private Animation _animation;
+        public Animation Animation;
         public AnimationSettings Settings { get; }
 
         private float _timer;
@@ -20,9 +20,9 @@ namespace SE_Praktikum.Services
 
         private ILogger _logger;
         
-        public int FrameWidth => _animation.FrameWidth;
+        public int FrameWidth => Animation.FrameWidth;
 
-        public int FrameHeight => _animation.FrameHeight;
+        public int FrameHeight => Animation.FrameHeight;
 
         public Vector2 Position { get; set; }
         
@@ -30,17 +30,17 @@ namespace SE_Praktikum.Services
         
 
         public Rectangle Frame =>
-            new Rectangle(_currentFrame * _animation.FrameWidth,
+            new Rectangle(_currentFrame * Animation.FrameWidth,
                 0,
-                _animation.FrameWidth,
-                _animation.FrameHeight);
+                Animation.FrameWidth,
+                Animation.FrameHeight);
 
         public event EventHandler OnAnimationComplete;
 
         public AnimationHandler(Animation animation, AnimationSettings settings, Vector2? position = null, Vector2? origin = null)
         {
             _logger = LogManager.GetCurrentClassLogger();
-            _animation = animation;
+            Animation = animation;
             Settings = settings;
             Position = position ?? new Vector2(0,0);
             Origin = origin ?? new Vector2(0,0);
@@ -57,7 +57,7 @@ namespace SE_Praktikum.Services
             _updated = false;
 
             spriteBatch.Draw(
-                _animation.Texture,
+                Animation.Texture,
                 Position,
                 Frame,
                 Settings.Color * Settings.Opacity,
@@ -80,10 +80,10 @@ namespace SE_Praktikum.Services
             {
                 _timer = 0f;
                 if (!Settings.IsPlaying) return;
-                if(_currentFrame < _animation.FrameCount-1)
+                if(_currentFrame < Animation.FrameCount-1)
                     _currentFrame++;
 
-                if (_currentFrame >= _animation.FrameCount-1)
+                if (_currentFrame >= Animation.FrameCount-1)
                 {
                     if(Settings.IsLooping)
                         _currentFrame = 0;
