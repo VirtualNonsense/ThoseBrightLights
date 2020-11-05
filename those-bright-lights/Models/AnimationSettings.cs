@@ -27,9 +27,10 @@ namespace SE_Praktikum.Models
         public bool IsPlaying;
 
         
-        public AnimationSettings(bool isLooping = false, float updateInterval = 1f, Color? color = null, 
+        public AnimationSettings(float layer = 1, bool isLooping = false, float updateInterval = 1f, Color? color = null, 
                                  float rotation = 0f, float scale = 1f, float opacity = 1, bool isPlaying = true)
         {
+            Layer = layer;
             IsLooping = isLooping;
             UpdateInterval = updateInterval;
             SpriteEffects = SpriteEffects.None;
