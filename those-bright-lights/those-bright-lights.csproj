@@ -35,7 +35,4 @@
         <PackageReference Include="Stateless" Version="5.1.3" />
         <PackageReference Include="System.Reactive" Version="5.0.0-preview.220" />
     </ItemGroup>
-    <ItemGroup>
-      <Folder Include="Components\Sprites\SplashScreen" />
-    </ItemGroup>
 </Project>
