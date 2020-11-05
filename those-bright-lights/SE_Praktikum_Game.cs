@@ -72,6 +72,7 @@ namespace SE_Praktikum
             //_logger.Debug("Update!");
 
             _currentState?.Update(gameTime);
+            _currentState?.PostUpdate(gameTime);
             base.Update(gameTime);
             
         }
