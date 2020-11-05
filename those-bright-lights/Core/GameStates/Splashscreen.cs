@@ -1,8 +1,14 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using NLog;
+using SE_Praktikum.Components.Sprites;
+using SE_Praktikum.Components.Sprites.SplashScreen;
 using SE_Praktikum.Models;
+using SE_Praktikum.Services.Factories;
 using SE_Praktikum.Services.ParticleEmitter;
 
 namespace SE_Praktikum.Core.GameStates
@@ -18,7 +24,7 @@ namespace SE_Praktikum.Core.GameStates
         private List<Actor> _actors;
         private Logger _logger;
 
-        public Splashscreen(IScreen parent, ExplosionEmitter explosionEmitter)
+        public Splashscreen(IScreen parent, ExplosionEmitter explosionEmitter, AnimationHandlerFactory factory)
         {
             _screen = parent;
             _explosionEmitter = explosionEmitter;
