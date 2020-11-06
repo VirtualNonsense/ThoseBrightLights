@@ -17,8 +17,6 @@ namespace SE_Praktikum.Services.Factories
     {
         private readonly ILogger _logger;
         private readonly TileFactory tileFactory;
-        private Regex _regex;
-
         public MapFactory(TileFactory tileFactory)
         {
             _logger = LogManager.GetCurrentClassLogger();
