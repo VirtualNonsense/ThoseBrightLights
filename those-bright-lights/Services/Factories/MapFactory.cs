@@ -33,13 +33,13 @@ namespace SE_Praktikum.Services.Factories
                 var title = tileSet.Source.Split(".")[0];
                 try
                 {
-                    tileSets.Add(new TileSet(contentManager.Load<Texture2D>($"Artwork/Tilemaps/{title}"), blueprint.Width, blueprint.Height, tileSet.FirstGId));
+                    tileSets.Add(new TileSet(contentManager.Load<Texture2D>($"Artwork/Tilemaps/{title}"), blueprint.TileWidth, blueprint.TileHeight, tileSet.FirstGId));
                 }
                 catch (ContentLoadException e)
                 {
                     _logger.Warn($"Texture {title} is missing: ", e);
                     var lastFirstGId = tileSets.Count > 0 ? tileSets.Last().StartEntry + tileSets.Last().Tiles - 1 : 0;
-                    tileSets.Add(new TileSet(contentManager.Load<Texture2D>($"Artwork/missing_texture"), blueprint.Width, blueprint.Height, lastFirstGId + 1 ));
+                    tileSets.Add(new TileSet(contentManager.Load<Texture2D>($"Artwork/missing_texture"), blueprint.TileWidth, blueprint.TileHeight, lastFirstGId + 1 ));
                 }
                 catch (Exception e)
                 {
