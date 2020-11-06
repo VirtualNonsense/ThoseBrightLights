@@ -9,14 +9,14 @@ namespace SE_Praktikum.Components.Sprites
 {
     public class Tile:IComponent
     {
-        TileMap _tilemap;
+        Texture2D _texture;
         private readonly Rectangle _frame;
         Vector2 _origin;
         private float _layer;
 
-        public Tile(TileMap tilemap, Rectangle frame, Vector2 origin, float layer)
+        public Tile(Texture2D texture, Rectangle frame, Vector2 origin, float layer)
         {
-            _tilemap = tilemap;
+            _texture = texture;
             _frame = frame;
             _origin = origin;
             _layer = layer;
@@ -24,7 +24,8 @@ namespace SE_Praktikum.Components.Sprites
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            throw new NotImplementedException();
+            spriteBatch.Draw(_texture, _origin, _frame, Color.White);
+            
         }
 
         public void Update(GameTime gameTime)
