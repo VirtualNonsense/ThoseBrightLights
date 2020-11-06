@@ -11,22 +11,20 @@ namespace SE_Praktikum.Components.Sprites
     {
         Texture2D _texture;
         private readonly Rectangle _frame;
-        Vector2 _origin;
+        Vector2 _position;
         private float _layer;
 
-        public Tile(Texture2D texture, Rectangle frame, Vector2 origin, float layer)
+        public Tile(Texture2D texture, Rectangle frame, Vector2 position, float layer)
         {
             _texture = texture;
             _frame = frame;
-            _origin = origin;
+            _position = position;
             _layer = layer;
         }
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(_texture, _origin, _frame, Color.White, 0, new Vector2(0, 0), 1, SpriteEffects.None, _layer);
-
-            
+            spriteBatch.Draw(_texture, _position, _frame, Color.White, 0, new Vector2(0, 0), 1, SpriteEffects.None, _layer);
         }
 
         public void Update(GameTime gameTime)
