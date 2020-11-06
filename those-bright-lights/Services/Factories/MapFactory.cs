@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using NLog;
 using SE_Praktikum.Components;
+using SE_Praktikum.Components.Sprites;
 using SE_Praktikum.Models;
 using SE_Praktikum.Models.Tiled;
 
@@ -15,12 +16,14 @@ namespace SE_Praktikum.Services.Factories
     public class MapFactory
     {
         private readonly ILogger _logger;
+        private readonly TileFactory tileFactory;
         private Regex _regex;
 
-        public MapFactory()
+        public MapFactory(TileFactory tileFactory)
         {
             _logger = LogManager.GetCurrentClassLogger();
             _regex = new Regex(@"\w+_\d+_\d.?");
+            this.tileFactory = tileFactory;
         }
 
         public Map LoadMap(ContentManager contentManager, LevelBlueprint blueprint)
@@ -55,7 +58,15 @@ namespace SE_Praktikum.Services.Factories
                     throw;
                 }
             }
-            return new Map(blueprint, new TileMap(tileSets));
+            List<Tile> tiles = new List<Tile>();
+            var t = 0f;
+            foreach(var layer in blueprint.Layers)
+            {
+                var c = tileFactory.GenerateTiles(layer.Data, t, tileSets, blueprint.TileWidth, blueprint.TileHeight, blueprint.Height, blueprint.Width);
+                tiles.AddRange(c);
+
+            }
+            return new Map(tiles);
         }
     }
 }
