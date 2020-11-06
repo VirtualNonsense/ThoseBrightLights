@@ -31,7 +31,7 @@ namespace SE_Praktikum.Services.Factories
             {
                 if (!_regex.IsMatch(tileSet.Source))
                 {
-                    _logger.Warn($"{tileSet.Source} is not available");
+                    _logger.Warn($"{tileSet.Source} does not follow naming convention");
                     var lastFirstGId = tileSets.Count > 0 ? tileSets.Last().StartEntry + tileSets.Last().Tiles - 1 : 0;
                     var texture = contentManager.Load<Texture2D>($"Artwork/missing_texture");
                     tileSets.Add(new TileSet(texture, texture.Height, texture.Width, lastFirstGId + 1 ));
