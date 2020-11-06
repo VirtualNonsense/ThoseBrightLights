@@ -7,19 +7,18 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using SE_Praktikum.Components.Sprites;
 using System.Data;
+using SE_Praktikum.Models.Tiled;
 
 namespace SE_Praktikum.Components
 {
-    class Map: IComponent
+    public class Map: IComponent
     {
+        private List<Tile> _tile;
 
-        LevelBlueprint _blueprint;
-        List<TileMap> _tilemaps;
 
-        public Map (LevelBlueprint blueprint, List<TileMap> tilemaps)
+        public Map (List<Tile> tiles)
         {
-            this._tilemaps = tilemaps;
-            this._blueprint = blueprint;
+            _tile = tiles;
 
         }
 
@@ -33,38 +32,6 @@ namespace SE_Praktikum.Components
             throw new NotImplementedException();
         }
 
-        //private static List<Tile> GenerateTiles(TileMap tilemap, LevelBlueprint blueprint)
-        //{
-        //    List<Tile> tiles = new List<Tile>();
-        //    foreach(var layer in blueprint.layers)
-        //    {
-        //        var c = 0;
-        //        foreach(var index in layer.data)
-        //        {
-        //            if (index == 0)
-        //                continue;
-        //            var x = c / layer.width;
-        //            var y = c % layer.height; 
-
-        //            blueprint.tiles.Add(new Tile());
-        //            c++;
-        //        }
-        //    }
-        //}
-
-        private static (int, TileMap) GetTileMap(int index,List <TileMap>maps)
-        {
-            var offset = 0;
-            foreach(var map in maps)
-            {
-                if(index-offset>map.Tiles)
-                {
-                    return (index - offset, map);
-                }
-                offset += map.Tiles;
-            }
-            return (-1, null);
-        }
 
     }
 }

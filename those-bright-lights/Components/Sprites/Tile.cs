@@ -7,7 +7,7 @@ using System.Text;
 
 namespace SE_Praktikum.Components.Sprites
 {
-    class Tile:IComponent
+    public class Tile:IComponent
     {
         TileMap _tilemap;
         private readonly Rectangle _frame;
