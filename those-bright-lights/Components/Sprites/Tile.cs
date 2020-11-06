@@ -10,26 +10,21 @@ namespace SE_Praktikum.Components.Sprites
     class Tile:IComponent
     {
         TileMap _tilemap;
-        int _index;
+        private readonly Rectangle _frame;
         Vector2 _origin;
+        private float _layer;
 
-        public Tile(TileMap tilemap, int index, Vector2 origin)
+        public Tile(TileMap tilemap, Rectangle frame, Vector2 origin, float layer)
         {
             _tilemap = tilemap;
-            this._index = index;
+            _frame = frame;
             _origin = origin;
+            _layer = layer;
         }
-
-
-
-
-
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            if (_tilemap.Frame(_index) == null)
-                return;
-            spriteBatch.Draw(_tilemap.texture, (Rectangle)_tilemap.Frame(_index), Color.White);
+            throw new NotImplementedException();
         }
 
         public void Update(GameTime gameTime)
