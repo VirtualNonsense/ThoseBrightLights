@@ -24,7 +24,8 @@ namespace SE_Praktikum.Components.Sprites
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(_texture, _origin, _frame, Color.White);
+            spriteBatch.Draw(_texture, _origin, _frame, Color.White, 0, new Vector2(0, 0), 1, SpriteEffects.None, _layer);
+
             
         }
 

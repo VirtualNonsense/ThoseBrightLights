@@ -22,7 +22,7 @@ namespace SE_Praktikum.Services.Factories
         public MapFactory(TileFactory tileFactory)
         {
             _logger = LogManager.GetCurrentClassLogger();
-            _regex = new Regex(@"\w+_\d+_\d.?");
+            
             this.tileFactory = tileFactory;
         }
 
@@ -30,27 +30,18 @@ namespace SE_Praktikum.Services.Factories
         {
             // Loading all necessary tile sets
             List<TileSet> tileSets = new List<TileSet>();
-            foreach (var tileSet in blueprint.TileSetsBlueprints)
+            foreach (var tileSet in blueprint.tilesets)
             {
-                if (!_regex.IsMatch(tileSet.Source))
-                {
-                    _logger.Warn($"{tileSet.Source} does not follow naming convention");
-                    var texture = contentManager.Load<Texture2D>($"Artwork/missing_texture");
-                    tileSets.Add(new TileSet(texture, texture.Height, texture.Width, tileSet.FirstGId));
-                    continue;
-                }
                 var title = tileSet.Source.Split(".")[0];
-                var columns = Int32.Parse(title.Split("_")[1]);
-                var rows = Int32.Parse(title.Split("_")[2]);
                 try
                 {
-                    tileSets.Add(new TileSet(contentManager.Load<Texture2D>($"Artwork/Tilemaps/{title}"), columns, rows, tileSet.FirstGId));
+                    tileSets.Add(new TileSet(contentManager.Load<Texture2D>($"Artwork/Tilemaps/{title}"), blueprint.Width, blueprint.Height, tileSet.FirstGId));
                 }
-                catch (FileNotFoundException e)
+                catch (ContentLoadException e)
                 {
                     _logger.Warn($"Texture {title} is missing: ", e);
                     var lastFirstGId = tileSets.Count > 0 ? tileSets.Last().StartEntry + tileSets.Last().Tiles - 1 : 0;
-                    tileSets.Add(new TileSet(contentManager.Load<Texture2D>($"Artwork/missing_texture"), columns, rows, lastFirstGId + 1 ));
+                    tileSets.Add(new TileSet(contentManager.Load<Texture2D>($"Artwork/missing_texture"), blueprint.Width, blueprint.Height, lastFirstGId + 1 ));
                 }
                 catch (Exception e)
                 {

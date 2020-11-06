@@ -6,20 +6,26 @@ using SE_Praktikum.Models;
 using SE_Praktikum.Services.ParticleEmitter;
 using Newtonsoft.Json;
 using System.IO;
+using SE_Praktikum.Services.Factories;
+using SE_Praktikum.Components;
+using SE_Praktikum.Models.Tiled;
 
 namespace SE_Praktikum.Core.GameStates
 {
     public class Splashscreen : GameState
     {
-        private TileMap _tilemap;
+        
         private IScreen _screen;
         private readonly ExplosionEmitter _explosionEmitter;
+        private readonly MapFactory mapfactory;
         public Song _song;
+        private Map map;
 
-        public Splashscreen(IScreen parent, ExplosionEmitter explosionEmitter)
+        public Splashscreen(IScreen parent, ExplosionEmitter explosionEmitter, MapFactory mapfactory)
         {
             _screen = parent;
             _explosionEmitter = explosionEmitter;
+            this.mapfactory = mapfactory;
         }
         
         public override void LoadContent(ContentManager contentManager)
@@ -27,7 +33,9 @@ namespace SE_Praktikum.Core.GameStates
             _song = contentManager.Load<Song>("Audio/Music/Song3_remaster2_mp3");
             MediaPlayer.Play(_song);
             MediaPlayer.IsRepeating = true;
-        }
+            var t = JsonConvert.DeserializeObject<LevelBlueprint>(File.ReadAllText(@".\Content\Level\TestMap_3_3.json")); ;
+            map = mapfactory.LoadMap(contentManager, t);
+                    }
 
         public override void UnloadContent()
         {
@@ -50,6 +58,7 @@ namespace SE_Praktikum.Core.GameStates
             spriteBatch.Begin(SpriteSortMode.FrontToBack);
             //_explosionEmitter.Draw(gameTime, spriteBatch);
             //spriteBatch.Draw(_tilemap.texture, _tilemap.Frame(1, 0), Color.White);
+            map.Draw(gameTime, spriteBatch);
             spriteBatch.End();
 
         }

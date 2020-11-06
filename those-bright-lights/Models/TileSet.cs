@@ -30,12 +30,14 @@ namespace SE_Praktikum.Models
 
         internal Rectangle GetFrame(uint index)
         {
-            var c = 1;
+            
+
+            var c = 0;
             for (int row = 0; row < Rows; row++)
             {
                 for (int column = 0; column < Columns; column++)
                 {
-                    if (index == c)
+                    if (index == StartEntry + c)
                         return new Rectangle(Columns * column, Rows * row, TileDimX, TileDimY);
                     c++;
                 }

@@ -24,7 +24,10 @@ namespace SE_Praktikum.Components
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            throw new NotImplementedException();
+            foreach(var tile in _tile)
+            {
+                tile.Draw(gameTime, spriteBatch);
+            }
         }
 
         public void Update(GameTime gameTime)

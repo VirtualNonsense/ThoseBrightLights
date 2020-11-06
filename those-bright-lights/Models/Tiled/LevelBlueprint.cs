@@ -14,7 +14,7 @@ namespace SE_Praktikum.Models.Tiled
         public string RenderOrder;
         public string TiledVersion;
         public int TileHeight;
-        public List<TileSetBlueprint> TileSetsBlueprints;
+        public List<TileSetBlueprint> tilesets;
         public int TileWidth;
         public string Type;
         public string Version;
@@ -32,7 +32,7 @@ namespace SE_Praktikum.Models.Tiled
             RenderOrder = renderOrder;
             TiledVersion = tiledVersion;
             TileHeight = tileHeight;
-            TileSetsBlueprints = tileSetsBlueprints;
+            tilesets = tileSetsBlueprints;
             TileWidth = tileWidth;
             Type = type;
             Version = version;
