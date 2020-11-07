@@ -38,7 +38,7 @@ namespace SE_Praktikum.Models
                 for (int column = 0; column < Columns; column++)
                 {
                     if (index == StartEntry + c)
-                        return new Rectangle(Columns * column, Rows * row, TileDimX, TileDimY);
+                        return new Rectangle(TileDimX * column, TileDimY * row, TileDimX, TileDimY);
                     c++;
                 }
             }
