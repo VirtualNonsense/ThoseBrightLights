@@ -44,10 +44,11 @@ namespace SE_Praktikum.Services
 
             foreach(var index in indices)
             {
-                if (index == 0)
-                    continue;
-                var p = new Vector2(column * tilewidth, row * tileheight);
-                list.Add(GenerateTile(index, p, layer, tilelist));
+                if (index != 0)
+                {
+                    var p = new Vector2(column * tilewidth, row * tileheight);
+                    list.Add(GenerateTile(index, p, layer, tilelist, layerOpacity));
+                }
                 column++;
                 if(column == columns)
                 {
