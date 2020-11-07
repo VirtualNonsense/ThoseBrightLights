@@ -60,7 +60,7 @@ namespace SE_Praktikum.Services.Factories
                                                           blueprint.Width,
                                                           layer.Visible? 1 : 0);
                 tiles.AddRange(c);
-
+                l++;
             }
             return new Map(tiles);
         }
