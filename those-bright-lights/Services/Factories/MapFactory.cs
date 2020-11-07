@@ -48,10 +48,17 @@ namespace SE_Praktikum.Services.Factories
                 }
             }
             List<Tile> tiles = new List<Tile>();
-            var t = 0f;
+            var l = 0f;
             foreach(var layer in blueprint.Layers)
             {
-                var c = tileFactory.GenerateTiles(layer.Data, t, tileSets, blueprint.TileWidth, blueprint.TileHeight, blueprint.Height, blueprint.Width);
+                var c = tileFactory.GenerateTiles(layer.Data, 
+                                                          l, 
+                                                          tileSets,
+                                                          blueprint.TileWidth,
+                                                          blueprint.TileHeight,
+                                                          blueprint.Height,
+                                                          blueprint.Width,
+                                                          layer.Visible? 1 : 0);
                 tiles.AddRange(c);
 
             }

@@ -16,21 +16,21 @@ namespace SE_Praktikum.Services
         {
              _logger = LogManager.GetCurrentClassLogger();
         }
-        public Tile GenerateTile(uint index, Vector2 position, float layer, List<TileSet> tilesets)
+        public Tile GenerateTile(uint index, Vector2 position, float layer, List<TileSet> tilesets, float opacity)
         {
              
             foreach(var tileset in tilesets)
             {
                 if (index > tileset.StartEntry + tileset.Tiles-1)
                     continue;
-                return new Tile(tileset.Texture, tileset.GetFrame(index), position, layer);
+                return new Tile(tileset.Texture, tileset.GetFrame(index), position, layer, opacity);
 
             }
             return null;
 
         }
 
-        public List<Tile> GenerateTiles(List<uint> indices, float layer, List<TileSet> tilelist, int tilewidth, int tileheight, int rows, int columns)
+        public List<Tile> GenerateTiles(List<uint> indices, float layer, List<TileSet> tilelist, int tilewidth, int tileheight, int rows, int columns, float layerOpacity)
         {
 
             if (indices.Count > rows * columns)
