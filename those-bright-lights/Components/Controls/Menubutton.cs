@@ -66,6 +66,11 @@ namespace SE_Praktikum.Components.Controls
             if (_isHovering)
                 colour = Color.Gray;
 
+            if (Clicked)
+            {
+                colour = Color.Black;
+            }
+
             spriteBatch.Draw(_texture, Rectangle, colour);
 
             if (!string.IsNullOrEmpty(Text))
@@ -92,7 +97,12 @@ namespace SE_Praktikum.Components.Controls
 
                 if (_currentMouse.LeftButton == ButtonState.Released && _previousMouse.LeftButton == ButtonState.Pressed)
                 {
+                    Clicked = true;
                     Click?.Invoke(this, new EventArgs());
+                }
+                else
+                {
+                    Clicked = false;
                 }
             }
         }
