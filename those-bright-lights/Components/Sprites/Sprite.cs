@@ -23,8 +23,6 @@ namespace SE_Praktikum.Components.Sprites
     protected Sprite(AnimationHandler animationHandler)
     {
       _animationHandler = animationHandler;
-      TextureData = new Color[_animationHandler.FrameWidth * _animationHandler.FrameHeight];
-      _animationHandler.Animation.Texture.GetData(TextureData);
     }
     // #################################################################################################################
     // Properties

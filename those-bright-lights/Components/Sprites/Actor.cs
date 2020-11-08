@@ -29,6 +29,8 @@ namespace SE_Praktikum.Components.Sprites
         // TODO: Return Coordinate for effect Placement
         public bool Intersects(Actor actor)
         {
+            var t1 = _animationHandler.GetDataOfFrame();
+            var t2 = actor._animationHandler.GetDataOfFrame();
             if (!CollisionEnabled || !actor.CollisionEnabled) return false;
             if (Math.Abs(actor.Layer - Layer) > float.Epsilon ) return false;
             // Calculate a matrix which transforms from A's local space into
@@ -61,8 +63,8 @@ namespace SE_Praktikum.Components.Sprites
                         0 <= yB && yB < actor.Rectangle.Height)
                     {
                         // Get the colors of the overlapping pixels
-                        var colourA = TextureData[xA + yA * Rectangle.Width];
-                        var colourB = actor.TextureData[xB + yB * actor.Rectangle.Width];
+                        var colourA = t1[xA + yA * Rectangle.Width];
+                        var colourB = t2[xB + yB * actor.Rectangle.Width];
 
                         // If both pixel are not completely transparent
                         if (colourA.A != 0 && colourB.A != 0)

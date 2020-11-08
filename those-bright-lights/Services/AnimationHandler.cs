@@ -101,5 +101,27 @@ namespace SE_Praktikum.Services
         {
             OnAnimationComplete?.Invoke(this, EventArgs.Empty);
         }
+
+        public Color[] GetDataOfFrame()
+        {
+            //initialize array with size of one frame
+            var data = new Color[FrameWidth * FrameHeight /Animation.FrameCount];
+            
+            //copy all the framedata to one array
+            var allData = new Color[FrameWidth * FrameHeight];
+            Animation.Texture.GetData(allData);
+            
+            //iterate through the pixels
+            for (int row = 1; row < FrameHeight; row++)
+            {
+                for (int column= (Animation.FrameCount-1)*FrameWidth;column<Animation.FrameCount*FrameWidth;column++)
+                {
+                    data[row * FrameWidth + column] = allData[row*FrameWidth + column + (Animation.FrameCount-1)*FrameWidth];
+                }
+            }
+            
+            return data;
+
+        }
     }
 }
