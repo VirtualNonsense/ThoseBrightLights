@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using SE_Praktikum.Models;
 using SE_Praktikum.Services.ParticleEmitter;
 using Microsoft.Xna.Framework.Input;
+using SE_Praktikum.Services;
 
 namespace SE_Praktikum.Core.GameStates
 {
@@ -15,13 +16,19 @@ namespace SE_Praktikum.Core.GameStates
         private IScreen _screen;
         private readonly ExplosionEmitter _explosionEmitter;
         public Song _song;
-        List<SoundEffect> soundEffects;
+        SoundHandler<Playereffect> soundEffects;
+
+        enum Playereffect
+        {
+            Shot,
+            Save
+        }
 
         public Splashscreen(IScreen parent, ExplosionEmitter explosionEmitter)
         {
             _screen = parent;
             _explosionEmitter = explosionEmitter;
-            soundEffects = new List<SoundEffect>();
+            soundEffects = new SoundHandler<Playereffect>();
         }
         
         public override void LoadContent(ContentManager contentManager)
@@ -36,8 +43,8 @@ namespace SE_Praktikum.Core.GameStates
             MediaPlayer.IsRepeating = true;
 
             // SOUNDS
-            soundEffects.Add(contentManager.Load<SoundEffect>("Audio/Sound_Effects/Savepoint (1)"));
-            soundEffects.Add(contentManager.Load<SoundEffect>("Audio/Sound_Effects/Shot2"));
+            soundEffects.Add(Playereffect.Save, contentManager.Load<SoundEffect>("Audio/Sound_Effects/Savepoint (1)"));
+            soundEffects.Add(Playereffect.Shot, contentManager.Load<SoundEffect>("Audio/Sound_Effects/Shot2"));
 
             //// Fire and forget play
             //soundEffects[0].Play();
@@ -61,10 +68,10 @@ namespace SE_Praktikum.Core.GameStates
             // SOUND
 
             if (Keyboard.GetState().IsKeyDown(Keys.F10))
-                soundEffects[0].CreateInstance().Play();
+                soundEffects.Play(Playereffect.Save);
 
             if (Keyboard.GetState().IsKeyDown(Keys.Enter))
-                soundEffects[1].CreateInstance().Play();
+                soundEffects.Play(Playereffect.Shot);
         }
 
         public override void PostUpdate()
