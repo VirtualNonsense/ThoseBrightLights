@@ -67,6 +67,12 @@
 /processorParam:Quality=Best
 /build:Audio/Sound_Effects/Savepoint (1).wav
 
+#begin Audio/Sound_Effects/Shot2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound_Effects/Shot2.wav
+
 #begin NWWP.png
 /importer:TextureImporter
 /processor:TextureProcessor
