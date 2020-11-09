@@ -36,14 +36,16 @@ namespace SE_Praktikum.Core.GameStates
         {
             var p = new Animation(contentManager.Load<Texture2D>("Artwork/Effects/explosion_45_45"), 7);
             _explosionEmitter.Animation = p;
-            //_explosionEmitter.SpawnArea = new Rectangle(500, 100, 500, 100);
+            _explosionEmitter.SpawnArea = new Rectangle(500, 100, 500, 100);
 
             _song = contentManager.Load<Song>("Audio/Music/Song3_remaster2_mp3");
             MediaPlayer.Play(_song);
             MediaPlayer.IsRepeating = true;
             
-            var animation = new Animation(contentManager.Load<Texture2D>("Artwork/misc/testboxoderso"),1);
-            var animationSettings = new AnimationSettings();
+            var animation = new Animation(contentManager.Load<Texture2D>("Artwork/Effects/explosion_45_45"),7);
+            var line1 = new Animation(contentManager.Load<Texture2D>("Artwork/misc/horizontalline"),1);
+            var line2 = new Animation(contentManager.Load<Texture2D>("Artwork/misc/verticalline"),1);
+            var animationSettings = new AnimationSettings(isLooping:true);
             
             c1 = new CollisionCube(_factory.GetAnimationHandler(animation, animationSettings), new Input{Down = Keys.S, Left=Keys.A,Right = Keys.D,Up = Keys.W}, _screen);
             c2 = new CollisionCube(_factory.GetAnimationHandler(animation, animationSettings), new Input{Down = Keys.Down, Left=Keys.Left,Right = Keys.Right,Up = Keys.Up}, _screen);
@@ -58,11 +60,10 @@ namespace SE_Praktikum.Core.GameStates
 
         public override void Update(GameTime gameTime)
         {
-            //_explosionEmitter.Update(gameTime);
+            _explosionEmitter.Update(gameTime);
             c1.Update(gameTime);
             c2.Update(gameTime);
             PostUpdate(gameTime);
-            
         }
 
 
@@ -94,8 +95,6 @@ namespace SE_Praktikum.Core.GameStates
                     i--;
                 }
             }
-                
-            //throw new System.NotImplementedException();
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
@@ -103,6 +102,7 @@ namespace SE_Praktikum.Core.GameStates
             spriteBatch.Begin(SpriteSortMode.FrontToBack);
             foreach(var sprite in _actors)
                 sprite.Draw(gameTime,spriteBatch);
+            _explosionEmitter.Draw(gameTime,spriteBatch);
             spriteBatch.End();
         }
     }
