@@ -105,16 +105,16 @@ namespace SE_Praktikum.Services
         public Color[] GetDataOfFrame()
         {
             //initialize array with size of one frame
-            var data = new Color[FrameWidth * FrameHeight /Animation.FrameCount];
+            var data = new Color[FrameWidth * FrameHeight];
             
             //copy all the framedata to one array
-            var allData = new Color[FrameWidth * FrameHeight];
+            var allData = new Color[FrameWidth * FrameHeight*Animation.FrameCount];
             Animation.Texture.GetData(allData);
             
             //iterate through the pixels
             for (int row = 1; row < FrameHeight; row++)
             {
-                for (int column= (Animation.FrameCount-1)*FrameWidth;column<Animation.FrameCount*FrameWidth;column++)
+                for (int column= 1;column<FrameWidth;column++)
                 {
                     data[row * FrameWidth + column] = allData[row*FrameWidth + column + (Animation.FrameCount-1)*FrameWidth];
                 }
