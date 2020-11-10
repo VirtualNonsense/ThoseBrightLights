@@ -2,13 +2,12 @@
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Media;
+using Microsoft.Xna.Framework.Audio;
+using System.Collections.Generic;
 using SE_Praktikum.Models;
 using SE_Praktikum.Services.ParticleEmitter;
-using Newtonsoft.Json;
-using System.IO;
-using SE_Praktikum.Services.Factories;
-using SE_Praktikum.Components;
-using SE_Praktikum.Models.Tiled;
+using Microsoft.Xna.Framework.Input;
+using SE_Praktikum.Services;
 
 namespace SE_Praktikum.Core.GameStates
 {
@@ -19,23 +18,44 @@ namespace SE_Praktikum.Core.GameStates
         private readonly ExplosionEmitter _explosionEmitter;
         private readonly MapFactory mapfactory;
         public Song _song;
-        private Map map;
+        SoundHandler<Playereffect> soundEffects;
+
+        enum Playereffect
+        {
+            Shot,
+            Save
+        }
 
         public Splashscreen(IScreen parent, ExplosionEmitter explosionEmitter, MapFactory mapfactory)
         {
             _screen = parent;
             _explosionEmitter = explosionEmitter;
-            this.mapfactory = mapfactory;
+            soundEffects = new SoundHandler<Playereffect>();
         }
         
         public override void LoadContent(ContentManager contentManager)
         {
+            var p = new Animation(contentManager.Load<Texture2D>("Artwork/Effects/explosion_45_45"), 7);
+            _explosionEmitter.Animation = p;
+            //_explosionEmitter.SpawnArea = new Rectangle(500, 100, 500, 100);
+
+            // MUSIC
             _song = contentManager.Load<Song>("Audio/Music/Song3_remaster2_mp3");
             MediaPlayer.Play(_song);
             MediaPlayer.IsRepeating = true;
-            var t = JsonConvert.DeserializeObject<LevelBlueprint>(File.ReadAllText(@".\Content\Level\TestMap_3_3.json")); ;
-            map = mapfactory.LoadMap(contentManager, t);
-                    }
+
+            // SOUNDS
+            soundEffects.Add(Playereffect.Save, contentManager.Load<SoundEffect>("Audio/Sound_Effects/Savepoint (1)"));
+            soundEffects.Add(Playereffect.Shot, contentManager.Load<SoundEffect>("Audio/Sound_Effects/Shot2"));
+
+            //// Fire and forget play
+            //soundEffects[0].Play();
+
+            //// Play that can be manipulated after the fact
+            //var instance = soundEffects[0].CreateInstance();
+            //instance.IsLooped = true;
+            //instance.Play();
+        }
 
         public override void UnloadContent()
         {
@@ -44,7 +64,16 @@ namespace SE_Praktikum.Core.GameStates
 
         public override void Update(GameTime gameTime)
         {
-            //explosionEmitter.Update(gameTime);
+            _explosionEmitter.Update(gameTime);
+
+
+            // SOUND
+
+            if (Keyboard.GetState().IsKeyDown(Keys.F10))
+                soundEffects.Play(Playereffect.Save);
+
+            if (Keyboard.GetState().IsKeyDown(Keys.Enter))
+                soundEffects.Play(Playereffect.Shot);
         }
 
         public override void PostUpdate()

@@ -103,6 +103,26 @@
 /processorParam:Quality=Best
 /build:Audio/Sound_Effects/Savepoint (1).wav
 
+#begin Audio/Sound_Effects/Shot2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound_Effects/Shot2.wav
+
+#begin Font/Font.spritefont
+/importer:FontDescriptionImporter
+/processor:LocalizedFontProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Font/Font.spritefont
+
+#begin Font/Font2.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Font/Font2.spritefont
+
 #begin NWWP.png
 /importer:TextureImporter
 /processor:TextureProcessor
