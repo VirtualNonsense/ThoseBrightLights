@@ -124,12 +124,15 @@ namespace SE_Praktikum.Services
             var allData = new Color[FrameWidth * FrameHeight*Animation.FrameCount];
             Animation.Texture.GetData(allData);
             
-            //iterate through the pixels
-            for (int row = 1; row < FrameHeight; row++)
+            //row offset, number of frames beforehand multiply with width of frame
+            var rowOffset = _currentFrame * FrameWidth;
+            
+            //iterate through all rows and cols
+            for (int row = 0; row < FrameHeight; row++)
             {
-                for (int column= 1;column<FrameWidth;column++)
+                for (int col= 0; col < FrameWidth; col++)
                 {
-                    data[row * FrameWidth + column] = allData[row*FrameWidth + column + (Animation.FrameCount-1)*FrameWidth];
+                    data[row * FrameWidth + col] = allData[row * Animation.Texture.Width + col + rowOffset];
                 }
             }
             
