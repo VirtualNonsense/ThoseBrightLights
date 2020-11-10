@@ -7,7 +7,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace SE_Praktikum.Services
+namespace SE_Praktikum.Services.Factories
 {
     public class TileFactory
     {
