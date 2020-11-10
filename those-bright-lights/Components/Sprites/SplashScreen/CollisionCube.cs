@@ -15,6 +15,7 @@ namespace SE_Praktikum.Components.Sprites.SplashScreen
         private KeyboardState _previousKey;
         private float _speed;
         private Logger _logger;
+        bool pressed = false;
 
         public CollisionCube(AnimationHandler animationHandler, Input input, IScreen screen) : base(animationHandler)
         {
@@ -55,8 +56,22 @@ namespace SE_Praktikum.Components.Sprites.SplashScreen
             //Position = Vector2.Clamp(Position, new Vector2(80, 0), new Vector2(_screen.ScreenWidth / 4, _screen.ScreenHeight));
             
             
+            if (Keyboard.GetState().IsKeyDown(Keys.M))
+            {
+                if(!pressed)
+                    _animationHandler.CurrentFrame++;
+                pressed = true;
+            }
+            else if (Keyboard.GetState().IsKeyDown(Keys.N))
+            {
+                if(!pressed)
+                    _animationHandler.CurrentFrame--;
+                pressed = true;
+            }
+            else if(pressed)
+                pressed = false;
             
-            base.Update(gameTime);
+            //base.Update(gameTime);
         }
 
 
