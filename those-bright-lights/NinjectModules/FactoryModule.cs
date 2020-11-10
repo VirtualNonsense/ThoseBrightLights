@@ -1,4 +1,5 @@
-﻿using SE_Praktikum.Services.Factories;
+﻿using SE_Praktikum.Services;
+using SE_Praktikum.Services.Factories;
 
 namespace SE_Praktikum.NinjectModules
 {
@@ -8,6 +9,9 @@ namespace SE_Praktikum.NinjectModules
         {
             Bind<ParticleFactory>().ToSelf().InSingletonScope();
             Bind<AnimationHandlerFactory>().ToSelf().InSingletonScope();
+            Bind<MapFactory>().ToSelf().InSingletonScope();
+            Bind<TileFactory>().ToSelf().InSingletonScope();
+
         }
     }
 }
