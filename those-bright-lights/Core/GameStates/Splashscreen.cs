@@ -16,7 +16,6 @@ namespace SE_Praktikum.Core.GameStates
         
         private IScreen _screen;
         private readonly ExplosionEmitter _explosionEmitter;
-        private readonly MapFactory mapfactory;
         public Song _song;
         SoundHandler<Playereffect> soundEffects;
 
@@ -26,7 +25,7 @@ namespace SE_Praktikum.Core.GameStates
             Save
         }
 
-        public Splashscreen(IScreen parent, ExplosionEmitter explosionEmitter, MapFactory mapfactory)
+        public Splashscreen(IScreen parent, ExplosionEmitter explosionEmitter)
         {
             _screen = parent;
             _explosionEmitter = explosionEmitter;
@@ -87,7 +86,6 @@ namespace SE_Praktikum.Core.GameStates
             spriteBatch.Begin(SpriteSortMode.FrontToBack);
             //_explosionEmitter.Draw(gameTime, spriteBatch);
             //spriteBatch.Draw(_tilemap.texture, _tilemap.Frame(1, 0), Color.White);
-            map.Draw(gameTime, spriteBatch);
             spriteBatch.End();
 
         }

@@ -29,7 +29,6 @@ namespace SE_Praktikum.Core
             return Matrix.CreateOrthographic(CameraViewWidth, CameraViewHeight, ZNearPlane, ZFarPlane);
         }
         
-        public Matrix
         
         
     }
