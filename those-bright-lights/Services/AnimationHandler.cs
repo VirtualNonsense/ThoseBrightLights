@@ -17,6 +17,19 @@ namespace SE_Praktikum.Services
         private bool _updated;
 
         private int _currentFrame;
+        public int CurrentFrame
+        {
+            get=>_currentFrame;
+            set
+            {
+                if (value < 0)
+                    _currentFrame = 0;
+                else if (value >= Animation.FrameCount)
+                    _currentFrame = Animation.FrameCount - 1;
+                else
+                    _currentFrame = value;
+            }
+        }
 
         private ILogger _logger;
         
@@ -30,7 +43,7 @@ namespace SE_Praktikum.Services
         
 
         public Rectangle Frame =>
-            new Rectangle(_currentFrame * Animation.FrameWidth,
+            new Rectangle(CurrentFrame * Animation.FrameWidth,
                 0,
                 Animation.FrameWidth,
                 Animation.FrameHeight);
@@ -51,7 +64,7 @@ namespace SE_Praktikum.Services
             if (!_updated)
             {
                 _logger.Error("Need to call 'Update' first");
-                throw new Exception("Need to call 'Update' first");
+                //throw new Exception("Need to call 'Update' first");
             }
 
             _updated = false;
@@ -80,13 +93,13 @@ namespace SE_Praktikum.Services
             {
                 _timer = 0f;
                 if (!Settings.IsPlaying) return;
-                if(_currentFrame < Animation.FrameCount-1)
-                    _currentFrame++;
+                if(CurrentFrame < Animation.FrameCount-1)
+                    CurrentFrame++;
 
-                if (_currentFrame >= Animation.FrameCount-1)
+                if (CurrentFrame >= Animation.FrameCount-1)
                 {
                     if(Settings.IsLooping)
-                        _currentFrame = 0;
+                        CurrentFrame = 0;
                     OnOnAnimationComplete();
                 }
             }
