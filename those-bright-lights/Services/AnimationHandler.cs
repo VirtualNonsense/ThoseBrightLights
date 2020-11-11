@@ -9,7 +9,7 @@ namespace SE_Praktikum.Services
     public class AnimationHandler
     {
         
-        private Animation _animation;
+        public Animation Animation;
         public AnimationSettings Settings { get; }
 
         private float _timer;
@@ -17,12 +17,25 @@ namespace SE_Praktikum.Services
         private bool _updated;
 
         private int _currentFrame;
+        public int CurrentFrame
+        {
+            get=>_currentFrame;
+            set
+            {
+                if (value < 0)
+                    _currentFrame = 0;
+                else if (value >= Animation.FrameCount)
+                    _currentFrame = Animation.FrameCount - 1;
+                else
+                    _currentFrame = value;
+            }
+        }
 
         private ILogger _logger;
         
-        public int FrameWidth => _animation.FrameWidth;
+        public int FrameWidth => Animation.FrameWidth;
 
-        public int FrameHeight => _animation.FrameHeight;
+        public int FrameHeight => Animation.FrameHeight;
 
         public Vector2 Position { get; set; }
         
@@ -30,17 +43,17 @@ namespace SE_Praktikum.Services
         
 
         public Rectangle Frame =>
-            new Rectangle(_currentFrame * _animation.FrameWidth,
+            new Rectangle(CurrentFrame * Animation.FrameWidth,
                 0,
-                _animation.FrameWidth,
-                _animation.FrameHeight);
+                Animation.FrameWidth,
+                Animation.FrameHeight);
 
         public event EventHandler OnAnimationComplete;
 
         public AnimationHandler(Animation animation, AnimationSettings settings, Vector2? position = null, Vector2? origin = null)
         {
             _logger = LogManager.GetCurrentClassLogger();
-            _animation = animation;
+            Animation = animation;
             Settings = settings;
             Position = position ?? new Vector2(0,0);
             Origin = origin ?? new Vector2(0,0);
@@ -51,13 +64,13 @@ namespace SE_Praktikum.Services
             if (!_updated)
             {
                 _logger.Error("Need to call 'Update' first");
-                throw new Exception("Need to call 'Update' first");
+                //throw new Exception("Need to call 'Update' first");
             }
 
             _updated = false;
 
             spriteBatch.Draw(
-                _animation.Texture,
+                Animation.Texture,
                 Position,
                 Frame,
                 Settings.Color * Settings.Opacity,
@@ -80,13 +93,13 @@ namespace SE_Praktikum.Services
             {
                 _timer = 0f;
                 if (!Settings.IsPlaying) return;
-                if(_currentFrame < _animation.FrameCount-1)
-                    _currentFrame++;
+                if(CurrentFrame < Animation.FrameCount-1)
+                    CurrentFrame++;
 
-                if (_currentFrame >= _animation.FrameCount-1)
+                if (CurrentFrame >= Animation.FrameCount-1)
                 {
                     if(Settings.IsLooping)
-                        _currentFrame = 0;
+                        CurrentFrame = 0;
                     OnOnAnimationComplete();
                 }
             }
@@ -100,6 +113,31 @@ namespace SE_Praktikum.Services
         protected virtual void OnOnAnimationComplete()
         {
             OnAnimationComplete?.Invoke(this, EventArgs.Empty);
+        }
+
+        public Color[] GetDataOfFrame()
+        {
+            //initialize array with size of one frame
+            var data = new Color[FrameWidth * FrameHeight];
+            
+            //copy all the framedata to one array
+            var allData = new Color[FrameWidth * FrameHeight*Animation.FrameCount];
+            Animation.Texture.GetData(allData);
+            
+            //row offset, number of frames beforehand multiply with width of frame
+            var rowOffset = _currentFrame * FrameWidth;
+            
+            //iterate through all rows and cols
+            for (int row = 0; row < FrameHeight; row++)
+            {
+                for (int col= 0; col < FrameWidth; col++)
+                {
+                    data[row * FrameWidth + col] = allData[row * Animation.Texture.Width + col + rowOffset];
+                }
+            }
+            
+            return data;
+
         }
     }
 }

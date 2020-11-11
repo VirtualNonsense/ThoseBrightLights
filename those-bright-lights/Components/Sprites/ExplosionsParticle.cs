@@ -8,10 +8,13 @@ using SE_Praktikum.Services.Factories;
 namespace SE_Praktikum.Components.Sprites
 {
     public class ExplosionsParticle : Particle
-    { 
+    {
+        private IScreen _parent;
+
         public ExplosionsParticle(AnimationHandler animationHandler, IScreen Parent) : base(animationHandler, Parent)
         {
             _animationHandler.OnAnimationComplete += AnimationHandlerOnOnAnimationComplete;
+            _parent = Parent;
         }
 
         private void AnimationHandlerOnOnAnimationComplete(object sender, EventArgs e)
