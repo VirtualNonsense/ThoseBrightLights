@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
 
 namespace SE_Praktikum.Models
 {
@@ -10,7 +11,7 @@ namespace SE_Praktikum.Models
         /// <summary>
         /// Determines how long it takes to update the frame. [ms] 
         /// </summary>
-        public float UpdateInterval;
+        public List<(int,float)> UpdateList;
 
         public float Layer;
 
@@ -27,12 +28,12 @@ namespace SE_Praktikum.Models
         public bool IsPlaying;
 
         
-        public AnimationSettings(float layer = 1, bool isLooping = false, float updateInterval = 1f, Color? color = null, 
+        public AnimationSettings(List<(int, float)> updateList, float layer = 1, bool isLooping = false,  Color? color = null, 
                                  float rotation = 0f, float scale = 1f, float opacity = 1, bool isPlaying = true)
         {
             Layer = layer;
             IsLooping = isLooping;
-            UpdateInterval = updateInterval;
+            UpdateList = updateList;
             SpriteEffects = SpriteEffects.None;
             Color = color??Color.White;
             Rotation = rotation;

@@ -16,7 +16,7 @@ namespace SE_Praktikum.Models
         public int Tiles => Columns * Rows;
         public int StartEntry;
         private ILogger _logger;
-        public int FrameCount;
+        public int FrameCount => Columns * Rows;
         public int FrameWidth => Rows * TileDimX;
         public int FrameHeight => Columns * TileDimY;
 

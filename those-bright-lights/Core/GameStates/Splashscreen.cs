@@ -22,8 +22,8 @@ namespace SE_Praktikum.Core.GameStates
         public override void LoadContent(ContentManager contentManager)
         {
             var p = new Animation(contentManager.Load<Texture2D>("Artwork/Effects/explosion_45_45"), 7);
-            _explosionEmitter.Animation = p;
-            //_explosionEmitter.SpawnArea = new Rectangle(500, 100, 500, 100);
+           // _explosionEmitter.Animation = p;
+            _explosionEmitter.SpawnArea = new Rectangle(500, 100, 500, 100);
 
             _song = contentManager.Load<Song>("Audio/Music/Song3_remaster2_mp3");
             MediaPlayer.Play(_song);

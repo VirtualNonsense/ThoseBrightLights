@@ -24,8 +24,8 @@ namespace SE_Praktikum.Services
             {
                 if (value < 0)
                     _currentFrame = 0;
-                else if (value >= Tileset.FrameCount)
-                    _currentFrame = Tileset.FrameCount - 1;
+                else if (value >= Settings.UpdateList.Count)
+                    _currentFrame = Settings.UpdateList.Count - 1;
                 else
                     _currentFrame = value;
             }
@@ -89,7 +89,7 @@ namespace SE_Praktikum.Services
 
             _timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            if (_timer > Settings.UpdateInterval)
+            if (_timer > Settings.UpdateList[CurrentFrame].Item2)
             {
                 _timer = 0f;
                 if (!Settings.IsPlaying) return;
