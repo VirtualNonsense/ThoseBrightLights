@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using NLog;
 using System;
@@ -15,6 +16,9 @@ namespace SE_Praktikum.Models
         public int Tiles => Columns * Rows;
         public int StartEntry;
         private ILogger _logger;
+        public int FrameCount;
+        public int FrameWidth => Rows * TileDimX;
+        public int FrameHeight => Columns * TileDimY;
 
         
         public TileSet(Texture2D texture, int tileDimX, int tileDimY, int startEntry)

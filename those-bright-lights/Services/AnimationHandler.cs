@@ -9,7 +9,7 @@ namespace SE_Praktikum.Services
     public class AnimationHandler
     {
         
-        public Animation Animation;
+        public TileSet Tileset;
         public AnimationSettings Settings { get; }
 
         private float _timer;
@@ -24,8 +24,8 @@ namespace SE_Praktikum.Services
             {
                 if (value < 0)
                     _currentFrame = 0;
-                else if (value >= Animation.FrameCount)
-                    _currentFrame = Animation.FrameCount - 1;
+                else if (value >= Tileset.FrameCount)
+                    _currentFrame = Tileset.FrameCount - 1;
                 else
                     _currentFrame = value;
             }
@@ -33,9 +33,9 @@ namespace SE_Praktikum.Services
 
         private ILogger _logger;
         
-        public int FrameWidth => Animation.FrameWidth;
+        public int FrameWidth => Tileset.FrameWidth;
 
-        public int FrameHeight => Animation.FrameHeight;
+        public int FrameHeight => Tileset.FrameHeight;
 
         public Vector2 Position { get; set; }
         
@@ -43,17 +43,17 @@ namespace SE_Praktikum.Services
         
 
         public Rectangle Frame =>
-            new Rectangle(CurrentFrame * Animation.FrameWidth,
+            new Rectangle(CurrentFrame * Tileset.FrameWidth,
                 0,
-                Animation.FrameWidth,
-                Animation.FrameHeight);
+                Tileset.FrameWidth,
+                Tileset.FrameHeight);
 
         public event EventHandler OnAnimationComplete;
 
-        public AnimationHandler(Animation animation, AnimationSettings settings, Vector2? position = null, Vector2? origin = null)
+        public AnimationHandler(TileSet tileset, AnimationSettings settings, Vector2? position = null, Vector2? origin = null)
         {
             _logger = LogManager.GetCurrentClassLogger();
-            Animation = animation;
+            Tileset = tileset;
             Settings = settings;
             Position = position ?? new Vector2(0,0);
             Origin = origin ?? new Vector2(0,0);
@@ -70,7 +70,7 @@ namespace SE_Praktikum.Services
             _updated = false;
 
             spriteBatch.Draw(
-                Animation.Texture,
+                Tileset.Texture,
                 Position,
                 Frame,
                 Settings.Color * Settings.Opacity,
@@ -93,10 +93,10 @@ namespace SE_Praktikum.Services
             {
                 _timer = 0f;
                 if (!Settings.IsPlaying) return;
-                if(CurrentFrame < Animation.FrameCount-1)
+                if(CurrentFrame < Tileset.FrameCount-1)
                     CurrentFrame++;
 
-                if (CurrentFrame >= Animation.FrameCount-1)
+                if (CurrentFrame >= Tileset.FrameCount-1)
                 {
                     if(Settings.IsLooping)
                         CurrentFrame = 0;
@@ -121,8 +121,8 @@ namespace SE_Praktikum.Services
             var data = new Color[FrameWidth * FrameHeight];
             
             //copy all the framedata to one array
-            var allData = new Color[FrameWidth * FrameHeight*Animation.FrameCount];
-            Animation.Texture.GetData(allData);
+            var allData = new Color[FrameWidth * FrameHeight* Tileset.FrameCount];
+            Tileset.Texture.GetData(allData);
             
             //row offset, number of frames beforehand multiply with width of frame
             var rowOffset = _currentFrame * FrameWidth;
@@ -132,7 +132,7 @@ namespace SE_Praktikum.Services
             {
                 for (int col= 0; col < FrameWidth; col++)
                 {
-                    data[row * FrameWidth + col] = allData[row * Animation.Texture.Width + col + rowOffset];
+                    data[row * FrameWidth + col] = allData[row * Tileset.Texture.Width + col + rowOffset];
                 }
             }
             

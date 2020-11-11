@@ -8,7 +8,7 @@ namespace SE_Praktikum.Models
         public bool IsLooping;
         
         /// <summary>
-        /// Determines how long it takes to update the frame. [sec] 
+        /// Determines how long it takes to update the frame. [ms] 
         /// </summary>
         public float UpdateInterval;
 
