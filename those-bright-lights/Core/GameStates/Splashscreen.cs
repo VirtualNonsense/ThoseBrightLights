@@ -40,9 +40,8 @@ namespace SE_Praktikum.Core.GameStates
             _explosionEmitter.Update(gameTime);
         }
 
-        public override void PostUpdate()
+        public override void PostUpdate(GameTime gameTime)
         {
-            //throw new System.NotImplementedException();
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
