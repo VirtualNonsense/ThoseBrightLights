@@ -1,20 +1,26 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using NLog;
 using SE_Praktikum.Models;
 using SE_Praktikum.Services.ParticleEmitter;
+using SE_Praktikum.Services.StateMachines;
 
 namespace SE_Praktikum.Core.GameStates
 {
     public class Splashscreen : GameState
     {
         private IScreen _screen;
+        private int _splashscreenTime = 60;
         private readonly ExplosionEmitter _explosionEmitter;
         public Song _song;
+        private Logger _logger;
 
         public Splashscreen(IScreen parent, ExplosionEmitter explosionEmitter)
         {
+            _logger = LogManager.GetCurrentClassLogger();
             _screen = parent;
             _explosionEmitter = explosionEmitter;
         }
@@ -32,12 +38,17 @@ namespace SE_Praktikum.Core.GameStates
 
         public override void UnloadContent()
         {
-            throw new System.NotImplementedException();
+            _logger.Debug("unloading content");
         }
 
         public override void Update(GameTime gameTime)
         {
             _explosionEmitter.Update(gameTime);
+            if(Keyboard.GetState().IsKeyDown(Keys.Space) || _splashscreenTime < gameTime.ElapsedGameTime.Seconds)
+            {
+                _logger.Debug("exiting splashscreen");
+                _subject.OnNext(GameStateMachine.GameStateMachineTrigger.SkipSplashScreen);
+            }
         }
 
         public override void PostUpdate(GameTime gameTime)
