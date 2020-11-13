@@ -23,6 +23,9 @@ namespace SE_Praktikum.Components.Controls
         private MouseState _previousMouse;
 
         private Texture2D _texture;
+        
+        private Vector2 _origin;
+        private Vector2 _position = new Vector2(0,0);
 
         #endregion
 
@@ -34,7 +37,17 @@ namespace SE_Praktikum.Components.Controls
 
         public Color PenColour { get; set; }
 
-        public Vector2 Position { get; set; }
+        public Vector2 Position
+        {
+            get => _position;
+            set => _position=value-_origin;
+        }
+
+        public Vector2 Origin
+        {
+            get => _origin;
+            set => _origin = value;
+        }
 
         public Rectangle Rectangle
         {
@@ -55,6 +68,7 @@ namespace SE_Praktikum.Components.Controls
             _texture = texture;
 
             _font = font;
+            _origin = new Vector2(texture.Width/2f, texture.Height/2f);
 
             PenColour = Color.Black;
         }
