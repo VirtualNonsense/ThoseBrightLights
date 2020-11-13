@@ -32,17 +32,24 @@ namespace SE_Praktikum.Core.GameStates
             _buttons.Add(new Menubutton(texture, font)
             {
                 Text = "New Game",
-                Position = new Vector2(_screen.ScreenWidth/2f, _screen.ScreenHeight/2f-texture.Height),
+                Position = new Vector2(_screen.ScreenWidth/2f, _screen.ScreenHeight/3f-texture.Height),
                 PenColour = Color.White
             });
             _buttons.Last().Click += (sender, args) => { _logger.Debug("new Game"); };
             _buttons.Add(new Menubutton(texture, font)
             {
-                Text = "Quit",
-                Position = new Vector2(_screen.ScreenWidth/2f, _screen.ScreenHeight/2f+texture.Height),
+                Text = "Settings",
+                Position = new Vector2(_screen.ScreenWidth/2f, _screen.ScreenHeight/3f),
                 PenColour = Color.White
             });
-            _buttons.Last().Click += (sender, args) => { _logger.Debug("Quit"); _subject.OnNext(GameStateMachine.GameStateMachineTrigger.QuitGame);};
+            _buttons.Last().Click += (sender, args) => { _logger.Debug("Settings"); _subject.OnNext(GameStateMachine.GameStateMachineTrigger.StartSettings);};
+            _buttons.Add(new Menubutton(texture, font)
+            {
+                Text = "Quit",
+                Position = new Vector2(_screen.ScreenWidth / 2f, _screen.ScreenHeight / 3f + texture.Height),
+                PenColour = Color.White
+            });
+            _buttons.Last().Click += (sender, args) => { _logger.Debug("Quit"); _subject.OnNext(GameStateMachine.GameStateMachineTrigger.QuitGame); };
         }
 
         public override void UnloadContent()

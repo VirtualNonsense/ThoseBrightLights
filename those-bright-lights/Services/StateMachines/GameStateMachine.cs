@@ -14,19 +14,22 @@ namespace SE_Praktikum.Services.StateMachines
         private readonly StateMachine<State, GameStateMachineTrigger> _machine;
         private readonly Dictionary<State, GameState> _stateMap;
         
-        public GameStateMachine(Splashscreen splashscreen, MainMenu menu)
+        public GameStateMachine(Splashscreen splashscreen, MainMenu menu, Settings settings)
         {
             _logger = LogManager.GetCurrentClassLogger();
             _subject = new Subject<GameState>();
             _stateMap = new Dictionary<State, GameState>
             {
                 {State.SplashScreen, splashscreen},
-                {State.Menu, menu}
+                {State.Menu, menu},
+                {State.Settings, settings}
             };
             _machine = new StateMachine<State, GameStateMachineTrigger>(State.Init);
             _machine.Configure(State.Init).Permit(GameStateMachineTrigger.InitFinished, State.SplashScreen).OnEntry(onEntry);
             _machine.Configure(State.SplashScreen).Permit(GameStateMachineTrigger.SkipSplashScreen, State.Menu).OnEntry(onEntry);
             _machine.Configure(State.Menu).Permit(GameStateMachineTrigger.QuitGame, State.Quit).OnEntry(onEntry);
+            _machine.Configure(State.Menu).Permit(GameStateMachineTrigger.StartSettings, State.Settings).OnEntry(onEntry);
+            _machine.Configure(State.Settings).Permit(GameStateMachineTrigger.Back, State.Menu).OnEntry(onEntry);
             _machine.Configure(State.Quit).OnEntry(onComplete);
             _machine.Fire(GameStateMachineTrigger.InitFinished);
             foreach (var mapEntry in _stateMap)
@@ -67,6 +70,7 @@ namespace SE_Praktikum.Services.StateMachines
             Init,
             SplashScreen,
             Menu,
+            Settings,
             Quit
         }
 
@@ -76,7 +80,8 @@ namespace SE_Praktikum.Services.StateMachines
             SkipSplashScreen,
             StartGame,
             StartSettings,
-            QuitGame,
+            Back,
+            QuitGame
         }
 
         public void OnCompleted()

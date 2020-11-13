@@ -33,7 +33,7 @@ namespace SE_Praktikum
 
         protected override void Initialize()
         {
-            _logger.Debug("Start Initialisiation");
+            _logger.Debug("Start Initialisation");
             _graphics.PreferredBackBufferWidth = ScreenWidth;
             _graphics.PreferredBackBufferHeight = ScreenHeight;
             _graphics.ApplyChanges();
