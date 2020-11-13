@@ -26,7 +26,8 @@ namespace SE_Praktikum.Services.StateMachines
             _machine = new StateMachine<State, GameStateMachineTrigger>(State.Init);
             _machine.Configure(State.Init).Permit(GameStateMachineTrigger.InitFinished, State.SplashScreen).OnEntry(onEntry);
             _machine.Configure(State.SplashScreen).Permit(GameStateMachineTrigger.SkipSplashScreen, State.Menu).OnEntry(onEntry);
-            _machine.Configure(State.Menu).Permit(GameStateMachineTrigger.QuitGame, State.Quit).OnEntry(onComplete);
+            _machine.Configure(State.Menu).Permit(GameStateMachineTrigger.QuitGame, State.Quit).OnEntry(onEntry);
+            _machine.Configure(State.Quit).OnEntry(onComplete);
             _machine.Fire(GameStateMachineTrigger.InitFinished);
             foreach (var mapEntry in _stateMap)
             {
