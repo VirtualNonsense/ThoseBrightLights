@@ -14,13 +14,14 @@ namespace SE_Praktikum.Services.StateMachines
         private readonly StateMachine<State, GameStateMachineTrigger> _machine;
         private readonly Dictionary<State, GameState> _stateMap;
         
-        public GameStateMachine(Splashscreen splashscreen)
+        public GameStateMachine(Splashscreen splashscreen, MainMenu menu)
         {
             _logger = LogManager.GetCurrentClassLogger();
             _subject = new Subject<GameState>();
             _stateMap = new Dictionary<State, GameState>
             {
-                 {State.SplashScreen, splashscreen}
+                {State.SplashScreen, splashscreen},
+                {State.Menu, menu}
             };
             _machine = new StateMachine<State, GameStateMachineTrigger>(State.Init);
             _machine.Configure(State.Init).Permit(GameStateMachineTrigger.InitFinished, State.SplashScreen).OnEntry(onEntry);
