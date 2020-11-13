@@ -55,11 +55,6 @@ namespace SE_Praktikum
 
         protected override void Update(GameTime gameTime)
         {
-            
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed ||
-                Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
-
             if (_nextState != null)
             {
                 _logger.Debug("Performing Reload");
@@ -70,11 +65,9 @@ namespace SE_Praktikum
                 
             }
             //_logger.Debug("Update!");
-
             _currentState?.Update(gameTime);
             _currentState?.PostUpdate(gameTime);
             base.Update(gameTime);
-            
         }
 
         protected override void Draw(GameTime gameTime)
@@ -93,7 +86,8 @@ namespace SE_Praktikum
 
         public void OnCompleted()
         {
-            throw new NotImplementedException();
+            _logger.Debug("OnCompleted(): shutting down");
+            Exit();
         }
 
         public void OnError(Exception error)
