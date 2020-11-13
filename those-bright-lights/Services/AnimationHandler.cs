@@ -33,9 +33,9 @@ namespace SE_Praktikum.Services
 
         private ILogger _logger;
         
-        public int FrameWidth => Tileset.FrameWidth;
+        public int FrameWidth => Tileset.TileDimX;
 
-        public int FrameHeight => Tileset.FrameHeight;
+        public int FrameHeight => Tileset.TileDimY;
 
         public Vector2 Position { get; set; }
         
@@ -115,28 +115,65 @@ namespace SE_Praktikum.Services
             OnAnimationComplete?.Invoke(this, EventArgs.Empty);
         }
 
-        public Color[] GetDataOfFrame()
+        public Color[] GetDataOfFrame(int Row, int Column)
         {
-            //initialize array with size of one frame
-            var data = new Color[FrameWidth * FrameHeight];
+            ////initialize array with size of one frame
+            //var data = new Color[FrameWidth * FrameHeight];
+
+            ////copy all the framedata to one array
+            //var allData = new Color[FrameWidth * FrameHeight* Tileset.FrameCount];
+            //Tileset.Texture.GetData(allData);
+
+            ////row offset, number of frames beforehand multiply with width of frame
+            //var rowOffset = _currentFrame * FrameWidth;
+
+            ////iterate through all rows and cols
+            //for (int row = 0; row < FrameHeight; row++)
+            //{
+            //    for (int col= 0; col < FrameWidth; col++)
+            //    {
+            //        data[row * FrameWidth + col] = allData[row * Tileset.Texture.Width + col + rowOffset];
+            //    }
+            //}
+
+            //return data;
+
+
+
+            var _texturewidth = Tileset.TileDimX * Tileset.Columns;
+            var _textureheight = Tileset.TileDimY * Tileset.Rows;
+
+            var _tilewidth = Tileset.TileDimX;
+            var _tileheight = Tileset.TileDimY;
+
+            //offset for all rows of all tiles above the tilerow we want
+            var _rowOffsetForAllTilesAbove = _texturewidth * _tileheight*Row;
+            //offset for all pixels in one tile calculated with the columnnumber 
+            var _pixelColumnOffset = Column * _tilewidth;
+
+            //array for one tile to copy sth in 
+            Color[] _pixelArray = new Color[_tilewidth *_tileheight];
             
-            //copy all the framedata to one array
-            var allData = new Color[FrameWidth * FrameHeight* Tileset.FrameCount];
-            Tileset.Texture.GetData(allData);
+            //array filled with all tiles from tileset
+            Color[] _allTiles = new Color[_texturewidth*_textureheight];
+            Tileset.Texture.GetData(_pixelArray);
+
+
             
-            //row offset, number of frames beforehand multiply with width of frame
-            var rowOffset = _currentFrame * FrameWidth;
-            
-            //iterate through all rows and cols
-            for (int row = 0; row < FrameHeight; row++)
+            //iterating over the tileheight in row steps
+            for(int row = 0; row < Tileset.TileDimY; row++)
             {
-                for (int col= 0; col < FrameWidth; col++)
+                //offset for pixels in each row
+                var _rowPixelOffset = row * _texturewidth;
+                //iterating over the tilewidth in column steps in one row step
+                for(int column = 0; row < Tileset.TileDimX; column++)
                 {
-                    data[row * FrameWidth + col] = allData[row * Tileset.Texture.Width + col + rowOffset];
+                    //summing up all offsets until the pixel we need 
+                    _pixelArray[row * _tilewidth + column] = _allTiles[_rowOffsetForAllTilesAbove + _pixelColumnOffset + _rowPixelOffset + column];
                 }
             }
-            
-            return data;
+            return _pixelArray;
+
 
         }
     }
