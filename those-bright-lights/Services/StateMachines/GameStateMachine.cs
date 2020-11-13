@@ -7,11 +7,11 @@ using Stateless;
 
 namespace SE_Praktikum.Services.StateMachines
 {
-    public class GameStateMachine : IObservable<GameState>
+    public class GameStateMachine : IObservable<GameState>, IObserver<GameStateMachine.GameStateMachineTrigger>
     {
         private readonly ILogger _logger;
         private readonly Subject<GameState> _subject;
-        private readonly StateMachine<State, StateTrigger> _machine;
+        private readonly StateMachine<State, GameStateMachineTrigger> _machine;
         private readonly Dictionary<State, GameState> _stateMap;
         
         public GameStateMachine(Splashscreen splashscreen)
@@ -22,11 +22,15 @@ namespace SE_Praktikum.Services.StateMachines
             {
                  {State.SplashScreen, splashscreen}
             };
-            _machine = new StateMachine<State, StateTrigger>(State.Init);
-            _machine.Configure(State.Init).Permit(StateTrigger.InitFinished, State.SplashScreen).OnEntry(onEntry);
-            _machine.Configure(State.SplashScreen).Permit(StateTrigger.Next, State.Menu).OnEntry(onEntry);
-            _machine.Configure(State.Menu).Permit(StateTrigger.Quit, State.Quit).OnEntry(onEntry);
-            _machine.Fire(StateTrigger.InitFinished);
+            _machine = new StateMachine<State, GameStateMachineTrigger>(State.Init);
+            _machine.Configure(State.Init).Permit(GameStateMachineTrigger.InitFinished, State.SplashScreen).OnEntry(onEntry);
+            _machine.Configure(State.SplashScreen).Permit(GameStateMachineTrigger.Next, State.Menu).OnEntry(onEntry);
+            _machine.Configure(State.Menu).Permit(GameStateMachineTrigger.Quit, State.Quit).OnEntry(onEntry);
+            _machine.Fire(GameStateMachineTrigger.InitFinished);
+            foreach (var mapEntry in _stateMap)
+            {
+                mapEntry.Value.Subscribe(this);
+            }
         }
         
         public IDisposable Subscribe(IObserver<GameState> observer)
@@ -50,12 +54,6 @@ namespace SE_Praktikum.Services.StateMachines
             _subject.OnNext(_stateMap[_machine.State]);
         }
 
-        
-        private void Skip()
-        {
-            _machine.Fire(StateTrigger.Next);
-        }
-
 
         private enum State
         {
@@ -65,7 +63,7 @@ namespace SE_Praktikum.Services.StateMachines
             Quit
         }
 
-        private enum StateTrigger
+        public enum GameStateMachineTrigger
         {
             InitFinished,
             Next,
@@ -74,6 +72,27 @@ namespace SE_Praktikum.Services.StateMachines
             Back,
             Quit,
         }
-        
+
+        public void OnCompleted()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void OnError(Exception error)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void OnNext(GameStateMachineTrigger value)
+        {
+            try
+            {
+                _machine.Fire(value);
+            }
+            catch (Exception e)
+            {
+                _logger.Warn(e, $"Unable to Perform Transition From {_machine.State} with {value}");
+            }
+        }
     }
 }
