@@ -37,6 +37,7 @@ namespace SE_Praktikum
             _graphics.PreferredBackBufferWidth = ScreenWidth;
             _graphics.PreferredBackBufferHeight = ScreenHeight;
             _graphics.ApplyChanges();
+            base.IsMouseVisible = true;
             base.Initialize();
         }
 
