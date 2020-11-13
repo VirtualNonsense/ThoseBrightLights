@@ -9,7 +9,7 @@ namespace SE_Praktikum.Core.GameStates
 {
     public abstract class GameState : IObservable<GameStateMachine.GameStateMachineTrigger>
     {
-        private Subject<GameStateMachine.GameStateMachineTrigger> _subject;
+        protected Subject<GameStateMachine.GameStateMachineTrigger> _subject;
         protected GameState()
         {
             _subject = new Subject<GameStateMachine.GameStateMachineTrigger>();
