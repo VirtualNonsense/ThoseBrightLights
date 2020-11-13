@@ -51,6 +51,7 @@ namespace SE_Praktikum
         protected override void UnloadContent()
         {
             _logger.Debug("unloading content");
+            _currentState?.UnloadContent();
             base.UnloadContent();
         }
 
