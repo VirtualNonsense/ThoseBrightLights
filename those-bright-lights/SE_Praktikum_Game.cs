@@ -23,7 +23,7 @@ namespace SE_Praktikum
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
 
-            ScreenHeight = 720;
+            ScreenHeight = 720; 
             ScreenWidth = 1280;
             
             _logger.Debug("Constructor finished");
@@ -98,7 +98,35 @@ namespace SE_Praktikum
             throw error;
         }
 
-        public int ScreenHeight { get; }
-        public int ScreenWidth { get; }
+        public void SetScreenFormat(Size previous)
+        {
+            switch (previous)
+            {
+                case Size.big:
+                    _graphics.PreferredBackBufferHeight = 400;
+                    _graphics.PreferredBackBufferWidth = 800;
+                    ScreenHeight = 100;
+                    ScreenWidth = 100;
+                    _graphics.ApplyChanges();
+                    break;
+                case Size.little:
+                    ScreenHeight = 720;
+                    ScreenWidth = 1280;
+                    _graphics.PreferredBackBufferHeight = 720;
+                    _graphics.PreferredBackBufferWidth = 1280;
+                    _graphics.ApplyChanges();
+                    break;
+                default:
+                    _graphics.PreferredBackBufferHeight = 1000;
+                    _graphics.PreferredBackBufferWidth = 1900;
+                    ScreenHeight = 1000;
+                    ScreenWidth = 1900;
+                    _graphics.ApplyChanges();
+                    break;
+            }
+        }
+
+        public int ScreenHeight { get; set; }
+        public int ScreenWidth { get; set; }
     }
 }
