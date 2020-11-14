@@ -50,6 +50,14 @@ namespace SE_Praktikum.Core.GameStates
             });
             _buttons.Last().Click += (sender, args) => { _logger.Debug("Settings"); _subject.OnNext(GameStateMachine.GameStateMachineTrigger.Back); };
 
+            _buttons.Add(new Menubutton(texture, font)
+            {
+                Text = "Change Screensize",
+                Position = new Vector2(_screen.ScreenWidth / 2f, _screen.ScreenHeight / 3f),
+                PenColour = Color.White
+            });
+            _buttons.Last().Click += (sender, args) => { _logger.Debug("Screensize Standard"); };
+
             _song = contentManager.Load<Song>("Audio/Music/Death_mp3");
             MediaPlayer.Play(_song);
             MediaPlayer.IsRepeating = true;
