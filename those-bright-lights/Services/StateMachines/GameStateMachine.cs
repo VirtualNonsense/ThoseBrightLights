@@ -14,7 +14,7 @@ namespace SE_Praktikum.Services.StateMachines
         private readonly StateMachine<State, GameStateMachineTrigger> _machine;
         private readonly Dictionary<State, GameState> _stateMap;
         
-        public GameStateMachine(Splashscreen splashscreen, MainMenu menu, Settings settings)
+        public GameStateMachine(Splashscreen splashscreen, MainMenu menu, Settings settings, LevelSelect levelSelect)
         {
             _logger = LogManager.GetCurrentClassLogger();
             _subject = new Subject<GameState>();
@@ -22,14 +22,19 @@ namespace SE_Praktikum.Services.StateMachines
             {
                 {State.SplashScreen, splashscreen},
                 {State.Menu, menu},
-                {State.Settings, settings}
+                {State.Settings, settings},
+                {State.LevelSelect, levelSelect}
             };
             _machine = new StateMachine<State, GameStateMachineTrigger>(State.Init);
             _machine.Configure(State.Init).Permit(GameStateMachineTrigger.InitFinished, State.SplashScreen).OnEntry(onEntry);
             _machine.Configure(State.SplashScreen).Permit(GameStateMachineTrigger.SkipSplashScreen, State.Menu).OnEntry(onEntry);
-            _machine.Configure(State.Menu).Permit(GameStateMachineTrigger.QuitGame, State.Quit).OnEntry(onEntry);
-            _machine.Configure(State.Menu).Permit(GameStateMachineTrigger.StartSettings, State.Settings).OnEntry(onEntry);
+            _machine.Configure(State.Menu)
+                .Permit(GameStateMachineTrigger.StartLevelSelect, State.LevelSelect)
+                .Permit(GameStateMachineTrigger.QuitGame, State.Quit)
+                .Permit(GameStateMachineTrigger.StartSettings, State.Settings)
+                .OnEntry(onEntry);
             _machine.Configure(State.Settings).Permit(GameStateMachineTrigger.Back, State.Menu).OnEntry(onEntry);
+            _machine.Configure(State.LevelSelect).OnEntry(onEntry);
             _machine.Configure(State.Quit).OnEntry(onComplete);
             _machine.Fire(GameStateMachineTrigger.InitFinished);
             foreach (var mapEntry in _stateMap)
@@ -71,6 +76,7 @@ namespace SE_Praktikum.Services.StateMachines
             SplashScreen,
             Menu,
             Settings,
+            LevelSelect,
             Quit
         }
 
@@ -80,6 +86,7 @@ namespace SE_Praktikum.Services.StateMachines
             SkipSplashScreen,
             StartGame,
             StartSettings,
+            StartLevelSelect,
             Back,
             QuitGame
         }

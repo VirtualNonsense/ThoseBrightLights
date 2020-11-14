@@ -9,6 +9,7 @@ namespace SE_Praktikum.NinjectModules
             Bind<Splashscreen>().ToSelf().InSingletonScope();
             Bind<MainMenu>().ToSelf().InSingletonScope();
             Bind<Settings>().ToSelf().InSingletonScope();
+            Bind<LevelSelect>().ToSelf().InSingletonScope();
         }
     }
 }
