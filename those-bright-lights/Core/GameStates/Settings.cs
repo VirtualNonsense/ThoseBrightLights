@@ -24,11 +24,14 @@ namespace SE_Praktikum.Core.GameStates
         {
             _logger = LogManager.GetCurrentClassLogger();
             _screen = screen;
-            _buttons = new List<Menubutton>();
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
+            if (_buttons == null)
+            {
+                return;
+            }
             spriteBatch.Begin();
             foreach (var button in _buttons)
             {
@@ -39,6 +42,11 @@ namespace SE_Praktikum.Core.GameStates
 
         public override void LoadContent(ContentManager contentManager)
         {
+            if (_buttons != null)
+            {
+                return;
+            }
+            _buttons = new List<Menubutton>();
             _logger.Debug("LoadingContent");
             var font = contentManager.Load<SpriteFont>("Font/Font2");
             var texture = contentManager.Load<Texture2D>("Artwork/Controls/button");
@@ -48,7 +56,7 @@ namespace SE_Praktikum.Core.GameStates
                 Position = new Vector2(_screen.ScreenWidth / 2f, _screen.ScreenHeight / 3f - texture.Height),
                 PenColour = Color.White
             });
-            _buttons.Last().Click += (sender, args) => { _logger.Debug("Settings"); _subject.OnNext(GameStateMachine.GameStateMachineTrigger.Back); };
+            _buttons.Last().Click += (sender, args) => { _logger.Debug("back"); _subject.OnNext(GameStateMachine.GameStateMachineTrigger.Back); };
 
             _buttons.Add(new Menubutton(texture, font)
             {
@@ -60,11 +68,13 @@ namespace SE_Praktikum.Core.GameStates
             {
                 _logger.Debug($"Actual Screensize: Height{_screen.ScreenHeight}; Width{_screen.ScreenWidth}");
                 _screen.SetScreenFormat((Size)_screen.ScreenHeight);
+                UnloadContent();
+                LoadContent(contentManager);
             };
 
-            _song = contentManager.Load<Song>("Audio/Music/Death_mp3");
-            MediaPlayer.Play(_song);
-            MediaPlayer.IsRepeating = true;
+            //_song = contentManager.Load<Song>("Audio/Music/Death_mp3");
+            //MediaPlayer.Play(_song);
+            //MediaPlayer.IsRepeating = true;
         }
 
         public override void PostUpdate(GameTime gameTime)
@@ -74,11 +84,16 @@ namespace SE_Praktikum.Core.GameStates
 
         public override void UnloadContent()
         {
-            
+            _buttons = null;
         }
 
         public override void Update(GameTime gameTime)
         {
+            if (_buttons == null)
+            {
+                return;
+            }
+
             foreach (var button in _buttons)
             {
                 button.Update(gameTime);

@@ -117,8 +117,8 @@ namespace SE_Praktikum
                     _graphics.ApplyChanges();
                     break;
                 default:
-                    _graphics.PreferredBackBufferHeight = 1000;
-                    _graphics.PreferredBackBufferWidth = 1900;
+                    _graphics.PreferredBackBufferHeight = 1000; // 1080
+                    _graphics.PreferredBackBufferWidth = 1900; // 1920
                     ScreenHeight = 1000;
                     ScreenWidth = 1900;
                     _graphics.ApplyChanges();
