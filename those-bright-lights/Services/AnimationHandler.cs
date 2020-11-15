@@ -118,30 +118,10 @@ namespace SE_Praktikum.Services
             OnAnimationComplete?.Invoke(this, EventArgs.Empty);
         }
 
-        public Color[] GetDataOfFrame(int Row, int Column)
+        public Color[] GetDataOfFrame()
         {
-            ////initialize array with size of one frame
-            //var data = new Color[FrameWidth * FrameHeight];
-
-            ////copy all the framedata to one array
-            //var allData = new Color[FrameWidth * FrameHeight* Tileset.FrameCount];
-            //Tileset.Texture.GetData(allData);
-
-            ////row offset, number of frames beforehand multiply with width of frame
-            //var rowOffset = _currentFrame * FrameWidth;
-
-            ////iterate through all rows and cols
-            //for (int row = 0; row < FrameHeight; row++)
-            //{
-            //    for (int col= 0; col < FrameWidth; col++)
-            //    {
-            //        data[row * FrameWidth + col] = allData[row * Tileset.Texture.Width + col + rowOffset];
-            //    }
-            //}
-
-            //return data;
-
-
+            int rowOfTile = _currentIndex / Tileset.Columns;
+            int columnOfTile = _currentIndex % Tileset.Columns;
 
             var _texturewidth = Tileset.TileDimX * Tileset.Columns;
             var _textureheight = Tileset.TileDimY * Tileset.Rows;
@@ -150,9 +130,9 @@ namespace SE_Praktikum.Services
             var _tileheight = Tileset.TileDimY;
 
             //offset for all rows of all tiles above the tilerow we want
-            var _rowOffsetForAllTilesAbove = _texturewidth * _tileheight*Row;
+            var _rowOffsetForAllTilesAbove = _texturewidth * _tileheight*rowOfTile ;
             //offset for all pixels in one tile calculated with the columnnumber 
-            var _pixelColumnOffset = Column * _tilewidth;
+            var _pixelColumnOffset = columnOfTile * _tilewidth;
 
             //array for one tile to copy sth in 
             Color[] _pixelArray = new Color[_tilewidth *_tileheight];
