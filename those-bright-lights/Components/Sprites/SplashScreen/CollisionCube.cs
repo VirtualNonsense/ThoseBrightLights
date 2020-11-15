@@ -59,13 +59,13 @@ namespace SE_Praktikum.Components.Sprites.SplashScreen
             if (Keyboard.GetState().IsKeyDown(Keys.M))
             {
                 if(!pressed)
-                    _animationHandler.CurrentFrame++;
+                    _animationHandler.CurrentIndex++;
                 pressed = true;
             }
             else if (Keyboard.GetState().IsKeyDown(Keys.N))
             {
                 if(!pressed)
-                    _animationHandler.CurrentFrame--;
+                    _animationHandler.CurrentIndex--;
                 pressed = true;
             }
             else if(pressed)

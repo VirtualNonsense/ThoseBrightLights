@@ -16,20 +16,23 @@ namespace SE_Praktikum.Services
 
         private bool _updated;
 
-        private int _currentFrame;
-        public int CurrentFrame
+        private int _currentIndex;
+        public int CurrentIndex
         {
-            get=>_currentFrame;
+            get=>_currentIndex;
+            //only sets boundaries of animation
             set
             {
                 if (value < 0)
-                    _currentFrame = 0;
+                    _currentIndex = 0;
                 else if (value >= Settings.UpdateList.Count)
-                    _currentFrame = Settings.UpdateList.Count - 1;
+                    _currentIndex = Settings.UpdateList.Count - 1;
                 else
-                    _currentFrame = value;
+                    _currentIndex = value;
             }
         }
+
+        public (int, float) CurrentFrame => Settings.UpdateList[_currentIndex];
 
         private ILogger _logger;
         
@@ -43,7 +46,7 @@ namespace SE_Praktikum.Services
         
 
         public Rectangle Frame =>
-            new Rectangle(CurrentFrame * Tileset.FrameWidth,
+            new Rectangle(CurrentIndex * Tileset.FrameWidth,
                 0,
                 Tileset.FrameWidth,
                 Tileset.FrameHeight);
@@ -89,17 +92,17 @@ namespace SE_Praktikum.Services
 
             _timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            if (_timer > Settings.UpdateList[CurrentFrame].Item2)
+            if (_timer > Settings.UpdateList[CurrentIndex].Item2)
             {
                 _timer = 0f;
                 if (!Settings.IsPlaying) return;
-                if(CurrentFrame < Tileset.FrameCount-1)
-                    CurrentFrame++;
+                if(CurrentIndex < Tileset.FrameCount-1)
+                    CurrentIndex++;
 
-                if (CurrentFrame >= Tileset.FrameCount-1)
+                if (CurrentIndex >= Tileset.FrameCount-1)
                 {
                     if(Settings.IsLooping)
-                        CurrentFrame = 0;
+                        CurrentIndex = 0;
                     OnOnAnimationComplete();
                 }
             }
