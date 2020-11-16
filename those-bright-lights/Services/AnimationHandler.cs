@@ -114,5 +114,10 @@ namespace SE_Praktikum.Services
             OnAnimationComplete?.Invoke(this, EventArgs.Empty);
         }
 
+        public Color[] GetDataOfFrame()
+        {
+            return Tileset.GetDataOfFrame(CurrentFrame.Item1);
+        }
+
     }
 }

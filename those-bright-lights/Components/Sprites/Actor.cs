@@ -27,13 +27,13 @@ namespace SE_Praktikum.Components.Sprites
         
         
         
-        // TODO: Return Coordinate for effect Placement
-        public bool Intersects(Actor actor)
+        public Vector2? Intersects(Actor actor)
         {
-            var t1 = _animationHandler.Tileset.GetDataOfFrame(_animationHandler.CurrentIndex);
-            var t2 = actor._animationHandler.Tileset.GetDataOfFrame(_animationHandler.CurrentIndex);
-            if (!CollisionEnabled || !actor.CollisionEnabled) return false;
-            if (Math.Abs(actor.Layer - Layer) > float.Epsilon ) return false;
+            if (this == actor) return null;
+            var t1 = _animationHandler.GetDataOfFrame();
+            var t2 = actor._animationHandler.GetDataOfFrame();
+            if (!CollisionEnabled || !actor.CollisionEnabled) return null;
+            if (Math.Abs(actor.Layer - Layer) > float.Epsilon ) return null;
             // Calculate a matrix which transforms from A's local space into
             // world space and then into B's local space
             var transformAToB = Transform * Matrix.Invert(actor.Transform);
@@ -70,7 +70,8 @@ namespace SE_Praktikum.Components.Sprites
                         // If both pixel are not completely transparent
                         if (colourA.A != 0 && colourB.A != 0)
                         {
-                            return true;
+                            OnOnCollide();
+                            return new Vector2(xB,yB);
                         }
                     }
 
@@ -83,7 +84,7 @@ namespace SE_Praktikum.Components.Sprites
             }
 
             // No intersection found
-            return false;
+            return null;
         }
 
 
