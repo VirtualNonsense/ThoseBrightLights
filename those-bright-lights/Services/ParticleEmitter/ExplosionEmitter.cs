@@ -40,10 +40,9 @@ namespace SE_Praktikum.Services.ParticleEmitter
             var ySpeed = _random.Next(10, 100) / 100f;
             var animation_duration = _random.Next(10, 200) / 100f;
             
-            
-            var settings = new AnimationSettings(updateInterval: animation_duration);
+            var settings = new AnimationSettings(updateList: new List<(int, float)>{(6,animation_duration),(2,animation_duration)},isLooping:true);
 
-            var sprite = _factory.BuildExplosionParticle(Animation, settings);
+            var sprite = _factory.BuildExplosionParticle(TileSet, settings);
             
             sprite.Position = new Vector2(xPosition, yPosition);
             sprite.Opacity = (float) _random.NextDouble();
