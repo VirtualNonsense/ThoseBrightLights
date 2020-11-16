@@ -28,12 +28,12 @@ namespace SE_Praktikum.Models
         public bool IsPlaying;
 
         
-        public AnimationSettings(List<(int, float)> updateList, float layer = 1, bool isLooping = false,  Color? color = null, 
+        public AnimationSettings(List<(int, float)> updateList = null, float layer = 1, bool isLooping = false,  Color? color = null, 
                                  float rotation = 0f, float scale = 1f, float opacity = 1, bool isPlaying = true)
         {
             Layer = layer;
             IsLooping = isLooping;
-            UpdateList = updateList;
+            UpdateList = updateList ?? new List<(int,float)> {(0,100)};
             SpriteEffects = SpriteEffects.None;
             Color = color??Color.White;
             Rotation = rotation;
