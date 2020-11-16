@@ -7,6 +7,7 @@ using NLog;
 using SE_Praktikum.Services;
 using SE_Praktikum.Components;
 using SE_Praktikum.Components.Sprites.SplashScreen;
+using SE_Praktikum.Models;
 
 namespace SE_Praktikum.Components.Sprites
 {
@@ -29,8 +30,8 @@ namespace SE_Praktikum.Components.Sprites
         // TODO: Return Coordinate for effect Placement
         public bool Intersects(Actor actor)
         {
-            var t1 = _animationHandler.GetDataOfFrame();
-            var t2 = actor._animationHandler.GetDataOfFrame();
+            var t1 = _animationHandler.Tileset.GetDataOfFrame(_animationHandler.CurrentIndex);
+            var t2 = actor._animationHandler.Tileset.GetDataOfFrame(_animationHandler.CurrentIndex);
             if (!CollisionEnabled || !actor.CollisionEnabled) return false;
             if (Math.Abs(actor.Layer - Layer) > float.Epsilon ) return false;
             // Calculate a matrix which transforms from A's local space into

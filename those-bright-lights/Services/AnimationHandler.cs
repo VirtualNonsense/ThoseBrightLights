@@ -114,46 +114,5 @@ namespace SE_Praktikum.Services
             OnAnimationComplete?.Invoke(this, EventArgs.Empty);
         }
 
-        public Color[] GetDataOfFrame()
-        {
-            int rowOfTile = _currentIndex / Tileset.Columns;
-            int columnOfTile = _currentIndex % Tileset.Columns;
-
-            var _texturewidth = Tileset.TileDimX * Tileset.Columns;
-            var _textureheight = Tileset.TileDimY * Tileset.Rows;
-
-            var _tilewidth = Tileset.TileDimX;
-            var _tileheight = Tileset.TileDimY;
-
-            //offset for all rows of all tiles above the tilerow we want
-            var _rowOffsetForAllTilesAbove = _texturewidth * _tileheight*rowOfTile ;
-            //offset for all pixels in one tile calculated with the columnnumber 
-            var _pixelColumnOffset = columnOfTile * _tilewidth;
-
-            //array for one tile to copy sth in 
-            Color[] _pixelArray = new Color[_tilewidth *_tileheight];
-            
-            //array filled with all tiles from tileset
-            Color[] _allTiles = new Color[_texturewidth*_textureheight];
-            Tileset.Texture.GetData(_pixelArray);
-
-
-            
-            //iterating over the tileheight in row steps
-            for(int row = 0; row < Tileset.TileDimY; row++)
-            {
-                //offset for pixels in each row
-                var _rowPixelOffset = row * _texturewidth;
-                //iterating over the tilewidth in column steps in one row step
-                for(int column = 0; row < Tileset.TileDimX; column++)
-                {
-                    //summing up all offsets until the pixel we need 
-                    _pixelArray[row * _tilewidth + column] = _allTiles[_rowOffsetForAllTilesAbove + _pixelColumnOffset + _rowPixelOffset + column];
-                }
-            }
-            return _pixelArray;
-
-
-        }
     }
 }

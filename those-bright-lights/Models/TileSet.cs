@@ -21,7 +21,7 @@ namespace SE_Praktikum.Models
         public int FrameHeight => Columns * TileDimY;
 
         
-        public TileSet(Texture2D texture, int tileDimX, int tileDimY, int startEntry)
+        public TileSet(Texture2D texture, int tileDimX, int tileDimY, int startEntry=0)
         {
             _logger = LogManager.GetCurrentClassLogger();
             Texture = texture;
@@ -34,8 +34,6 @@ namespace SE_Praktikum.Models
 
         internal Rectangle GetFrame(uint index)
         {
-            
-
             var c = 0;
             for (int row = 0; row < Rows; row++)
             {
@@ -48,6 +46,48 @@ namespace SE_Praktikum.Models
             }
             _logger.Warn($"index{index} not found");
             return Rectangle.Empty;
+        }
+        
+        public Color[] GetDataOfFrame(int tile)
+        {
+            int rowOfTile = tile / Columns;
+            int columnOfTile = tile % Columns;
+
+            var texturewidth = TileDimX * Columns;
+            var textureheight = TileDimY * Rows;
+
+            var tilewidth = TileDimX;
+            var tileheight = TileDimY;
+
+            //offset for all rows of all tiles above the tilerow we want
+            var rowOffsetForAllTilesAbove = texturewidth * tileheight*rowOfTile ;
+            //offset for all pixels in one tile calculated with the columnnumber 
+            var pixelColumnOffset = columnOfTile * tilewidth;
+
+            //array for one tile to copy sth in 
+            Color[] pixelArray = new Color[tilewidth *tileheight];
+            
+            //array filled with all tiles from tileset
+            Color[] allTiles = new Color[texturewidth*textureheight];
+            Texture.GetData(pixelArray);
+
+
+            
+            //iterating over the tileheight in row steps
+            for(int row = 0; row < TileDimY; row++)
+            {
+                //offset for pixels in each row
+                var rowPixelOffset = row * texturewidth;
+                //iterating over the tilewidth in column steps in one row step
+                for(int column = 0; row < TileDimX; column++)
+                {
+                    //summing up all offsets until the pixel we need 
+                    pixelArray[row * tilewidth + column] = allTiles[rowOffsetForAllTilesAbove + pixelColumnOffset + rowPixelOffset + column];
+                }
+            }
+            return pixelArray;
+
+
         }
     }
 }
