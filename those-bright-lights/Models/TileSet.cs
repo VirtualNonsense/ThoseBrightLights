@@ -80,7 +80,7 @@ namespace SE_Praktikum.Models
             
             //array filled with all tiles from tileset
             Color[] allTiles = new Color[texturewidth*textureheight];
-            Texture.GetData(pixelArray);
+            Texture.GetData(allTiles);
 
 
             
@@ -90,7 +90,7 @@ namespace SE_Praktikum.Models
                 //offset for pixels in each row
                 var rowPixelOffset = row * texturewidth;
                 //iterating over the tilewidth in column steps in one row step
-                for(int column = 0; row < TileDimX; column++)
+                for(int column = 0; column < TileDimX; column++)
                 {
                     //summing up all offsets until the pixel we need 
                     pixelArray[row * tilewidth + column] = allTiles[rowOffsetForAllTilesAbove + pixelColumnOffset + rowPixelOffset + column];
