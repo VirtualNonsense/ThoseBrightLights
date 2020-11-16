@@ -32,6 +32,17 @@ namespace SE_Praktikum.Models
             StartEntry = startEntry;
         }
 
+        public TileSet(Texture2D texture, int startEntry = 0)
+        {
+            _logger = LogManager.GetCurrentClassLogger();
+            Texture = texture;
+            TileDimX = Texture.Width;
+            TileDimY = Texture.Height;
+            Columns = Texture.Width / TileDimX;
+            Rows = Texture.Height / TileDimY;
+            StartEntry = startEntry;
+        }
+
         internal Rectangle GetFrame(uint index)
         {
             var c = 0;
