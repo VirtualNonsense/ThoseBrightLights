@@ -45,11 +45,7 @@ namespace SE_Praktikum.Services
         public Vector2 Origin { get; set; }
         
 
-        public Rectangle Frame =>
-            new Rectangle(CurrentIndex * Tileset.FrameWidth,
-                0,
-                Tileset.FrameWidth,
-                Tileset.FrameHeight);
+        public Rectangle Frame => Tileset.GetFrame((uint)Settings.UpdateList[_currentIndex].Item1);
 
         public event EventHandler OnAnimationComplete;
 
