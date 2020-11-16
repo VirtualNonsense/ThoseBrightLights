@@ -79,8 +79,8 @@ namespace SE_Praktikum.Components.Sprites.SplashScreen
         {
             if (this == actor)
                 return;
-
-            IsRemoveAble = true;
+            
+            _logger.Warn("Collission");
         }
     }
     

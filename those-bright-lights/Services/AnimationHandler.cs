@@ -62,7 +62,7 @@ namespace SE_Praktikum.Services
         {
             if (!_updated)
             {
-                _logger.Error("Need to call 'Update' first");
+                //_logger.Error("Need to call 'Update' first");
                 //throw new Exception("Need to call 'Update' first");
             }
 
