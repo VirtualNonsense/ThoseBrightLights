@@ -32,6 +32,7 @@ namespace SE_Praktikum.Services
             }
         }
 
+        //TODO: find better name, frame is for rectangle
         public (int, float) CurrentFrame => Settings.UpdateList[_currentIndex];
 
         private ILogger _logger;
