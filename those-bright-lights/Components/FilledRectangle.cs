@@ -6,7 +6,7 @@ using System.Text;
 
 namespace SE_Praktikum.Components
 {
-    public class Rectangle : IComponent
+    public class FilledRectangle : IComponent
     {
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
