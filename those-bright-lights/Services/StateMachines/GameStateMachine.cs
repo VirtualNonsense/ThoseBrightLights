@@ -26,15 +26,18 @@ namespace SE_Praktikum.Services.StateMachines
                 {State.LevelSelect, levelSelect}
             };
             _machine = new StateMachine<State, GameStateMachineTrigger>(State.Init);
-            _machine.Configure(State.Init).Permit(GameStateMachineTrigger.InitFinished, State.SplashScreen).OnEntry(onEntry);
-            _machine.Configure(State.SplashScreen).Permit(GameStateMachineTrigger.SkipSplashScreen, State.Menu).OnEntry(onEntry);
-            _machine.Configure(State.Menu)
+            _machine.Configure(State.Init).OnEntry(onEntry)
+                .Permit(GameStateMachineTrigger.InitFinished, State.SplashScreen);
+            _machine.Configure(State.SplashScreen).OnEntry(onEntry)
+                .Permit(GameStateMachineTrigger.SkipSplashScreen, State.Menu);
+            _machine.Configure(State.Menu).OnEntry(onEntry)
                 .Permit(GameStateMachineTrigger.StartLevelSelect, State.LevelSelect)
                 .Permit(GameStateMachineTrigger.QuitGame, State.Quit)
-                .Permit(GameStateMachineTrigger.StartSettings, State.Settings)
-                .OnEntry(onEntry);
-            _machine.Configure(State.Settings).Permit(GameStateMachineTrigger.Back, State.Menu).OnEntry(onEntry);
-            _machine.Configure(State.LevelSelect).OnEntry(onEntry);
+                .Permit(GameStateMachineTrigger.StartSettings, State.Settings);
+            _machine.Configure(State.Settings).OnEntry(onEntry)
+                .Permit(GameStateMachineTrigger.Back, State.Menu);
+            _machine.Configure(State.LevelSelect).OnEntry(onEntry)
+                .Permit(GameStateMachineTrigger.Back, State.Menu);
             _machine.Configure(State.Quit).OnEntry(onComplete);
             _machine.Fire(GameStateMachineTrigger.InitFinished);
             foreach (var mapEntry in _stateMap)
