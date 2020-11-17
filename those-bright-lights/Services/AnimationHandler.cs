@@ -87,7 +87,7 @@ namespace SE_Praktikum.Services
         {
             _updated = true;
 
-            _timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+            _timer += (float)gameTime.ElapsedGameTime.Milliseconds;
 
             if (_timer > Settings.UpdateList[CurrentIndex].Item2)
             {
