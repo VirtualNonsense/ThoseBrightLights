@@ -45,6 +45,14 @@ namespace SE_Praktikum.Components.Sprites.SplashScreen
             {
                 velocity.X -= _speed;
             }
+            if (_currentKey.IsKeyDown(_input.TurnLeft))
+            {
+                Rotation += 0.01f;
+            }if (_currentKey.IsKeyDown(_input.TurnRight))
+            {
+                Rotation -= 0.01f;
+            }
+            
             else if (_currentKey.IsKeyDown(_input.Right))
             {
                 velocity.X += _speed;

@@ -40,18 +40,18 @@ namespace SE_Praktikum.Core.GameStates
             
             CollisionCube p = new CollisionCube(
                 new AnimationHandler(
-                    new TileSet(contentManager.Load<Texture2D>("Artwork/misc/horizontalline")),
-                    new AnimationSettings()),
-                new Input(Keys.Up, Keys.Down, Keys.Left, Keys.Right),
+                    new TileSet(contentManager.Load<Texture2D>("Artwork/effects/explosion_45_45"),45,45),
+                    new AnimationSettings(7)),
+                new Input(Keys.Up, Keys.Down, Keys.Left, Keys.Right, Keys.Add, Keys.Subtract ),
                 _screen);
 
             p.OnCollide += (sender, args) => { _logger.Warn("p collide"); };
             
             CollisionCube q = new CollisionCube(
                 new AnimationHandler(
-                    new TileSet(contentManager.Load<Texture2D>("Artwork/misc/verticalline")),
-                    new AnimationSettings()),
-                new Input(Keys.W, Keys.S, Keys.A, Keys.D),
+                    new TileSet(contentManager.Load<Texture2D>("Artwork/effects/explosion_45_45"),45,45),
+                    new AnimationSettings(7)),
+                new Input(Keys.W, Keys.S, Keys.A, Keys.D, Keys.Q, Keys.E),
                 _screen);
             List = new List<Actor> {p, q};
             

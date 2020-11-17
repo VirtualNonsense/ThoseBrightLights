@@ -11,13 +11,19 @@ namespace SE_Praktikum.Models
         public Keys Left { get; set; }
 
         public Keys Right { get; set; }
+        
+        public Keys TurnLeft { get; set; }
+        
+        public Keys TurnRight { get; set; }
 
-        public Input(Keys up, Keys down, Keys left, Keys right)
+        public Input(Keys up, Keys down, Keys left, Keys right, Keys turnLeft, Keys turnRight)
         {
             Up = up;
             Down = down;
             Left = left;
             Right = right;
+            TurnLeft = turnLeft;
+            TurnRight = turnRight;
         }
     }
 }
