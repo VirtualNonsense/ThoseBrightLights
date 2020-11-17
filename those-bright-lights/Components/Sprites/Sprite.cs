@@ -35,7 +35,6 @@ namespace SE_Praktikum.Components.Sprites
     
     public Vector2 Origin { 
       get => _animationHandler.Origin;
-      set => _animationHandler.Origin = value; 
     }
 
     public readonly Color[] TextureData;

@@ -43,7 +43,7 @@ namespace SE_Praktikum.Services
 
         public Vector2 Position { get; set; }
         
-        public Vector2 Origin { get; set; }
+        public Vector2 Origin { get => Tileset.GetFrameCenter(); }
         
 
         public Rectangle Frame => Tileset.GetFrame((uint)Settings.UpdateList[_currentIndex].Item1);
@@ -56,7 +56,6 @@ namespace SE_Praktikum.Services
             Tileset = tileset;
             Settings = settings;
             Position = position ?? new Vector2(0,0);
-            Origin = origin ?? new Vector2(0,0);
         }
 
         public void Draw(SpriteBatch spriteBatch)

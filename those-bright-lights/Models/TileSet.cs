@@ -58,6 +58,11 @@ namespace SE_Praktikum.Models
             _logger.Warn($"index{index} not found");
             return Rectangle.Empty;
         }
+
+        public Vector2 GetFrameCenter()
+        {
+            return new Vector2(TileDimX/2f, TileDimY/2f);
+        }
         
         public Color[] GetDataOfFrame(int tile)
         {
@@ -78,7 +83,7 @@ namespace SE_Praktikum.Models
             //array for one tile to copy sth in 
             Color[] pixelArray = new Color[tilewidth *tileheight];
             
-            //array filled with all tiles from tileset
+            //array filled with all tiles from tileset 
             Color[] allTiles = new Color[texturewidth*textureheight];
             Texture.GetData(allTiles);
 
