@@ -79,7 +79,7 @@ namespace SE_Praktikum.Components.Sprites.SplashScreen
             else if(pressed)
                 pressed = false;
             
-            //base.Update(gameTime);
+            base.Update(gameTime);
         }
 
 
