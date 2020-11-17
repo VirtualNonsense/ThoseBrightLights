@@ -9,51 +9,51 @@ namespace SE_Praktikum.Services
     public class AnimationHandler
     {
         
-        public Animation Animation;
+        public TileSet Tileset;
         public AnimationSettings Settings { get; }
 
         private float _timer;
 
         private bool _updated;
 
-        private int _currentFrame;
-        public int CurrentFrame
+        private int _currentIndex;
+        public int CurrentIndex
         {
-            get=>_currentFrame;
+            get=>_currentIndex;
+            //only sets boundaries of animation
             set
             {
                 if (value < 0)
-                    _currentFrame = 0;
-                else if (value >= Animation.FrameCount)
-                    _currentFrame = Animation.FrameCount - 1;
+                    _currentIndex = 0;
+                else if (value >= Settings.UpdateList.Count)
+                    _currentIndex = Settings.UpdateList.Count - 1;
                 else
-                    _currentFrame = value;
+                    _currentIndex = value;
             }
         }
 
+        //TODO: find better name, frame is for rectangle
+        public (int, float) CurrentFrame => Settings.UpdateList[_currentIndex];
+
         private ILogger _logger;
         
-        public int FrameWidth => Animation.FrameWidth;
+        public int FrameWidth => Tileset.TileDimX;
 
-        public int FrameHeight => Animation.FrameHeight;
+        public int FrameHeight => Tileset.TileDimY;
 
         public Vector2 Position { get; set; }
         
         public Vector2 Origin { get; set; }
         
 
-        public Rectangle Frame =>
-            new Rectangle(CurrentFrame * Animation.FrameWidth,
-                0,
-                Animation.FrameWidth,
-                Animation.FrameHeight);
+        public Rectangle Frame => Tileset.GetFrame((uint)Settings.UpdateList[_currentIndex].Item1);
 
         public event EventHandler OnAnimationComplete;
 
-        public AnimationHandler(Animation animation, AnimationSettings settings, Vector2? position = null, Vector2? origin = null)
+        public AnimationHandler(TileSet tileset, AnimationSettings settings, Vector2? position = null, Vector2? origin = null)
         {
             _logger = LogManager.GetCurrentClassLogger();
-            Animation = animation;
+            Tileset = tileset;
             Settings = settings;
             Position = position ?? new Vector2(0,0);
             Origin = origin ?? new Vector2(0,0);
@@ -63,14 +63,14 @@ namespace SE_Praktikum.Services
         {
             if (!_updated)
             {
-                _logger.Error("Need to call 'Update' first");
+                //_logger.Error("Need to call 'Update' first");
                 //throw new Exception("Need to call 'Update' first");
             }
 
             _updated = false;
 
             spriteBatch.Draw(
-                Animation.Texture,
+                Tileset.Texture,
                 Position,
                 Frame,
                 Settings.Color * Settings.Opacity,
@@ -87,19 +87,19 @@ namespace SE_Praktikum.Services
         {
             _updated = true;
 
-            _timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+            _timer += (float)gameTime.ElapsedGameTime.Milliseconds;
 
-            if (_timer > Settings.UpdateInterval)
+            if (_timer > Settings.UpdateList[CurrentIndex].Item2)
             {
                 _timer = 0f;
                 if (!Settings.IsPlaying) return;
-                if(CurrentFrame < Animation.FrameCount-1)
-                    CurrentFrame++;
+                if(CurrentIndex < Tileset.FrameCount-1)
+                    CurrentIndex++;
 
-                if (CurrentFrame >= Animation.FrameCount-1)
+                if (CurrentIndex >= Tileset.FrameCount-1)
                 {
                     if(Settings.IsLooping)
-                        CurrentFrame = 0;
+                        CurrentIndex = 0;
                     OnOnAnimationComplete();
                 }
             }
@@ -117,27 +117,8 @@ namespace SE_Praktikum.Services
 
         public Color[] GetDataOfFrame()
         {
-            //initialize array with size of one frame
-            var data = new Color[FrameWidth * FrameHeight];
-            
-            //copy all the framedata to one array
-            var allData = new Color[FrameWidth * FrameHeight*Animation.FrameCount];
-            Animation.Texture.GetData(allData);
-            
-            //row offset, number of frames beforehand multiply with width of frame
-            var rowOffset = _currentFrame * FrameWidth;
-            
-            //iterate through all rows and cols
-            for (int row = 0; row < FrameHeight; row++)
-            {
-                for (int col= 0; col < FrameWidth; col++)
-                {
-                    data[row * FrameWidth + col] = allData[row * Animation.Texture.Width + col + rowOffset];
-                }
-            }
-            
-            return data;
-
+            return Tileset.GetDataOfFrame(CurrentFrame.Item1);
         }
+
     }
 }

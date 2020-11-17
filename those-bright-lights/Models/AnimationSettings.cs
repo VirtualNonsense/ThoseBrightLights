@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
 
 namespace SE_Praktikum.Models
 {
@@ -8,9 +9,9 @@ namespace SE_Praktikum.Models
         public bool IsLooping;
         
         /// <summary>
-        /// Determines how long it takes to update the frame. [sec] 
+        /// Determines how long it takes to update the frame. [ms] 
         /// </summary>
-        public float UpdateInterval;
+        public List<(int,float)> UpdateList;
 
         public float Layer;
 
@@ -27,12 +28,30 @@ namespace SE_Praktikum.Models
         public bool IsPlaying;
 
         
-        public AnimationSettings(float layer = 1, bool isLooping = false, float updateInterval = 1f, Color? color = null, 
+        public AnimationSettings(List<(int, float)> updateList = null, float layer = 1, bool isLooping = false,  Color? color = null, 
                                  float rotation = 0f, float scale = 1f, float opacity = 1, bool isPlaying = true)
         {
             Layer = layer;
             IsLooping = isLooping;
-            UpdateInterval = updateInterval;
+            UpdateList = updateList ?? new List<(int,float)> {(0,100)};
+            SpriteEffects = SpriteEffects.None;
+            Color = color??Color.White;
+            Rotation = rotation;
+            Scale = scale;
+            Opacity = opacity;
+            IsPlaying = isPlaying;
+        }
+        
+        public AnimationSettings(int frames = 1, float duration = 100f, float layer = 1, bool isLooping = false,  Color? color = null, 
+                                 float rotation = 0f, float scale = 1f, float opacity = 1, bool isPlaying = true)
+        {
+            Layer = layer;
+            IsLooping = isLooping;
+            UpdateList = new List<(int, float)>();
+            for (var i = 0; i < frames; i++)
+            {
+                UpdateList.Add((i,duration));
+            }     
             SpriteEffects = SpriteEffects.None;
             Color = color??Color.White;
             Rotation = rotation;

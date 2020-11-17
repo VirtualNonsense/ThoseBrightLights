@@ -45,6 +45,14 @@ namespace SE_Praktikum.Components.Sprites.SplashScreen
             {
                 velocity.X -= _speed;
             }
+            if (_currentKey.IsKeyDown(_input.TurnLeft))
+            {
+                Rotation += 0.01f;
+            }if (_currentKey.IsKeyDown(_input.TurnRight))
+            {
+                Rotation -= 0.01f;
+            }
+            
             else if (_currentKey.IsKeyDown(_input.Right))
             {
                 velocity.X += _speed;
@@ -59,19 +67,19 @@ namespace SE_Praktikum.Components.Sprites.SplashScreen
             if (Keyboard.GetState().IsKeyDown(Keys.M))
             {
                 if(!pressed)
-                    _animationHandler.CurrentFrame++;
+                    _animationHandler.CurrentIndex++;
                 pressed = true;
             }
             else if (Keyboard.GetState().IsKeyDown(Keys.N))
             {
                 if(!pressed)
-                    _animationHandler.CurrentFrame--;
+                    _animationHandler.CurrentIndex--;
                 pressed = true;
             }
             else if(pressed)
                 pressed = false;
             
-            //base.Update(gameTime);
+            base.Update(gameTime);
         }
 
 
@@ -79,8 +87,8 @@ namespace SE_Praktikum.Components.Sprites.SplashScreen
         {
             if (this == actor)
                 return;
-
-            IsRemoveAble = true;
+            
+            _logger.Warn("Collission");
         }
     }
     

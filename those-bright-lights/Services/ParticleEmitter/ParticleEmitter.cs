@@ -17,7 +17,7 @@ namespace SE_Praktikum.Services.ParticleEmitter
 
         private ILogger _logger;
 
-        public Animation Animation { get; set; }
+        public TileSet TileSet { get; set; }
         public Texture2D Texture { get; set; }
 
         /// <summary>
