@@ -105,14 +105,14 @@ namespace SE_Praktikum.Core
             {
                 _position.Z += CameraZoomSpeed * time;
                 if (_position.Z > ZFarPlane)
-                    _position.Z = ZFarPlane;
+                    _position.Z = ZFarPlane - float.Epsilon;
             }
                 
             if (Keyboard.GetState().IsKeyDown(_controls.ZoomOut))
             {
                 _position.Z -= CameraZoomSpeed * time;
                 if (_position.Z < ZNearPlane)
-                    _position.Z = ZFarPlane;
+                    _position.Z = 0 + float.Epsilon;
             }
 
             if (Keyboard.GetState().IsKeyDown(_controls.TurnRight))
