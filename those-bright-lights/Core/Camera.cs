@@ -66,7 +66,7 @@ namespace SE_Praktikum.Core
                                                        Keys.J, 
                                                        Keys.H, 
                                                        Keys.K, 
-                                                       Keys.O, 
+                                                       Keys.I, 
                                                        Keys.Y, 
                                                        Keys.O, 
                                                        Keys.L );
