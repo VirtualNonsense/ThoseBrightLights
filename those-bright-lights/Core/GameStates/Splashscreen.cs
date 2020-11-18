@@ -66,6 +66,7 @@ namespace SE_Praktikum.Core.GameStates
 
         public override void Update(GameTime gameTime)
         {
+            _screen.Camera.Update(gameTime);
             // _explosionEmitter.Update(gameTime);
             foreach (Actor actor in List)
             {
@@ -86,7 +87,7 @@ namespace SE_Praktikum.Core.GameStates
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            spriteBatch.Begin(SpriteSortMode.FrontToBack);
+            spriteBatch.Begin(SpriteSortMode.FrontToBack, null, null, null, RasterizerState.CullClockwise, _screen.Camera.GetCameraEffect());
             foreach(Actor actor in List) actor.Draw(gameTime, spriteBatch);
             spriteBatch.End();
         }
