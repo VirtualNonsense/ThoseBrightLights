@@ -1,5 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using NLog;
 using SE_Praktikum.Models;
 
 namespace SE_Praktikum.Core
@@ -9,24 +11,30 @@ namespace SE_Praktikum.Core
         private readonly CameraControls _controls;
 
         private Vector3 _position;
+        private readonly BasicEffect _spriteEffect;
+        private Logger _logger;
+
         public Vector3 Position
         {
             get => _position;
         }
-        public float CameraViewWidth { get; }
-        public float CameraViewHeight { get; }
+        public float CameraViewWidth { get; set; }
+        public float AspectRatio { get; }
         public float ZNearPlane { get; }
         public float ZFarPlane { get; }
+        
         
         public float CameraSpeed { get; set; }
         
         public float CameraZoomSpeed { get; set; }
 
-        public Camera(Vector3 position, float cameraViewWidth, float cameraViewHeight, float? cameraSpeed = null, float cameraZoomSpeed = .5f, float zNearPlane = 0f, float zFarPlane = -1f, CameraControls controls = null)
+        public Camera(Vector3 position, float cameraViewWidth, float aspectRatio, BasicEffect spriteEffect, float? cameraSpeed = null, float cameraZoomSpeed = 10, float zNearPlane = 0f, float zFarPlane = -1f, CameraControls controls = null)
         {
+            _logger = LogManager.GetCurrentClassLogger();
             _position = position;
+            _spriteEffect = spriteEffect;
             CameraViewWidth = cameraViewWidth;
-            CameraViewHeight = cameraViewHeight;
+            AspectRatio = aspectRatio;
             CameraSpeed = cameraSpeed ?? cameraViewWidth;
             CameraZoomSpeed = cameraZoomSpeed;
             ZNearPlane = zNearPlane;
@@ -37,44 +45,41 @@ namespace SE_Praktikum.Core
                                                        Keys.Right, 
                                                        Keys.OemOpenBrackets, 
                                                        Keys.OemCloseBrackets, 
-                                                       Keys.PageUp, 
-                                                       Keys.PageDown );
+                                                       Keys.O, 
+                                                       Keys.L );
         }
 
-        public Matrix View()
+        private Matrix View()
         {
             return Matrix.CreateLookAt(Position, Position + Vector3.Forward, Vector3.Up);
         }
-        
-        public Matrix GetProjection()
+
+        private Matrix GetProjection()
         {
-            return Matrix.CreateOrthographic(CameraViewWidth, CameraViewHeight, ZNearPlane, ZFarPlane);
+            return Matrix.CreateOrthographic(CameraViewWidth, CameraViewWidth/AspectRatio, ZNearPlane, ZFarPlane);
         }
 
         public void Update(GameTime gameTime)
         {
-            if (_controls != null)
-            {
-                var time = (float)gameTime.ElapsedGameTime.TotalSeconds;
-                if (Keyboard.GetState().IsKeyDown(_controls.Down))
-                    _position.Y += CameraSpeed * time;
-                
-                if (Keyboard.GetState().IsKeyDown(_controls.Up))
-                    _position.Y -= CameraSpeed * time;
-                
-                if (Keyboard.GetState().IsKeyDown(_controls.Left))
-                    _position.X += CameraSpeed * time;
-                
-                if (Keyboard.GetState().IsKeyDown(_controls.Right))
-                    _position.X -= CameraSpeed * time;
+            if (_controls == null || Keyboard.GetState().GetPressedKeyCount() == 0) return;
+            var time = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            if (Keyboard.GetState().IsKeyDown(_controls.Up))
+                _position.Y += CameraSpeed * time;
 
-                if (Keyboard.GetState().IsKeyDown(_controls.ZoomIn))
-                    _position.Z += CameraZoomSpeed * time;
-                
-                if (Keyboard.GetState().IsKeyDown(_controls.ZoomOut))
-                    _position.Z += CameraZoomSpeed * time;
+            if (Keyboard.GetState().IsKeyDown(_controls.Down))
+                _position.Y -= CameraSpeed * time;
 
-            }
+            if (Keyboard.GetState().IsKeyDown(_controls.Right))
+                _position.X += CameraSpeed * time;
+            
+            if (Keyboard.GetState().IsKeyDown(_controls.Left))
+                _position.X -= CameraSpeed * time;
+
+            if (Keyboard.GetState().IsKeyDown(_controls.ZoomIn))
+                CameraViewWidth += CameraZoomSpeed * time;
+                
+            if (Keyboard.GetState().IsKeyDown(_controls.ZoomOut))
+                CameraViewWidth = (CameraViewWidth - CameraZoomSpeed * time > 0)? CameraViewWidth - CameraZoomSpeed * time : 0;
         }
 
         public class CameraControls : Input
@@ -88,6 +93,13 @@ namespace SE_Praktikum.Core
                 ZoomIn = zoomIn;
                 ZoomOut = zoomOut;
             }
+        }
+
+        public BasicEffect GetCameraEffect()
+        {
+            _spriteEffect.View = View();
+            _spriteEffect.Projection = GetProjection();
+            return _spriteEffect;
         }
         
     }
