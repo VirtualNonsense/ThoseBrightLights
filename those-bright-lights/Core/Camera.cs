@@ -53,7 +53,8 @@ namespace SE_Praktikum.Core
 
         private Matrix View()
         {
-            return Matrix.CreateLookAt(Position, Position + Vector3.Forward, _offSetVector);
+            var p = new Plane(new Vector3(0, 1, 0), 1);
+            return Matrix.CreateLookAt(_position, _position + Vector3.Forward, Vector3.Up) * Matrix.CreateReflection(p);
         }
 
         private Matrix GetProjection()
