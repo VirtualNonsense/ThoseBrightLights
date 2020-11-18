@@ -39,12 +39,12 @@ namespace SE_Praktikum.Core
             CameraZoomSpeed = cameraZoomSpeed;
             ZNearPlane = zNearPlane;
             ZFarPlane = zFarPlane;
-            _controls = controls ?? new CameraControls(Keys.Up,
-                                                       Keys.Down, 
-                                                       Keys.Left, 
-                                                       Keys.Right, 
-                                                       Keys.OemOpenBrackets, 
-                                                       Keys.OemCloseBrackets, 
+            _controls = controls ?? new CameraControls(Keys.U,
+                                                       Keys.J, 
+                                                       Keys.H, 
+                                                       Keys.K, 
+                                                       Keys.O, 
+                                                       Keys.Y, 
                                                        Keys.O, 
                                                        Keys.L );
         }
