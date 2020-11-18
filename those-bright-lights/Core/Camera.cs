@@ -30,7 +30,7 @@ namespace SE_Praktikum.Core
 
         private Vector3 _offSetVector = Vector3.Up;
 
-        public Camera(Vector3 position, float cameraViewWidth, float aspectRatio, BasicEffect spriteEffect, float? cameraSpeed = null, float cameraZoomSpeed = 100, float zNearPlane = 0f, float zFarPlane = -1f, CameraControls controls = null)
+        public Camera(Vector3 position, float cameraViewWidth, float aspectRatio, BasicEffect spriteEffect, float? cameraSpeed = null, float cameraZoomSpeed = 5f, float zNearPlane = 1, float zFarPlane = float.MaxValue, CameraControls controls = null)
         {
             _logger = LogManager.GetCurrentClassLogger();
             _position = position;
@@ -58,7 +58,7 @@ namespace SE_Praktikum.Core
 
         private Matrix GetProjection()
         {
-            return Matrix.CreateOrthographic(CameraViewWidth, CameraViewWidth/AspectRatio, ZNearPlane, ZFarPlane);
+            return Matrix.CreatePerspective(CameraViewWidth, CameraViewWidth/AspectRatio, ZNearPlane, ZFarPlane);
         }
 
         public void Update(GameTime gameTime)
@@ -66,22 +66,30 @@ namespace SE_Praktikum.Core
             if (_controls == null || Keyboard.GetState().GetPressedKeyCount() == 0) return;
             var time = (float)gameTime.ElapsedGameTime.TotalSeconds;
             if (Keyboard.GetState().IsKeyDown(_controls.Up))
-                _position.Y += CameraSpeed * time;
+                _position.Y += CameraSpeed * time + _position.Z/2 * time;
 
             if (Keyboard.GetState().IsKeyDown(_controls.Down))
-                _position.Y -= CameraSpeed * time;
+                _position.Y -= CameraSpeed * time + _position.Z/2 * time;
 
             if (Keyboard.GetState().IsKeyDown(_controls.Right))
-                _position.X += CameraSpeed * time;
+                _position.X += CameraSpeed * time + _position.Z/2 * time;
             
             if (Keyboard.GetState().IsKeyDown(_controls.Left))
-                _position.X -= CameraSpeed * time;
+                _position.X -= CameraSpeed * time + _position.Z/2 * time;
 
             if (Keyboard.GetState().IsKeyDown(_controls.ZoomIn))
-                CameraViewWidth += CameraZoomSpeed * time;
+            {
+                _position.Z += CameraZoomSpeed * time;
+                if (_position.Z > ZFarPlane)
+                    _position.Z = ZFarPlane;
+            }
                 
             if (Keyboard.GetState().IsKeyDown(_controls.ZoomOut))
-                CameraViewWidth = (CameraViewWidth - CameraZoomSpeed * time > 0)? CameraViewWidth - CameraZoomSpeed * time : 0;
+            {
+                _position.Z -= CameraZoomSpeed * time;
+                if (_position.Z < ZNearPlane)
+                    _position.Z = ZFarPlane;
+            }
         }
 
         public class CameraControls : Input
