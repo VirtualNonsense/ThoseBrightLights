@@ -13,6 +13,7 @@ namespace SE_Praktikum.Core
         private Vector3 _position;
         private readonly BasicEffect _spriteEffect;
         private Logger _logger;
+        private int _rotation;
 
         public Vector3 Position
         {
@@ -75,7 +76,8 @@ namespace SE_Praktikum.Core
         private Matrix View()
         {
             var p = new Plane(new Vector3(0, 1, 0), 1);
-            return Matrix.CreateLookAt(_position, _position + Vector3.Forward, Vector3.Up) * Matrix.CreateReflection(p);
+            return Matrix.CreateLookAt(_position, _position + Vector3.Forward, Vector3.Up)
+                   * Matrix.CreateReflection(p)* Matrix.CreateRotationZ(_rotation * (float)Math.PI/180);
         }
 
         private Matrix GetProjection()
@@ -112,6 +114,22 @@ namespace SE_Praktikum.Core
                 if (_position.Z < ZNearPlane)
                     _position.Z = ZFarPlane;
             }
+
+            if (Keyboard.GetState().IsKeyDown(_controls.TurnRight))
+            {
+                _rotation += 1;
+                if (_rotation > 359)
+                    _rotation = 0;
+            }
+            
+            if (Keyboard.GetState().IsKeyDown(_controls.TurnLeft))
+            {
+                _rotation -= 1;
+                if (_rotation < 0)
+                    _rotation = 359;
+            }
+                
+            _logger.Debug(_position);
         }
 
         public class CameraControls : Input
