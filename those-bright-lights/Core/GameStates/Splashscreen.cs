@@ -61,8 +61,8 @@ namespace SE_Praktikum.Core.GameStates
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            spriteBatch.Begin(SpriteSortMode.FrontToBack);
-            TestMap.Draw(gameTime, spriteBatch);
+            spriteBatch.Begin(SpriteSortMode.FrontToBack, null, null, null, RasterizerState.CullClockwise, _screen.Camera.GetCameraEffect());
+            foreach(Actor actor in List) actor.Draw(gameTime, spriteBatch);
             spriteBatch.End();
         }
     }

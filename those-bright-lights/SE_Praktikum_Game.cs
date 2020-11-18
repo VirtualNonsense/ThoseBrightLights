@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using NLog;
+using SE_Praktikum.Core;
 using SE_Praktikum.Core.GameStates;
 using SE_Praktikum.Models;
 
@@ -34,9 +35,14 @@ namespace SE_Praktikum
         protected override void Initialize()
         {
             _logger.Debug("Start Initialisiation");
+            
             _graphics.PreferredBackBufferWidth = ScreenWidth;
             _graphics.PreferredBackBufferHeight = ScreenHeight;
             _graphics.ApplyChanges();
+            Camera = new Camera(new Vector3(ScreenWidth/2f,-ScreenHeight/2f, 1),
+                ScreenWidth, 
+                _graphics.GraphicsDevice.Viewport.AspectRatio, 
+                new BasicEffect(_graphics.GraphicsDevice) {TextureEnabled = true});
             base.Initialize();
         }
 
@@ -104,5 +110,6 @@ namespace SE_Praktikum
 
         public int ScreenHeight { get; }
         public int ScreenWidth { get; }
+        public Camera Camera { get; private set; }
     }
 }
