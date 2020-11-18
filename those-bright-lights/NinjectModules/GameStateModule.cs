@@ -7,6 +7,7 @@ namespace SE_Praktikum.NinjectModules
         public override void Load()
         {
             Bind<Splashscreen>().ToSelf().InSingletonScope();
+            Bind<Testscreen>().ToSelf().InSingletonScope();
         }
     }
 }
