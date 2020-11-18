@@ -13,6 +13,21 @@
     <ItemGroup>
         <None Remove="Icon.ico" />
         <None Remove="Icon.bmp" />
+        <None Update="Content\Level\AnimationLevel\AnimationLevel.json">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Update="Content\Level\AnimationLevel\Blocks_32_32.json">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Update="Content\Level\AnimationLevel\Space_32_32.json">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Update="Content\Level\TestLevel\Blocks_32_32.json">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Update="Content\Level\TestLevel\Space_32_32.json">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
         <None Update="Content\Level\TestMap_32_32.json">
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
