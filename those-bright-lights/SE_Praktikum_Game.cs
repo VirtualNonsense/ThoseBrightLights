@@ -35,14 +35,14 @@ namespace SE_Praktikum
         protected override void Initialize()
         {
             _logger.Debug("Start Initialisiation");
-            Camera = new Camera(new Vector3(0,1.7f, 1),
-                                50.5f, 
-                                _graphics.GraphicsDevice.Viewport.AspectRatio, 
-                                new BasicEffect(_graphics.GraphicsDevice) {TextureEnabled = true});
             
             _graphics.PreferredBackBufferWidth = ScreenWidth;
             _graphics.PreferredBackBufferHeight = ScreenHeight;
             _graphics.ApplyChanges();
+            Camera = new Camera(new Vector3(ScreenWidth/2f,-ScreenHeight/2f, 1),
+                ScreenWidth, 
+                _graphics.GraphicsDevice.Viewport.AspectRatio, 
+                new BasicEffect(_graphics.GraphicsDevice) {TextureEnabled = true});
             base.Initialize();
         }
 
