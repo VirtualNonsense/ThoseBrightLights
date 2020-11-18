@@ -18,7 +18,7 @@ namespace SE_Praktikum.Core
         {
             get => _position;
         }
-        public float CameraViewWidth { get; set; }
+        public float FieldOfView { get; set; }
         public float AspectRatio { get; }
         public float ZNearPlane { get; }
         public float ZFarPlane { get; }
@@ -30,14 +30,35 @@ namespace SE_Praktikum.Core
 
         private Vector3 _offSetVector = Vector3.Up;
 
-        public Camera(Vector3 position, float cameraViewWidth, float aspectRatio, BasicEffect spriteEffect, float? cameraSpeed = null, float cameraZoomSpeed = 5f, float zNearPlane = 1, float zFarPlane = float.MaxValue, CameraControls controls = null)
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="position"></param>
+        /// <param name="fieldOfView">field of view in deg</param>
+        /// <param name="aspectRatio"></param>
+        /// <param name="spriteEffect"></param>
+        /// <param name="cameraSpeed"></param>
+        /// <param name="cameraZoomSpeed"></param>
+        /// <param name="zNearPlane"></param>
+        /// <param name="zFarPlane"></param>
+        /// <param name="controls"></param>
+        public Camera(Vector3 position,
+                      float fieldOfView, 
+                      float aspectRatio, 
+                      BasicEffect spriteEffect, 
+                      float? cameraSpeed = null, 
+                      float cameraZoomSpeed = 5f, 
+                      float zNearPlane = .1f, 
+                      float zFarPlane = float.MaxValue, 
+                      CameraControls controls = null)
         {
             _logger = LogManager.GetCurrentClassLogger();
             _position = position;
             _spriteEffect = spriteEffect;
-            CameraViewWidth = cameraViewWidth;
+            FieldOfView = fieldOfView;
             AspectRatio = aspectRatio;
-            CameraSpeed = cameraSpeed ?? cameraViewWidth;
+            CameraSpeed = cameraSpeed ?? fieldOfView;
             CameraZoomSpeed = cameraZoomSpeed;
             ZNearPlane = zNearPlane;
             ZFarPlane = zFarPlane;
@@ -59,7 +80,7 @@ namespace SE_Praktikum.Core
 
         private Matrix GetProjection()
         {
-            return Matrix.CreatePerspective(CameraViewWidth, CameraViewWidth/AspectRatio, ZNearPlane, ZFarPlane);
+            return Matrix.CreatePerspectiveFieldOfView((float) (FieldOfView * Math.PI/180f), AspectRatio, ZNearPlane, ZFarPlane);
         }
 
         public void Update(GameTime gameTime)
