@@ -28,6 +28,8 @@ namespace SE_Praktikum.Core
         
         public float CameraZoomSpeed { get; set; }
 
+        private Vector3 _offSetVector = Vector3.Up;
+
         public Camera(Vector3 position, float cameraViewWidth, float aspectRatio, BasicEffect spriteEffect, float? cameraSpeed = null, float cameraZoomSpeed = 100, float zNearPlane = 0f, float zFarPlane = -1f, CameraControls controls = null)
         {
             _logger = LogManager.GetCurrentClassLogger();
@@ -51,7 +53,7 @@ namespace SE_Praktikum.Core
 
         private Matrix View()
         {
-            return Matrix.CreateLookAt(Position, Position + Vector3.Forward, Vector3.Up);
+            return Matrix.CreateLookAt(Position, Position + _offSetVector, Vector3.Up);
         }
 
         private Matrix GetProjection()

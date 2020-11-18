@@ -34,11 +34,11 @@ namespace SE_Praktikum.Components.Sprites.SplashScreen
 
             if (_currentKey.IsKeyDown(_input.Up))
             {
-                velocity.Y = -_speed;
+                velocity.Y += _speed;
             }
             else if (_currentKey.IsKeyDown(_input.Down))
             {
-                velocity.Y += _speed;
+                velocity.Y -= _speed;
             }
 
             if (_currentKey.IsKeyDown(_input.Left))
