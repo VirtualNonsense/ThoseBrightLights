@@ -28,7 +28,7 @@ namespace SE_Praktikum.Core
         
         public float CameraZoomSpeed { get; set; }
 
-        public Camera(Vector3 position, float cameraViewWidth, float aspectRatio, BasicEffect spriteEffect, float? cameraSpeed = null, float cameraZoomSpeed = 10, float zNearPlane = 0f, float zFarPlane = -1f, CameraControls controls = null)
+        public Camera(Vector3 position, float cameraViewWidth, float aspectRatio, BasicEffect spriteEffect, float? cameraSpeed = null, float cameraZoomSpeed = 100, float zNearPlane = 0f, float zFarPlane = -1f, CameraControls controls = null)
         {
             _logger = LogManager.GetCurrentClassLogger();
             _position = position;
