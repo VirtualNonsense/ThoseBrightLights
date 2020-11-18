@@ -51,7 +51,7 @@ namespace SE_Praktikum.Core.GameStates
 
         public override void Update(GameTime gameTime)
         {
-            
+            _screen.Camera.Update(gameTime); 
         }
 
         public override void PostUpdate(GameTime gameTime)
@@ -61,8 +61,9 @@ namespace SE_Praktikum.Core.GameStates
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
+            //spriteBatch.Begin(SpriteSortMode.FrontToBack, null, null, null, RasterizerState.CullClockwise, _screen.Camera.GetCameraEffect());
             spriteBatch.Begin(SpriteSortMode.FrontToBack, null, null, null, RasterizerState.CullClockwise, _screen.Camera.GetCameraEffect());
-            foreach(Actor actor in List) actor.Draw(gameTime, spriteBatch);
+            TestMap.Draw(gameTime, spriteBatch);
             spriteBatch.End();
         }
     }
