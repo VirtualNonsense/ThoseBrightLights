@@ -129,8 +129,6 @@ namespace SE_Praktikum.Core
                 if (_rotation < 0)
                     _rotation = 359;
             }
-                
-            _logger.Debug(_position);
         }
 
         public class CameraControls : Input
