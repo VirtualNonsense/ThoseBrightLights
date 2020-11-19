@@ -90,10 +90,10 @@ namespace SE_Praktikum.Core
         {
             if (_controls == null || Keyboard.GetState().GetPressedKeyCount() == 0) return;
             var time = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            if (Keyboard.GetState().IsKeyDown(_controls.Up))
+            if (Keyboard.GetState().IsKeyDown(_controls.Down))
                 _position.Y += CameraSpeed * time + _position.Z/2 * time;
 
-            if (Keyboard.GetState().IsKeyDown(_controls.Down))
+            if (Keyboard.GetState().IsKeyDown(_controls.Up))
                 _position.Y -= CameraSpeed * time + _position.Z/2 * time;
 
             if (Keyboard.GetState().IsKeyDown(_controls.Right))
