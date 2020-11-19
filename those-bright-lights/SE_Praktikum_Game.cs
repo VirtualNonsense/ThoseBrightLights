@@ -39,8 +39,8 @@ namespace SE_Praktikum
             _graphics.PreferredBackBufferWidth = ScreenWidth;
             _graphics.PreferredBackBufferHeight = ScreenHeight;
             _graphics.ApplyChanges();
-            Camera = new Camera(new Vector3(1,1,0),
-                ScreenWidth, 
+            Camera = new Camera(new Vector3(0,0,100),
+                120, 
                 _graphics.GraphicsDevice.Viewport.AspectRatio, 
                 new BasicEffect(_graphics.GraphicsDevice) {TextureEnabled = true});
             base.Initialize();
