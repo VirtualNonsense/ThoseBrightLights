@@ -64,7 +64,7 @@ namespace SE_Praktikum.Core.GameStates
             //spriteBatch.Begin(SpriteSortMode.FrontToBack, null, null, null, RasterizerState.CullClockwise, _screen.Camera.GetCameraEffect());
             spriteBatch.Begin(SpriteSortMode.FrontToBack,
                               null,
-                              null, 
+                              SamplerState.PointClamp, 
                               null,
                               RasterizerState.CullCounterClockwise, 
                               _screen.Camera.GetCameraEffect());
