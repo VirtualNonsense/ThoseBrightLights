@@ -85,21 +85,23 @@ namespace SE_Praktikum.Services
         public void Update(GameTime gameTime)
         {
             _updated = true;
-
-            _timer += (float)gameTime.ElapsedGameTime.Milliseconds;
-
+            if (!Settings.IsPlaying) return;
+            
+            _timer += gameTime.ElapsedGameTime.Milliseconds;
             if (_timer > Settings.UpdateList[CurrentIndex].Item2)
             {
                 _timer = 0f;
-                if (!Settings.IsPlaying) return;
-                if(CurrentIndex < Tileset.FrameCount-1)
+                if(CurrentIndex < Settings.UpdateList.Count-1)
                     CurrentIndex++;
-
-                if (CurrentIndex >= Tileset.FrameCount-1)
+                else
                 {
-                    if(Settings.IsLooping)
+                    if (Settings.IsLooping)
+                    {
                         CurrentIndex = 0;
+                        return;
+                    }
                     OnOnAnimationComplete();
+                    Settings.IsPlaying = false;
                 }
             }
         }
