@@ -61,12 +61,12 @@ namespace SE_Praktikum.Core.GameStates
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            //spriteBatch.Begin(SpriteSortMode.FrontToBack, null, null, null, RasterizerState.CullClockwise, _screen.Camera.GetCameraEffect());
+            
             spriteBatch.Begin(SpriteSortMode.FrontToBack,
                               null,
-                              SamplerState.PointClamp, 
+                              SamplerState.PointClamp, // Sharp Pixel rendering
                               null,
-                              RasterizerState.CullCounterClockwise, 
+                              RasterizerState.CullCounterClockwise, // Render only the texture side that faces the camara to boost performance 
                               _screen.Camera.GetCameraEffect());
             TestMap.Draw(gameTime, spriteBatch);
             spriteBatch.End();
