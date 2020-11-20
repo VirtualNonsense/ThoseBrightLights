@@ -9,7 +9,7 @@ namespace SE_Praktikum.Services.Factories
         {
         }
         
-        public AnimationHandler GetAnimationHandler(Animation animation, AnimationSettings settings)
+        public AnimationHandler GetAnimationHandler(TileSet animation, AnimationSettings settings)
         {
             return new AnimationHandler(animation, settings);
         }

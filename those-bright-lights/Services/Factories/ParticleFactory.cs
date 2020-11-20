@@ -15,7 +15,7 @@ namespace SE_Praktikum.Services.Factories
             this._factory = _factory;
         }
 
-        public ExplosionsParticle BuildExplosionParticle(Animation animations, AnimationSettings settings)
+        public ExplosionsParticle BuildExplosionParticle(TileSet animations, AnimationSettings settings)
         {
             return new ExplosionsParticle(_factory.GetAnimationHandler(animations, settings), _screen);
         }

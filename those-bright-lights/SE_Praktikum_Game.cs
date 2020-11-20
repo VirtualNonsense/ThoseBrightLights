@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using NLog;
+using SE_Praktikum.Core;
 using SE_Praktikum.Core.GameStates;
 using SE_Praktikum.Models;
 
@@ -23,7 +24,7 @@ namespace SE_Praktikum
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
 
-            ScreenHeight = 720; 
+            ScreenHeight = 720;
             ScreenWidth = 1280;
             
             _logger.Debug("Constructor finished");
@@ -33,11 +34,16 @@ namespace SE_Praktikum
 
         protected override void Initialize()
         {
-            _logger.Debug("Start Initialisation");
+            _logger.Debug("Start Initialisiation");
+            
             _graphics.PreferredBackBufferWidth = ScreenWidth;
             _graphics.PreferredBackBufferHeight = ScreenHeight;
             _graphics.ApplyChanges();
-            base.IsMouseVisible = true;
+            IsMouseVisible = true;
+            Camera = new Camera(new Vector3(0,0,100),
+                120, 
+                _graphics.GraphicsDevice.Viewport.AspectRatio, 
+                new BasicEffect(_graphics.GraphicsDevice) {TextureEnabled = true});
             base.Initialize();
         }
 
@@ -98,35 +104,8 @@ namespace SE_Praktikum
             throw error;
         }
 
-        public void SetScreenFormat(Size previous)
-        {
-            switch (previous)
-            {
-                case Size.big:
-                    _graphics.PreferredBackBufferHeight = 400;
-                    _graphics.PreferredBackBufferWidth = 800;
-                    ScreenHeight = 100;
-                    ScreenWidth = 100;
-                    _graphics.ApplyChanges();
-                    break;
-                case Size.little:
-                    ScreenHeight = 720;
-                    ScreenWidth = 1280;
-                    _graphics.PreferredBackBufferHeight = 720;
-                    _graphics.PreferredBackBufferWidth = 1280;
-                    _graphics.ApplyChanges();
-                    break;
-                default:
-                    _graphics.PreferredBackBufferHeight = 1000; // 1080
-                    _graphics.PreferredBackBufferWidth = 1900; // 1920
-                    ScreenHeight = 1000;
-                    ScreenWidth = 1900;
-                    _graphics.ApplyChanges();
-                    break;
-            }
-        }
-
-        public int ScreenHeight { get; set; }
-        public int ScreenWidth { get; set; }
+        public int ScreenHeight { get; }
+        public int ScreenWidth { get; }
+        public Camera Camera { get; private set; }
     }
 }
