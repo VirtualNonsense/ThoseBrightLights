@@ -40,7 +40,7 @@ namespace SE_Praktikum.Core.GameStates
             spriteBatch.End();
         }
 
-        public override void LoadContent(ContentManager contentManager)
+        public override void LoadContent(ContentManager contentManager, GraphicsDevice graphicsDevice)
         {
             if (_buttons != null)
             {

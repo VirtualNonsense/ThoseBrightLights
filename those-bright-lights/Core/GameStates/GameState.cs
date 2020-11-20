@@ -15,7 +15,7 @@ namespace SE_Praktikum.Core.GameStates
             _subject = new Subject<GameStateMachine.GameStateMachineTrigger>();
         }
 
-        public abstract void LoadContent(ContentManager contentManager);
+        public abstract void LoadContent(ContentManager contentManager, GraphicsDevice graphicsDevice);
 
         public abstract void UnloadContent();
         
