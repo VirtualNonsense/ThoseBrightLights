@@ -11,5 +11,6 @@ namespace SE_Praktikum.Models
         public int playerPosition;
         public int enemyPosition;
         public int weapon;
+        public int score;
     }
 }
