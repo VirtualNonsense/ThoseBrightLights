@@ -10,22 +10,23 @@ namespace SE_Praktikum.Components.Sprites
 {
     public class Spaceship : Actor
     {
-        protected float _speed;
-        private Logger _logger;
-        protected int _health;
-        protected KeyboardState _currentKey;
-        protected KeyboardState _previousKey;
+        protected float Speed;
+        private readonly Logger _logger;
+        protected int Health;
+        protected Vector2 Direction;
+        protected KeyboardState CurrentKey;
+        protected KeyboardState PreviousKey;
         
         public Spaceship(AnimationHandler animationHandler, int health, float speed = 1f) : base(animationHandler)
         {
             _logger = LogManager.GetCurrentClassLogger();
-            _health = health;
-            _speed = speed;
+            Health = health;
+            Speed = speed;
         }
 
         public override void BaseCollide(Actor actor)
         {
-            _logger.Info(_health);
+            _logger.Info(Health);
         }
 
         public void Shoot()
