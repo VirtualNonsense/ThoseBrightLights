@@ -7,6 +7,7 @@ using NLog;
 using SE_Praktikum.Components.Sprites;
 using SE_Praktikum.Models;
 using SE_Praktikum.Services;
+using SE_Praktikum.Services.Factories;
 
 namespace SE_Praktikum.Core.GameStates
 {
@@ -15,28 +16,23 @@ namespace SE_Praktikum.Core.GameStates
         private IScreen _screen;
         private Logger _logger;
         public List<Actor> List;
+        private PlayerFactory _playerFactory;
         
-        public Testscreen(IScreen parent)
+        public Testscreen(IScreen parent, PlayerFactory playerFactory)
         {
             _screen = parent;
+            _playerFactory = playerFactory;
             _logger = LogManager.GetCurrentClassLogger();
         }
 
         public override void LoadContent(ContentManager contentManager)
         {
-            Player p = new Player(
-                new AnimationHandler(
-                    new TileSet(contentManager.Load<Texture2D>("Artwork/actors/spaceship")), new AnimationSettings(1)),
-                new Input(Keys.W, Keys.S, Keys.A, Keys.D, Keys.Q, Keys.E ),
-                100,1);
-            
-            Player q = new Player(
-                new AnimationHandler(
-                    new TileSet(contentManager.Load<Texture2D>("Artwork/actors/spaceship")),
-                    new AnimationSettings(1)),
-                new Input(Keys.Up, Keys.Down, Keys.Left, Keys.Right, Keys.Add, Keys.Subtract ),100,1);
-            q.Position = new Vector2(200,200);
+            Player p = _playerFactory.GetInstance(contentManager);
 
+            Player q = _playerFactory.GetInstance(contentManager,
+                new Input(Keys.Up, Keys.Down, Keys.Left, Keys.Right, Keys.Add, Keys.Subtract));
+            
+            q.Position = new Vector2(200,200);
             List = new List<Actor> {p, q};
             
             //p.OnCollide += (sender, args) => { _logger.Warn("p collide"); };
