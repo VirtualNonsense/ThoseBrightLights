@@ -1,6 +1,8 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using NLog;
+using SE_Praktikum.Components.Sprites.Weapons;
 using SE_Praktikum.Models;
 using SE_Praktikum.Services;
 using Stateless;
@@ -12,6 +14,10 @@ namespace SE_Praktikum.Components.Sprites
     {
         private Input _input;
         private Logger _logger;
+        private List<Weapon> _weapons;
+        private int _currentWeapon = 0;
+        private Vector2 _direction;
+        
         public Player(AnimationHandler animationHandler, Input input=null, int health=100, float speed = 1) 
             : base(animationHandler, health, speed)
         {
@@ -19,6 +25,8 @@ namespace SE_Praktikum.Components.Sprites
             Health = health;
             Speed = speed;
             _logger = LogManager.GetCurrentClassLogger();
+            _weapons = new List<Weapon>();
+            _direction = Vector2.Zero;
         }
 
         public override void Update(GameTime gameTime)
@@ -88,6 +96,11 @@ namespace SE_Praktikum.Components.Sprites
             }
 
             base.OnOnCollide();
+        }
+
+        public void PickUpWeapon(Weapon weapon)
+        {
+            _weapons.Add(weapon);
         }
     }
 }

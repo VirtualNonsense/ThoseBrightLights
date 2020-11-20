@@ -29,10 +29,6 @@ namespace SE_Praktikum.Components.Sprites
             _logger.Info(Health);
         }
 
-        public void Shoot()
-        {
-            throw new NotImplementedException();
-        }
 
     }
 }
