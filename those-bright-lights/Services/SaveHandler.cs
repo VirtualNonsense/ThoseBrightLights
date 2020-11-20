@@ -17,6 +17,7 @@ namespace SE_Praktikum.Services
                 sw.WriteLine($"Player_Position:{saveGame.playerPosition}");
                 sw.WriteLine($"Enemy_Position:{saveGame.enemyPosition}");
                 sw.WriteLine($"Weapon:{saveGame.weapon}");
+                sw.WriteLine($"Score:{saveGame.score}");
             }
         }
 
