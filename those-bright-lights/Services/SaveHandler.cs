@@ -49,6 +49,9 @@ namespace SE_Praktikum.Services
                         case "Weapon":
                             saveGame.weapon = int.Parse(keyValuePair[1]);
                             break;
+                        case "Score":
+                            saveGame.score = int.Parse(keyValuePair[1]);
+                            break;
                         default:
                             Console.WriteLine("What??");
                             break;
