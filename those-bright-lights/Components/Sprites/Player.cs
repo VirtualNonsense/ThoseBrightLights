@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using NLog;
@@ -78,6 +79,11 @@ namespace SE_Praktikum.Components.Sprites
             }
             
             #endregion
+
+            #region Collision
+            //_weapons[_currentWeapon].Update(gameTime);
+            #endregion
+            
             
             base.Update(gameTime);
         }

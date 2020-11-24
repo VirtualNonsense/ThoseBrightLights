@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using NLog;
+using SE_Praktikum.Components.Sprites.Weapons;
 using SE_Praktikum.Models;
 using SE_Praktikum.Services;
 

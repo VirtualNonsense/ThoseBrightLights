@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SE_Praktikum.Services;
 
@@ -16,5 +17,7 @@ namespace SE_Praktikum.Components.Sprites.Weapons
             _direction = direction;
         }
 
+      
+        
     }
 }

@@ -21,5 +21,10 @@ namespace SE_Praktikum.Components.Sprites.Weapons
         {
             throw new System.NotImplementedException();
         }
+
+        public override void Update(GameTime gameTime)
+        {
+            
+        }
     }
 }
