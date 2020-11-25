@@ -20,13 +20,22 @@ namespace SE_Praktikum.Components.Sprites
         {
         }
 
+        public Rectangle HitBox => throw new NotImplementedException();
+
         public event EventHandler<EventArgs> OnCollide; 
         
 
         public abstract void BaseCollide(Actor actor);
-        
-        
-        
+
+        public bool Collides(ICollideAble other)
+        {
+            if (Layer != other.Layer)
+                return false;
+            // ToDo: Intersects doenst account for rotation
+            var r = HitBox.Intersects(other.HitBox);
+            return r;
+        }
+
         public Vector2? Intersects(Actor actor)
         {
             if (this == actor) return null;
