@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using SE_Praktikum.Services;
 using SE_Praktikum.Components.Sprites.Weapons;
 using SE_Praktikum.Components.Controls;
+using System;
 
 namespace SE_Praktikum.Components.Sprites
 {
@@ -12,8 +13,10 @@ namespace SE_Praktikum.Components.Sprites
         private float _speed;
         private List<Weapon> _weapons;
         private int _currentWeapon;
-        
+
+
         #region Events
+        public event EventHandler OnShoot;
         
         #endregion
         
@@ -43,6 +46,7 @@ namespace SE_Praktikum.Components.Sprites
         {
             
         }
+
 
     }
 
