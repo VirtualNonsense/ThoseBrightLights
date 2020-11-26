@@ -16,43 +16,43 @@ namespace SE_Praktikum.Components.Sprites
             : base(animationHandler, health, speed)
         {
             _input = input;
-            _health = health;
-            _speed = speed;
+            Health = health;
+            Speed = speed;
             _logger = LogManager.GetCurrentClassLogger();
         }
 
         public override void Update(GameTime gameTime)
         {
             
-            _previousKey = _currentKey;
-            _currentKey = Keyboard.GetState();
+            PreviousKey = CurrentKey;
+            CurrentKey = Keyboard.GetState();
 
             var velocity = Vector2.Zero;
 
-            if (_currentKey.IsKeyDown(_input.Up))
+            if (CurrentKey.IsKeyDown(_input.Up))
             {
-                velocity.Y = -_speed;
+                velocity.Y = -Speed;
             }
-            else if (_currentKey.IsKeyDown(_input.Down))
+            else if (CurrentKey.IsKeyDown(_input.Down))
             {
-                velocity.Y += _speed;
+                velocity.Y += Speed;
             }
 
-            if (_currentKey.IsKeyDown(_input.Left))
+            if (CurrentKey.IsKeyDown(_input.Left))
             {
-                velocity.X -= _speed;
+                velocity.X -= Speed;
             }
-            if (_currentKey.IsKeyDown(_input.TurnLeft))
+            if (CurrentKey.IsKeyDown(_input.TurnLeft))
             {
                 Rotation += 0.01f;
-            }if (_currentKey.IsKeyDown(_input.TurnRight))
+            }if (CurrentKey.IsKeyDown(_input.TurnRight))
             {
                 Rotation -= 0.01f;
             }
             
-            else if (_currentKey.IsKeyDown(_input.Right))
+            else if (CurrentKey.IsKeyDown(_input.Right))
             {
-                velocity.X += _speed;
+                velocity.X += Speed;
             }
 
 
@@ -65,15 +65,15 @@ namespace SE_Praktikum.Components.Sprites
 
         protected override void OnOnCollide()
         {
-            _health -= 1;
-            if (_health <= 0)
+            Health -= 1;
+            if (Health <= 0)
             {
                 _logger.Error("Dead!");
                 IsRemoveAble = true;
             }
             else
             {
-                _logger.Info(_health);
+                _logger.Info(Health);
             }
 
             base.OnOnCollide();
