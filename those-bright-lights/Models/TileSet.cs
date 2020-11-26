@@ -64,7 +64,7 @@ namespace SE_Praktikum.Models
             return new Vector2(TileDimX/2f, TileDimY/2f);
         }
         
-        public Color[] GetDataOfFrame(int tile)
+        public Byte[] GetDataOfFrame(int tile)
         {
             int rowOfTile = tile / Columns;
             int columnOfTile = tile % Columns;
@@ -81,7 +81,7 @@ namespace SE_Praktikum.Models
             var pixelColumnOffset = columnOfTile * tilewidth;
 
             //array for one tile to copy sth in 
-            Color[] pixelArray = new Color[tilewidth *tileheight];
+            Byte[] pixelArray = new Byte[tilewidth *tileheight];
             
             //array filled with all tiles from tileset 
             Color[] allTiles = new Color[texturewidth*textureheight];
@@ -98,7 +98,7 @@ namespace SE_Praktikum.Models
                 for(int column = 0; column < TileDimX; column++)
                 {
                     //summing up all offsets until the pixel we need 
-                    pixelArray[row * tilewidth + column] = allTiles[rowOffsetForAllTilesAbove + pixelColumnOffset + rowPixelOffset + column];
+                    pixelArray[row * tilewidth + column] = allTiles[rowOffsetForAllTilesAbove + pixelColumnOffset + rowPixelOffset + column].A;
                 }
             }
             return pixelArray;

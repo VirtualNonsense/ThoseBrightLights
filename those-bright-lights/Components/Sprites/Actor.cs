@@ -73,11 +73,11 @@ namespace SE_Praktikum.Components.Sprites
                         0 <= yB && yB < actor.Rectangle.Height)
                     {
                         // Get the colors of the overlapping pixels
-                        var colourA = t1[xA + yA * Rectangle.Width];
-                        var colourB = t2[xB + yB * actor.Rectangle.Width];
+                        var alphaA = t1[xA + yA * Rectangle.Width];
+                        var alphaB = t2[xB + yB * actor.Rectangle.Width];
 
                         // If both pixel are not completely transparent
-                        if (colourA.A != 0 && colourB.A != 0)
+                        if (alphaA != 0 && alphaB != 0)
                         {
                             OnOnCollide();
                             return new Vector2(xB,yB);
