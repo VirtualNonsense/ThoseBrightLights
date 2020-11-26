@@ -32,12 +32,23 @@ namespace SE_Praktikum.Components.Sprites
             if (Layer != other.Layer)
                 return false;
             // ToDo: Intersects doenst account for rotation
-            var r = HitBox.Intersects(other.HitBox);
-            return r;
+            if (other is Actor actor)
+                return !(this.Intersects(actor) is null);
+            else
+                throw new NotImplementedException();
         }
 
         public Vector2? Intersects(Actor actor)
         {
+            //if actors are not rotated, use faster method Intersects of Rectangle for now, 
+            //-> no exact value for the collision position
+            if (Rotation == 0 && actor.Rotation == 0)
+            {
+                if (HitBox.Intersects(actor.HitBox))
+                    return Position;
+                return null;
+            }
+            //actors can't collide with themselves
             if (this == actor) return null;
             var t1 = _animationHandler.GetDataOfFrame();
             var t2 = actor._animationHandler.GetDataOfFrame();
