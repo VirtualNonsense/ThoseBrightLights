@@ -23,7 +23,7 @@ namespace SE_Praktikum.Core.GameStates
             _screen = screen; 
         }
 
-        public override void LoadContent(ContentManager contentManager, GraphicsDevice graphicsDevice)
+        public override void LoadContent(ContentManager contentManager)
         {
             if (_buttons != null)
             {

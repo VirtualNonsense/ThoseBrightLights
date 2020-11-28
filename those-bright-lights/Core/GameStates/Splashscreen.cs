@@ -37,7 +37,7 @@ namespace SE_Praktikum.Core.GameStates
             MapFactory = mapFactory;
         }
         
-        public override void LoadContent(ContentManager contentManager, GraphicsDevice graphicsDevice)
+        public override void LoadContent(ContentManager contentManager)
         {
             var p = new TileSet(contentManager.Load<Texture2D>("Artwork/Effects/explosion_45_45"), 45, 45,0);
             _explosionEmitter.TileSet = p;

@@ -34,7 +34,7 @@ namespace SE_Praktikum.Core.GameStates
             spriteBatch.End();
         }
 
-        public override void LoadContent(ContentManager contentManager, GraphicsDevice graphicsDevice)
+        public override void LoadContent(ContentManager contentManager)
         {
             if (_buttons != null) return;
             _buttons = new List<Menubutton>();
