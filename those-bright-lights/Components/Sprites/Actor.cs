@@ -20,7 +20,9 @@ namespace SE_Praktikum.Components.Sprites
         {
         }
 
-        public Rectangle HitBox => throw new NotImplementedException();
+        private Rectangle? _hitbox = null;
+        public Rectangle HitBox => _hitbox ?? Rectangle;
+        
 
         public event EventHandler<EventArgs> OnCollide; 
         
