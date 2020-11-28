@@ -9,12 +9,16 @@ namespace SE_Praktikum.Core
 {
     public class Level : IComponent
     {
+        private readonly MapFactory _mapFactory;
+        private readonly PlayerFactory _playerFactory;
         private List<IComponent> _components;
 
         
         //Constructor
-        public Level()
+        public Level(MapFactory mapFactory, PlayerFactory playerFactory)
         {
+            _mapFactory = mapFactory;
+            _playerFactory = playerFactory;
             _components = new List<IComponent>();
         }
 
@@ -55,6 +59,14 @@ namespace SE_Praktikum.Core
             {
                 _components.Add(t.Bullet);
             }
+        }
+
+        public void LoadContent(ContentManager contentManager)
+        {
+            _components.Add(_playerFactory.GetInstance(contentManager));
+            //TODO: try to load the json map via the contentmanager
+            _components.Add(_mapFactory.LoadMap(contentManager,
+                JsonConvert.DeserializeObject<LevelBlueprint>(File.ReadAllText(@".\Content\Level\TestLevel\TestLevel.json"))));
         }
     }
 }
