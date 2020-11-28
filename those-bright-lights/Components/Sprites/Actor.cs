@@ -11,7 +11,7 @@ using SE_Praktikum.Models;
 
 namespace SE_Praktikum.Components.Sprites
 {
-    public abstract class Actor : Sprite, ICollideAble
+    public abstract class Actor : Sprite
     {
 
         public bool CollisionEnabled = true;
@@ -29,16 +29,6 @@ namespace SE_Praktikum.Components.Sprites
 
         public abstract void BaseCollide(Actor actor);
 
-        public bool Collides(ICollideAble other)
-        {
-            if (Layer != other.Layer)
-                return false;
-            // ToDo: Intersects doenst account for rotation
-            if (other is Actor actor)
-                return !(this.Intersects(actor) is null);
-            else
-                throw new NotImplementedException();
-        }
 
         public Vector2? Intersects(Actor actor)
         {
