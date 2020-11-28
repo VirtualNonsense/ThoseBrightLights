@@ -13,9 +13,9 @@ namespace SE_Praktikum.Core
 
         
         //Constructor
-        public Level(List<IComponent> components)
+        public Level()
         {
-            _components = components;
+            _components = new List<IComponent>();
         }
 
 
@@ -47,7 +47,7 @@ namespace SE_Praktikum.Core
         }
 
         
-        public void OnNotify(LevelEvent levelEvent)
+        public void OnShoot(LevelEvent levelEvent)
         {
             var t = (LevelEvent.ShootBullet)levelEvent;
             //if player or enemy shoots the ShootBullet event triggers
