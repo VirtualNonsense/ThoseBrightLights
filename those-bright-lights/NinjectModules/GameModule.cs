@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Content;
 using Ninject;
 using Ninject.Modules;
+using SE_Praktikum.Core;
 using SE_Praktikum.Core.GameStates;
 using SE_Praktikum.Models;
 using SE_Praktikum.Services;
@@ -19,6 +20,7 @@ namespace SE_Praktikum.NinjectModules
             Bind<ContentManager>().ToMethod(c => c.Kernel.Get<SE_Praktikum_Game>().Content);
             Bind<IObservable<GameState>>().To<GameStateMachine>();
             Bind<ExplosionEmitter>().ToSelf();
+            Bind<Level>().ToSelf();
 
         }
     }
