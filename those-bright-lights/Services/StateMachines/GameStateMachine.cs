@@ -14,7 +14,7 @@ namespace SE_Praktikum.Services.StateMachines
         private readonly StateMachine<State, StateTrigger> _machine;
         private readonly Dictionary<State, GameState> _stateMap;
         
-        public GameStateMachine(Testscreen splashscreen)
+        public GameStateMachine(Splashscreen splashscreen)
         {
             _logger = LogManager.GetCurrentClassLogger();
             _subject = new Subject<GameState>();

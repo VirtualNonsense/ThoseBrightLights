@@ -21,27 +21,22 @@ namespace SE_Praktikum.Core.GameStates
     public class Splashscreen : GameState
     {
         private IScreen _screen;
-        private Map TestMap;
-        public Song _song;
-        private MapFactory MapFactory;
+        private Level _level;
 
        
 
         private Logger _logger;
 
-        public Splashscreen(IScreen parent, ExplosionEmitter explosionEmitter, MapFactory mapFactory)
+        public Splashscreen(IScreen parent, ExplosionEmitter explosionEmitter, MapFactory mapFactory, Level level)
         {
             _screen = parent;
-
             _logger = LogManager.GetCurrentClassLogger();
-            MapFactory = mapFactory;
+            _level = level;
         }
 
         public override void LoadContent(ContentManager contentManager)
         {
-           var LevelBlueprint = JsonConvert.DeserializeObject<LevelBlueprint>(File.ReadAllText(@".\Content\Level\TestLevel\TestLevel.json"));
-            TestMap = MapFactory.LoadMap(contentManager, LevelBlueprint);
-
+            _level.LoadContent(contentManager);
         }
 
         public override void UnloadContent()
@@ -52,6 +47,7 @@ namespace SE_Praktikum.Core.GameStates
         public override void Update(GameTime gameTime)
         {
             _screen.Camera.Update(gameTime); 
+            _level.Update(gameTime);
         }
 
         public override void PostUpdate(GameTime gameTime)
@@ -68,7 +64,7 @@ namespace SE_Praktikum.Core.GameStates
                               null,
                               RasterizerState.CullCounterClockwise, // Render only the texture side that faces the camara to boost performance 
                               _screen.Camera.GetCameraEffect());
-            TestMap.Draw(gameTime, spriteBatch);
+            _level.Draw(gameTime,spriteBatch);
             spriteBatch.End();
         }
     }
