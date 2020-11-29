@@ -24,7 +24,7 @@ namespace SE_Praktikum.Services.Factories
             _logger = LogManager.GetCurrentClassLogger();
         }
 
-        public MenuButton GetInstance(ContentManager contentManager, uint tilesX, uint tilesY, Vector2 position, bool useCenterAsOrigin = true, Camera camera = null)
+        public MenuButton GetInstance(ContentManager contentManager, uint tilesX, uint tilesY, Vector2 position, string text = "", bool useCenterAsOrigin = true, Camera camera = null)
         {
             List<AnimationHandler> handlers = new List<AnimationHandler>();
             if (_buttonsAndSwitches is null) 
@@ -164,6 +164,8 @@ namespace SE_Praktikum.Services.Factories
                     }
                     
                     animationSettings.IsPlaying = false;
+                    // should be < 0 to avoid problem with text rendering
+                    animationSettings.Layer = -.10f;
                     var handler = _animationHandlerFactory.GetAnimationHandler(
                         _buttonsAndSwitches, 
                         animationSettings,
@@ -173,7 +175,7 @@ namespace SE_Praktikum.Services.Factories
                     handlers.Add(handler);
                 }
             }
-            return new MenuButton(handlers, contentManager.Load<SpriteFont>("Font/Font2"), position: position, useCenterAsOrigin: useCenterAsOrigin, camera: camera);;
+            return new MenuButton(handlers, contentManager.Load<SpriteFont>("Font/Font2"), text: text, position: position, useCenterAsOrigin: useCenterAsOrigin, camera: camera);;
         }
         
     }
