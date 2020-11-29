@@ -1,4 +1,4 @@
-﻿﻿using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -151,9 +151,9 @@ namespace SE_Praktikum.Components.Controls
             {
                 var animationHandlerFrame = animationHandler.Frame;
                 animationHandlerFrame.X =  (int) (animationHandler.Position.X + animationHandler.Offset.X -
-                                                  animationHandler.Origin.X - _origin.X);
+                                                  animationHandler.Origin.X + _position.X - _origin.X);
                 animationHandlerFrame.Y =  (int) (animationHandler.Position.Y + animationHandler.Offset.Y -
-                                                  animationHandler.Origin.Y - _origin.Y); 
+                                                  animationHandler.Origin.Y + _position.Y - _origin.Y); 
                 _logger.Debug(animationHandlerFrame);
                 Rectangle.Union(ref animationHandlerFrame, ref r, out r);
             }
