@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using NLog;
+using SE_Praktikum.Extensions;
 using SE_Praktikum.Models;
 
 namespace SE_Praktikum.Core
@@ -153,8 +154,11 @@ namespace SE_Praktikum.Core
 
         public Vector2 ProjectScreenPosIntoWorld(Vector2 position)
         {
-            var mouseOriginInWorld = new Vector2(-_viewport.Width/2f + _position.X, -_viewport.Height/2f + _position.Y);
-            return mouseOriginInWorld + position;
+            var angle = MathExtensions.DegToRad(FieldOfView/2);
+            var max = (float)Math.Tan(angle) * _position.Z;
+            var x = MathExtensions.Remap(position.X, 0, _viewport.Width, - max * _viewport.AspectRatio, max * _viewport.AspectRatio);
+            var y = MathExtensions.Remap(position.Y, 0, _viewport.Height, - max, max);
+            return new Vector2(x + _position.X - .5f, y + _position.Y - 2.5f); // adding camera position and tooling numbers
         }
     }
 }
