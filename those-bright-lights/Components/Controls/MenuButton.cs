@@ -46,16 +46,24 @@ namespace SE_Praktikum.Components.Controls
         public Vector2 Position
         {
             get => _position;
-            set => _position=value;
+            set
+            {
+                _position = value;
+                Frame = GetRectangle();
+            }
         }
 
         public Vector2 Origin
         {
             get => _origin;
-            set => _origin = value;
+            set
+            {
+                _origin = value;
+                Frame = GetRectangle();
+            }
         }
 
-        public Rectangle Frame { get; }
+        public Rectangle Frame { get; private set; }
 
         public string Text { get; set; }
 
