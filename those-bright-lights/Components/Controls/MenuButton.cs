@@ -65,6 +65,8 @@ namespace SE_Praktikum.Components.Controls
 
         public Rectangle Frame { get; private set; }
 
+        private Vector2 Offset => _position - _origin;
+
         public string Text { get; set; }
 
         #endregion
@@ -76,7 +78,8 @@ namespace SE_Praktikum.Components.Controls
                           Color? textColor = null,
                           Vector2? position = null,
                           bool useCenterAsOrigin = true,
-                          Camera camera = null)
+                          Camera camera = null,
+                          string text = "")
         {
             _logger = LogManager.GetCurrentClassLogger();
             _position = position ?? Vector2.Zero;
@@ -84,7 +87,8 @@ namespace SE_Praktikum.Components.Controls
             _origin = Vector2.Zero;
             _font = font;
             _camera = camera;
-            TextColor = textColor ?? Color.Black;
+            TextColor = textColor ?? Color.CornflowerBlue;
+            Text = text;
             Frame = GetRectangle();
             if (useCenterAsOrigin)
             {
@@ -111,7 +115,7 @@ namespace SE_Praktikum.Components.Controls
             {
                 handler.Settings.Color = co;
                 handler.CurrentIndex = Clicked? 1 : 0;
-                handler.Offset = _position - _origin;
+                handler.Offset = Offset;
                 handler.Draw(spriteBatch);
             }
 
@@ -132,7 +136,6 @@ namespace SE_Praktikum.Components.Controls
                                               _camera.ProjectScreenPosIntoWorld(_currentMouse.Position.ToVector2());
 
             var mouseRectangle = new Rectangle((int) Math.Round(pos.X), (int) Math.Round(pos.Y), 1, 1);
-            _logger.Trace($"frame {Frame} mousepos: {mouseRectangle}");
             _isHovering = false;
 
             if (mouseRectangle.Intersects(Frame))
@@ -150,22 +153,27 @@ namespace SE_Praktikum.Components.Controls
                     Clicked = false;
                 }
             }
+            else
+            {
+                Clicked = false;
+            }
         }
 
         private Rectangle GetRectangle()
         {
-            Rectangle r = Rectangle.Empty;
+            // making sure an intersection between r and the other is impossible.
+            Rectangle r = new Rectangle(int.MaxValue, Int32.MaxValue, 0, 0);
             foreach (AnimationHandler animationHandler in _handler)
             {
-                var animationHandlerFrame = animationHandler.Frame;
-                animationHandlerFrame.X =  (int) (animationHandler.Position.X + animationHandler.Offset.X -
-                                                  animationHandler.Origin.X + _position.X - _origin.X);
-                animationHandlerFrame.Y =  (int) (animationHandler.Position.Y + animationHandler.Offset.Y -
-                                                  animationHandler.Origin.Y + _position.Y - _origin.Y); 
-                _logger.Debug(animationHandlerFrame);
-                Rectangle.Union(ref animationHandlerFrame, ref r, out r);
+                // will be updated during update method but must be set initially as well.
+                animationHandler.Offset = Offset;
+                var frame = animationHandler.Frame;
+                frame.X =  (int) (animationHandler.Position.X + animationHandler.Offset.X -
+                                                  animationHandler.Origin.X);
+                frame.Y =  (int) (animationHandler.Position.Y + animationHandler.Offset.Y -
+                                                  animationHandler.Origin.Y );
+                Rectangle.Union(ref frame, ref r, out r);
             }
-
             return r;
         }
 
