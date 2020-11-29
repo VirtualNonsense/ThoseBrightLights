@@ -12,6 +12,7 @@ namespace SE_Praktikum.Core
         private readonly CameraControls _controls;
 
         private Vector3 _position;
+        private readonly Viewport _viewport;
         private readonly BasicEffect _spriteEffect;
         private Logger _logger;
         private int _rotation;
@@ -21,7 +22,6 @@ namespace SE_Praktikum.Core
             get => _position;
         }
         public float FieldOfView { get; set; }
-        public float AspectRatio { get; }
         public float ZNearPlane { get; }
         public float ZFarPlane { get; }
         
@@ -38,7 +38,7 @@ namespace SE_Praktikum.Core
         /// </summary>
         /// <param name="position"></param>
         /// <param name="fieldOfView">field of view in deg</param>
-        /// <param name="aspectRatio"></param>
+        /// <param name="viewport"></param>
         /// <param name="spriteEffect"></param>
         /// <param name="cameraSpeed"></param>
         /// <param name="cameraZoomSpeed"></param>
@@ -47,7 +47,7 @@ namespace SE_Praktikum.Core
         /// <param name="controls"></param>
         public Camera(Vector3 position,
                       float fieldOfView, 
-                      float aspectRatio, 
+                      Viewport viewport,
                       BasicEffect spriteEffect, 
                       float? cameraSpeed = null, 
                       float cameraZoomSpeed = 5f, 
@@ -57,9 +57,9 @@ namespace SE_Praktikum.Core
         {
             _logger = LogManager.GetCurrentClassLogger();
             _position = position;
+            _viewport = viewport;
             _spriteEffect = spriteEffect;
             FieldOfView = fieldOfView;
-            AspectRatio = aspectRatio;
             CameraSpeed = cameraSpeed ?? fieldOfView;
             CameraZoomSpeed = cameraZoomSpeed;
             ZNearPlane = zNearPlane;
@@ -83,7 +83,7 @@ namespace SE_Praktikum.Core
 
         private Matrix GetProjection()
         {
-            return Matrix.CreatePerspectiveFieldOfView((float) (FieldOfView * Math.PI/180f), AspectRatio, ZNearPlane, ZFarPlane);
+            return Matrix.CreatePerspectiveFieldOfView((float) (FieldOfView * Math.PI/180f), _viewport.AspectRatio, ZNearPlane, ZFarPlane);
         }
 
         public void Update(GameTime gameTime)
@@ -150,6 +150,11 @@ namespace SE_Praktikum.Core
             _spriteEffect.Projection = GetProjection();
             return _spriteEffect;
         }
-        
+
+        public Vector2 ProjectScreenPosIntoWorld(Vector2 position)
+        {
+            var mouseOriginInWorld = new Vector2(-_viewport.Width/2f + _position.X, -_viewport.Height/2f + _position.Y);
+            return mouseOriginInWorld + position;
+        }
     }
 }
