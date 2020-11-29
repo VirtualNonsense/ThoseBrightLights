@@ -42,7 +42,7 @@ namespace SE_Praktikum
             IsMouseVisible = true;
             Camera = new Camera(new Vector3(0,0,100),
                 120, 
-                _graphics.GraphicsDevice.Viewport.AspectRatio, 
+                _graphics.GraphicsDevice.Viewport, 
                 new BasicEffect(_graphics.GraphicsDevice) {TextureEnabled = true});
             base.Initialize();
         }
