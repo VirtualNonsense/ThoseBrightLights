@@ -49,7 +49,6 @@ namespace SE_Praktikum.Services.ParticleEmitter
                 particle.Update(gameTime);
 
             RemovedFinishedParticles();
-            _logger.Trace($"Total amount of particles: {ParticleCount}");
         }
 
         protected virtual void AddParticle()
@@ -72,7 +71,6 @@ namespace SE_Praktikum.Services.ParticleEmitter
             {
                 if (_particles[i].IsRemoveAble)
                 {
-                    _logger.Trace("particle removed");
                     _particles.RemoveAt(i);
                     i--;
                     ParticleCount--;

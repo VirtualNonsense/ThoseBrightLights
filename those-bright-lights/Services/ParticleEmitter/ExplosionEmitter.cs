@@ -34,7 +34,6 @@ namespace SE_Praktikum.Services.ParticleEmitter
 
         protected override Sprite GenerateParticle()
         {   
-            _logger.Trace("Generating particle");
             
             var xPosition = _spawnArea.X + _random.Next(0, _spawnArea.Width);
             var yPosition = _spawnArea.Y + _random.Next(0, _spawnArea.Height);
