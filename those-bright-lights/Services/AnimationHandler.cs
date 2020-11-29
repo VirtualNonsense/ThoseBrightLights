@@ -63,7 +63,6 @@ namespace SE_Praktikum.Services
             Settings = settings;
             Position = position ?? new Vector2(0,0);
             Origin = origin ?? Tileset.GetFrameCenter();
-            _logger.Debug(Origin);
             Offset = Vector2.Zero;
         }
 
