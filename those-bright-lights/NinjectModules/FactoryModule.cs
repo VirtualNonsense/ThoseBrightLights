@@ -11,6 +11,7 @@ namespace SE_Praktikum.NinjectModules
             Bind<AnimationHandlerFactory>().ToSelf().InSingletonScope();
             Bind<MapFactory>().ToSelf().InSingletonScope();
             Bind<TileFactory>().ToSelf().InSingletonScope();
+            Bind<MenuButtonFactory>().ToSelf().InSingletonScope();
         }
     }
 }
