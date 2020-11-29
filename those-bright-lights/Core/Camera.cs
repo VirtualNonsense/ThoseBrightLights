@@ -70,8 +70,8 @@ namespace SE_Praktikum.Core
                                                        Keys.K, 
                                                        Keys.I, 
                                                        Keys.Y, 
-                                                       Keys.O, 
-                                                       Keys.L );
+                                                       Keys.L, 
+                                                       Keys.O );
         }
 
         private Matrix View()
@@ -102,14 +102,14 @@ namespace SE_Praktikum.Core
             if (Keyboard.GetState().IsKeyDown(_controls.Left))
                 _position.X -= CameraSpeed * time + _position.Z/2 * time;
 
-            if (Keyboard.GetState().IsKeyDown(_controls.ZoomIn))
+            if (Keyboard.GetState().IsKeyDown(_controls.ZoomOut))
             {
                 _position.Z += CameraZoomSpeed * time;
                 if (_position.Z > ZFarPlane)
                     _position.Z = ZFarPlane - float.Epsilon;
             }
                 
-            if (Keyboard.GetState().IsKeyDown(_controls.ZoomOut))
+            if (Keyboard.GetState().IsKeyDown(_controls.ZoomIn))
             {
                 _position.Z -= CameraZoomSpeed * time;
                 if (_position.Z < ZNearPlane)
