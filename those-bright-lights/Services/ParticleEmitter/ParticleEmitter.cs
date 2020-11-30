@@ -8,7 +8,7 @@ using SE_Praktikum.Models;
 
 namespace SE_Praktikum.Services.ParticleEmitter
 {
-    public abstract class ParticleEmitter : IComponent
+    public abstract class ParticleEmitter
     {
         private float _generateTimer;
 
