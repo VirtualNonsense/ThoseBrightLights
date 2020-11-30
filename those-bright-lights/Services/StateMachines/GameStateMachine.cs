@@ -28,9 +28,7 @@ namespace SE_Praktikum.Services.StateMachines
                 {State.Settings, settings},
                 {State.LevelSelect, levelSelect}
             };
-            _machine = new StateMachine<State, GameStateMachineTrigger>(State.Init);
-            _machine.Configure(State.Init).OnEntry(onEntry)
-                .Permit(GameStateMachineTrigger.InitFinished, State.SplashScreen);
+            _machine = new StateMachine<State, GameStateMachineTrigger>(State.SplashScreen);
             _machine.Configure(State.SplashScreen).OnEntry(onEntry)
                 .Permit(GameStateMachineTrigger.SkipSplashScreen, State.Menu);
             _machine.Configure(State.Menu).OnEntry(onEntry)
@@ -42,7 +40,6 @@ namespace SE_Praktikum.Services.StateMachines
             _machine.Configure(State.LevelSelect).OnEntry(onEntry)
                 .Permit(GameStateMachineTrigger.Back, State.Menu);
             _machine.Configure(State.Quit).OnEntry(onComplete);
-            _machine.Fire(GameStateMachineTrigger.InitFinished);
             foreach (var mapEntry in _stateMap)
             {
                 mapEntry.Value.Subscribe(this);
@@ -78,7 +75,6 @@ namespace SE_Praktikum.Services.StateMachines
 
         private enum State
         {
-            Init,
             SplashScreen,
             Menu,
             Settings,
@@ -88,7 +84,6 @@ namespace SE_Praktikum.Services.StateMachines
 
         public enum GameStateMachineTrigger
         {
-            InitFinished,
             SkipSplashScreen,
             StartGame,
             StartSettings,
