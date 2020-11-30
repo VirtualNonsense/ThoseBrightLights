@@ -17,6 +17,7 @@ namespace SE_Praktikum.Services
                 sw.WriteLine($"Player_Position:{saveGame.playerPosition}");
                 sw.WriteLine($"Enemy_Position:{saveGame.enemyPosition}");
                 sw.WriteLine($"Weapon:{saveGame.weapon}");
+                sw.WriteLine($"Score:{saveGame.score}");
             }
         }
 
@@ -47,6 +48,9 @@ namespace SE_Praktikum.Services
                             break;
                         case "Weapon":
                             saveGame.weapon = int.Parse(keyValuePair[1]);
+                            break;
+                        case "Score":
+                            saveGame.score = int.Parse(keyValuePair[1]);
                             break;
                         default:
                             Console.WriteLine("What??");
