@@ -1,62 +1,50 @@
-﻿using System.Collections.Generic;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Media;
 using NLog;
-using SE_Praktikum.Components.Sprites;
-using SE_Praktikum.Components.Sprites.SplashScreen;
 using SE_Praktikum.Models;
-using SE_Praktikum.Services;
-using SE_Praktikum.Services.ParticleEmitter;
-using SE_Praktikum.Components;
-using SE_Praktikum.Services.Factories;
-using Newtonsoft.Json;
-using SE_Praktikum.Models.Tiled;
-using System.IO;
+using SE_Praktikum.Services.StateMachines;
 
 namespace SE_Praktikum.Core.GameStates
 {
     public class Splashscreen : GameState
     {
-        private IScreen _screen;
-        private Map TestMap;
-        public Song _song;
-        private MapFactory MapFactory;
-
-       
-
         private Logger _logger;
+        private IScreen _screen;
+        private float _elapsedTime = 0;
+        private int _splashscreenTime = 60;
 
-        public Splashscreen(IScreen parent, ExplosionEmitter explosionEmitter, MapFactory mapFactory)
+        public Splashscreen(IScreen parent)
         {
-            _screen = parent;
-
             _logger = LogManager.GetCurrentClassLogger();
-            MapFactory = mapFactory;
+            _screen = parent;
         }
-
+        
         public override void LoadContent(ContentManager contentManager)
         {
-           var LevelBlueprint = JsonConvert.DeserializeObject<LevelBlueprint>(File.ReadAllText(@".\Content\Level\TestLevel\TestLevel.json"));
-            TestMap = MapFactory.LoadMap(contentManager, LevelBlueprint);
 
         }
 
         public override void UnloadContent()
         {
-            throw new System.NotImplementedException();
+            _logger.Debug("unloading content");
         }
 
         public override void Update(GameTime gameTime)
         {
+            _elapsedTime += gameTime.ElapsedGameTime.Milliseconds/1000f;
+            _logger.Trace(_elapsedTime);
+            if(Keyboard.GetState().IsKeyDown(Keys.Escape) || _splashscreenTime < _elapsedTime)
+            {
+                _logger.Debug("exiting splashscreen");
+                _subject.OnNext(GameStateMachine.GameStateMachineTrigger.SkipSplashScreen);
+            }
             _screen.Camera.Update(gameTime); 
         }
 
         public override void PostUpdate(GameTime gameTime)
         {
-           
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
@@ -68,7 +56,6 @@ namespace SE_Praktikum.Core.GameStates
                               null,
                               RasterizerState.CullCounterClockwise, // Render only the texture side that faces the camara to boost performance 
                               _screen.Camera.GetCameraEffect());
-            TestMap.Draw(gameTime, spriteBatch);
             spriteBatch.End();
         }
     }

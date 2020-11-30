@@ -25,6 +25,30 @@
 /processorParam:TextureFormat=Color
 /build:Artwork/Actors/spaceship.png
 
+#begin Artwork/Controls/button.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Artwork/Controls/button.png
+
+#begin Artwork/Controls/ButtonsAndSwitches.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Artwork/Controls/ButtonsAndSwitches.png
+
 #begin Artwork/Effects/explosion_45_45.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -36,6 +60,42 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Artwork/Effects/explosion_45_45.png
+
+#begin Artwork/misc/100x50PixelTest.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Artwork/misc/100x50PixelTest.png
+
+#begin Artwork/misc/1280x720PixelTest.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Artwork/misc/1280x720PixelTest.png
+
+#begin Artwork/misc/arrow.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Artwork/misc/arrow.png
 
 #begin Artwork/misc/horizontalline.png
 /importer:TextureImporter
@@ -108,6 +168,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Artwork/Tilemaps/Blocks_32_32.png
+
+#begin Artwork/Tilemaps/ButtonsAndSwitches.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Artwork/Tilemaps/ButtonsAndSwitches.png
 
 #begin Artwork/Tilemaps/Space_32_32.png
 /importer:TextureImporter

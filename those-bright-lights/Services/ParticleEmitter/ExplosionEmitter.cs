@@ -34,14 +34,21 @@ namespace SE_Praktikum.Services.ParticleEmitter
 
         protected override Sprite GenerateParticle()
         {   
-            _logger.Trace("Generating particle");
             
             var xPosition = _spawnArea.X + _random.Next(0, _spawnArea.Width);
             var yPosition = _spawnArea.Y + _random.Next(0, _spawnArea.Height);
             var ySpeed = _random.Next(10, 100) / 100f;
-            var animation_duration = _random.Next(10, 200) / 100f;
+            var animation_duration = _random.Next(10, 200);
             
-            var settings = new AnimationSettings(updateList: new List<(int, float)>{(6,animation_duration),(2,animation_duration)},isLooping:true);
+            var settings = new AnimationSettings(updateList: new List<(int, float)>
+            {
+                (0,animation_duration),
+                (2,2*animation_duration),
+                (3,3*animation_duration),
+                (4,4*animation_duration),
+                (5,5*animation_duration),
+                (6,6*animation_duration),
+            });
 
             var sprite = _factory.BuildExplosionParticle(TileSet, settings);
             
@@ -50,7 +57,7 @@ namespace SE_Praktikum.Services.ParticleEmitter
             sprite.Rotation = MathHelper.ToRadians(_random.Next(0, 360));
             sprite.Scale = (float) _random.NextDouble() + _random.Next(0, 3);
             sprite.Velocity = new Vector2(0, ySpeed);
-            sprite.Layer = sprite.Opacity;
+            sprite.Layer = sprite.Opacity*20;
 
 
             return sprite;

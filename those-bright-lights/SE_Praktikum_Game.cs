@@ -39,9 +39,10 @@ namespace SE_Praktikum
             _graphics.PreferredBackBufferWidth = ScreenWidth;
             _graphics.PreferredBackBufferHeight = ScreenHeight;
             _graphics.ApplyChanges();
+            IsMouseVisible = true;
             Camera = new Camera(new Vector3(0,0,100),
                 120, 
-                _graphics.GraphicsDevice.Viewport.AspectRatio, 
+                _graphics.GraphicsDevice.Viewport, 
                 new BasicEffect(_graphics.GraphicsDevice) {TextureEnabled = true});
             base.Initialize();
         }
@@ -56,16 +57,12 @@ namespace SE_Praktikum
         protected override void UnloadContent()
         {
             _logger.Debug("unloading content");
+            _currentState?.UnloadContent();
             base.UnloadContent();
         }
 
         protected override void Update(GameTime gameTime)
         {
-            
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed ||
-                Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
-
             if (_nextState != null)
             {
                 _logger.Debug("Performing Reload");
@@ -76,11 +73,9 @@ namespace SE_Praktikum
                 
             }
             //_logger.Debug("Update!");
-
             _currentState?.Update(gameTime);
             _currentState?.PostUpdate(gameTime);
             base.Update(gameTime);
-            
         }
 
         protected override void Draw(GameTime gameTime)
@@ -99,7 +94,8 @@ namespace SE_Praktikum
 
         public void OnCompleted()
         {
-            throw new NotImplementedException();
+            _logger.Debug("OnCompleted(): shutting down");
+            Exit();
         }
 
         public void OnError(Exception error)

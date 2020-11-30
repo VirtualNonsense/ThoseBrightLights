@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using NLog;
+using SE_Praktikum.Extensions;
 using SE_Praktikum.Models;
 
 namespace SE_Praktikum.Core
@@ -12,6 +13,7 @@ namespace SE_Praktikum.Core
         private readonly CameraControls _controls;
 
         private Vector3 _position;
+        private readonly Viewport _viewport;
         private readonly BasicEffect _spriteEffect;
         private Logger _logger;
         private int _rotation;
@@ -21,7 +23,6 @@ namespace SE_Praktikum.Core
             get => _position;
         }
         public float FieldOfView { get; set; }
-        public float AspectRatio { get; }
         public float ZNearPlane { get; }
         public float ZFarPlane { get; }
         
@@ -38,7 +39,7 @@ namespace SE_Praktikum.Core
         /// </summary>
         /// <param name="position"></param>
         /// <param name="fieldOfView">field of view in deg</param>
-        /// <param name="aspectRatio"></param>
+        /// <param name="viewport"></param>
         /// <param name="spriteEffect"></param>
         /// <param name="cameraSpeed"></param>
         /// <param name="cameraZoomSpeed"></param>
@@ -47,7 +48,7 @@ namespace SE_Praktikum.Core
         /// <param name="controls"></param>
         public Camera(Vector3 position,
                       float fieldOfView, 
-                      float aspectRatio, 
+                      Viewport viewport,
                       BasicEffect spriteEffect, 
                       float? cameraSpeed = null, 
                       float cameraZoomSpeed = 5f, 
@@ -57,9 +58,9 @@ namespace SE_Praktikum.Core
         {
             _logger = LogManager.GetCurrentClassLogger();
             _position = position;
+            _viewport = viewport;
             _spriteEffect = spriteEffect;
             FieldOfView = fieldOfView;
-            AspectRatio = aspectRatio;
             CameraSpeed = cameraSpeed ?? fieldOfView;
             CameraZoomSpeed = cameraZoomSpeed;
             ZNearPlane = zNearPlane;
@@ -70,8 +71,8 @@ namespace SE_Praktikum.Core
                                                        Keys.K, 
                                                        Keys.I, 
                                                        Keys.Y, 
-                                                       Keys.O, 
-                                                       Keys.L );
+                                                       Keys.L, 
+                                                       Keys.O );
         }
 
         private Matrix View()
@@ -83,7 +84,7 @@ namespace SE_Praktikum.Core
 
         private Matrix GetProjection()
         {
-            return Matrix.CreatePerspectiveFieldOfView((float) (FieldOfView * Math.PI/180f), AspectRatio, ZNearPlane, ZFarPlane);
+            return Matrix.CreatePerspectiveFieldOfView((float) (FieldOfView * Math.PI/180f), _viewport.AspectRatio, ZNearPlane, ZFarPlane);
         }
 
         public void Update(GameTime gameTime)
@@ -102,14 +103,14 @@ namespace SE_Praktikum.Core
             if (Keyboard.GetState().IsKeyDown(_controls.Left))
                 _position.X -= CameraSpeed * time + _position.Z/2 * time;
 
-            if (Keyboard.GetState().IsKeyDown(_controls.ZoomIn))
+            if (Keyboard.GetState().IsKeyDown(_controls.ZoomOut))
             {
                 _position.Z += CameraZoomSpeed * time;
                 if (_position.Z > ZFarPlane)
                     _position.Z = ZFarPlane - float.Epsilon;
             }
                 
-            if (Keyboard.GetState().IsKeyDown(_controls.ZoomOut))
+            if (Keyboard.GetState().IsKeyDown(_controls.ZoomIn))
             {
                 _position.Z -= CameraZoomSpeed * time;
                 if (_position.Z < ZNearPlane)
@@ -150,6 +151,34 @@ namespace SE_Praktikum.Core
             _spriteEffect.Projection = GetProjection();
             return _spriteEffect;
         }
+
+        public Vector2 ProjectScreenPosIntoWorld(Vector2 position)
+        {
+            var angle = MathExtensions.DegToRad(FieldOfView/2);
+            var max = (float)Math.Tan(angle) * _position.Z;
+            var x = MathExtensions.Remap(position.X, 0, _viewport.Width, - max * _viewport.AspectRatio, max * _viewport.AspectRatio);
+            var y = MathExtensions.Remap(position.Y, 0, _viewport.Height, - max, max);
+            return new Vector2(x + _position.X - .5f, y + _position.Y - 2.5f); // adding camera position and tooling numbers
+        }
+
+        public uint GetPerspectiveScreenWidth(float height = 0)
+        {
+            height = _position.Z - height;
+            if (height <= 0)
+                throw new ArgumentException($"height should be smaller than Position.Z ({_position.Z})");
+            var angle = MathExtensions.DegToRad(FieldOfView / 2);
+            var max = (float) Math.Tan(angle) * _position.Z;
+            return (uint) (2 * max * _viewport.AspectRatio);
+        }
         
+        public uint GetPerspectiveScreenHeight(float height = 0)
+        {
+            height = _position.Z - height;
+            if (height <= 0)
+                throw new ArgumentException($"height should be smaller than Position.Z ({_position.Z})");
+            var angle = MathExtensions.DegToRad(FieldOfView / 2);
+            var max = (float) Math.Tan(angle) * _position.Z;
+            return (uint) (2 * max);
+        }
     }
 }

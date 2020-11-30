@@ -67,6 +67,8 @@ namespace SE_Praktikum.Components.Sprites
             }
         }
 
+        public Vector2 Position { get=>throw new NotImplementedException(); set=>throw new NotImplementedException(); }
+
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(_texture, 

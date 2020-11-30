@@ -1,4 +1,5 @@
-﻿using SE_Praktikum.Models;
+﻿using Microsoft.Xna.Framework;
+using SE_Praktikum.Models;
 
 namespace SE_Praktikum.Services.Factories
 {
@@ -9,9 +10,12 @@ namespace SE_Praktikum.Services.Factories
         {
         }
         
-        public AnimationHandler GetAnimationHandler(TileSet animation, AnimationSettings settings)
+        public AnimationHandler GetAnimationHandler(TileSet animation,
+                                                    AnimationSettings settings,
+                                                    Vector2? position = null, 
+                                                    Vector2? origin = null)
         {
-            return new AnimationHandler(animation, settings);
+            return new AnimationHandler(animation, settings, position, origin);
         }
     }
 }

@@ -1,16 +1,18 @@
 ﻿using System;
+using System.Reactive.Subjects;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using SE_Praktikum.Services.StateMachines;
 
 namespace SE_Praktikum.Core.GameStates
 {
-    public abstract class GameState
+    public abstract class GameState : IObservable<GameStateMachine.GameStateMachineTrigger>
     {
-        public event EventHandler OnStateComplete;
-
+        protected Subject<GameStateMachine.GameStateMachineTrigger> _subject;
         protected GameState()
         {
+            _subject = new Subject<GameStateMachine.GameStateMachineTrigger>();
         }
 
         public abstract void LoadContent(ContentManager contentManager);
@@ -35,10 +37,10 @@ namespace SE_Praktikum.Core.GameStates
         /// <param name="spriteBatch"></param>
         public abstract void Draw(GameTime gameTime, SpriteBatch spriteBatch);
 
-        protected virtual void OnStateCompleted(EventArgs e)
+
+        public IDisposable Subscribe(IObserver<GameStateMachine.GameStateMachineTrigger> observer)
         {
-            EventHandler handler = OnStateComplete;
-            handler?.Invoke(this, e);
+            return _subject.Subscribe(observer);
         }
     }
 }

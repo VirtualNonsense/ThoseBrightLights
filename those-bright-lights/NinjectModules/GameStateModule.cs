@@ -7,7 +7,10 @@ namespace SE_Praktikum.NinjectModules
         public override void Load()
         {
             Bind<Splashscreen>().ToSelf().InSingletonScope();
-            Bind<Testscreen>().ToSelf().InSingletonScope();
+            Bind<MainMenu>().ToSelf().InSingletonScope();
+            Bind<Settings>().ToSelf().InSingletonScope();
+            Bind<LevelSelect>().ToSelf().InSingletonScope();
+            Bind<InGame>().ToSelf().InSingletonScope();
         }
     }
 }

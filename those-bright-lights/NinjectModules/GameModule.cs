@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
 using Ninject;
 using Ninject.Modules;
 using SE_Praktikum.Core.GameStates;
@@ -16,10 +17,8 @@ namespace SE_Praktikum.NinjectModules
         {
             Bind<SE_Praktikum_Game>().ToSelf().InSingletonScope();
             Bind<IScreen>().ToMethod(c => c.Kernel.Get<SE_Praktikum_Game>());
-            Bind<ContentManager>().ToMethod(c => c.Kernel.Get<SE_Praktikum_Game>().Content);
             Bind<IObservable<GameState>>().To<GameStateMachine>();
             Bind<ExplosionEmitter>().ToSelf();
-
         }
     }
 }
