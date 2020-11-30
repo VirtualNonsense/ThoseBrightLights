@@ -75,7 +75,7 @@ namespace SE_Praktikum.Core.GameStates
             {
                 return;
             }
-
+            _screen.Camera.Update(gameTime);
             foreach (var button in _buttons)
             {
                 button.Update(gameTime);
@@ -93,7 +93,13 @@ namespace SE_Praktikum.Core.GameStates
                 return;
             }
 
-            spriteBatch.Begin();
+            spriteBatch.Begin(SpriteSortMode.FrontToBack,
+                BlendState.AlphaBlend,
+                SamplerState.PointClamp, // Sharp Pixel rendering
+                DepthStencilState.DepthRead,
+                RasterizerState.CullCounterClockwise, // Render only the texture side that faces the camara to boost performance 
+                _screen.Camera.GetCameraEffect()
+                );
             foreach (var button in _buttons)
             {
                 button.Draw(gameTime, spriteBatch);
