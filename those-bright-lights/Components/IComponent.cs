@@ -8,6 +8,8 @@ namespace SE_Praktikum.Components
     /// </summary>
     public interface IComponent
     {
+        Vector2 Position { get; set; }
+        
         void Draw(GameTime gameTime, SpriteBatch spriteBatch);
 
         void Update(GameTime gameTime);
