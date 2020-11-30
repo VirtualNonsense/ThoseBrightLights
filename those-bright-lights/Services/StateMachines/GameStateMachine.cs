@@ -4,6 +4,7 @@ using System.Reactive.Subjects;
 using NLog;
 using SE_Praktikum.Core.GameStates;
 using Stateless;
+using Stateless.Graph;
 
 namespace SE_Praktikum.Services.StateMachines
 {
@@ -128,5 +129,6 @@ namespace SE_Praktikum.Services.StateMachines
                 _logger.Warn(e, $"Unable to Perform Transition From {_machine.State} with {value}");
             }
         }
+        public string DotGraph => UmlDotGraph.Format(_machine.GetInfo());
     }
 }
