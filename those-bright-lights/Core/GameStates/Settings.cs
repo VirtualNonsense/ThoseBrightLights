@@ -10,35 +10,26 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using SE_Praktikum.Components;
+using SE_Praktikum.Services.Factories;
 
 namespace SE_Praktikum.Core.GameStates
 {
     public class Settings : GameState
     {
         private readonly IScreen _screen;
-        private List<MenuButton> _buttons;
+        private readonly MenuButtonFactory _factory;
+        private ComponentGrid _buttons;
         private Logger _logger;
         private Song _song;
 
-        public Settings(IScreen screen)
+        public Settings(IScreen screen, MenuButtonFactory factory)
         {
             _logger = LogManager.GetCurrentClassLogger();
             _screen = screen;
+            _factory = factory;
         }
 
-        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
-        {
-            if (_buttons == null)
-            {
-                return;
-            }
-            spriteBatch.Begin();
-            foreach (var button in _buttons)
-            {
-                button.Draw(gameTime, spriteBatch);
-            }
-            spriteBatch.End();
-        }
 
         public override void LoadContent(ContentManager contentManager)
         {
@@ -46,22 +37,24 @@ namespace SE_Praktikum.Core.GameStates
             {
                 return;
             }
-            _buttons = new List<Menubutton>();
+
             _logger.Debug("LoadingContent");
-            var font = contentManager.Load<SpriteFont>("Font/Font2");
-            var texture = contentManager.Load<Texture2D>("Artwork/Controls/button");
-            _buttons.Add(new Menubutton(texture, font)
-            {
-                Text = "Back",
-                Position = new Vector2(_screen.ScreenWidth / 2f, _screen.ScreenHeight / 3f - texture.Height),
-                PenColour = Color.White
-            });
-            _buttons.Last().Click += (sender, args) => { _logger.Debug("back"); _subject.OnNext(GameStateMachine.GameStateMachineTrigger.Back); };
-
-
-            //_song = contentManager.Load<Song>("Audio/Music/Death_mp3");
-            //MediaPlayer.Play(_song);
-            //MediaPlayer.IsRepeating = true;
+            _buttons = new ComponentGrid(new Vector2(0,0), 
+                _screen.Camera.GetPerspectiveScreenWidth(),
+                _screen.Camera.GetPerspectiveScreenHeight(),
+                1);
+            var buttons = 3;
+            uint width = (uint) (_screen.Camera.GetPerspectiveScreenWidth() / buttons);
+            uint height = (uint) (_screen.Camera.GetPerspectiveScreenHeight() / buttons);
+            MenuButton b = _factory.GetInstanceByDimension(contentManager,
+                width,
+                height,
+                new Vector2(0, 0),
+                "Back to main menu",
+                true,
+                _screen.Camera);
+            b.Click += (sender, args) => { _logger.Debug("Back to main menu"); _subject.OnNext(GameStateMachine.GameStateMachineTrigger.Back); };
+            _buttons.Add(b);
         }
 
         public override void PostUpdate(GameTime gameTime)
@@ -85,6 +78,27 @@ namespace SE_Praktikum.Core.GameStates
             {
                 button.Update(gameTime);
             }
+        }
+        
+        
+        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        {
+            if (_buttons == null)
+            {
+                return;
+            }
+            spriteBatch.Begin(SpriteSortMode.FrontToBack,
+                BlendState.AlphaBlend,
+                SamplerState.PointClamp, // Sharp Pixel rendering
+                DepthStencilState.DepthRead,
+                RasterizerState.CullCounterClockwise, // Render only the texture side that faces the camara to boost performance 
+                _screen.Camera.GetCameraEffect()
+            );
+            foreach (var button in _buttons)
+            {
+                button.Draw(gameTime, spriteBatch);
+            }
+            spriteBatch.End();
         }
     }
 }

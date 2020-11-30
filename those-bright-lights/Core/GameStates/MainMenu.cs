@@ -5,8 +5,10 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using NLog;
 using NLog.Fluent;
+using SE_Praktikum.Components;
 using SE_Praktikum.Components.Controls;
 using SE_Praktikum.Models;
+using SE_Praktikum.Services.Factories;
 using SE_Praktikum.Services.StateMachines;
 
 namespace SE_Praktikum.Core.GameStates
@@ -14,13 +16,15 @@ namespace SE_Praktikum.Core.GameStates
     public class MainMenu : GameState
     {
         private readonly IScreen _screen;
-        private List<MenuButton> _buttons;
+        private readonly MenuButtonFactory _factory;
+        private ComponentGrid _buttons;
         private Logger _logger;
 
-        public MainMenu(IScreen screen)
+        public MainMenu(IScreen screen, MenuButtonFactory factory)
         {
             _logger = LogManager.GetCurrentClassLogger();
-            _screen = screen; 
+            _screen = screen;
+            _factory = factory;
         }
 
         public override void LoadContent(ContentManager contentManager)
@@ -29,38 +33,43 @@ namespace SE_Praktikum.Core.GameStates
             {
                 return;
             }
-            _buttons = new List<Menubutton>();
+
             _logger.Debug("LoadingContent");
-            var font = contentManager.Load<SpriteFont>("Font/Font2");
-            var texture = contentManager.Load<Texture2D>("Artwork/Controls/button");
-            _buttons.Add(new Menubutton(texture, font)
-            {
-                Text = "New Game",
-                Position = new Vector2(_screen.ScreenWidth/2f, _screen.ScreenHeight/4f - texture.Height),
-                PenColour = Color.White
-            });
-            _buttons.Last().Click += (sender, args) => { _logger.Debug("New Game"); };
-            _buttons.Add(new Menubutton(texture, font)
-            {
-                Text = "Level select",
-                Position = new Vector2(_screen.ScreenWidth / 2f, _screen.ScreenHeight/4f),
-                PenColour = Color.White
-            });
-            _buttons.Last().Click += (sender, args) => { _logger.Debug("Level Select"); _subject.OnNext(GameStateMachine.GameStateMachineTrigger.StartLevelSelect); };
-            _buttons.Add(new Menubutton(texture, font)
-            {
-                Text = "Settings",
-                Position = new Vector2(_screen.ScreenWidth/2f, _screen.ScreenHeight/4f + texture.Height),
-                PenColour = Color.White
-            });
-            _buttons.Last().Click += (sender, args) => { _logger.Debug("Settings"); _subject.OnNext(GameStateMachine.GameStateMachineTrigger.StartSettings);};
-            _buttons.Add(new Menubutton(texture, font)
-            {
-                Text = "Quit",
-                Position = new Vector2(_screen.ScreenWidth / 2f, _screen.ScreenHeight /4f + 2*texture.Height),
-                PenColour = Color.White
-            });
-            _buttons.Last().Click += (sender, args) => { _logger.Debug("Quit"); _subject.OnNext(GameStateMachine.GameStateMachineTrigger.QuitGame); };
+            _buttons = new ComponentGrid(new Vector2(0,0), 
+                                      _screen.Camera.GetPerspectiveScreenWidth(),
+                                      _screen.Camera.GetPerspectiveScreenHeight(),
+                                      1);
+            var buttons = 3;
+            uint width = (uint) (_screen.Camera.GetPerspectiveScreenWidth() / buttons);
+            uint height = (uint) (_screen.Camera.GetPerspectiveScreenHeight() / buttons);
+            MenuButton b = _factory.GetInstanceByDimension(contentManager,
+                width,
+                height,
+                new Vector2(0, 0),
+                "New Game",
+                true,
+                _screen.Camera);
+            b.Click += (sender, args) => { _logger.Debug("Start new game"); _subject.OnNext(GameStateMachine.GameStateMachineTrigger.StartGame); };
+            _buttons.Add(b);
+            b = _factory.GetInstanceByDimension(contentManager,
+                width,
+                height,
+                new Vector2(0, 0),
+                "Settings",
+                true,
+                _screen.Camera);
+            b.Click += (sender, args) => { _logger.Debug("Go to settings"); _subject.OnNext(GameStateMachine.GameStateMachineTrigger.StartSettings); };
+            _buttons.Add(b);
+            b = _factory.GetInstanceByDimension(contentManager,
+                width,
+                height,
+                new Vector2(0, 0),
+                "Quit",
+                true,
+                _screen.Camera);
+            b.Click += (sender, args) => { _logger.Debug("Quit game"); _subject.OnNext(GameStateMachine.GameStateMachineTrigger.QuitGame); };
+            _buttons.Add(b);
+            
             _logger.Error(_buttons.Count);
         }
 

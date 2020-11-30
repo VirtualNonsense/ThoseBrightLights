@@ -37,38 +37,38 @@ namespace SE_Praktikum.Core.GameStates
         public override void LoadContent(ContentManager contentManager)
         {
             if (_buttons != null) return;
-            _buttons = new List<Menubutton>();
+            // {
+            //     Text = "Level 1",
+            //     Position = new Vector2(_screen.ScreenWidth / 2f, _screen.ScreenHeight / 4f - texture.Height),
+            //     TextColor = Color.White
+            // });
+            // _buttons.Last().Click += (sender, args) => { _logger.Debug("Level 1 selected"); };
+            // _buttons.Add(new Menubutton(texture, font)
+            // {
+            //     Text = "Level 2",
+            //     Position = new Vector2(_screen.ScreenWidth / 2f, _screen.ScreenHeight / 4f),
+            //     TextColor = Color.White
+            // });
+            // _buttons.Last().Click += (sender, args) => { _logger.Debug("Level 2 selected"); };
+            // _buttons.Add(new Menubutton(texture, font)
+            // {
+            //     Text = "Level 3",
+            //     Position = new Vector2(_screen.ScreenWidth / 2f, _screen.ScreenHeight / 4f + texture.Height),
+            //     TextColor = Color.White
+            // });
+            // _buttons.Last().Click += (sender, args) => { _logger.Debug("Level 3 selected"); };
+            // _buttons.Add(new Menubutton(texture, font)
+            // {
+            //     Text = "Back",
+            //     Position = new Vector2(_screen.ScreenWidth / 2f, _screen.ScreenHeight / 4f + 2*texture.Height),
+            //     TextColor = Color.White
+            // });
+            // _buttons.Last().Click += (sender, args) => { _logger.Debug("back"); _subject.OnNext(GameStateMachine.GameStateMachineTrigger.Back);};
+            _buttons = new List<MenuButton>();
             _logger.Debug("LoadingContent");
             var font = contentManager.Load<SpriteFont>("Font/Font2");
             var texture = contentManager.Load<Texture2D>("Artwork/Controls/button");
-            _buttons.Add(new Menubutton(texture, font)
-            {
-                Text = "Level 1",
-                Position = new Vector2(_screen.ScreenWidth / 2f, _screen.ScreenHeight / 4f - texture.Height),
-                PenColour = Color.White
-            });
-            _buttons.Last().Click += (sender, args) => { _logger.Debug("Level 1 selected"); };
-            _buttons.Add(new Menubutton(texture, font)
-            {
-                Text = "Level 2",
-                Position = new Vector2(_screen.ScreenWidth / 2f, _screen.ScreenHeight / 4f),
-                PenColour = Color.White
-            });
-            _buttons.Last().Click += (sender, args) => { _logger.Debug("Level 2 selected"); };
-            _buttons.Add(new Menubutton(texture, font)
-            {
-                Text = "Level 3",
-                Position = new Vector2(_screen.ScreenWidth / 2f, _screen.ScreenHeight / 4f + texture.Height),
-                PenColour = Color.White
-            });
-            _buttons.Last().Click += (sender, args) => { _logger.Debug("Level 3 selected"); };
-            _buttons.Add(new Menubutton(texture, font)
-            {
-                Text = "Back",
-                Position = new Vector2(_screen.ScreenWidth / 2f, _screen.ScreenHeight / 4f + 2*texture.Height),
-                PenColour = Color.White
-            });
-            _buttons.Last().Click += (sender, args) => { _logger.Debug("back"); _subject.OnNext(GameStateMachine.GameStateMachineTrigger.Back);};
+            // _buttons.Add(new Menubutton(texture, font)
         }
 
         public override void PostUpdate(GameTime gameTime)
