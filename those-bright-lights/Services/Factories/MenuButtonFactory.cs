@@ -24,11 +24,24 @@ namespace SE_Praktikum.Services.Factories
             _logger = LogManager.GetCurrentClassLogger();
         }
 
+        private void loadAssetsIfNecessary(ContentManager contentManager)
+        {
+            _buttonsAndSwitches ??= new TileSet(contentManager.Load<Texture2D>("Artwork/Tilemaps/ButtonsAndSwitches"), _tileWidth,
+                _tileHeight);
+        }
+
+        public MenuButton GetInstanceByDimension(ContentManager contentManager, uint width, uint height, Vector2 position,
+            string text = "", bool useCenterAsOrigin = true, Camera camera = null)
+        {
+            loadAssetsIfNecessary(contentManager);
+            uint tilesX = (uint) (width / _buttonsAndSwitches.TileDimX);
+            uint tilesY = (uint) (height / _buttonsAndSwitches.TileDimY);
+            return GetInstance(contentManager,tilesX, tilesY, position, text, useCenterAsOrigin, camera);
+        }
         public MenuButton GetInstance(ContentManager contentManager, uint tilesX, uint tilesY, Vector2 position, string text = "", bool useCenterAsOrigin = true, Camera camera = null)
         {
             List<AnimationHandler> handlers = new List<AnimationHandler>();
-            if (_buttonsAndSwitches is null) 
-                _buttonsAndSwitches = new TileSet(contentManager.Load<Texture2D>("Artwork/Tilemaps/ButtonsAndSwitches"), _tileWidth, _tileHeight);
+            loadAssetsIfNecessary(contentManager);
 
             AnimationSettings animationSettings;
             for (var y = 0; y < tilesY; y++)
