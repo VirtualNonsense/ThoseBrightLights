@@ -12,7 +12,7 @@ namespace SE_Praktikum.Core.GameStates
     {
         private Logger _logger;
         private IScreen _screen;
-        private int _elapsedTime = 0;
+        private float _elapsedTime = 0;
         private int _splashscreenTime = 60;
 
         public Splashscreen(IScreen parent)
@@ -33,7 +33,8 @@ namespace SE_Praktikum.Core.GameStates
 
         public override void Update(GameTime gameTime)
         {
-            _elapsedTime += gameTime.ElapsedGameTime.Seconds;
+            _elapsedTime += gameTime.ElapsedGameTime.Milliseconds/1000f;
+            _logger.Trace(_elapsedTime);
             if(Keyboard.GetState().IsKeyDown(Keys.Escape) || _splashscreenTime < _elapsedTime)
             {
                 _logger.Debug("exiting splashscreen");
