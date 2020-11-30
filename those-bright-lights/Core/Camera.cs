@@ -160,5 +160,25 @@ namespace SE_Praktikum.Core
             var y = MathExtensions.Remap(position.Y, 0, _viewport.Height, - max, max);
             return new Vector2(x + _position.X - .5f, y + _position.Y - 2.5f); // adding camera position and tooling numbers
         }
+
+        public uint GetPerspectiveScreenWidth(float height = 0)
+        {
+            height = _position.Z - height;
+            if (height <= 0)
+                throw new ArgumentException($"height should be smaller than Position.Z ({_position.Z})");
+            var angle = MathExtensions.DegToRad(FieldOfView / 2);
+            var max = (float) Math.Tan(angle) * _position.Z;
+            return (uint) (2 * max * _viewport.AspectRatio);
+        }
+        
+        public uint GetPerspectiveScreenHeight(float height = 0)
+        {
+            height = _position.Z - height;
+            if (height <= 0)
+                throw new ArgumentException($"height should be smaller than Position.Z ({_position.Z})");
+            var angle = MathExtensions.DegToRad(FieldOfView / 2);
+            var max = (float) Math.Tan(angle) * _position.Z;
+            return (uint) (2 * max);
+        }
     }
 }
