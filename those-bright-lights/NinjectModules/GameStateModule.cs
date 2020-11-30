@@ -10,6 +10,7 @@ namespace SE_Praktikum.NinjectModules
             Bind<MainMenu>().ToSelf().InSingletonScope();
             Bind<Settings>().ToSelf().InSingletonScope();
             Bind<LevelSelect>().ToSelf().InSingletonScope();
+            Bind<InGame>().ToSelf().InSingletonScope();
         }
     }
 }

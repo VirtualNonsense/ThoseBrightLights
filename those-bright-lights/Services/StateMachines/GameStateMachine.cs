@@ -17,7 +17,8 @@ namespace SE_Praktikum.Services.StateMachines
         public GameStateMachine(Splashscreen splashscreen, 
                                 MainMenu menu,
                                 Settings settings,
-                                LevelSelect levelSelect)
+                                LevelSelect levelSelect,
+                                InGame inGame)
         {
             _logger = LogManager.GetCurrentClassLogger();
             _subject = new Subject<GameState>();
@@ -26,20 +27,31 @@ namespace SE_Praktikum.Services.StateMachines
                 {State.SplashScreen, splashscreen},
                 {State.Menu, menu},
                 {State.Settings, settings},
-                {State.LevelSelect, levelSelect}
+                {State.LevelSelect, levelSelect},
+                {State.InGame, inGame}
             };
             _machine = new StateMachine<State, GameStateMachineTrigger>(State.SplashScreen);
             _machine.Configure(State.SplashScreen).OnEntry(onEntry)
                 .Permit(GameStateMachineTrigger.SkipSplashScreen, State.Menu);
+            
             _machine.Configure(State.Menu).OnEntry(onEntry)
                 .Permit(GameStateMachineTrigger.StartLevelSelect, State.LevelSelect)
+                .Permit(GameStateMachineTrigger.StartGame, State.InGame)
                 .Permit(GameStateMachineTrigger.QuitGame, State.Quit)
                 .Permit(GameStateMachineTrigger.StartSettings, State.Settings);
+            
             _machine.Configure(State.Settings).OnEntry(onEntry)
                 .Permit(GameStateMachineTrigger.Back, State.Menu);
+            
             _machine.Configure(State.LevelSelect).OnEntry(onEntry)
                 .Permit(GameStateMachineTrigger.Back, State.Menu);
+            
+            _machine.Configure(State.InGame).OnEntry(onEntry)
+                .Permit(GameStateMachineTrigger.SaveAndQuit, State.Quit)
+                .Permit(GameStateMachineTrigger.SaveAndBackToMenu, State.Menu);
+            
             _machine.Configure(State.Quit).OnEntry(onComplete);
+
             foreach (var mapEntry in _stateMap)
             {
                 mapEntry.Value.Subscribe(this);
@@ -79,6 +91,7 @@ namespace SE_Praktikum.Services.StateMachines
             Menu,
             Settings,
             LevelSelect,
+            InGame,
             Quit
         }
 
@@ -88,6 +101,8 @@ namespace SE_Praktikum.Services.StateMachines
             StartGame,
             StartSettings,
             StartLevelSelect,
+            SaveAndQuit,
+            SaveAndBackToMenu,
             Back,
             QuitGame
         }
