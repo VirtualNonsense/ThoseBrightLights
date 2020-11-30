@@ -22,6 +22,8 @@ namespace SE_Praktikum.Components
 
         }
 
+        public Vector2 Position { get=>throw new NotImplementedException(); set=>throw new NotImplementedException(); }
+
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             foreach(var tile in _tile)
