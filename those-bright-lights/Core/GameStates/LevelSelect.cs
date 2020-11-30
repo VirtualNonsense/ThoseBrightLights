@@ -15,7 +15,7 @@ namespace SE_Praktikum.Core.GameStates
     public class LevelSelect : GameState
     {
         private readonly IScreen _screen;
-        private List<Menubutton> _buttons;
+        private List<MenuButton> _buttons;
         private Logger _logger;
 
         public LevelSelect(IScreen screen)

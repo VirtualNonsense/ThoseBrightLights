@@ -16,7 +16,7 @@ namespace SE_Praktikum.Core.GameStates
     public class Settings : GameState
     {
         private readonly IScreen _screen;
-        private List<Menubutton> _buttons;
+        private List<MenuButton> _buttons;
         private Logger _logger;
         private Song _song;
 
