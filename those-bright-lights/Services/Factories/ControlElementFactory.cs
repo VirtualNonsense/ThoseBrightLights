@@ -70,6 +70,16 @@ namespace SE_Praktikum.Services.Factories
                                 (3, 1f), // clicked
                             });
                         }
+                        // only one column
+                        else if (x == tilesX - 1)
+                        {
+                            _logger.Trace($"row {y} top left, only one column");
+                            animationSettings = new AnimationSettings(new List<(int, float)>
+                            {
+                                (14, 1f), // normal
+                                (15, 1f), // clicked
+                            });
+                        }
                         else
                         {
                             _logger.Trace($"pos {x} {y} top left");
@@ -106,12 +116,25 @@ namespace SE_Praktikum.Services.Factories
                     // Bottom left
                     else if (x == 0 && y == tilesY - 1)
                     {
-                        _logger.Trace($"pos {x} {y} bottom left");
-                        animationSettings = new AnimationSettings(new List<(int, float)>
+                        // only one column
+                        if (x == tilesX - 1)
                         {
-                            (24, 1f),
-                            (19, 1f)
-                        });
+                            _logger.Trace($"row {y} bottom left, only one column");
+                            animationSettings = new AnimationSettings(new List<(int, float)>
+                            {
+                                (30, 1f), // normal
+                                (23, 1f), // clicked
+                            });
+                        }
+                        else
+                        {
+                            _logger.Trace($"pos {x} {y} bottom left");
+                            animationSettings = new AnimationSettings(new List<(int, float)>
+                            {
+                                (24, 1f),
+                                (19, 1f)
+                            });
+                        }
                     }
                     // Bottom right
                     else if (x == tilesX - 1 && y == tilesY - 1)
@@ -159,11 +182,23 @@ namespace SE_Praktikum.Services.Factories
                     // Left
                     else if (x == 0)
                     {
-                        _logger.Trace($"pos {x} {y} left");
-                        animationSettings = new AnimationSettings(new List<(int, float)>
+                        // only one column
+                        if (x == tilesX - 1)
                         {
-                            (16, 1f),
-                        });
+                            _logger.Trace($"row {y} bottom left, only one column");
+                            animationSettings = new AnimationSettings(new List<(int, float)>
+                            {
+                                (22, 1f), // normal
+                            });
+                        }
+                        else
+                        {
+                            _logger.Trace($"pos {x} {y} left");
+                            animationSettings = new AnimationSettings(new List<(int, float)>
+                            {
+                                (16, 1f),
+                            });
+                        }
                         
                     }
                     // Right
