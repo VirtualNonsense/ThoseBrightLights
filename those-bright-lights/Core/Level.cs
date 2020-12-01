@@ -41,9 +41,11 @@ namespace SE_Praktikum.Core
 
         public void Update(GameTime gameTime)
         {
-            foreach(var i in _components)
+            int index=0;
+            while (index < _components.Count)
             {
-                i.Update(gameTime);
+                _components[index].Update(gameTime);
+                index++;
             }
             foreach(var actor1 in _components.OfType<Actor>())
             {
@@ -75,8 +77,7 @@ namespace SE_Praktikum.Core
             var player = _playerFactory.GetInstance(contentManager);
             player.OnShoot += (sender, args) =>
             {
-                LevelEvent e = args as LevelEvent;
-                if (e is null) return;
+                if (!(args is LevelEvent e)) return;
                 OnLevelEvent(e);
             };  
             _components.Add(player);

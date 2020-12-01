@@ -40,6 +40,7 @@ namespace SE_Praktikum.Components.Sprites
         {
             Speed = speed;
             Health = health;
+            _weapons = new List<Weapon>();
         }
 
         
@@ -62,14 +63,14 @@ namespace SE_Praktikum.Components.Sprites
         }
         protected virtual void InvokeOnShoot()
         {
-            LevelEvent.ShootBullet e = new LevelEvent.ShootBullet();
-            e.Bullet = _weapons[_currentWeapon].GetBullet();
-            
+            var e = new LevelEvent.ShootBullet {Bullet = _weapons[_currentWeapon].GetBullet()};
+            if (e.Bullet is null)
+                return;
             OnShoot?.Invoke(this,e);
             //TODO: wie löse ich jetzt hier das shootbullet event in level aus?
         }
 
-        protected virtual void OnOnPickUpWeapon(Weapon weapon)
+        public virtual void AddWeapon(Weapon weapon)
         {
             _weapons.Add(weapon);
             _currentWeapon = _weapons.Count - 1;

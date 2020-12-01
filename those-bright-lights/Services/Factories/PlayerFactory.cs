@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using SE_Praktikum.Components.Sprites;
+using SE_Praktikum.Components.Sprites.Weapons;
 using SE_Praktikum.Models;
 
 namespace SE_Praktikum.Services.Factories
@@ -24,6 +25,8 @@ namespace SE_Praktikum.Services.Factories
             var animationSettings = new AnimationSettings(1,isPlaying:false);
             var input = _inputFactory.GetInstance();
             var p = new Player(_animationHandlerFactory.GetAnimationHandler(tileSet,animationSettings),input);
+            p.AddWeapon(new MissileLauncher(_animationHandlerFactory.GetAnimationHandler(
+                new TileSet(contentManager.Load<Texture2D>("Artwork/projectiles/missile")),animationSettings)));
 
             return p;
         } 
