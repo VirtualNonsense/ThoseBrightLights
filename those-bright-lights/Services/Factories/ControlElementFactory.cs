@@ -51,8 +51,17 @@ namespace SE_Praktikum.Services.Factories
                     // Top left
                     if (x == 0 && y == 0)
                     {
+                        if (y == tilesY - 1 && y == tilesY - 1)
+                        {
+                            _logger.Trace($"Single tile");
+                            animationSettings = new AnimationSettings(new List<(int, float)>
+                            {
+                                (6, 1f), // normal
+                                (7, 1f), // clicked
+                            });
+                        }
                         // only one line
-                        if (y == tilesY - 1)
+                        else if (y == tilesY - 1)
                         {
                             _logger.Trace($"column {x} top left, only one line");
                             animationSettings = new AnimationSettings(new List<(int, float)>
