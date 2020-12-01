@@ -12,19 +12,24 @@ namespace SE_Praktikum.Components.Sprites
         private readonly Vector2 _spaceShipVelocity;
         private AnimationHandler _propulsionAnimationHandler;
         private Vector2 OffSet;
+        private Vector2 _velocity;
+        private float _elapsedTime = 0;
 
         public Missile(AnimationHandler animationHandler, Vector2 spaceShipVelocity, AnimationHandler propulsion) : base(animationHandler)
         {
             _spaceShipVelocity = spaceShipVelocity;
             _propulsionAnimationHandler = propulsion;
             OffSet = new Vector2(-animationHandler.FrameWidth/2-_propulsionAnimationHandler.FrameWidth/2,0);
+            Layer -= 2 * Single.Epsilon;
             _propulsionAnimationHandler.Settings.Layer = Layer;
+            _velocity = new Vector2(2,0);
         }
 
 
         public override void Update(GameTime gameTime)
         {
-            Position += _spaceShipVelocity + Vector2.UnitX;
+            _elapsedTime += gameTime.ElapsedGameTime.Milliseconds / 1000f;
+            Position += _spaceShipVelocity + _velocity*_elapsedTime;
             _propulsionAnimationHandler.Position = Position + OffSet; 
             _propulsionAnimationHandler.Update(gameTime);
             base.Update(gameTime);

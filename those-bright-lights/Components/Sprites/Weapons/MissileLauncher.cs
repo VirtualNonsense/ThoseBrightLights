@@ -21,7 +21,7 @@ namespace SE_Praktikum.Components.Sprites.Weapons
             _animationHandlerFactory = animationHandlerFactory;
             _tileSet = tileSet;
             _propulsion = propulsion;
-            _clipSize = 5;
+            _clipSize = 50;
             _ammo = _clipSize;
             _logger = LogManager.GetCurrentClassLogger();
         }
