@@ -23,10 +23,10 @@ namespace SE_Praktikum.Components.Sprites
 
         public override void Update(GameTime gameTime)
         {
-            
             PreviousKey = CurrentKey;
             CurrentKey = Keyboard.GetState();
 
+            #region Movement
             var velocity = Vector2.Zero;
 
             if (CurrentKey.IsKeyDown(_input.Up))
@@ -37,28 +37,29 @@ namespace SE_Praktikum.Components.Sprites
             {
                 velocity.Y += Speed;
             }
-
             if (CurrentKey.IsKeyDown(_input.Left))
             {
                 velocity.X -= Speed;
             }
-            if (CurrentKey.IsKeyDown(_input.TurnLeft))
-            {
-                Rotation += 0.01f;
-            }if (CurrentKey.IsKeyDown(_input.TurnRight))
-            {
-                Rotation -= 0.01f;
-            }
-            
             else if (CurrentKey.IsKeyDown(_input.Right))
             {
                 velocity.X += Speed;
             }
-
-
+            if (CurrentKey.IsKeyDown(_input.TurnLeft))
+            {
+                Rotation += 0.01f;
+            }
+            else if (CurrentKey.IsKeyDown(_input.TurnRight))
+            {
+                Rotation -= 0.01f;
+            }
             Position += velocity;
-
-            //Position = Vector2.Clamp(Position, new Vector2(80, 0), new Vector2(_screen.ScreenWidth / 4, _screen.ScreenHeight));
+            #endregion
+            
+            #region Weapon
+            if(CurrentKey.IsKeyDown(_input.Shoot))
+                InvokeOnShoot();
+            #endregion
             
             base.Update(gameTime);
         }
