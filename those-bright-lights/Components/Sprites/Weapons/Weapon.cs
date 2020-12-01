@@ -1,7 +1,8 @@
 ﻿namespace SE_Praktikum.Components.Sprites.Weapons
 {
-    public class Weapon
+    public abstract class Weapon
     {
+        public abstract Bullet GetBullet();
         
     }
 }

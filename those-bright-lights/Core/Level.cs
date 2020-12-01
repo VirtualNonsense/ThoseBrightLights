@@ -21,7 +21,6 @@ namespace SE_Praktikum.Core
         private List<IComponent> _components;
         private Logger _logger;
 
-
         //Constructor
         public Level(MapFactory mapFactory, PlayerFactory playerFactory)
         {
@@ -60,7 +59,7 @@ namespace SE_Praktikum.Core
         }
 
         
-        public void OnShoot(LevelEvent levelEvent)
+        public void OnLevelEvent(LevelEvent levelEvent)
         {
             var t = (LevelEvent.ShootBullet)levelEvent;
             //if player or enemy shoots the ShootBullet event triggers
@@ -73,10 +72,19 @@ namespace SE_Praktikum.Core
 
         public void LoadContent(ContentManager contentManager)
         {
-            _components.Add(_playerFactory.GetInstance(contentManager));
+            var player = _playerFactory.GetInstance(contentManager);
+            player.OnShoot += (sender, args) =>
+            {
+                LevelEvent e = args as LevelEvent;
+                if (e is null) return;
+                OnLevelEvent(e);
+            };  
+            _components.Add(player);
+            
             //TODO: try to load the json map via the contentmanager
             _components.Add(_mapFactory.LoadMap(contentManager,
                 JsonConvert.DeserializeObject<LevelBlueprint>(File.ReadAllText(@".\Content\Level\TestLevel\TestLevel.json"))));
+            
         }
     }
 }

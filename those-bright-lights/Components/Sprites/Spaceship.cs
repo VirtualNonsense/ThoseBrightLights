@@ -62,7 +62,10 @@ namespace SE_Praktikum.Components.Sprites
         }
         protected virtual void InvokeOnShoot()
         {
-            OnShoot?.Invoke(this,EventArgs.Empty);
+            LevelEvent.ShootBullet e = new LevelEvent.ShootBullet();
+            e.Bullet = _weapons[_currentWeapon].GetBullet();
+            
+            OnShoot?.Invoke(this,e);
             //TODO: wie löse ich jetzt hier das shootbullet event in level aus?
         }
 
