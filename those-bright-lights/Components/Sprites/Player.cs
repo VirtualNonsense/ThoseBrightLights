@@ -78,5 +78,11 @@ namespace SE_Praktikum.Components.Sprites
             }
             base.InvokeOnCollide();
         }
+
+        protected override void InvokeOnTakeDamage(float damage)
+        {
+            Health -= damage;
+            base.InvokeOnTakeDamage(damage);
+        }
     }
 }

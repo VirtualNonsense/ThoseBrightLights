@@ -67,6 +67,7 @@ namespace SE_Praktikum.Core
             if (t!=null)                                    
             {
                 _components.Add(t.Bullet);
+                _logger.Info("Shot bullet!");
             }
         }
 

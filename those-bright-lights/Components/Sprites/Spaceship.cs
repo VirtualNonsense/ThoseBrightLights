@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using NLog;
+using SE_Praktikum.Core;
 using SE_Praktikum.Models;
 using SE_Praktikum.Services;
 
@@ -26,6 +27,10 @@ namespace SE_Praktikum.Components.Sprites
 
         #region Events
         public event EventHandler OnShoot;
+        public event EventHandler OnDie;
+        public event EventHandler OnPickUpWeapon;
+        public event EventHandler OnTakeDamage;
+        
         
         #endregion
 
@@ -44,19 +49,28 @@ namespace SE_Praktikum.Components.Sprites
             _logger.Info(Health);
         }
 
-        public void Shoot()
+       
+
+        protected virtual void InvokeOnTakeDamage(float damage)
         {
-            
+            OnTakeDamage?.Invoke(this,EventArgs.Empty);
         }
 
-        public void PickUpWeapon(Weapon weapon)
+        protected virtual void InvokeOnDie()
+        {
+            OnDie?.Invoke(this, EventArgs.Empty);
+        }
+        protected virtual void InvokeOnShoot()
+        {
+            OnShoot?.Invoke(this,EventArgs.Empty);
+            //TODO: wie löse ich jetzt hier das shootbullet event in level aus?
+        }
+
+        protected virtual void OnOnPickUpWeapon(Weapon weapon)
         {
             _weapons.Add(weapon);
-        }
-
-        public void TakeDamage(float damage)
-        {
-            
+            _currentWeapon = _weapons.Count - 1;
+            OnPickUpWeapon?.Invoke(this, EventArgs.Empty);
         }
     }
 }
