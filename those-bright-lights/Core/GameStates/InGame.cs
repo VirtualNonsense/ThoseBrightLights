@@ -15,7 +15,6 @@ namespace SE_Praktikum.Core.GameStates
     public class InGame : GameState
     {
         private IScreen _screen;
-        private int _splashscreenTime = 60;
         private readonly ExplosionEmitter _explosionEmitter;
         private Map TestMap;
         private Logger _logger;

@@ -21,7 +21,6 @@ namespace SE_Praktikum.Core.GameStates
         private readonly ControlElementFactory _factory;
         private ComponentGrid _buttons;
         private Logger _logger;
-        private Song _song;
 
         public Settings(IScreen screen, ControlElementFactory factory)
         {
