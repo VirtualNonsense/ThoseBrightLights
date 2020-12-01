@@ -13,25 +13,19 @@ using SE_Praktikum.Services;
 
 namespace SE_Praktikum.Components.Controls
 {
-    public class MenuButton : IComponent
+    public class MenuButton : MenuItem
     {
         #region Fields
 
-        private MouseState _currentMouse;
-
-        private readonly List<AnimationHandler> _handler;
-        private SpriteFont _font;
-        private readonly Camera _camera;
+        private Logger _logger;
+        
+        private readonly SpriteFont _font;
 
         private bool _isHovering;
+        
+        private MouseState _currentMouse;
 
         private MouseState _previousMouse;
-
-        
-        private Vector2 _origin;
-        private Vector2 _position;
-
-        private Logger _logger;
 
         #endregion
 
@@ -43,30 +37,7 @@ namespace SE_Praktikum.Components.Controls
 
         public Color TextColor { get; set; }
 
-        public Vector2 Position
-        {
-            get => _position;
-            set
-            {
-                _position = value;
-                Frame = GetRectangle();
-            }
-        }
-
-        public Vector2 Origin
-        {
-            get => _origin;
-            set
-            {
-                _origin = value;
-                Frame = GetRectangle();
-            }
-        }
-
-        public Rectangle Frame { get; private set; }
-
-        private Vector2 Offset => _position - _origin;
-
+        
         public string Text { get; set; }
 
         #endregion
@@ -79,27 +50,16 @@ namespace SE_Praktikum.Components.Controls
                           Vector2? position = null,
                           bool useCenterAsOrigin = true,
                           Camera camera = null,
-                          string text = "")
+                          string text = "") : base(handler, camera, useCenterAsOrigin)
         {
             _logger = LogManager.GetCurrentClassLogger();
             _position = position ?? Vector2.Zero;
-            _handler = handler;
-            _origin = Vector2.Zero;
             _font = font;
-            _camera = camera;
             TextColor = textColor ?? Color.CornflowerBlue;
             Text = text;
-            Frame = GetRectangle();
-            if (useCenterAsOrigin)
-            {
-                _origin = new Vector2(Frame.Width/2f, Frame.Height/2f);
-                // a bit stupid but currently necessary
-                // consider rewriting it....
-                Frame = GetRectangle();
-            }
         }
 
-        public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             var co = Color.White;
 
@@ -128,7 +88,7 @@ namespace SE_Praktikum.Components.Controls
             }
         }
 
-        public void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
             _previousMouse = _currentMouse;
             _currentMouse = Mouse.GetState();
@@ -137,7 +97,7 @@ namespace SE_Praktikum.Components.Controls
 
             var mouseRectangle = new Rectangle((int) Math.Round(pos.X), (int) Math.Round(pos.Y), 1, 1);
             _isHovering = false;
-
+            _logger.Debug(pos);
             if (mouseRectangle.Intersects(Frame))
             {
                 _isHovering = true;
@@ -157,24 +117,6 @@ namespace SE_Praktikum.Components.Controls
             {
                 Clicked = false;
             }
-        }
-
-        private Rectangle GetRectangle()
-        {
-            // making sure an intersection between r and the other is impossible.
-            Rectangle r = new Rectangle(int.MaxValue, Int32.MaxValue, 0, 0);
-            foreach (AnimationHandler animationHandler in _handler)
-            {
-                // will be updated during update method but must be set initially as well.
-                animationHandler.Offset = Offset;
-                var frame = animationHandler.Frame;
-                frame.X =  (int) (animationHandler.Position.X + animationHandler.Offset.X -
-                                                  animationHandler.Origin.X);
-                frame.Y =  (int) (animationHandler.Position.Y + animationHandler.Offset.Y -
-                                                  animationHandler.Origin.Y );
-                Rectangle.Union(ref frame, ref r, out r);
-            }
-            return r;
         }
 
         #endregion
