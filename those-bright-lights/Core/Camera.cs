@@ -137,7 +137,8 @@ namespace SE_Praktikum.Core
         
             public Keys ZoomOut { get; set; }
 
-            public CameraControls(Keys up, Keys down, Keys left, Keys right, Keys turnRight, Keys turnLeft, Keys zoomIn, Keys zoomOut) : base(up, down, left, right, turnLeft, turnRight)
+            //TODO: delete shoot in base when shoot is nullable
+            public CameraControls(Keys up, Keys down, Keys left, Keys right, Keys turnRight, Keys turnLeft, Keys zoomIn, Keys zoomOut) : base(up, down, left, right, turnLeft, turnRight, Keys.Add)
             {
                 ZoomIn = zoomIn;
                 ZoomOut = zoomOut;

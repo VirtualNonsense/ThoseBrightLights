@@ -13,7 +13,7 @@ namespace SE_Praktikum.Services.Factories
 
         public Input GetInstance()
         {
-            var i = new Input(Keys.W,Keys.S, Keys.A, Keys.D, Keys.Q, Keys.E);
+            var i = new Input(Keys.W,Keys.S, Keys.A, Keys.D, Keys.Q, Keys.E, Keys.Space);
             //TODO Andi du weißt scho was hier zu tun is
             return i;
         }

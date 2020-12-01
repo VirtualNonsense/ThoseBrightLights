@@ -27,14 +27,14 @@ namespace SE_Praktikum.Core.GameStates
             Player p = new Player(
                 new AnimationHandler(
                     new TileSet(contentManager.Load<Texture2D>("Artwork/actors/spaceship")), new AnimationSettings(1)),
-                new Input(Keys.W, Keys.S, Keys.A, Keys.D, Keys.Q, Keys.E ),
+                new Input(Keys.W, Keys.S, Keys.A, Keys.D, Keys.Q, Keys.E, Keys.Space ),
                 100,1);
             
             Player q = new Player(
                 new AnimationHandler(
                     new TileSet(contentManager.Load<Texture2D>("Artwork/actors/spaceship")),
                     new AnimationSettings(1)),
-                new Input(Keys.Up, Keys.Down, Keys.Left, Keys.Right, Keys.Add, Keys.Subtract ),100,1);
+                new Input(Keys.Up, Keys.Down, Keys.Left, Keys.Right, Keys.Add, Keys.Subtract, Keys.Enter ),100,1);
             q.Position = new Vector2(200,200);
 
             List = new List<Actor> {p, q};
