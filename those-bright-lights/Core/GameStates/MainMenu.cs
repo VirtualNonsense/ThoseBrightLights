@@ -47,7 +47,6 @@ namespace SE_Praktikum.Core.GameStates
                 height,
                 new Vector2(0, 0),
                 "New Game",
-                true,
                 _screen.Camera);
             b.Click += (sender, args) => { _logger.Debug("Start new game"); _subject.OnNext(GameStateMachine.GameStateMachineTrigger.StartGame); };
             _buttons.Add(b);
@@ -56,7 +55,6 @@ namespace SE_Praktikum.Core.GameStates
                 height,
                 new Vector2(0, 0),
                 "Settings",
-                true,
                 _screen.Camera);
             b.Click += (sender, args) => { _logger.Debug("Go to settings"); _subject.OnNext(GameStateMachine.GameStateMachineTrigger.StartSettings); };
             _buttons.Add(b);
@@ -65,7 +63,6 @@ namespace SE_Praktikum.Core.GameStates
                 height,
                 new Vector2(0, 0),
                 "Quit",
-                true,
                 _screen.Camera);
             b.Click += (sender, args) => { _logger.Debug("Quit game"); _subject.OnNext(GameStateMachine.GameStateMachineTrigger.QuitGame); };
             _buttons.Add(b);

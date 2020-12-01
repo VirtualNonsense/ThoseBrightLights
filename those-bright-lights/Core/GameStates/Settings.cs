@@ -50,7 +50,6 @@ namespace SE_Praktikum.Core.GameStates
                 height,
                 new Vector2(0, 0),
                 "Back to main menu",
-                true,
                 _screen.Camera);
             b.Click += (sender, args) => { _logger.Debug("Back to main menu"); _subject.OnNext(GameStateMachine.GameStateMachineTrigger.Back); };
             _buttons.Add(b);

@@ -31,14 +31,14 @@ namespace SE_Praktikum.Services.Factories
         }
 
         public MenuButton GetMenuButtonByDimension(ContentManager contentManager, uint width, uint height, Vector2 position,
-            string text = "", bool useCenterAsOrigin = true, Camera camera = null)
+            string text = "", Camera camera = null)
         {
             loadAssetsIfNecessary(contentManager);
             uint tilesX = (uint) (width / _buttonsAndSwitches.TileDimX);
             uint tilesY = (uint) (height / _buttonsAndSwitches.TileDimY);
-            return GetMenuButton(contentManager,tilesX, tilesY, position, text, useCenterAsOrigin, camera);
+            return GetMenuButton(contentManager,tilesX, tilesY, position, text, camera);
         }
-        public MenuButton GetMenuButton(ContentManager contentManager, uint tilesX, uint tilesY, Vector2 position, string text = "", bool useCenterAsOrigin = true, Camera camera = null)
+        public MenuButton GetMenuButton(ContentManager contentManager, uint tilesX, uint tilesY, Vector2 position, string text = "",  Camera camera = null)
         {
             List<AnimationHandler> handlers = new List<AnimationHandler>();
             loadAssetsIfNecessary(contentManager);

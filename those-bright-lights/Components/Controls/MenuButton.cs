@@ -48,7 +48,6 @@ namespace SE_Praktikum.Components.Controls
                           SpriteFont font,
                           Color? textColor = null,
                           Vector2? position = null,
-                          bool useCenterAsOrigin = true,
                           Camera camera = null,
                           string text = "") : base(handler, camera)
         {
