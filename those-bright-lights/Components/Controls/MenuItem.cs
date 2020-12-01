@@ -27,7 +27,7 @@ namespace SE_Praktikum.Components.Controls
             Frame = GetRectangle();
         }
 
-        public Vector2 Position
+        public virtual Vector2 Position
         {
             get => _position;
             set
@@ -37,7 +37,7 @@ namespace SE_Praktikum.Components.Controls
             }
         }
 
-        public Vector2 Origin
+        public virtual Vector2 Origin
         {
             get => _origin;
             set
