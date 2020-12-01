@@ -8,13 +8,14 @@ using Newtonsoft.Json;
 using NLog;
 using SE_Praktikum.Components;
 using SE_Praktikum.Components.Sprites;
+using SE_Praktikum.Components.Sprites.Weapons;
 using SE_Praktikum.Models;
 using SE_Praktikum.Models.Tiled;
 using SE_Praktikum.Services.Factories;
 
 namespace SE_Praktikum.Core
 {
-    public class Level : IComponent
+    public class Level 
     {
         private readonly MapFactory _mapFactory;
         private readonly PlayerFactory _playerFactory;
@@ -58,9 +59,35 @@ namespace SE_Praktikum.Core
                     }
                 }
             }
+
+            foreach (var bullet in _components.OfType<Bullet>())
+            {
+                foreach (var bullet2 in _components.OfType<Bullet>())
+                {
+                    var intersect = bullet.Intersects(bullet2);
+                    if (!(intersect is null))
+                    {
+                        bullet.IsRemoveAble = true;
+                    }
+                }
+            }
+
+            index = 0;
+            while (index < _components.Count)
+            {
+                if (_components[index].IsRemoveAble == true)
+                {
+                    _components.RemoveAt(index);
+                    continue;
+                }
+
+                index++;
+            }
+
         }
 
-        
+
+
         public void OnLevelEvent(LevelEvent levelEvent, Vector2 playerPosition)
         {
             var t = (LevelEvent.ShootBullet)levelEvent;

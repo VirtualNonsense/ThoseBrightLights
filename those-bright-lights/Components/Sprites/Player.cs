@@ -12,6 +12,7 @@ namespace SE_Praktikum.Components.Sprites
     {
         private Input _input;
         private Logger _logger;
+        private bool _shot = false;
         public Player(AnimationHandler animationHandler, Input input=null, int health=100, float speed = 1) 
             : base(animationHandler, health, speed)
         {
@@ -57,8 +58,14 @@ namespace SE_Praktikum.Components.Sprites
             #endregion
             
             #region Weapon
-            if(CurrentKey.IsKeyDown(_input.Shoot))
-                InvokeOnShoot();
+
+            if (CurrentKey.IsKeyDown(_input.Shoot) && !_shot)
+            {
+                InvokeOnShoot(velocity);
+                _shot = true;
+            }
+            else if (CurrentKey.IsKeyUp(_input.Shoot))
+                _shot = false;
             #endregion
             
             base.Update(gameTime);
