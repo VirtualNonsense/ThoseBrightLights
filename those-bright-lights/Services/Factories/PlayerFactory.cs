@@ -11,11 +11,13 @@ namespace SE_Praktikum.Services.Factories
     {
         private readonly AnimationHandlerFactory _animationHandlerFactory;
         private readonly InputFactory _inputFactory;
+        private WeaponFactory _weaponFactory;
 
-        public PlayerFactory(AnimationHandlerFactory animationHandlerFactory, InputFactory inputFactory)
+        public PlayerFactory(AnimationHandlerFactory animationHandlerFactory, InputFactory inputFactory, WeaponFactory weaponFactory)
         {
             _animationHandlerFactory = animationHandlerFactory;
             _inputFactory = inputFactory;
+            _weaponFactory = weaponFactory;
         }
 
         public Player GetInstance(ContentManager contentManager)
@@ -25,8 +27,7 @@ namespace SE_Praktikum.Services.Factories
             var animationSettings = new AnimationSettings(1,isPlaying:false);
             var input = _inputFactory.GetInstance();
             var p = new Player(_animationHandlerFactory.GetAnimationHandler(tileSet,animationSettings),input);
-            p.AddWeapon(new MissileLauncher(_animationHandlerFactory.GetAnimationHandler(
-                new TileSet(contentManager.Load<Texture2D>("Artwork/projectiles/missile")),animationSettings)));
+            p.AddWeapon(_weaponFactory.GetMissileLauncher(contentManager));
 
             return p;
         } 
