@@ -61,13 +61,14 @@ namespace SE_Praktikum.Core
         }
 
         
-        public void OnLevelEvent(LevelEvent levelEvent)
+        public void OnLevelEvent(LevelEvent levelEvent, Vector2 playerPosition)
         {
             var t = (LevelEvent.ShootBullet)levelEvent;
             //if player or enemy shoots the ShootBullet event triggers
             if (t!=null)                                    
             {
                 _components.Add(t.Bullet);
+                t.Bullet.Position = playerPosition;
                 _logger.Info("Shot bullet!");
             }
         }
@@ -78,7 +79,7 @@ namespace SE_Praktikum.Core
             player.OnShoot += (sender, args) =>
             {
                 if (!(args is LevelEvent e)) return;
-                OnLevelEvent(e);
+                OnLevelEvent(e, player.Position);
             };  
             _components.Add(player);
             
