@@ -10,7 +10,7 @@ using SE_Praktikum.Models;
 
 namespace SE_Praktikum.Services.Factories
 {
-    public class MenuButtonFactory
+    public class ControlElementFactory
     {
         private readonly AnimationHandlerFactory _animationHandlerFactory;
         private TileSet _buttonsAndSwitches;
@@ -18,7 +18,7 @@ namespace SE_Praktikum.Services.Factories
         private const int _tileHeight = 32;
         private Logger _logger;
 
-        public MenuButtonFactory(AnimationHandlerFactory animationHandlerFactory)
+        public ControlElementFactory(AnimationHandlerFactory animationHandlerFactory)
         {
             _animationHandlerFactory = animationHandlerFactory;
             _logger = LogManager.GetCurrentClassLogger();

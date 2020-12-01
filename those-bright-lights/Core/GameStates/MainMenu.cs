@@ -16,11 +16,11 @@ namespace SE_Praktikum.Core.GameStates
     public class MainMenu : GameState
     {
         private readonly IScreen _screen;
-        private readonly MenuButtonFactory _factory;
+        private readonly ControlElementFactory _factory;
         private ComponentGrid _buttons;
         private Logger _logger;
 
-        public MainMenu(IScreen screen, MenuButtonFactory factory)
+        public MainMenu(IScreen screen, ControlElementFactory factory)
         {
             _logger = LogManager.GetCurrentClassLogger();
             _screen = screen;

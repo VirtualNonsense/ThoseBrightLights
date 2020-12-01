@@ -18,12 +18,12 @@ namespace SE_Praktikum.Core.GameStates
     public class Settings : GameState
     {
         private readonly IScreen _screen;
-        private readonly MenuButtonFactory _factory;
+        private readonly ControlElementFactory _factory;
         private ComponentGrid _buttons;
         private Logger _logger;
         private Song _song;
 
-        public Settings(IScreen screen, MenuButtonFactory factory)
+        public Settings(IScreen screen, ControlElementFactory factory)
         {
             _logger = LogManager.GetCurrentClassLogger();
             _screen = screen;
