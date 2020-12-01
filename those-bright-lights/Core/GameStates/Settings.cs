@@ -46,7 +46,7 @@ namespace SE_Praktikum.Core.GameStates
             var buttons = 3;
             uint width = (uint) (_screen.Camera.GetPerspectiveScreenWidth() / buttons);
             uint height = (uint) (_screen.Camera.GetPerspectiveScreenHeight() / buttons);
-            MenuButton b = _factory.GetInstanceByDimension(contentManager,
+            MenuButton b = _factory.GetMenuButtonByDimension(contentManager,
                 width,
                 height,
                 new Vector2(0, 0),
