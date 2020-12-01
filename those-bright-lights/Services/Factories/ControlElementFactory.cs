@@ -43,11 +43,11 @@ namespace SE_Praktikum.Services.Factories
             List<AnimationHandler> handlers = new List<AnimationHandler>();
             loadAssetsIfNecessary(contentManager);
 
-            AnimationSettings animationSettings;
             for (var y = 0; y < tilesY; y++)
             {
                 for (var x = 0; x < tilesX; x++)
                 {
+                    AnimationSettings animationSettings;
                     // Top left
                     if (x == 0 && y == 0)
                     {
@@ -232,7 +232,7 @@ namespace SE_Praktikum.Services.Factories
                     handlers.Add(handler);
                 }
             }
-            return new MenuButton(handlers, contentManager.Load<SpriteFont>("Font/Font2"), text: text, position: position, useCenterAsOrigin: useCenterAsOrigin, camera: camera);;
+            return new MenuButton(handlers, contentManager.Load<SpriteFont>("Font/Font2"), text: text, position: position, camera: camera);;
         }
         
     }
