@@ -12,11 +12,7 @@ namespace SE_Praktikum.Components.Sprites.Weapons
         public Bullet(AnimationHandler animationHandler) : base(animationHandler)
         {
         }
-
-        public override void BaseCollide(Actor actor)
-        {
-            throw new NotImplementedException();
-        }
+        
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {

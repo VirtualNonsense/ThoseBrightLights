@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using NLog;
-using SE_Praktikum.Components.Sprites.SplashScreen;
+using SE_Praktikum.Components.Sprites;
 using SE_Praktikum.Models;
 using SE_Praktikum.Services;
 using SE_Praktikum.Services.Factories;

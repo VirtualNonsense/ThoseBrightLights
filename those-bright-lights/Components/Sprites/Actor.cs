@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 using NLog;
 using SE_Praktikum.Services;
 using SE_Praktikum.Components;
-using SE_Praktikum.Components.Sprites.SplashScreen;
+using SE_Praktikum.Components.Sprites;
 using SE_Praktikum.Models;
 
 namespace SE_Praktikum.Components.Sprites
@@ -27,7 +27,6 @@ namespace SE_Praktikum.Components.Sprites
         public event EventHandler<EventArgs> OnCollide; 
         
 
-        public abstract void BaseCollide(Actor actor);
 
 
         public Vector2? Intersects(Actor actor)

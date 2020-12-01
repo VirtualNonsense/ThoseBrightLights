@@ -42,13 +42,7 @@ namespace SE_Praktikum.Components.Sprites
             Health = health;
             _weapons = new List<Weapon>();
         }
-
         
-        public override void BaseCollide(Actor actor)
-        {
-            throw new System.NotImplementedException();
-            _logger.Info(Health);
-        }
 
        
 

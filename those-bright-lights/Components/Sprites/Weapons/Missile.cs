@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SE_Praktikum.Components.Sprites.Weapons;
 using SE_Praktikum.Models;
@@ -20,10 +21,6 @@ namespace SE_Praktikum.Components.Sprites
             _propulsionAnimationHandler.Settings.Layer = Layer;
         }
 
-        public override void BaseCollide(Actor actor)
-        {
-            throw new System.NotImplementedException();
-        }
 
         public override void Update(GameTime gameTime)
         {
