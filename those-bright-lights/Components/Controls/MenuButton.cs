@@ -50,7 +50,7 @@ namespace SE_Praktikum.Components.Controls
                           Vector2? position = null,
                           bool useCenterAsOrigin = true,
                           Camera camera = null,
-                          string text = "") : base(handler, camera, useCenterAsOrigin)
+                          string text = "") : base(handler, camera)
         {
             _logger = LogManager.GetCurrentClassLogger();
             _position = position ?? Vector2.Zero;

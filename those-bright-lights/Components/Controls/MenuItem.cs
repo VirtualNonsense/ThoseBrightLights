@@ -15,20 +15,16 @@ namespace SE_Praktikum.Components.Controls
         public Vector2 _position;
         public Vector2 _origin;
 
-        public MenuItem(List<AnimationHandler> handler, Camera camera, 
-            bool useCenterAsOrigin)
+        public MenuItem(List<AnimationHandler> handler, Camera camera)
         {
             _handler = handler;
             _camera = camera;
             Frame = GetRectangle();
-            _origin = Vector2.Zero;
-            if (useCenterAsOrigin)
-            {
-                _origin = new Vector2(Frame.Width/2f, Frame.Height/2f);
-                // a bit stupid but currently necessary
-                // consider rewriting it....
-                Frame = GetRectangle();
-            }
+            _origin = new Vector2(Frame.Width/2f, Frame.Height/2f);
+            
+            // a bit stupid but currently necessary
+            // consider rewriting it....
+            Frame = GetRectangle();
         }
 
         public Vector2 Position
