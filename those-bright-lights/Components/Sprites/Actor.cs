@@ -32,6 +32,10 @@ namespace SE_Praktikum.Components.Sprites
 
         public Vector2? Intersects(Actor actor)
         {
+            //actors can't collide with themselves
+            if (this == actor) return null;
+            if (!CollisionEnabled || !actor.CollisionEnabled) return null;
+            if (Math.Abs(actor.Layer - Layer) > float.Epsilon ) return null;
             //if actors are not rotated, use faster method Intersects of Rectangle for now, 
             //-> no exact value for the collision position
             if (Rotation == 0 && actor.Rotation == 0)
@@ -40,12 +44,8 @@ namespace SE_Praktikum.Components.Sprites
                     return Position;
                 return null;
             }
-            //actors can't collide with themselves
-            if (this == actor) return null;
             var t1 = _animationHandler.GetDataOfFrame();
             var t2 = actor._animationHandler.GetDataOfFrame();
-            if (!CollisionEnabled || !actor.CollisionEnabled) return null;
-            if (Math.Abs(actor.Layer - Layer) > float.Epsilon ) return null;
             // Calculate a matrix which transforms from A's local space into
             // world space and then into B's local space
             var transformAToB = Transform * Matrix.Invert(actor.Transform);
