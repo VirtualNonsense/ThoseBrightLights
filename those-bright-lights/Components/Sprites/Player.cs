@@ -63,7 +63,7 @@ namespace SE_Praktikum.Components.Sprites
             base.Update(gameTime);
         }
 
-        protected override void OnOnCollide()
+        protected override void InvokeOnCollide()
         {
             Health -= 1;
             if (Health <= 0)
@@ -75,8 +75,7 @@ namespace SE_Praktikum.Components.Sprites
             {
                 _logger.Info(Health);
             }
-
-            base.OnOnCollide();
+            base.InvokeOnCollide();
         }
     }
 }

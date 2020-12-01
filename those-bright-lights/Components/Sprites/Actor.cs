@@ -82,7 +82,7 @@ namespace SE_Praktikum.Components.Sprites
                         // If both pixel are not completely transparent
                         if (alphaA != 0 && alphaB != 0)
                         {
-                            OnOnCollide();
+                            InvokeOnCollide();
                             return new Vector2(xB,yB);
                         }
                     }
@@ -100,7 +100,7 @@ namespace SE_Praktikum.Components.Sprites
         }
 
 
-        protected virtual void OnOnCollide()
+        protected virtual void InvokeOnCollide()
         {
             OnCollide?.Invoke(this, EventArgs.Empty);
         }

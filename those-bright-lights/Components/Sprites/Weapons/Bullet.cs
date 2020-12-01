@@ -30,9 +30,9 @@ namespace SE_Praktikum.Components.Sprites.Weapons
             base.Update(gameTime);
         }
 
-        protected override void OnOnCollide()
+        protected override void InvokeOnCollide()
         {
-            base.OnOnCollide();
+            base.InvokeOnCollide();
         }
     }
 }
