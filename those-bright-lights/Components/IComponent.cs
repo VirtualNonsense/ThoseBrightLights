@@ -11,5 +11,7 @@ namespace SE_Praktikum.Components
         void Draw(GameTime gameTime, SpriteBatch spriteBatch);
 
         void Update(GameTime gameTime);
+
+        bool IsRemoveAble { get; set; }
     }
 }

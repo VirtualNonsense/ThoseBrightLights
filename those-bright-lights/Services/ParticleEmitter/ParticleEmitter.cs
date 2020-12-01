@@ -52,6 +52,8 @@ namespace SE_Praktikum.Services.ParticleEmitter
             _logger.Trace($"Total amount of particles: {ParticleCount}");
         }
 
+        public bool IsRemoveAble { get; set; }
+
         protected virtual void AddParticle()
         {
             if (_generateTimer > GenerateSpeed)

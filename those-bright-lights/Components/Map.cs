@@ -35,6 +35,6 @@ namespace SE_Praktikum.Components
             //throw new NotImplementedException();
         }
 
-
+        public bool IsRemoveAble { get; set; }
     }
 }

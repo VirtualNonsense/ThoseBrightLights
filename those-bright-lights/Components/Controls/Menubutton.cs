@@ -107,6 +107,8 @@ namespace SE_Praktikum.Components.Controls
             }
         }
 
+        public bool IsRemoveAble { get; set; }
+
         #endregion
     }
 }
