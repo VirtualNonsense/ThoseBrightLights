@@ -54,7 +54,7 @@ namespace SE_Praktikum.Core
                     var collisionPosition = actor1.Intersects(actor2);
                     if(!(collisionPosition is null))
                     {
-                        _logger.Info("Collision");
+                        
                     }
                 }
             }
