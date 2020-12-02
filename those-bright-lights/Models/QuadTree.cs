@@ -10,5 +10,6 @@ namespace SE_Praktikum.Models
         List<T> objects;
         int level;
         Rectangle boundary;
+        QuadTree<T> nodes;
     }
 }
