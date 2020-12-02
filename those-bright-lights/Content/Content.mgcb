@@ -37,6 +37,18 @@
 /processorParam:TextureFormat=Color
 /build:Artwork/Effects/explosion_45_45.png
 
+#begin Artwork/Effects/laesr_explosion_6_6_6.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Artwork/Effects/laesr_explosion_6_6_6.png
+
 #begin Artwork/misc/horizontalline.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -85,6 +97,18 @@
 /processorParam:TextureFormat=Color
 /build:Artwork/missing_texture.jpg
 
+#begin Artwork/Projectiles/laser.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Artwork/Projectiles/laser.png
+
 #begin Artwork/Projectiles/missile.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -96,18 +120,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Artwork/Projectiles/missile.png
-
-#begin Artwork/Projectiles/missile_propulsion_15_15.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Artwork/Projectiles/missile_propulsion_15_15.png
 
 #begin Artwork/Projectiles/missile_propulsion_15_15.png
 /importer:TextureImporter
