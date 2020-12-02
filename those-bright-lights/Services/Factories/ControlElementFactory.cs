@@ -234,6 +234,87 @@ namespace SE_Praktikum.Services.Factories
             }
             return new MenuButton(handlers, contentManager.Load<SpriteFont>("Font/Font2"), text: text, position: position, camera: camera);;
         }
-        
+
+        public Slider GetSliderByDimension(ContentManager contentManager,
+            float initialValue,
+            float min,
+            float max,
+            uint width,
+            Vector2 position,
+            Camera camera = null, float layer = 0)
+        {
+            
+            loadAssetsIfNecessary(contentManager);
+            uint tilesX = (uint) (width / _buttonsAndSwitches.TileDimX);
+            return GetSlider(contentManager,initialValue, min, max, tilesX, position, camera);
+        }
+        public Slider GetSlider(ContentManager contentManager,
+            float initialValue,
+            float min,
+            float max,
+            uint tilesX,
+            Vector2 position,
+            Camera camera = null, float layer = 0)
+        {
+            List<AnimationHandler> handlers = new List<AnimationHandler>();
+            loadAssetsIfNecessary(contentManager);
+
+            for (var x = 0; x < tilesX; x++)
+            {
+                AnimationSettings animationSettings;
+                if (x == 0)
+                {
+                    animationSettings = new AnimationSettings(new List<(int, float)>
+                    {
+                        (27,1f)
+                    });
+                }
+                else if (x == tilesX - 1)
+                {
+                    animationSettings = new AnimationSettings(new List<(int, float)>
+                    {
+                        (29,1f)
+                    });
+                }
+                else
+                {
+                    animationSettings = new AnimationSettings(new List<(int, float)>
+                    {
+                        (28,1f)
+                    });
+                }
+
+                animationSettings.IsPlaying = false;
+                animationSettings.Layer = layer;
+                var handler = _animationHandlerFactory.GetAnimationHandler(
+                    _buttonsAndSwitches, 
+                    animationSettings,
+                    new Vector2(x * _tileWidth, 0),
+                    Vector2.Zero
+                );
+                handlers.Add(handler);
+            }
+
+            var sliderSettings = new AnimationSettings(new List<(int, float)>
+            {
+                (31, 1f), // when still
+                (32, 1f) // when dragged
+            }) 
+            {
+                IsPlaying = false,
+                Layer =  layer + float.Epsilon // forcing render order
+            };
+            var _sliderBladeHandler = new List<AnimationHandler>
+            {
+                _animationHandlerFactory.GetAnimationHandler(
+                    _buttonsAndSwitches, 
+                    sliderSettings,
+                    Vector2.Zero,
+                    Vector2.Zero
+                )
+            };
+            return new Slider(initialValue, min, max, new Slider.SliderBlade(_sliderBladeHandler, camera), handlers, camera);
+        }
+
     }
 }
