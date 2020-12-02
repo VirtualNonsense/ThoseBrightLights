@@ -32,9 +32,9 @@ namespace SE_Praktikum.Components
 
         public void Update(GameTime gameTime)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
-
+        public bool IsRemoveAble { get; set; }
     }
 }

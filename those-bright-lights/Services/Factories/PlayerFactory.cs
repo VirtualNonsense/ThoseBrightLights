@@ -1,35 +1,35 @@
-﻿using Microsoft.Xna.Framework.Content;
+﻿using System.Reflection.Metadata;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using NLog;
 using SE_Praktikum.Components.Sprites;
+using SE_Praktikum.Components.Sprites.Weapons;
 using SE_Praktikum.Models;
 
 namespace SE_Praktikum.Services.Factories
 {
     public class PlayerFactory
     {
-        private Logger _logger;
-        private AnimationHandlerFactory _animationHandlerFactory;
-        private TileFactory _tileFactory;
-        private int _health = 100;
-        private float _speed = 1;
-        
+        private readonly AnimationHandlerFactory _animationHandlerFactory;
+        private readonly InputFactory _inputFactory;
+        private WeaponFactory _weaponFactory;
 
-        public PlayerFactory(AnimationHandlerFactory animationHandlerFactory)
+        public PlayerFactory(AnimationHandlerFactory animationHandlerFactory, InputFactory inputFactory, WeaponFactory weaponFactory)
         {
             _animationHandlerFactory = animationHandlerFactory;
+            _inputFactory = inputFactory;
+            _weaponFactory = weaponFactory;
         }
 
-        public Player GetInstance(ContentManager contentManager, Input input = null)
+        public Player GetInstance(ContentManager contentManager)
         {
-            Input i = input ?? new Input(Keys.W, Keys.S, Keys.A, Keys.D, Keys.Q, Keys.E);
-            Player p = new Player(
-                _animationHandlerFactory.GetAnimationHandler(
-                    new TileSet(contentManager.Load<Texture2D>("Artwork/actors/spaceship")),
-                    new AnimationSettings(1)),
-                i, _health, _speed);
+            var texture2D = contentManager.Load<Texture2D>("Artwork/Actors/spaceship");
+            var tileSet = new TileSet(texture2D);
+            var animationSettings = new AnimationSettings(1,isPlaying:false);
+            var input = _inputFactory.GetInstance();
+            var p = new Player(_animationHandlerFactory.GetAnimationHandler(tileSet,animationSettings),input);
+            p.AddWeapon(_weaponFactory.GetMissileLauncher(contentManager));
+
             return p;
-        }
+        } 
     }
 }

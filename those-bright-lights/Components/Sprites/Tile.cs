@@ -84,8 +84,8 @@ namespace SE_Praktikum.Components.Sprites
         {
             throw new NotImplementedException();
         }
-        
-        
+
+        public bool IsRemoveAble { get; set; }
     }
 
     public enum TileModifier

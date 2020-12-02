@@ -6,12 +6,12 @@ using Microsoft.Xna.Framework.Graphics;
 using NLog;
 using SE_Praktikum.Services;
 using SE_Praktikum.Components;
-using SE_Praktikum.Components.Sprites.SplashScreen;
+using SE_Praktikum.Components.Sprites;
 using SE_Praktikum.Models;
 
 namespace SE_Praktikum.Components.Sprites
 {
-    public abstract class Actor : Sprite, ICollideAble
+    public abstract class Actor : Sprite
     {
 
         public bool CollisionEnabled = true;
@@ -20,20 +20,31 @@ namespace SE_Praktikum.Components.Sprites
         {
         }
 
+        private Rectangle? _hitbox = null;
+        public Rectangle HitBox => _hitbox ?? Rectangle;
+        
+
         public event EventHandler<EventArgs> OnCollide; 
         
 
-        public abstract void BaseCollide(Actor actor);
-        
-        
-        
+
+
         public Vector2? Intersects(Actor actor)
         {
+            //actors can't collide with themselves
             if (this == actor) return null;
-            var t1 = _animationHandler.GetDataOfFrame();
-            var t2 = actor._animationHandler.GetDataOfFrame();
             if (!CollisionEnabled || !actor.CollisionEnabled) return null;
             if (Math.Abs(actor.Layer - Layer) > float.Epsilon ) return null;
+            //if actors are not rotated, use faster method Intersects of Rectangle for now, 
+            //-> no exact value for the collision position
+            if (Rotation == 0 && actor.Rotation == 0)
+            {
+                if (HitBox.Intersects(actor.HitBox))
+                    return Position;
+                return null;
+            }
+            var t1 = _animationHandler.GetDataOfFrame();
+            var t2 = actor._animationHandler.GetDataOfFrame();
             // Calculate a matrix which transforms from A's local space into
             // world space and then into B's local space
             var transformAToB = Transform * Matrix.Invert(actor.Transform);
@@ -64,13 +75,13 @@ namespace SE_Praktikum.Components.Sprites
                         0 <= yB && yB < actor.Rectangle.Height)
                     {
                         // Get the colors of the overlapping pixels
-                        var colourA = t1[xA + yA * Rectangle.Width];
-                        var colourB = t2[xB + yB * actor.Rectangle.Width];
+                        var alphaA = t1[xA + yA * Rectangle.Width];
+                        var alphaB = t2[xB + yB * actor.Rectangle.Width];
 
                         // If both pixel are not completely transparent
-                        if (colourA.A != 0 && colourB.A != 0)
+                        if (alphaA != 0 && alphaB != 0)
                         {
-                            OnOnCollide();
+                            InvokeOnCollide();
                             return new Vector2(xB,yB);
                         }
                     }
@@ -88,7 +99,7 @@ namespace SE_Praktikum.Components.Sprites
         }
 
 
-        protected virtual void OnOnCollide()
+        protected virtual void InvokeOnCollide()
         {
             OnCollide?.Invoke(this, EventArgs.Empty);
         }

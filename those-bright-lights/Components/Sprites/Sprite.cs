@@ -58,6 +58,7 @@ namespace SE_Praktikum.Components.Sprites
       set => Position = new Vector2(Position.X, value);
     }
 
+    //TODO: does layer have to be float? maybe use int instead
     public float Layer
     {
       get => _animationHandler.Settings.Layer;

@@ -1,5 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using Microsoft.Xna.Framework;
+using NLog;
+using SE_Praktikum.Components.Sprites;
+using SE_Praktikum.Models;
 using SE_Praktikum.Services;
 using SE_Praktikum.Services.Factories;
 
@@ -7,38 +10,38 @@ namespace SE_Praktikum.Components.Sprites.Weapons
 {
     public class MissileLauncher : Weapon
     {
-        private List<Missile> _missiles;
-        //TODO: does the missileLauncher know the direction himself?
-        private Vector2 _direction;
-        public MissileLauncher() : base()
+        private readonly AnimationHandlerFactory _animationHandlerFactory;
+        private readonly TileSet _texture;
+        private readonly TileSet _propulsion;
+        private readonly Func<Particle> _getParticle;
+        private readonly int _clipSize = 50;
+        private int _ammo;
+        private Logger _logger;
+
+        public MissileLauncher(AnimationHandlerFactory animationHandlerFactory,TileSet texture, TileSet propulsion, Func <Particle> getParticle)
         {
+            _animationHandlerFactory = animationHandlerFactory;
+            _texture = texture;
+            _propulsion = propulsion;
+            _getParticle = getParticle;
+            _ammo = _clipSize;
+            _logger = LogManager.GetCurrentClassLogger();
         }
 
-        public override void Shoot(Vector2 direction)
-        {
-            _missiles.Add(new Missile(AnimationHandler,direction));
-            //add a new missile to the list
-        }
 
-        public override void Update(GameTime gameTime, List<Actor> actors)
+        public override Bullet GetBullet(Vector2 velocitySpaceship)
         {
-            int index = 0;
-            while(index < _missiles.Count)
+            if (_ammo <= 0)
             {
-                foreach (var actor in actors)
-                {
-                    Vector2? pos = _missiles[index].Intersects(actor);
-                    if (pos != null)
-                    {
-                        _missiles.RemoveAt(index);
-                        OnOnHit();
-                    }
-                    else
-                        index++;
-
-                }
-            }
-            //TODO: check every object in list against all objects they can collide with -> delete from list and call event in object
+                _logger.Warn("No Ammo left!");
+                return null;
+            }   
+            _ammo--;
+            Missile m = new Missile(_animationHandlerFactory.GetAnimationHandler(_texture,
+                new AnimationSettings(1, isPlaying: false)),velocitySpaceship,
+                _animationHandlerFactory.GetAnimationHandler(_propulsion,new AnimationSettings(6,50, isLooping:true)),_getParticle());
+            return m;
         }
+
     }
 }
