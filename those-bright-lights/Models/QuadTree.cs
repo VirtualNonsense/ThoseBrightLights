@@ -4,7 +4,8 @@ using System.Text;
 
 namespace SE_Praktikum.Models
 {
-    public class QuadTree
+    public class QuadTree<T>
     {
+        List<T> objects;
     }
 }
