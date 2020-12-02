@@ -22,6 +22,14 @@ namespace SE_Praktikum.Services.Factories
             TileSet explosion = new TileSet(contentManager.Load<Texture2D>("Artwork/effects/explosion_45_45"), 45, 45);
             return new ExplosionsParticle(_factory.GetAnimationHandler(explosion, animationSettings), _screen);
         }
+
+        public ExplosionsParticle BuildLaserExplosionParticle(ContentManager contentManager,
+            AnimationSettings settings = null)
+        {
+            var animationSettings = settings ?? new AnimationSettings(6, 20f, 1);
+            TileSet explosion = new TileSet(contentManager.Load<Texture2D>("Artwork/effects/laesr_explosion_6_6_6"),6,6);
+            return new ExplosionsParticle(_factory.GetAnimationHandler(explosion,animationSettings),_screen);
+        }
         
     }
 }

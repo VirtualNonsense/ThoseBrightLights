@@ -20,13 +20,21 @@ namespace SE_Praktikum.Services.Factories
 
         public MissileLauncher GetMissileLauncher(ContentManager contentManager)
         {
-            Texture2D _texture = contentManager.Load<Texture2D>("Artwork/projectiles/missile");
-            TileSet tileSet = new TileSet(_texture);
-            Texture2D _propulsion = contentManager.Load<Texture2D>("Artwork/projectiles/missile_propulsion_15_15");
-            TileSet propulsionTileSet = new TileSet(_propulsion,15,15);
-            var m = new MissileLauncher(_animationHandlerFactory,tileSet, propulsionTileSet,
+            Texture2D texture = contentManager.Load<Texture2D>("Artwork/projectiles/missile");
+            TileSet textureTileSet = new TileSet(texture);
+            Texture2D propulsion = contentManager.Load<Texture2D>("Artwork/projectiles/missile_propulsion_15_15");
+            TileSet propulsionTileSet = new TileSet(propulsion,15,15);
+            var m = new MissileLauncher(_animationHandlerFactory,textureTileSet, propulsionTileSet,
                 () => _particleFactory.BuildExplosionParticle(contentManager));
             return m;
+        }
+
+        public Lasergun GetLasergun(ContentManager contentManager)
+        {
+            Texture2D texture = contentManager.Load<Texture2D>("Artwork/projectiles/laser");
+            TileSet textureTileSet = new TileSet(texture);
+            var l = new Lasergun(_animationHandlerFactory, textureTileSet, () => _particleFactory.BuildLaserExplosionParticle(contentManager));
+            return l;
         }
     }
 }
