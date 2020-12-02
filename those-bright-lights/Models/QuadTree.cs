@@ -10,13 +10,14 @@ namespace SE_Praktikum.Models
         List<T> objects;
         int level;
         Rectangle boundary;
-        QuadTree<T> nodes;
+        QuadTree<T>[] nodes;
 
         public QuadTree(int level, Rectangle boundary)
         {
             this.level = level;
             objects = new List<T>();
             this.boundary = boundary;
+            nodes = new QuadTree<T>[4];
         }
     }
 }
