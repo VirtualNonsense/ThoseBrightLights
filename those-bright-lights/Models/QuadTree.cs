@@ -42,7 +42,7 @@ namespace SE_Praktikum.Models
             //TODO: finish nodes' location!
         }
 
-
+        //TODO: Index funtion, insert function, collide function
 
     }
 }
