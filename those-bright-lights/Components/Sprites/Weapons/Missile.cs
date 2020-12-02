@@ -26,7 +26,7 @@ namespace SE_Praktikum.Components.Sprites.Weapons
         public override void Update(GameTime gameTime)
         {
             _elapsedTime += gameTime.ElapsedGameTime.Milliseconds / 1000f;
-            Position += Movement(_spaceShipVelocity,_elapsedTime);
+            Position = Movement(_spaceShipVelocity,_elapsedTime);
             _propulsionAnimationHandler.Position = Position + _offSet; 
             _propulsionAnimationHandler.Update(gameTime);
             base.Update(gameTime);

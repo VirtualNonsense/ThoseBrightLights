@@ -27,7 +27,7 @@ namespace SE_Praktikum.Services.Factories
             var animationSettings = new AnimationSettings(1,isPlaying:false);
             var input = _inputFactory.GetInstance();
             var p = new Player(_animationHandlerFactory.GetAnimationHandler(tileSet,animationSettings),input);
-            p.AddWeapon(_weaponFactory.GetMissileLauncher(contentManager));
+            p.AddWeapon(_weaponFactory.GetLasergun(contentManager));
 
             return p;
         } 

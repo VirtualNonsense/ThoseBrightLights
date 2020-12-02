@@ -25,7 +25,7 @@ namespace SE_Praktikum.Components.Sprites.Weapons
             float elapsedGameTime)
         {
             Vector2 position = spaceshipVelocity * elapsedGameTime +
-                               0.5f * Acceleration * elapsedGameTime * elapsedGameTime + Velocity * elapsedGameTime;
+                               0.5f * Acceleration * elapsedGameTime * elapsedGameTime + Velocity * elapsedGameTime + Position;
             return position;
         }
         

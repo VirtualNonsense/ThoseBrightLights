@@ -11,13 +11,15 @@ namespace SE_Praktikum.Components.Sprites.Weapons
 
         public Laser(AnimationHandler animationHandler, Particle explosion) : base(animationHandler, explosion)
         {
-            Velocity = new Vector2(2,0);
+            Velocity = new Vector2(0,2);
+            Acceleration = Vector2.Zero;
+            _spaceShipVelocity = Vector2.Zero;
         }
         
         public override void Update(GameTime gameTime)
         {
             _elapsedTime += gameTime.ElapsedGameTime.Milliseconds / 1000f;
-            Position += _spaceShipVelocity+Velocity;
+            Position = Movement(_spaceShipVelocity,_elapsedTime);
             base.Update(gameTime);
         }
 
