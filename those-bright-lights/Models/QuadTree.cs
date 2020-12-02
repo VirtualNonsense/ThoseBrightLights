@@ -19,5 +19,10 @@ namespace SE_Praktikum.Models
             this.boundary = boundary;
             nodes = new QuadTree<T>[4];
         }
+
+        public void Clearing()
+        {
+            objects.Clear();
+        }
     }
 }
