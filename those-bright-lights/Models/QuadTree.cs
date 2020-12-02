@@ -23,6 +23,11 @@ namespace SE_Praktikum.Models
         public void Clearing()
         {
             objects.Clear();
+
+            for (int i = 0; i < nodes.Length; i++)
+            {
+                nodes[i] = null;
+            }
         }
     }
 }
