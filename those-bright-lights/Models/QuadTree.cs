@@ -34,6 +34,8 @@ namespace SE_Praktikum.Models
         {
             int x = boundary.X;
             int y = boundary.Y;
+            int newWidth = boundary.Width / 2;
+            int newHeight = boundary.Height / 2;
         }
     }
 }
