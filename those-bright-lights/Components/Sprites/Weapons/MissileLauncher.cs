@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 using NLog;
 using SE_Praktikum.Components.Sprites;
 using SE_Praktikum.Models;
@@ -9,19 +10,20 @@ namespace SE_Praktikum.Components.Sprites.Weapons
 {
     public class MissileLauncher : Weapon
     {
-        private AnimationHandlerFactory _animationHandlerFactory;
-        private readonly TileSet _tileSet;
+        private readonly AnimationHandlerFactory _animationHandlerFactory;
+        private readonly TileSet _texture;
         private readonly TileSet _propulsion;
-        private int _clipSize;
+        private readonly Func<Particle> _getParticle;
+        private readonly int _clipSize = 50;
         private int _ammo;
         private Logger _logger;
 
-        public MissileLauncher(AnimationHandlerFactory animationHandlerFactory, TileSet tileSet, TileSet propulsion)
+        public MissileLauncher(AnimationHandlerFactory animationHandlerFactory,TileSet texture, TileSet propulsion, Func <Particle> getParticle)
         {
             _animationHandlerFactory = animationHandlerFactory;
-            _tileSet = tileSet;
+            _texture = texture;
             _propulsion = propulsion;
-            _clipSize = 50;
+            _getParticle = getParticle;
             _ammo = _clipSize;
             _logger = LogManager.GetCurrentClassLogger();
         }
@@ -35,9 +37,9 @@ namespace SE_Praktikum.Components.Sprites.Weapons
                 return null;
             }   
             _ammo--;
-            Missile m = new Missile(_animationHandlerFactory.GetAnimationHandler(_tileSet,
+            Missile m = new Missile(_animationHandlerFactory.GetAnimationHandler(_texture,
                 new AnimationSettings(1, isPlaying: false)),velocitySpaceship,
-                _animationHandlerFactory.GetAnimationHandler(_propulsion,new AnimationSettings(6,50, isLooping:true)));
+                _animationHandlerFactory.GetAnimationHandler(_propulsion,new AnimationSettings(6,50, isLooping:true)),_getParticle());
             return m;
         }
 

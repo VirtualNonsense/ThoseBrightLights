@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Microsoft.Xna.Framework;
@@ -19,14 +20,18 @@ namespace SE_Praktikum.Core
     {
         private readonly MapFactory _mapFactory;
         private readonly PlayerFactory _playerFactory;
+        private readonly ParticleFactory _particleFactory;
         private List<IComponent> _components;
         private Logger _logger;
 
+        private event EventHandler OnExplosion;
+
         //Constructor
-        public Level(MapFactory mapFactory, PlayerFactory playerFactory)
+        public Level(MapFactory mapFactory, PlayerFactory playerFactory, ParticleFactory particleFactory)
         {
             _mapFactory = mapFactory;
             _playerFactory = playerFactory;
+            _particleFactory = particleFactory;
             _components = new List<IComponent>();
             _logger = LogManager.GetCurrentClassLogger();
         }
@@ -59,7 +64,7 @@ namespace SE_Praktikum.Core
                     }
                 }
             }
-
+            var explosions = new List<IComponent>();
             foreach (var bullet in _components.OfType<Bullet>())
             {
                 foreach (var bullet2 in _components.OfType<Bullet>())
@@ -68,9 +73,11 @@ namespace SE_Praktikum.Core
                     if (!(intersect is null))
                     {
                         bullet.IsRemoveAble = true;
+                        explosions.Add(bullet.Explosion);
                     }
                 }
             }
+            _components.AddRange(explosions);
 
             index = 0;
             while (index < _components.Count)
@@ -115,5 +122,6 @@ namespace SE_Praktikum.Core
                 JsonConvert.DeserializeObject<LevelBlueprint>(File.ReadAllText(@".\Content\Level\TestLevel\TestLevel.json"))));
             
         }
+
     }
 }

@@ -29,5 +29,10 @@ namespace SE_Praktikum.Components.Sprites
                 IsRemoveAble = true;
             base.Update(gameTime);
         }
+
+        public override Particle Clone()
+        {
+            return this.MemberwiseClone() as Particle;
+        }
     }
 }

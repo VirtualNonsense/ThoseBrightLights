@@ -15,7 +15,7 @@ namespace SE_Praktikum.Components.Sprites
         private Vector2 _velocity;
         private float _elapsedTime = 0;
 
-        public Missile(AnimationHandler animationHandler, Vector2 spaceShipVelocity, AnimationHandler propulsion) : base(animationHandler)
+        public Missile(AnimationHandler animationHandler, Vector2 spaceShipVelocity, AnimationHandler propulsion, Particle explosion) : base(animationHandler, explosion)
         {
             _spaceShipVelocity = spaceShipVelocity;
             _propulsionAnimationHandler = propulsion;
@@ -39,6 +39,11 @@ namespace SE_Praktikum.Components.Sprites
         {
             _propulsionAnimationHandler.Draw(spriteBatch);
             base.Draw(gameTime, spriteBatch);
+        }
+
+        protected override void InvokeOnCollide()
+        {
+            base.InvokeOnCollide();
         }
     }
 }
