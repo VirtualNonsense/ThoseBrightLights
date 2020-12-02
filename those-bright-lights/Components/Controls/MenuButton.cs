@@ -96,7 +96,6 @@ namespace SE_Praktikum.Components.Controls
 
             var mouseRectangle = new Rectangle((int) Math.Round(pos.X), (int) Math.Round(pos.Y), 1, 1);
             _isHovering = false;
-            _logger.Debug(pos);
             if (mouseRectangle.Intersects(Frame))
             {
                 _isHovering = true;
