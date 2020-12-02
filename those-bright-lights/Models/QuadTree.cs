@@ -14,7 +14,9 @@ namespace SE_Praktikum.Models
 
         public QuadTree(int level, Rectangle boundary)
         {
-
+            this.level = level;
+            objects = new List<T>();
+            this.boundary = boundary;
         }
     }
 }
