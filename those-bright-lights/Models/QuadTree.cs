@@ -29,5 +29,11 @@ namespace SE_Praktikum.Models
                 nodes[i] = null;
             }
         }
+
+        public void Divide()
+        {
+            int x = boundary.X;
+            int y = boundary.Y;
+        }
     }
 }
