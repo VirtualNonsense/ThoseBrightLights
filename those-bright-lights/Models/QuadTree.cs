@@ -36,6 +36,12 @@ namespace SE_Praktikum.Models
             int y = boundary.Y;
             int newWidth = boundary.Width / 2;
             int newHeight = boundary.Height / 2;
+
+            nodes[0] = new QuadTree<T>(level + 1, new Rectangle(x + newWidth, y, newWidth, newHeight));
+
+            //TODO: finish nodes' location!
         }
+
+
     }
 }
