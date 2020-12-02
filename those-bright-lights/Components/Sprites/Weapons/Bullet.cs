@@ -10,10 +10,23 @@ namespace SE_Praktikum.Components.Sprites.Weapons
 {
     public class Bullet : Actor
     {
-        public Particle Explosion;   
+        public Particle Explosion;
+        protected Vector2 Velocity;
+        protected Vector2 Acceleration;
+        protected Vector2 BulletPosition;
         public Bullet(AnimationHandler animationHandler, Particle explosion) : base(animationHandler)
         {
             Explosion = explosion;
+            Velocity = Vector2.Zero;
+            Acceleration = Vector2.Zero;
+        }
+
+        public Vector2 Movement(Vector2 spaceshipVelocity,
+            float elapsedGameTime)
+        {
+            Vector2 position = spaceshipVelocity * elapsedGameTime +
+                               0.5f * Acceleration * elapsedGameTime * elapsedGameTime + Velocity * elapsedGameTime;
+            return position;
         }
         
 
@@ -32,7 +45,6 @@ namespace SE_Praktikum.Components.Sprites.Weapons
 
         protected override void InvokeOnCollide()
         {
-            var p = Position; 
             base.InvokeOnCollide();
         }
 
