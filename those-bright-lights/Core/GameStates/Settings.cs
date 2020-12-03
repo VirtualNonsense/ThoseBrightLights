@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework.Audio;
 using SE_Praktikum.Components;
 using SE_Praktikum.Services.Factories;
 
@@ -38,9 +39,11 @@ namespace SE_Praktikum.Core.GameStates
             var buttons = 3;
             uint width = (uint) (_screen.Camera.GetPerspectiveScreenWidth() / buttons);
             uint height = (uint) (_screen.Camera.GetPerspectiveScreenHeight() / buttons);
-            
-            var s = _factory.GetSliderByDimension(contentManager, 20, 10, 30, width, Vector2.Zero, _screen.Camera);
-            s.OnValueChanged += (sender, args) => { _logger.Debug($"{s.Value}"); };
+            var s = _factory.GetSliderByDimension(contentManager, MediaPlayer.Volume,0 , 1, width, Vector2.Zero, _screen.Camera);
+            // TODO: SaveRoutine!
+            s.OnValueChanged += (sender, args) => {
+                MediaPlayer.Volume = s.Value;
+            };
             _components.Add(s);
             
             MenuButton b = _factory.GetMenuButtonByDimension(contentManager,
