@@ -298,7 +298,7 @@ namespace SE_Praktikum.Services.Factories
             var sliderSettings = new AnimationSettings(new List<(int, float)>
             {
                 (31, 1f), // when still
-                (32, 1f) // when dragged
+                (39, 1f) // when dragged
             }) 
             {
                 IsPlaying = false,
