@@ -20,6 +20,7 @@ namespace SE_Praktikum.Components.Controls
         private Logger _logger;
         
         private readonly SpriteFont _font;
+        private readonly int _textOffSetWhenPressed;
 
         private bool _isHovering;
         
@@ -49,11 +50,12 @@ namespace SE_Praktikum.Components.Controls
                           Color? textColor = null,
                           Vector2? position = null,
                           Camera camera = null,
-                          string text = "") : base(handler, camera)
+                          string text = "", int textOffSetWhenPressed = 0) : base(handler, camera)
         {
             _logger = LogManager.GetCurrentClassLogger();
             _position = position ?? Vector2.Zero;
             _font = font;
+            _textOffSetWhenPressed = textOffSetWhenPressed;
             TextColor = textColor ?? Color.CornflowerBlue;
             Text = text;
         }
@@ -81,7 +83,8 @@ namespace SE_Praktikum.Components.Controls
             if (!string.IsNullOrEmpty(Text))
             {
                 var x = (Frame.X + (Frame.Width / 2)) - (_font.MeasureString(Text).X / 2);
-                var y = (Frame.Y + (Frame.Height / 2)) - (_font.MeasureString(Text).Y / 2);
+                var y = (Frame.Y + (Frame.Height / 2)) - (_font.MeasureString(Text).Y / 2) +
+                        (Clicked ? _textOffSetWhenPressed : 0);
 
                 spriteBatch.DrawString(_font, Text, new Vector2(x, y), TextColor);
             }

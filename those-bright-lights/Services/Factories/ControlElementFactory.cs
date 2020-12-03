@@ -232,7 +232,7 @@ namespace SE_Praktikum.Services.Factories
                     handlers.Add(handler);
                 }
             }
-            return new MenuButton(handlers, contentManager.Load<SpriteFont>("Font/Font2"), text: text, position: position, camera: camera);;
+            return new MenuButton(handlers, contentManager.Load<SpriteFont>("Font/Font2"), text: text, position: position, camera: camera, textOffSetWhenPressed: 3);;
         }
 
         public Slider GetSliderByDimension(ContentManager contentManager,
