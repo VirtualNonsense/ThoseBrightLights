@@ -30,15 +30,15 @@ namespace SE_Praktikum.Services.Factories
                 _tileHeight);
         }
 
-        public MenuButton GetMenuButtonByDimension(ContentManager contentManager, uint width, uint height, Vector2 position,
+        public MenuButton GetButton(ContentManager contentManager, uint width, uint height, Vector2 position,
             string text = "", Camera camera = null)
         {
             loadAssetsIfNecessary(contentManager);
             uint tilesX = (uint) (width / _buttonsAndSwitches.TileDimX);
             uint tilesY = (uint) (height / _buttonsAndSwitches.TileDimY);
-            return GetMenuButton(contentManager,tilesX, tilesY, position, text, camera);
+            return GetButtonByTiles(contentManager,tilesX, tilesY, position, text, camera);
         }
-        public MenuButton GetMenuButton(ContentManager contentManager, uint tilesX, uint tilesY, Vector2 position, string text = "",  Camera camera = null)
+        public MenuButton GetButtonByTiles(ContentManager contentManager, uint tilesX, uint tilesY, Vector2 position, string text = "",  Camera camera = null)
         {
             List<AnimationHandler> handlers = new List<AnimationHandler>();
             loadAssetsIfNecessary(contentManager);
@@ -235,26 +235,25 @@ namespace SE_Praktikum.Services.Factories
             return new MenuButton(handlers, contentManager.Load<SpriteFont>("Font/Font2"), text: text, position: position, camera: camera, textOffSetWhenPressed: 3);;
         }
 
-        public Slider GetSliderByDimension(ContentManager contentManager,
+        public Slider GetSlider(ContentManager contentManager,
             float initialValue,
             float min,
             float max,
             uint width,
-            Vector2 position,
             Camera camera = null, float layer = 0)
         {
             
             loadAssetsIfNecessary(contentManager);
             uint tilesX = (uint) (width / _buttonsAndSwitches.TileDimX);
-            return GetSlider(contentManager,initialValue, min, max, tilesX, position, camera);
+            return GetSliderByTiles(contentManager,initialValue, min, max, tilesX, camera);
         }
-        public Slider GetSlider(ContentManager contentManager,
+        public Slider GetSliderByTiles(ContentManager contentManager,
             float initialValue,
             float min,
             float max,
             uint tilesX,
-            Vector2 position,
-            Camera camera = null, float layer = 0)
+            Camera camera = null, 
+            float layer = 0)
         {
             List<AnimationHandler> handlers = new List<AnimationHandler>();
             loadAssetsIfNecessary(contentManager);
@@ -315,6 +314,8 @@ namespace SE_Praktikum.Services.Factories
             };
             return new Slider(initialValue, min, max, new Slider.SliderBlade(_sliderBladeHandler, camera), handlers, camera);
         }
-
     }
+    
+    
+    
 }

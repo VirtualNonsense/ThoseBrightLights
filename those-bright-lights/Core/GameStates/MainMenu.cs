@@ -42,7 +42,7 @@ namespace SE_Praktikum.Core.GameStates
             var buttons = 3;
             uint width = (uint) (_screen.Camera.GetPerspectiveScreenWidth() / buttons);
             uint height = (uint) (_screen.Camera.GetPerspectiveScreenHeight() / buttons);
-            MenuButton b = _factory.GetMenuButtonByDimension(contentManager,
+            MenuButton b = _factory.GetButton(contentManager,
                 width,
                 height,
                 new Vector2(0, 0),
@@ -50,7 +50,7 @@ namespace SE_Praktikum.Core.GameStates
                 _screen.Camera);
             b.Click += (sender, args) => { _logger.Debug("Start new game"); _subject.OnNext(GameStateMachine.GameStateMachineTrigger.StartGame); };
             _buttons.Add(b);
-            b = _factory.GetMenuButtonByDimension(contentManager,
+            b = _factory.GetButton(contentManager,
                 width,
                 height,
                 new Vector2(0, 0),
@@ -58,7 +58,7 @@ namespace SE_Praktikum.Core.GameStates
                 _screen.Camera);
             b.Click += (sender, args) => { _logger.Debug("Go to settings"); _subject.OnNext(GameStateMachine.GameStateMachineTrigger.StartSettings); };
             _buttons.Add(b);
-            b = _factory.GetMenuButtonByDimension(contentManager,
+            b = _factory.GetButton(contentManager,
                 width,
                 height,
                 new Vector2(0, 0),
