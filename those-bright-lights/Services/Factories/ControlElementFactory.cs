@@ -15,6 +15,7 @@ namespace SE_Praktikum.Services.Factories
         private readonly AnimationHandlerFactory _animationHandlerFactory;
         private readonly ContentManager _contentManager;
         private TileSet _buttonsAndSwitches;
+        private SpriteFont _font;
         private const int _tileWidth = 32;
         private const int _tileHeight = 32;
         private Logger _logger;
@@ -30,6 +31,7 @@ namespace SE_Praktikum.Services.Factories
         {
             _buttonsAndSwitches ??= new TileSet(_contentManager.Load<Texture2D>("Artwork/Tilemaps/ButtonsAndSwitches"), _tileWidth,
                 _tileHeight);
+            _font ??= _contentManager.Load<SpriteFont>("Font/Font2");
         }
 
         public MenuButton GetButton(uint width, uint height, Vector2 position,
@@ -234,7 +236,7 @@ namespace SE_Praktikum.Services.Factories
                     handlers.Add(handler);
                 }
             }
-            return new MenuButton(handlers, _contentManager.Load<SpriteFont>("Font/Font2"), text: text, position: position, camera: camera, textOffSetWhenPressed: 3);;
+            return new MenuButton(handlers, _font, text: text, position: position, camera: camera, textOffSetWhenPressed: 3);;
         }
 
         public Slider GetSlider(ContentManager contentManager,
