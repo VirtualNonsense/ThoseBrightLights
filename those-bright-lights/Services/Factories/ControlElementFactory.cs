@@ -239,18 +239,20 @@ namespace SE_Praktikum.Services.Factories
             float initialValue,
             float min,
             float max,
+            Vector2 position,
             uint width,
             Camera camera = null, float layer = 0)
         {
             
             loadAssetsIfNecessary(contentManager);
             uint tilesX = (uint) (width / _buttonsAndSwitches.TileDimX);
-            return GetSliderByTiles(contentManager,initialValue, min, max, tilesX, camera);
+            return GetSliderByTiles(contentManager,initialValue, min, max, position, tilesX, camera);
         }
         public Slider GetSliderByTiles(ContentManager contentManager,
             float initialValue,
             float min,
             float max,
+            Vector2 position,
             uint tilesX,
             Camera camera = null, 
             float layer = 0)
@@ -312,7 +314,7 @@ namespace SE_Praktikum.Services.Factories
                     Vector2.Zero
                 )
             };
-            return new Slider(initialValue, min, max, new Slider.SliderBlade(_sliderBladeHandler, camera), handlers, camera);
+            return new Slider(initialValue, min, max,  position, new Slider.SliderBlade(_sliderBladeHandler, camera), handlers, camera);
         }
     }
     

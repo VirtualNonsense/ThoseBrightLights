@@ -61,13 +61,14 @@ namespace SE_Praktikum.Components.Controls
         private float UpperPos => _position.X + Frame.Width/2f - sliderWidth;
         private float LowerPos => _position.X - Frame.Width/2f + sliderWidth;
         
-        public Slider(float initialValue, float min, float max, SliderBlade sliderBlade, List<AnimationHandler> handler, Camera camera) : base(handler, camera)
+        public Slider(float initialValue, float min, float max, Vector2 position, SliderBlade sliderBlade, List<AnimationHandler> handler, Camera camera) : base(handler, camera)
         {
             _logger = LogManager.GetCurrentClassLogger();
             _value = initialValue;
             _min = min;
             _max = max;
             _sliderBlade = sliderBlade;
+            Position = position;
             _sliderBlade.Position = Position;
         }
          

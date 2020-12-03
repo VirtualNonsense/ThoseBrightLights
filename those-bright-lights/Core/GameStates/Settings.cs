@@ -39,7 +39,7 @@ namespace SE_Praktikum.Core.GameStates
             var buttons = 3;
             uint width = (uint) (_screen.Camera.GetPerspectiveScreenWidth() / buttons);
             uint height = (uint) (_screen.Camera.GetPerspectiveScreenHeight() / buttons);
-            var s = _factory.GetSlider(contentManager, MediaPlayer.Volume,0 , 1, width, _screen.Camera);
+            var s = _factory.GetSlider(contentManager, MediaPlayer.Volume,0 , 1, Vector2.Zero, width, _screen.Camera);
             // TODO: SaveRoutine!
             s.OnValueChanged += (sender, args) => {
                 MediaPlayer.Volume = s.Value;
