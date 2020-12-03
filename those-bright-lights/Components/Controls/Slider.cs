@@ -48,6 +48,16 @@ namespace SE_Praktikum.Components.Controls
             }
         }
 
+        public override float Layer
+        {
+            get=>base.Layer;
+            set
+            {
+                base.Layer = value;
+                _sliderBlade.Layer = value + .1f;
+            }
+        }
+
         private float UpperPos => _position.X + Frame.Width/2f - sliderWidth;
         private float LowerPos => _position.X - Frame.Width/2f + sliderWidth;
         

@@ -47,6 +47,18 @@ namespace SE_Praktikum.Components.Controls
             }
         }
 
+        public virtual float Layer
+        {
+            get => _handler.First().Settings.Layer;
+            set
+            {
+                foreach (var animationHandler in _handler)
+                {
+                    animationHandler.Settings.Layer = value;
+                }
+            }
+        }
+
         public Rectangle Frame { get; private set; }
         
         protected Vector2 Offset => _position - _origin;
