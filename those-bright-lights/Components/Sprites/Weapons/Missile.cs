@@ -9,6 +9,7 @@ namespace SE_Praktikum.Components.Sprites.Weapons
     {
         private readonly Vector2 _spaceShipVelocity;
         private readonly AnimationHandler _propulsionAnimationHandler;
+        private readonly Vector2 _positionOffset;
         private readonly Vector2 _offSet;
         private float _elapsedTime = 0;
 
@@ -17,17 +18,16 @@ namespace SE_Praktikum.Components.Sprites.Weapons
             _spaceShipVelocity = spaceShipVelocity;
             _propulsionAnimationHandler = propulsion;
             _offSet = new Vector2(-animationHandler.FrameWidth/2-_propulsionAnimationHandler.FrameWidth/2,0);
-            Layer -= 2 * Single.Epsilon;
             _propulsionAnimationHandler.Settings.Layer = Layer;
-            Acceleration = new Vector2(3,0);
+            Acceleration = new Vector2(5,0);
         }
 
 
         public override void Update(GameTime gameTime)
         {
             _elapsedTime += gameTime.ElapsedGameTime.Milliseconds / 1000f;
-            Position = Movement(_spaceShipVelocity,_elapsedTime);
-            _propulsionAnimationHandler.Position = Position + _offSet; 
+            //Position = Movement(_spaceShipVelocity,_elapsedTime);
+            _propulsionAnimationHandler.Position =  Position + _offSet; 
             _propulsionAnimationHandler.Update(gameTime);
             base.Update(gameTime);
         }

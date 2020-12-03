@@ -11,7 +11,7 @@ namespace SE_Praktikum.Components.Sprites.Weapons
 
         public Laser(AnimationHandler animationHandler, Particle explosion) : base(animationHandler, explosion)
         {
-            Velocity = new Vector2(0,2);
+            Velocity = new Vector2(5,0);
             Acceleration = Vector2.Zero;
             _spaceShipVelocity = Vector2.Zero;
         }
