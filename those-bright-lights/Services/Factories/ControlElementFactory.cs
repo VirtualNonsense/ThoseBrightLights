@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Net.Mime;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -6,6 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 using NLog;
 using SE_Praktikum.Components.Controls;
 using SE_Praktikum.Core;
+using SE_Praktikum.Extensions;
 using SE_Praktikum.Models;
 
 namespace SE_Praktikum.Services.Factories
@@ -32,6 +34,118 @@ namespace SE_Praktikum.Services.Factories
             _buttonsAndSwitches ??= new TileSet(_contentManager.Load<Texture2D>("Artwork/Tilemaps/ButtonsAndSwitches"), _tileWidth,
                 _tileHeight);
             _font ??= _contentManager.Load<SpriteFont>("Font/Font2");
+        }
+
+        public TextBox GetTextBoxByTiles(uint tilesX, uint tilesY, Vector2 position, Color color, string text = "",  Camera camera = null)
+        {
+            List<AnimationHandler> handlers = new List<AnimationHandler>();
+            loadAssetsIfNecessary();
+
+            for (var y = 0; y < tilesY; y++)
+            {
+                for (var x = 0; x < tilesX; x++)
+                {
+                    AnimationSettings animationSettings;
+                    switch (TableHelper.GetTablePos(x, y, tilesX-1, tilesY-1))
+                    {
+                        case TableHelper.TablePosition.TopLeft:
+                            animationSettings = new AnimationSettings(new List<(int, float)>
+                            {
+                                (40, 1f),
+                            });
+                            break;
+                        case TableHelper.TablePosition.TopRight:
+                            animationSettings = new AnimationSettings(new List<(int, float)>
+                            {
+                                (42, 1f),
+                            });
+                            break;
+                        case TableHelper.TablePosition.Top:
+                            animationSettings = new AnimationSettings(new List<(int, float)>
+                            {
+                                (41, 1f),
+                            });
+                            break;
+                        case TableHelper.TablePosition.Right:
+                            animationSettings = new AnimationSettings(new List<(int, float)>
+                            {
+                                (50, 1f),
+                            });
+                            break;
+                        case TableHelper.TablePosition.BottomRight:
+                            animationSettings = new AnimationSettings(new List<(int, float)>
+                            {
+                                (58, 1f),
+                            });
+                            break;
+                        case TableHelper.TablePosition.Bottom:
+                            animationSettings = new AnimationSettings(new List<(int, float)>
+                            {
+                                (57, 1f),
+                            });
+                            break;
+                        case TableHelper.TablePosition.BottomLeft:
+                            animationSettings = new AnimationSettings(new List<(int, float)>
+                            {
+                                (56, 1f),
+                            });
+                            break;
+                        case TableHelper.TablePosition.Left:
+                            animationSettings = new AnimationSettings(new List<(int, float)>
+                            {
+                                (48, 1f),
+                            });
+                            break;
+                        case TableHelper.TablePosition.Middle:
+                            animationSettings = new AnimationSettings(new List<(int, float)>
+                            {
+                                (49, 1f),
+                            });
+                            break;
+                        case TableHelper.TablePosition.SingleColumnTop:
+                            throw new NotImplementedException();
+                        case TableHelper.TablePosition.SingleColumnMiddle:
+                            throw new NotImplementedException();
+                        case TableHelper.TablePosition.SingleColumnBottom:
+                            throw new NotImplementedException();
+                        case TableHelper.TablePosition.SingleRowLeft:
+                            animationSettings = new AnimationSettings(new List<(int, float)>
+                            {
+                                (32, 1f),
+                            });
+                            break;
+                        case TableHelper.TablePosition.SingleRowMiddle:
+                            animationSettings = new AnimationSettings(new List<(int, float)>
+                            {
+                                (33, 1f),
+                            });
+                            break;
+                        case TableHelper.TablePosition.SingleRowRight:
+                            animationSettings = new AnimationSettings(new List<(int, float)>
+                            {
+                                (34, 1f),
+                            });
+                            break;
+                        case TableHelper.TablePosition.SingleTile:
+                            throw new NotImplementedException();
+                        default:
+                            throw new NotImplementedException();
+                    }
+                    
+                    animationSettings.IsPlaying = false;
+                    // should be < 0 to avoid problem with text rendering
+                    animationSettings.Layer = -.10f;
+                    var handler = _animationHandlerFactory.GetAnimationHandler(
+                        _buttonsAndSwitches, 
+                        animationSettings,
+                        new Vector2(x * _tileWidth, y * _tileWidth),
+                        Vector2.Zero
+                    );
+                    handlers.Add(handler);
+                }
+            }
+
+            return new TextBox(handlers, _font, position, color, camera, text);
         }
 
         public MenuButton GetButton(uint width, uint height, Vector2 position,
