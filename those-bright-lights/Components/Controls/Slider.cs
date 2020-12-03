@@ -38,7 +38,7 @@ namespace SE_Praktikum.Components.Controls
             } 
         }
 
-        public override Vector2 Position
+        public sealed override Vector2 Position
         {
             get => base.Position;
             set
