@@ -46,7 +46,7 @@ namespace SE_Praktikum.Core.GameStates
             };
             _components.Add(s);
             
-            MenuButton b = _factory.GetButton(contentManager,
+            MenuButton b = _factory.GetButton(
                 width,
                 height,
                 new Vector2(0, 0),

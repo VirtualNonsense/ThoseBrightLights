@@ -13,35 +13,37 @@ namespace SE_Praktikum.Services.Factories
     public class ControlElementFactory
     {
         private readonly AnimationHandlerFactory _animationHandlerFactory;
+        private readonly ContentManager _contentManager;
         private TileSet _buttonsAndSwitches;
         private const int _tileWidth = 32;
         private const int _tileHeight = 32;
         private Logger _logger;
 
-        public ControlElementFactory(AnimationHandlerFactory animationHandlerFactory)
+        public ControlElementFactory(AnimationHandlerFactory animationHandlerFactory, ContentManager contentManager)
         {
             _animationHandlerFactory = animationHandlerFactory;
+            _contentManager = contentManager;
             _logger = LogManager.GetCurrentClassLogger();
         }
 
-        private void loadAssetsIfNecessary(ContentManager contentManager)
+        private void loadAssetsIfNecessary()
         {
-            _buttonsAndSwitches ??= new TileSet(contentManager.Load<Texture2D>("Artwork/Tilemaps/ButtonsAndSwitches"), _tileWidth,
+            _buttonsAndSwitches ??= new TileSet(_contentManager.Load<Texture2D>("Artwork/Tilemaps/ButtonsAndSwitches"), _tileWidth,
                 _tileHeight);
         }
 
-        public MenuButton GetButton(ContentManager contentManager, uint width, uint height, Vector2 position,
+        public MenuButton GetButton(uint width, uint height, Vector2 position,
             string text = "", Camera camera = null)
         {
-            loadAssetsIfNecessary(contentManager);
+            loadAssetsIfNecessary();
             uint tilesX = (uint) (width / _buttonsAndSwitches.TileDimX);
             uint tilesY = (uint) (height / _buttonsAndSwitches.TileDimY);
-            return GetButtonByTiles(contentManager,tilesX, tilesY, position, text, camera);
+            return GetButtonByTiles(tilesX, tilesY, position, text, camera);
         }
-        public MenuButton GetButtonByTiles(ContentManager contentManager, uint tilesX, uint tilesY, Vector2 position, string text = "",  Camera camera = null)
+        public MenuButton GetButtonByTiles(uint tilesX, uint tilesY, Vector2 position, string text = "",  Camera camera = null)
         {
             List<AnimationHandler> handlers = new List<AnimationHandler>();
-            loadAssetsIfNecessary(contentManager);
+            loadAssetsIfNecessary();
 
             for (var y = 0; y < tilesY; y++)
             {
@@ -232,7 +234,7 @@ namespace SE_Praktikum.Services.Factories
                     handlers.Add(handler);
                 }
             }
-            return new MenuButton(handlers, contentManager.Load<SpriteFont>("Font/Font2"), text: text, position: position, camera: camera, textOffSetWhenPressed: 3);;
+            return new MenuButton(handlers, _contentManager.Load<SpriteFont>("Font/Font2"), text: text, position: position, camera: camera, textOffSetWhenPressed: 3);;
         }
 
         public Slider GetSlider(ContentManager contentManager,
@@ -244,7 +246,7 @@ namespace SE_Praktikum.Services.Factories
             Camera camera = null, float layer = 0)
         {
             
-            loadAssetsIfNecessary(contentManager);
+            loadAssetsIfNecessary();
             uint tilesX = (uint) (width / _buttonsAndSwitches.TileDimX);
             return GetSliderByTiles(contentManager,initialValue, min, max, position, tilesX, camera);
         }
@@ -258,7 +260,7 @@ namespace SE_Praktikum.Services.Factories
             float layer = 0)
         {
             List<AnimationHandler> handlers = new List<AnimationHandler>();
-            loadAssetsIfNecessary(contentManager);
+            loadAssetsIfNecessary();
 
             for (var x = 0; x < tilesX; x++)
             {

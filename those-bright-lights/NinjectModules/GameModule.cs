@@ -17,6 +17,7 @@ namespace SE_Praktikum.NinjectModules
         {
             Bind<SE_Praktikum_Game>().ToSelf().InSingletonScope();
             Bind<IScreen>().ToMethod(c => c.Kernel.Get<SE_Praktikum_Game>());
+            Bind<ContentManager>().ToMethod(c => c.Kernel.Get<SE_Praktikum_Game>().Content);
             Bind<IObservable<GameState>>().To<GameStateMachine>();
             Bind<ExplosionEmitter>().ToSelf();
         }
