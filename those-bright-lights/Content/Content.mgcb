@@ -259,6 +259,12 @@
 /processorParam:Quality=Best
 /build:Audio/Sound_Effects/Airborne/Flight_Ufo_nc.wav
 
+#begin Audio/Sound_Effects/Airborne/Wobble_test.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound_Effects/Airborne/Wobble_test.wav
+
 #begin Audio/Sound_Effects/Button/Button_Goofy.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
