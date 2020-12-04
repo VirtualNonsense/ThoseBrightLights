@@ -301,6 +301,12 @@
 /processorParam:Quality=Best
 /build:Audio/Sound_Effects/Button/Button_Sonar.wav
 
+#begin Audio/Sound_Effects/Collusion/Clink.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound_Effects/Collusion/Clink.wav
+
 #begin Audio/Sound_Effects/Savepoint (1).wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
