@@ -41,9 +41,8 @@ namespace SE_Praktikum.Components.Sprites
             //TODO: doesn't work currently
             if (Rotation == 0 && actor.Rotation == 0)
             {
-                if (HitBox.Intersects(actor.HitBox))
-                    return Position;
-                return null;
+                if (!HitBox.Intersects(actor.HitBox))
+                    return null;
             }
             var t1 = _animationHandler.GetDataOfFrame();
             var t2 = actor._animationHandler.GetDataOfFrame();
