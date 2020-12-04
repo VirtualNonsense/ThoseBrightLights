@@ -265,6 +265,12 @@
 /processorParam:Quality=Best
 /build:Audio/Sound_Effects/Airborne/Ignition.wav
 
+#begin Audio/Sound_Effects/Airborne/Ignition_heavy.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound_Effects/Airborne/Ignition_heavy.wav
+
 #begin Audio/Sound_Effects/Airborne/Wobble_test.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
