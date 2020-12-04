@@ -22,6 +22,7 @@ namespace SE_Praktikum.Core.GameStates
         private readonly IScreen _screen;
         private readonly ControlElementFactory _factory;
         private ComponentGrid _components;
+        private float _tmpSoundFxVolume = .5f;
 
 
         public override void LoadContent(ContentManager contentManager)
@@ -39,21 +40,35 @@ namespace SE_Praktikum.Core.GameStates
             var buttons = 3;
             uint width = (uint) (_screen.Camera.GetPerspectiveScreenWidth() / buttons);
             uint height = (uint) (_screen.Camera.GetPerspectiveScreenHeight() / buttons);
-            var s = _factory.GetSlider(contentManager, MediaPlayer.Volume,0 , 1, Vector2.Zero, width, _screen.Camera);
-            // TODO: SaveRoutine!
-            s.OnValueChanged += (sender, args) => {
-                MediaPlayer.Volume = s.Value;
-            };
-            _components.Add(s);
+
+            var musicVolumeLabel = _factory.GetTextBoxByTiles(6, 1, Vector2.Zero, Color.Black, "Music Volume", _screen.Camera);
+            var soundEffectVolumeLabel = _factory.GetTextBoxByTiles(6, 1, Vector2.Zero, Color.Black, "FX Volume", _screen.Camera);
             
-            MenuButton b = _factory.GetButton(
+            var musicVolumeSlider = _factory.GetSlider(contentManager, MediaPlayer.Volume,0 , 1, Vector2.Zero, width, _screen.Camera);
+            // TODO: SaveRoutine!
+            musicVolumeSlider.OnValueChanged += (sender, args) => {
+                MediaPlayer.Volume = musicVolumeSlider.Value;
+            };
+            
+            var soundEffectVolumeSlider = _factory.GetSlider(contentManager, _tmpSoundFxVolume,0 , 1, Vector2.Zero, width, _screen.Camera);
+            // TODO: SaveRoutine!
+            soundEffectVolumeSlider.OnValueChanged += (sender, args) =>
+            {
+                _tmpSoundFxVolume = soundEffectVolumeSlider.Value;
+            };
+
+            MenuButton backButton = _factory.GetButton(
                 width,
                 height,
                 new Vector2(0, 0),
                 "Back to main menu",
                 _screen.Camera);
-            b.Click += (sender, args) => { _logger.Debug("Back to main menu"); _subject.OnNext(GameStateMachine.GameStateMachineTrigger.Back); };
-            _components.Add(b);
+            backButton.Click += (sender, args) => { _logger.Debug("Back to main menu"); _subject.OnNext(GameStateMachine.GameStateMachineTrigger.Back); };
+            _components.Add(musicVolumeLabel);
+            _components.Add(soundEffectVolumeLabel);
+            _components.Add(backButton);
+            _components.Add(musicVolumeSlider);
+            _components.Add(soundEffectVolumeSlider);
         }
 
         public Settings(IScreen screen, ControlElementFactory factory)
