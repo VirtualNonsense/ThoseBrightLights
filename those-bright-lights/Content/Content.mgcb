@@ -229,6 +229,12 @@
 /processorParam:Quality=Best
 /build:Audio/Music/Song4_remaster.wav
 
+#begin Audio/Sound_Effects/Button/Button_Goofy.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound_Effects/Button/Button_Goofy.wav
+
 #begin Audio/Sound_Effects/Button/Button_high.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
