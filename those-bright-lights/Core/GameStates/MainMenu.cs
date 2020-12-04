@@ -67,7 +67,6 @@ namespace SE_Praktikum.Core.GameStates
             b.Click += (sender, args) => { _logger.Debug("Quit game"); _subject.OnNext(GameStateMachine.GameStateMachineTrigger.QuitGame); };
             _buttons.Add(b);
             
-            _logger.Error(_buttons.Count);
         }
 
         public override void UnloadContent()
