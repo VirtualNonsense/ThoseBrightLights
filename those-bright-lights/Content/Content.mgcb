@@ -193,18 +193,6 @@
 /processorParam:TextureFormat=Color
 /build:Artwork/Tilemaps/Space_32_32.png
 
-#begin Audio/Music/Death.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Audio/Music/Death.wav
-
-#begin Audio/Music/Death_mp3.mp3
-/importer:Mp3Importer
-/processor:SongProcessor
-/processorParam:Quality=Best
-/build:Audio/Music/Death_mp3.mp3
-
 #begin Audio/Music/Song2_remaster2.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
