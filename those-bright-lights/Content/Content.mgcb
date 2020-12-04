@@ -307,6 +307,12 @@
 /processorParam:Quality=Best
 /build:Audio/Sound_Effects/Collusion/Clink.wav
 
+#begin Audio/Sound_Effects/Collusion/ClinkBell.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound_Effects/Collusion/ClinkBell.wav
+
 #begin Audio/Sound_Effects/Collusion/Clonk.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
