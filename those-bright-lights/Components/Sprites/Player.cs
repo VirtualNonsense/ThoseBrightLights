@@ -13,7 +13,7 @@ namespace SE_Praktikum.Components.Sprites
         private Input _input;
         private Logger _logger;
         private bool _shot = false;
-        public Player(AnimationHandler animationHandler, Input input=null, int health=100, float speed = 1) 
+        public Player(AnimationHandler animationHandler, Input input=null, int health=100, float speed = 5) 
             : base(animationHandler, health, speed)
         {
             _input = input;

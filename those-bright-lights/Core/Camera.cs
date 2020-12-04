@@ -49,8 +49,8 @@ namespace SE_Praktikum.Core
                       float fieldOfView, 
                       float aspectRatio, 
                       BasicEffect spriteEffect, 
-                      float? cameraSpeed = null, 
-                      float cameraZoomSpeed = 5f, 
+                      float? cameraSpeed = 1000, 
+                      float cameraZoomSpeed = 5000f, 
                       float zNearPlane = .1f, 
                       float zFarPlane = float.MaxValue, 
                       CameraControls controls = null)
