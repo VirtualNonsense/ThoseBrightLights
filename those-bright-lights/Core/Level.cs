@@ -119,7 +119,7 @@ namespace SE_Praktikum.Core
             
             //TODO: try to load the json map via the contentmanager
             _components.Add(_mapFactory.LoadMap(contentManager,
-                JsonConvert.DeserializeObject<LevelBlueprint>(File.ReadAllText(@".\Content\Level\TestLevel\TestLevel.json"))));
+                JsonConvert.DeserializeObject<LevelBlueprint>(File.ReadAllText(@".\Content\Level\AlphaLevel\AlphaMap.json"))));
             
         }
 
