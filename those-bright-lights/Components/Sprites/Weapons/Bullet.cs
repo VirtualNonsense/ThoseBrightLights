@@ -39,6 +39,12 @@ namespace SE_Praktikum.Components.Sprites.Weapons
 
         public override void Update(GameTime gameTime)
         {
+            timeAlive += gameTime.ElapsedGameTime.Milliseconds / 1000f;
+            if (timeAlive >= maxTime)
+            {
+                IsRemoveAble = true;
+            }
+            
             Explosion.Position = Position;
             base.Update(gameTime);
         }
