@@ -22,10 +22,10 @@ namespace SE_Praktikum.Components.Sprites.Weapons
             _logger = LogManager.GetCurrentClassLogger();
         }
 
-        public override Bullet GetBullet(Vector2 velocitySpaceship, Vector2 positionSpaceship)
+        public override Bullet GetBullet(Vector2 velocitySpaceship, Vector2 positionSpaceship,float rotation, Actor parent)
         {
             Laser l = new Laser(_animationHandlerFactory.GetAnimationHandler(_textureTileSet,
-                    new AnimationSettings(1, isPlaying: false)),positionSpaceship,_getParticle());
+                    new AnimationSettings(1, isPlaying: false)),positionSpaceship,rotation,_getParticle(), parent);
             return l;
         }
     }

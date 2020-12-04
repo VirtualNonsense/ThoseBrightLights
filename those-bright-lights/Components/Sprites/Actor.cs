@@ -7,6 +7,7 @@ using NLog;
 using SE_Praktikum.Services;
 using SE_Praktikum.Components;
 using SE_Praktikum.Components.Sprites;
+using SE_Praktikum.Components.Sprites.Weapons;
 using SE_Praktikum.Models;
 
 namespace SE_Praktikum.Components.Sprites

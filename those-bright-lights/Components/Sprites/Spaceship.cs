@@ -57,7 +57,7 @@ namespace SE_Praktikum.Components.Sprites
         }
         protected virtual void InvokeOnShoot(Vector2 velocity)
         {
-            var e = new LevelEvent.ShootBullet {Bullet = _weapons[_currentWeapon].GetBullet(velocity,Position)};
+            var e = new LevelEvent.ShootBullet {Bullet = _weapons[_currentWeapon].GetBullet(velocity,Position,Rotation, this)};
             if (e.Bullet is null)
                 return;
             OnShoot?.Invoke(this,e);

@@ -10,8 +10,10 @@ namespace SE_Praktikum.Components.Sprites.Weapons
         private readonly Vector2 _spaceShipVelocity;
         private float _elapsedTime = 0;
 
-        public Laser(AnimationHandler animationHandler,Vector2 positionSpaceship, Particle explosion) : base(animationHandler, explosion)
+        public Laser(AnimationHandler animationHandler,Vector2 positionSpaceship,float rotation, Particle explosion, Actor parent) : base(animationHandler, explosion)
         {
+            Rotation = rotation;
+            Parent = parent;
             Position = positionSpaceship;
             Velocity = new Vector2(5,0);
             Acceleration = Vector2.Zero;

@@ -29,7 +29,7 @@ namespace SE_Praktikum.Components.Sprites.Weapons
         }
 
 
-        public override Bullet GetBullet(Vector2 velocitySpaceship, Vector2 positionSpaceship)
+        public override Bullet GetBullet(Vector2 velocitySpaceship, Vector2 positionSpaceship,float rotation, Actor parent)
         {
             if (_ammo <= 0)
             {
@@ -38,8 +38,9 @@ namespace SE_Praktikum.Components.Sprites.Weapons
             }   
             _ammo--;
             Missile m = new Missile(_animationHandlerFactory.GetAnimationHandler(_textureTileSet,
-                new AnimationSettings(1, isPlaying: false)),velocitySpaceship, positionSpaceship,
-                _animationHandlerFactory.GetAnimationHandler(_propulsion,new AnimationSettings(6,50, isLooping:true)),_getParticle());
+                new AnimationSettings(1, isPlaying: false)),velocitySpaceship, positionSpaceship,rotation,
+                _animationHandlerFactory.GetAnimationHandler(_propulsion,new AnimationSettings(6,50, isLooping:true)),
+                _getParticle(), parent);
             return m;
         }
 
