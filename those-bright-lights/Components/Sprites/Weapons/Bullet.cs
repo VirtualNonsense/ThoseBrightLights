@@ -47,8 +47,9 @@ namespace SE_Praktikum.Components.Sprites.Weapons
             {
                 IsRemoveAble = true;
             }
-            
-            Explosion.Position = Position;
+
+            Explosion.Position =
+                Position + new Vector2(_animationHandler.FrameWidth / 2, _animationHandler.FrameHeight / 2);
             base.Update(gameTime);
         }
 
