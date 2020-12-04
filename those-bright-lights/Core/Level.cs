@@ -102,7 +102,6 @@ namespace SE_Praktikum.Core
             if (t!=null)                                    
             {
                 _components.Add(t.Bullet);
-                t.Bullet.Position = playerPosition;
                 _logger.Info("Shot bullet!");
             }
         }
