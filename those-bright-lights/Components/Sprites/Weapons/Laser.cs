@@ -6,11 +6,10 @@ namespace SE_Praktikum.Components.Sprites.Weapons
 {
     public class Laser : Bullet
     {
-        private readonly Vector2 _positionSpaceship;
         private readonly Vector2 _spaceShipVelocity;
         private float _elapsedTime = 0;
 
-        public Laser(AnimationHandler animationHandler,Vector2 positionSpaceship,float rotation, Particle explosion, Actor parent) : base(animationHandler, explosion)
+        public Laser(AnimationHandler animationHandler,Vector2 positionSpaceship,float rotation, Particle explosion, Sprite parent) : base(animationHandler, explosion)
         {
             Rotation = rotation;
             Parent = parent;
@@ -18,7 +17,7 @@ namespace SE_Praktikum.Components.Sprites.Weapons
             Velocity = 5;
             Acceleration = 0;
             _spaceShipVelocity = Vector2.Zero;
-            maxTime = 5;
+            MaxTime = 5;
         }
         
         public override void Update(GameTime gameTime)

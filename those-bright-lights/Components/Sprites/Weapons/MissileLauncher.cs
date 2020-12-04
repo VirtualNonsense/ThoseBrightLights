@@ -14,9 +14,9 @@ namespace SE_Praktikum.Components.Sprites.Weapons
         private readonly TileSet _textureTileSet;
         private readonly TileSet _propulsion;
         private readonly Func<Particle> _getParticle;
-        private readonly int _clipSize = 50;
+        private const int _clipSize = 50;
         private int _ammo;
-        private Logger _logger;
+        private readonly Logger _logger;
 
         public MissileLauncher(AnimationHandlerFactory animationHandlerFactory,TileSet textureTileSet, TileSet propulsion, Func <Particle> getParticle)
         {

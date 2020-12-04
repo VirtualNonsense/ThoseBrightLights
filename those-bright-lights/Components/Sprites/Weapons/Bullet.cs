@@ -12,11 +12,11 @@ namespace SE_Praktikum.Components.Sprites.Weapons
     public class Bullet : Actor
     {
         public readonly Particle Explosion;
-        private Vector2 _direction => new Vector2((float)Math.Cos(Rotation),(float)Math.Sin(Rotation));
-        protected float Velocity;
+        private Vector2 Direction => new Vector2((float)Math.Cos(Rotation),(float)Math.Sin(Rotation));
+        protected new float Velocity;
         protected float Acceleration;
-        protected float maxTime;
-        protected float timeAlive;
+        protected float MaxTime;
+        protected float TimeAlive;
 
         protected Bullet(AnimationHandler animationHandler, Particle explosion) : base(animationHandler)
         {
@@ -27,8 +27,8 @@ namespace SE_Praktikum.Components.Sprites.Weapons
 
         protected Vector2 Movement(Vector2 spaceshipVelocity, float elapsedTime)
         {
-            Vector2 position = spaceshipVelocity +
-                                0.5f * Acceleration * _direction * elapsedTime + Velocity *_direction + Position;
+            var position = spaceshipVelocity +
+                           0.5f * Acceleration * Direction * elapsedTime + Velocity *Direction + Position;
             return position;
         }
         
@@ -42,8 +42,8 @@ namespace SE_Praktikum.Components.Sprites.Weapons
 
         public override void Update(GameTime gameTime)
         {
-            timeAlive += gameTime.ElapsedGameTime.Milliseconds / 1000f;
-            if (timeAlive >= maxTime)
+            TimeAlive += gameTime.ElapsedGameTime.Milliseconds / 1000f;
+            if (TimeAlive >= MaxTime)
             {
                 IsRemoveAble = true;
             }

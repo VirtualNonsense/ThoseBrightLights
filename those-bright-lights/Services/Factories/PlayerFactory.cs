@@ -8,13 +8,13 @@ using SE_Praktikum.Models;
 
 namespace SE_Praktikum.Services.Factories
 {
-    public class PlayerFactory
+    public abstract class PlayerFactory
     {
         private readonly AnimationHandlerFactory _animationHandlerFactory;
         private readonly InputFactory _inputFactory;
         private readonly WeaponFactory _weaponFactory;
 
-        public PlayerFactory(AnimationHandlerFactory animationHandlerFactory, InputFactory inputFactory, WeaponFactory weaponFactory)
+        protected PlayerFactory(AnimationHandlerFactory animationHandlerFactory, InputFactory inputFactory, WeaponFactory weaponFactory)
         {
             _animationHandlerFactory = animationHandlerFactory;
             _inputFactory = inputFactory;

@@ -8,24 +8,22 @@ namespace SE_Praktikum.Components.Sprites.Weapons
     public class Missile : Bullet
     {
         private readonly Vector2 _spaceShipVelocity;
-        private readonly Vector2 _spaceShipPosition;
         private readonly AnimationHandler _propulsionAnimationHandler;
-        private readonly Vector2 _positionOffset;
         private readonly Vector2 _offSet;
         private float _elapsedTime = 0;
 
-        public Missile(AnimationHandler animationHandler, Vector2 spaceShipVelocity,Vector2 spaceShipPosition,float rotation, AnimationHandler propulsion, Particle explosion, Actor parent) : base(animationHandler, explosion)
+        public Missile(AnimationHandler animationHandler, Vector2 spaceShipVelocity,Vector2 spaceShipPosition,float rotation, AnimationHandler propulsion, Particle explosion, Sprite parent) : base(animationHandler, explosion)
         {
             Rotation = rotation;
             Parent = parent;
             _spaceShipVelocity = spaceShipVelocity;
-            _positionOffset = new Vector2(0,10);
-            Position = spaceShipPosition + _positionOffset;
+            var positionOffset = new Vector2(0,10);
+            Position = spaceShipPosition + positionOffset;
             _propulsionAnimationHandler = propulsion;
             _offSet = new Vector2(-animationHandler.FrameWidth/2-_propulsionAnimationHandler.FrameWidth/2,0);
             _propulsionAnimationHandler.Settings.Layer = Layer;
             Acceleration = 5;
-            maxTime = 5;
+            MaxTime = 5;
         }
 
 

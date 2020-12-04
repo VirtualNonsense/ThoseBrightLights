@@ -21,8 +21,8 @@ namespace SE_Praktikum.Core
         private readonly MapFactory _mapFactory;
         private readonly PlayerFactory _playerFactory;
         private readonly ParticleFactory _particleFactory;
-        private List<IComponent> _components;
-        private Logger _logger;
+        private readonly List<IComponent> _components;
+        private readonly Logger _logger;
 
         private event EventHandler OnExplosion;
 
