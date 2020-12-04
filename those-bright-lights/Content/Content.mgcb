@@ -265,6 +265,12 @@
 /processorParam:Quality=Best
 /build:Audio/Sound_Effects/Shot/Laser_Long.wav
 
+#begin Audio/Sound_Effects/Shot/Laser_Short.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound_Effects/Shot/Laser_Short.wav
+
 #begin Audio/Sound_Effects/Shot2.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
