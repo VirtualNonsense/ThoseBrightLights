@@ -53,33 +53,49 @@ namespace SE_Praktikum.Core
                 _components[index].Update(gameTime);
                 index++;
             }
+
+            CheckForCollisions();
+            
+        }
+
+        private void CheckForCollisions()
+        {
+            
+            var explosions = new List<IComponent>();
             foreach(var actor1 in _components.OfType<Actor>())
             {
                 foreach(var actor2 in _components.OfType<Actor>())
                 {
+                    //check if one actor has the other actor as parent
+                    if (actor1.Parent != null && actor1.Parent == actor2)
+                        continue;
+                    if (actor2.Parent != null && actor2.Parent == actor1)
+                        continue;
+                    
+                        
                     var collisionPosition = actor1.Intersects(actor2);
+                    //collision detected
                     if(!(collisionPosition is null))
                     {
-                        
-                    }
-                }
-            }
-            var explosions = new List<IComponent>();
-            foreach (var bullet in _components.OfType<Bullet>())
-            {
-                foreach (var bullet2 in _components.OfType<Bullet>())
-                {
-                    var intersect = bullet.Intersects(bullet2);
-                    if (!(intersect is null))
-                    {
-                        bullet.IsRemoveAble = true;
-                        explosions.Add(bullet.Explosion);
+                        //if one actor is of type bullet remove that actor and create explosion
+                        #region Actor is Bullet
+                        if (actor1 is Bullet b1)
+                        {
+                            b1.IsRemoveAble = true;
+                            explosions.Add(b1.Explosion);
+                        }
+                        if (actor2 is Bullet b2)
+                        {
+                            b2.IsRemoveAble = true;
+                            explosions.Add(b2.Explosion);
+                        }
+                        #endregion
                     }
                 }
             }
             _components.AddRange(explosions);
 
-            index = 0;
+            var index = 0;
             while (index < _components.Count)
             {
                 if (_components[index].IsRemoveAble == true)
@@ -90,9 +106,7 @@ namespace SE_Praktikum.Core
 
                 index++;
             }
-
         }
-
 
 
         public void OnLevelEvent(LevelEvent levelEvent, Vector2 playerPosition)
