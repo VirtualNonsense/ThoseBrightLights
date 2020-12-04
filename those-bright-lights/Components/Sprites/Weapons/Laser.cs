@@ -15,9 +15,10 @@ namespace SE_Praktikum.Components.Sprites.Weapons
             Rotation = rotation;
             Parent = parent;
             Position = positionSpaceship;
-            Velocity = new Vector2(5,0);
-            Acceleration = Vector2.Zero;
+            Velocity = 5;
+            Acceleration = 0;
             _spaceShipVelocity = Vector2.Zero;
+            maxTime = 5;
         }
         
         public override void Update(GameTime gameTime)

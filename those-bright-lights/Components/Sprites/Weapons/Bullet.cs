@@ -12,20 +12,23 @@ namespace SE_Praktikum.Components.Sprites.Weapons
     public class Bullet : Actor
     {
         public readonly Particle Explosion;
-        protected Vector2 Velocity;
-        protected Vector2 Acceleration;
+        private Vector2 _direction => new Vector2((float)Math.Cos(Rotation),(float)Math.Sin(Rotation));
+        protected float Velocity;
+        protected float Acceleration;
+        protected float maxTime;
+        protected float timeAlive;
 
         protected Bullet(AnimationHandler animationHandler, Particle explosion) : base(animationHandler)
         {
             Explosion = explosion;
-            Velocity = Vector2.Zero;
-            Acceleration = Vector2.Zero;
+            Velocity = 0;
+            Acceleration = 0;
         }
 
         protected Vector2 Movement(Vector2 spaceshipVelocity, float elapsedTime)
         {
-            Vector2 position = spaceshipVelocity+
-                               0.5f * Acceleration * elapsedTime + Velocity + Position;
+            Vector2 position = spaceshipVelocity +
+                                0.5f * Acceleration * _direction * elapsedTime + Velocity *_direction + Position;
             return position;
         }
         
