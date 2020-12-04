@@ -21,17 +21,19 @@ namespace SE_Praktikum.Core
         private readonly MapFactory _mapFactory;
         private readonly PlayerFactory _playerFactory;
         private readonly ParticleFactory _particleFactory;
+        private readonly EnemyFactory _enemyFactory;
         private readonly List<IComponent> _components;
         private readonly Logger _logger;
 
         private event EventHandler OnExplosion;
 
         //Constructor
-        public Level(MapFactory mapFactory, PlayerFactory playerFactory, ParticleFactory particleFactory)
+        public Level(MapFactory mapFactory, PlayerFactory playerFactory, ParticleFactory particleFactory, EnemyFactory enemyFactory)
         {
             _mapFactory = mapFactory;
             _playerFactory = playerFactory;
             _particleFactory = particleFactory;
+            _enemyFactory = enemyFactory;
             _components = new List<IComponent>();
             _logger = LogManager.GetCurrentClassLogger();
         }
@@ -129,11 +131,14 @@ namespace SE_Praktikum.Core
                 OnLevelEvent(e, player.Position);
             };  
             _components.Add(player);
-            
-            //TODO: try to load the json map via the contentmanager
-            _components.Add(_mapFactory.LoadMap(contentManager,
-                JsonConvert.DeserializeObject<LevelBlueprint>(File.ReadAllText(@".\Content\Level\TestLevel\TestLevel.json"))));
-            
+
+            var enemy = _enemyFactory.GetInstance(contentManager);
+            _components.Add(enemy);
+
+            // //TODO: try to load the json map via the contentmanager
+            // _components.Add(_mapFactory.LoadMap(contentManager,
+            //     JsonConvert.DeserializeObject<LevelBlueprint>(File.ReadAllText(@".\Content\Level\TestLevel\TestLevel.json"))));
+            //
         }
 
     }
