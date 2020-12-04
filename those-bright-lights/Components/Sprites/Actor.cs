@@ -37,6 +37,7 @@ namespace SE_Praktikum.Components.Sprites
             if (Math.Abs(actor.Layer - Layer) > float.Epsilon ) return null;
             //if actors are not rotated, use faster method Intersects of Rectangle for now, 
             //-> no exact value for the collision position
+            //TODO: doesn't work currently
             if (Rotation == 0 && actor.Rotation == 0)
             {
                 if (HitBox.Intersects(actor.HitBox))
