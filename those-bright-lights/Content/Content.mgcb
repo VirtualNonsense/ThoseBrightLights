@@ -235,6 +235,12 @@
 /processorParam:Quality=Best
 /build:Audio/Sound_Effects/Button/Button_high.wav
 
+#begin Audio/Sound_Effects/Button/Button_high_reverb.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound_Effects/Button/Button_high_reverb.wav
+
 #begin Audio/Sound_Effects/Savepoint (1).wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
