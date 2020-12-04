@@ -8,14 +8,17 @@ namespace SE_Praktikum.Components.Sprites.Weapons
     public class Missile : Bullet
     {
         private readonly Vector2 _spaceShipVelocity;
+        private readonly Vector2 _spaceShipPosition;
         private readonly AnimationHandler _propulsionAnimationHandler;
         private readonly Vector2 _positionOffset;
         private readonly Vector2 _offSet;
         private float _elapsedTime = 0;
 
-        public Missile(AnimationHandler animationHandler, Vector2 spaceShipVelocity, AnimationHandler propulsion, Particle explosion) : base(animationHandler, explosion)
+        public Missile(AnimationHandler animationHandler, Vector2 spaceShipVelocity,Vector2 spaceShipPosition, AnimationHandler propulsion, Particle explosion) : base(animationHandler, explosion)
         {
             _spaceShipVelocity = spaceShipVelocity;
+            _positionOffset = new Vector2(0,10);
+            Position = spaceShipPosition + _positionOffset;
             _propulsionAnimationHandler = propulsion;
             _offSet = new Vector2(-animationHandler.FrameWidth/2-_propulsionAnimationHandler.FrameWidth/2,0);
             _propulsionAnimationHandler.Settings.Layer = Layer;
@@ -26,7 +29,7 @@ namespace SE_Praktikum.Components.Sprites.Weapons
         public override void Update(GameTime gameTime)
         {
             _elapsedTime += gameTime.ElapsedGameTime.Milliseconds / 1000f;
-            //Position = Movement(_spaceShipVelocity,_elapsedTime);
+            Position = Movement(_spaceShipVelocity,_elapsedTime);
             _propulsionAnimationHandler.Position =  Position + _offSet; 
             _propulsionAnimationHandler.Update(gameTime);
             base.Update(gameTime);
