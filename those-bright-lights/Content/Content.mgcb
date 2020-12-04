@@ -229,6 +229,12 @@
 /processorParam:Quality=Best
 /build:Audio/Music/Song4_remaster.wav
 
+#begin Audio/Sound_Effects/Airborne/Flight_plane_c.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound_Effects/Airborne/Flight_plane_c.wav
+
 #begin Audio/Sound_Effects/Airborne/Flight_Ufo_nc.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
