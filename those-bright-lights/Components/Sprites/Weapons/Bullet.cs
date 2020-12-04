@@ -24,7 +24,6 @@ namespace SE_Praktikum.Components.Sprites.Weapons
 
         protected Vector2 Movement(Vector2 spaceshipVelocity, float elapsedTime)
         {
-            LogManager.GetCurrentClassLogger().Info(elapsedTime);
             Vector2 position = spaceshipVelocity+
                                0.5f * Acceleration * elapsedTime + Velocity + Position;
             return position;
