@@ -19,24 +19,26 @@ namespace SE_Praktikum.Core.GameStates
         private Map TestMap;
         private Logger _logger;
         private MapFactory MapFactory;
+        private readonly ContentManager _contentManager;
 
-        public InGame(IScreen parent, ExplosionEmitter explosionEmitter, MapFactory mapFactory)
+        public InGame(IScreen parent, ExplosionEmitter explosionEmitter, MapFactory mapFactory, ContentManager contentManager)
         {
             _logger = LogManager.GetCurrentClassLogger();
             _screen = parent;
             _explosionEmitter = explosionEmitter;
             MapFactory = mapFactory;
+            _contentManager = contentManager;
         }
 
-        public override void LoadContent(ContentManager contentManager)
+        public override void LoadContent()
         {
-            var p = new TileSet(contentManager.Load<Texture2D>("Artwork/Effects/explosion_45_45"), 45, 45, 0);
+            var p = new TileSet(_contentManager.Load<Texture2D>("Artwork/Effects/explosion_45_45"), 45, 45, 0);
             _explosionEmitter.TileSet = p;
             //_explosionEmitter.SpawnArea = new Rectangle(500, 100, 500, 100);
             var LevelBlueprint =
                 JsonConvert.DeserializeObject<LevelBlueprint>(
                     File.ReadAllText(@".\Content\Level\TestLevel\TestLevel.json"));
-            TestMap = MapFactory.LoadMap(contentManager, LevelBlueprint);
+            TestMap = MapFactory.LoadMap(LevelBlueprint);
 
         }
 

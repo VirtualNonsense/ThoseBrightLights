@@ -353,7 +353,7 @@ namespace SE_Praktikum.Services.Factories
             return new MenuButton(handlers, _font, text: text, position: position, camera: camera, textOffSetWhenPressed: 3);;
         }
 
-        public Slider GetSlider(ContentManager contentManager,
+        public Slider GetSlider(
             float initialValue,
             float min,
             float max,
@@ -364,9 +364,9 @@ namespace SE_Praktikum.Services.Factories
             
             loadAssetsIfNecessary();
             uint tilesX = (uint) (width / _buttonsAndSwitches.TileDimX);
-            return GetSliderByTiles(contentManager,initialValue, min, max, position, tilesX, camera);
+            return GetSliderByTiles(initialValue, min, max, position, tilesX, camera);
         }
-        public Slider GetSliderByTiles(ContentManager contentManager,
+        public Slider GetSliderByTiles(
             float initialValue,
             float min,
             float max,

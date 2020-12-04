@@ -25,7 +25,7 @@ namespace SE_Praktikum.Core.GameStates
         private float _tmpSoundFxVolume = .5f;
 
 
-        public override void LoadContent(ContentManager contentManager)
+        public override void LoadContent()
         {
             if (_components != null)
             {
@@ -44,13 +44,13 @@ namespace SE_Praktikum.Core.GameStates
             var musicVolumeLabel = _factory.GetTextBoxByTiles(6, 1, Vector2.Zero, Color.Black, "Music Volume", _screen.Camera);
             var soundEffectVolumeLabel = _factory.GetTextBoxByTiles(6, 1, Vector2.Zero, Color.Black, "FX Volume", _screen.Camera);
             
-            var musicVolumeSlider = _factory.GetSlider(contentManager, MediaPlayer.Volume,0 , 1, Vector2.Zero, width, _screen.Camera);
+            var musicVolumeSlider = _factory.GetSlider( MediaPlayer.Volume,0 , 1, Vector2.Zero, width, _screen.Camera);
             // TODO: SaveRoutine!
             musicVolumeSlider.OnValueChanged += (sender, args) => {
                 MediaPlayer.Volume = musicVolumeSlider.Value;
             };
             
-            var soundEffectVolumeSlider = _factory.GetSlider(contentManager, _tmpSoundFxVolume,0 , 1, Vector2.Zero, width, _screen.Camera);
+            var soundEffectVolumeSlider = _factory.GetSlider( _tmpSoundFxVolume,0 , 1, Vector2.Zero, width, _screen.Camera);
             // TODO: SaveRoutine!
             soundEffectVolumeSlider.OnValueChanged += (sender, args) =>
             {

@@ -17,14 +17,17 @@ namespace SE_Praktikum.Services.Factories
     {
         private readonly ILogger _logger;
         private readonly TileFactory tileFactory;
-        public MapFactory(TileFactory tileFactory)
+        private readonly ContentManager _contentManager;
+
+        public MapFactory(TileFactory tileFactory, ContentManager contentManager)
         {
             _logger = LogManager.GetCurrentClassLogger();
             
             this.tileFactory = tileFactory;
+            _contentManager = contentManager;
         }
 
-        public Map LoadMap(ContentManager contentManager, LevelBlueprint blueprint)
+        public Map LoadMap(LevelBlueprint blueprint)
         {
             // Loading all necessary tile sets
             List<TileSet> tileSets = new List<TileSet>();
@@ -33,13 +36,13 @@ namespace SE_Praktikum.Services.Factories
                 var title = tileSet.Source.Split(".")[0];
                 try
                 {
-                    tileSets.Add(new TileSet(contentManager.Load<Texture2D>($"Artwork/Tilemaps/{title}"), blueprint.TileWidth, blueprint.TileHeight, tileSet.FirstGId));
+                    tileSets.Add(new TileSet(_contentManager.Load<Texture2D>($"Artwork/Tilemaps/{title}"), blueprint.TileWidth, blueprint.TileHeight, tileSet.FirstGId));
                 }
                 catch (ContentLoadException e)
                 {
                     _logger.Warn($"Texture {title} is missing: ", e);
                     var lastFirstGId = tileSets.Count > 0 ? tileSets.Last().StartEntry + tileSets.Last().Tiles - 1 : 0;
-                    tileSets.Add(new TileSet(contentManager.Load<Texture2D>($"Artwork/missing_texture"), blueprint.TileWidth, blueprint.TileHeight, lastFirstGId + 1 ));
+                    tileSets.Add(new TileSet(_contentManager.Load<Texture2D>($"Artwork/missing_texture"), blueprint.TileWidth, blueprint.TileHeight, lastFirstGId + 1 ));
                 }
                 catch (Exception e)
                 {

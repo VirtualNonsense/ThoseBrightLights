@@ -27,7 +27,7 @@ namespace SE_Praktikum.Core.GameStates
             _factory = factory;
         }
 
-        public override void LoadContent(ContentManager contentManager)
+        public override void LoadContent()
         {
             if (_buttons != null)
             {

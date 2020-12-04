@@ -21,7 +21,7 @@ namespace SE_Praktikum.Core.GameStates
             _screen = parent;
         }
         
-        public override void LoadContent(ContentManager contentManager)
+        public override void LoadContent()
         {
 
         }

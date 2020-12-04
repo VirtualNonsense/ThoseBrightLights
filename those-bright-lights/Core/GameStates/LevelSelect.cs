@@ -15,13 +15,15 @@ namespace SE_Praktikum.Core.GameStates
     public class LevelSelect : GameState
     {
         private readonly IScreen _screen;
+        private readonly ContentManager _contentManager;
         private List<MenuButton> _buttons;
         private Logger _logger;
 
-        public LevelSelect(IScreen screen)
+        public LevelSelect(IScreen screen, ContentManager contentManager)
         {
             _logger = LogManager.GetCurrentClassLogger();
             _screen = screen;
+            _contentManager = contentManager;
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
@@ -34,7 +36,7 @@ namespace SE_Praktikum.Core.GameStates
             spriteBatch.End();
         }
 
-        public override void LoadContent(ContentManager contentManager)
+        public override void LoadContent()
         {
             if (_buttons != null) return;
             // {
@@ -66,8 +68,8 @@ namespace SE_Praktikum.Core.GameStates
             // _buttons.Last().Click += (sender, args) => { _logger.Debug("back"); _subject.OnNext(GameStateMachine.GameStateMachineTrigger.Back);};
             _buttons = new List<MenuButton>();
             _logger.Debug("LoadingContent");
-            var font = contentManager.Load<SpriteFont>("Font/Font2");
-            var texture = contentManager.Load<Texture2D>("Artwork/Controls/button");
+            var font = _contentManager.Load<SpriteFont>("Font/Font2");
+            var texture = _contentManager.Load<Texture2D>("Artwork/Controls/button");
             // _buttons.Add(new Menubutton(texture, font)
         }
 
