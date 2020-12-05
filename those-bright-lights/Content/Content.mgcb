@@ -229,11 +229,131 @@
 /processorParam:Quality=Best
 /build:Audio/Music/Song4_remaster.wav
 
+#begin Audio/Sound_Effects/Airborne/Flight_plane_c.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound_Effects/Airborne/Flight_plane_c.wav
+
+#begin Audio/Sound_Effects/Airborne/Flight_space_big_nc.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound_Effects/Airborne/Flight_space_big_nc.wav
+
+#begin Audio/Sound_Effects/Airborne/Flight_space_deep_c.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound_Effects/Airborne/Flight_space_deep_c.wav
+
+#begin Audio/Sound_Effects/Airborne/Flight_space_mid_c.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound_Effects/Airborne/Flight_space_mid_c.wav
+
+#begin Audio/Sound_Effects/Airborne/Flight_Ufo_nc.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound_Effects/Airborne/Flight_Ufo_nc.wav
+
+#begin Audio/Sound_Effects/Airborne/Ignition.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound_Effects/Airborne/Ignition.wav
+
+#begin Audio/Sound_Effects/Airborne/Ignition_heavy.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound_Effects/Airborne/Ignition_heavy.wav
+
+#begin Audio/Sound_Effects/Airborne/Wobble_test.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound_Effects/Airborne/Wobble_test.wav
+
+#begin Audio/Sound_Effects/Button/Button_Goofy.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound_Effects/Button/Button_Goofy.wav
+
+#begin Audio/Sound_Effects/Button/Button_high.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound_Effects/Button/Button_high.wav
+
+#begin Audio/Sound_Effects/Button/Button_high_reverb.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound_Effects/Button/Button_high_reverb.wav
+
+#begin Audio/Sound_Effects/Button/Button_Sonar.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound_Effects/Button/Button_Sonar.wav
+
+#begin Audio/Sound_Effects/Collusion/Big_Explo.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound_Effects/Collusion/Big_Explo.wav
+
+#begin Audio/Sound_Effects/Collusion/Clink.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound_Effects/Collusion/Clink.wav
+
+#begin Audio/Sound_Effects/Collusion/ClinkBell.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound_Effects/Collusion/ClinkBell.wav
+
+#begin Audio/Sound_Effects/Collusion/Clonk.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound_Effects/Collusion/Clonk.wav
+
+#begin Audio/Sound_Effects/Collusion/Small_Explo.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound_Effects/Collusion/Small_Explo.wav
+
 #begin Audio/Sound_Effects/Savepoint (1).wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Audio/Sound_Effects/Savepoint (1).wav
+
+#begin Audio/Sound_Effects/Shot/Laser_Long.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound_Effects/Shot/Laser_Long.wav
+
+#begin Audio/Sound_Effects/Shot/Laser_Short.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound_Effects/Shot/Laser_Short.wav
+
+#begin Audio/Sound_Effects/Shot/Laser_sizzle.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound_Effects/Shot/Laser_sizzle.wav
 
 #begin Audio/Sound_Effects/Shot2.wav
 /importer:WavImporter
