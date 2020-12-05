@@ -1,5 +1,6 @@
 ﻿using SE_Praktikum.Models;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.Xna.Framework;
@@ -12,7 +13,7 @@ using SE_Praktikum.Models.Tiled;
 
 namespace SE_Praktikum.Components
 {
-    public class Map: IComponent
+    public class Map: IComponent, IEnumerable<Tile>
     {
         private List<Tile> _tiles;
         
@@ -43,5 +44,14 @@ namespace SE_Praktikum.Components
         }
 
         public bool IsRemoveAble { get; set; }
+        public IEnumerator<Tile> GetEnumerator()
+        {
+            return _tiles.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
     }
 }
