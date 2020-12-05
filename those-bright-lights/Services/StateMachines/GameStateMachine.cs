@@ -15,7 +15,8 @@ namespace SE_Praktikum.Services.StateMachines
         private readonly StateMachine<State, GameStateMachineTrigger> _machine;
         private readonly Dictionary<State, GameState> _stateMap;
         
-        public GameStateMachine(Splashscreen splashscreen, 
+        public GameStateMachine(Splashscreen splashscreen,
+                                SaveSelect saveSelect,
                                 MainMenu menu,
                                 Settings settings,
                                 LevelSelect levelSelect,
@@ -26,6 +27,7 @@ namespace SE_Praktikum.Services.StateMachines
             _stateMap = new Dictionary<State, GameState>
             {
                 {State.SplashScreen, splashscreen},
+                {State.SaveSlotSelection, saveSelect},
                 {State.Menu, menu},
                 {State.Settings, settings},
                 {State.LevelSelect, levelSelect},
@@ -33,13 +35,18 @@ namespace SE_Praktikum.Services.StateMachines
             };
             _machine = new StateMachine<State, GameStateMachineTrigger>(State.SplashScreen);
             _machine.Configure(State.SplashScreen).OnEntry(onEntry)
-                .Permit(GameStateMachineTrigger.SkipSplashScreen, State.Menu);
+                .Permit(GameStateMachineTrigger.SkipSplashScreen, State.SaveSlotSelection);
+
+
+            _machine.Configure(State.SaveSlotSelection).OnEntry(onEntry)
+                .Permit(GameStateMachineTrigger.SaveSlotSelected, State.Menu);
             
             _machine.Configure(State.Menu).OnEntry(onEntry)
                 .Permit(GameStateMachineTrigger.StartLevelSelect, State.LevelSelect)
                 .Permit(GameStateMachineTrigger.StartGame, State.InGame)
                 .Permit(GameStateMachineTrigger.QuitGame, State.Quit)
-                .Permit(GameStateMachineTrigger.StartSettings, State.Settings);
+                .Permit(GameStateMachineTrigger.StartSettings, State.Settings)
+                .Permit(GameStateMachineTrigger.BackToSaveSlotSelection, State.SaveSlotSelection);
             
             _machine.Configure(State.Settings).OnEntry(onEntry)
                 .Permit(GameStateMachineTrigger.Back, State.Menu);
@@ -89,6 +96,7 @@ namespace SE_Praktikum.Services.StateMachines
         private enum State
         {
             SplashScreen,
+            SaveSlotSelection,
             Menu,
             Settings,
             LevelSelect,
@@ -99,6 +107,8 @@ namespace SE_Praktikum.Services.StateMachines
         public enum GameStateMachineTrigger
         {
             SkipSplashScreen,
+            SaveSlotSelected,
+            BackToSaveSlotSelection,
             StartGame,
             StartSettings,
             StartLevelSelect,
