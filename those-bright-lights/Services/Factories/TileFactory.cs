@@ -12,9 +12,12 @@ namespace SE_Praktikum.Services.Factories
     public class TileFactory
     {
         private ILogger _logger;
-        public TileFactory()
+        private readonly AnimationHandlerFactory _factory;
+
+        public TileFactory(AnimationHandlerFactory factory)
         {
-             _logger = LogManager.GetCurrentClassLogger();
+            _factory = factory;
+            _logger = LogManager.GetCurrentClassLogger();
         }
         public Tile GenerateTile(uint index, Vector2 position, float layer, List<TileSet> tilesets, float opacity, int width, int height)
         {
@@ -24,7 +27,12 @@ namespace SE_Praktikum.Services.Factories
             {
                 if (index > tileset.StartEntry + tileset.Tiles-1)
                     continue;
-                return new Tile(tileset.Texture, tileset.GetFrame(index), position, layer, opacity, width, height, t.Item1);
+                var settings = new AnimationSettings(new List<(int, float)>{((int)index, 1f)}, isPlaying:false, opacity: opacity, layer: layer);
+                var handler = _factory.GetAnimationHandler(tileset, settings);
+                handler.Position = position;
+                return new Tile(handler, t.Item1);
+                
+                // return new Tile(tileset.Texture, tileset.GetFrame(index), position, layer, opacity, width, height, t.Item1);
 
             }
 

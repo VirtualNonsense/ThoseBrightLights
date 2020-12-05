@@ -22,6 +22,7 @@ namespace SE_Praktikum.Core
         private readonly PlayerFactory _playerFactory;
         private readonly ParticleFactory _particleFactory;
         private List<IComponent> _components;
+        private Map _map;
         private Logger _logger;
 
         private event EventHandler OnExplosion;
@@ -43,6 +44,7 @@ namespace SE_Praktikum.Core
             {
                 i.Draw(gameTime, spriteBatch);
             }
+            _map.Draw(gameTime, spriteBatch);
         }
 
         public void Update(GameTime gameTime)
@@ -79,6 +81,18 @@ namespace SE_Praktikum.Core
             }
             _components.AddRange(explosions);
 
+            foreach (var player in _components.OfType<Player>())
+            {
+                foreach (var tile in _map)
+                {
+                    var c =player.Intersects(tile);
+                    if (c != null)
+                    {
+                        _logger.Trace("map collision");
+                    }
+                }
+            }
+
             index = 0;
             while (index < _components.Count)
             {
@@ -109,7 +123,14 @@ namespace SE_Praktikum.Core
 
         public void LoadContent(ContentManager contentManager)
         {
+            
+            //TODO: try to load the json map via the contentmanager
+            _map = _mapFactory.LoadMap(contentManager,
+                JsonConvert.DeserializeObject<LevelBlueprint>(File.ReadAllText(@".\Content\Level\AlphaLevel\AlphaMap.json")));
+            
+            //TODO: Set player level to _map.TopLayer
             var player = _playerFactory.GetInstance(contentManager);
+            player.Layer = _map.TopLayer;
             player.OnShoot += (sender, args) =>
             {
                 if (!(args is LevelEvent e)) return;
@@ -117,9 +138,6 @@ namespace SE_Praktikum.Core
             };  
             _components.Add(player);
             
-            //TODO: try to load the json map via the contentmanager
-            _components.Add(_mapFactory.LoadMap(contentManager,
-                JsonConvert.DeserializeObject<LevelBlueprint>(File.ReadAllText(@".\Content\Level\AlphaLevel\AlphaMap.json"))));
             
         }
 

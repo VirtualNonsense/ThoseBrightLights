@@ -2,37 +2,18 @@
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using NLog;
+using SE_Praktikum.Services;
 
 namespace SE_Praktikum.Components.Sprites
 {
-    public class Tile:IComponent
+    public class Tile:Actor
     {
-        Texture2D _texture;
-        private readonly Rectangle _frame;
-        Vector2 _position;
-        private float _layer;
-        private readonly float _opacity;
         private Logger _logger;
-        private SpriteEffects _spriteEffects = SpriteEffects.None;
-        private float _rotation;
-        private Vector2 _origin;
 
-        public Tile(Texture2D texture, 
-                    Rectangle frame,
-                    Vector2 position,
-                    float layer,
-                    float opacity,
-                    int width,
-                    int height,
-                    TileModifier tileModifier = TileModifier.None)
+        public Tile(AnimationHandler animationHandler, TileModifier tileModifier = TileModifier.None) : base(animationHandler)
         {
             _logger = LogManager.GetCurrentClassLogger();
-            _texture = texture;
-            _frame = frame;
-            _position = position;
-            _origin = new Vector2(width/2, height/2);
-            _layer = layer;
-            _opacity = opacity; 
+            base._animationHandler.Origin = new Vector2(_animationHandler.FrameWidth/2f, animationHandler.FrameWidth/2f);
             SetTileModifier(tileModifier);
         }
 
@@ -41,51 +22,31 @@ namespace SE_Praktikum.Components.Sprites
             switch (tileModifier)
             {
                 case TileModifier.MirroredHorizontally:
-                    _spriteEffects = SpriteEffects.FlipHorizontally;
+                    _animationHandler.Settings.SpriteEffects = SpriteEffects.FlipHorizontally;
                     break;
                 case TileModifier.MirroredVertically:
-                    _spriteEffects = SpriteEffects.FlipVertically;
+                    _animationHandler.Settings.SpriteEffects = SpriteEffects.FlipVertically;
                     break;
                 case TileModifier.Turned180Deg:
-                    _rotation = (float)(180 * Math.PI / 180);
+                    _animationHandler.Settings.Rotation = (float)(180 * Math.PI / 180);
                     
                     break;
                 case TileModifier.MirroredVerticallyTurnedRight:
-                    _spriteEffects = SpriteEffects.FlipVertically;
-                    _rotation = (float)(90 * Math.PI / 180); 
+                    _animationHandler.Settings.SpriteEffects = SpriteEffects.FlipVertically;
+                    _animationHandler.Settings.Rotation = (float)(90 * Math.PI / 180); 
                     break;
                 case TileModifier.TurnedRight:
-                    _rotation = (float)(90 * Math.PI / 180); 
+                    _animationHandler.Settings.Rotation = (float)(90 * Math.PI / 180); 
                     break;
                 case TileModifier.TurnedLeft:
-                    _rotation = (float)(-90 * Math.PI / 180); 
+                    _animationHandler.Settings.Rotation = (float)(-90 * Math.PI / 180); 
                     break;
                 case TileModifier.MirroredHorizontallyTurnedRight:
-                    _spriteEffects = SpriteEffects.FlipHorizontally;
-                    _rotation = (float)(90 * Math.PI / 180); 
+                    _animationHandler.Settings.SpriteEffects = SpriteEffects.FlipHorizontally;
+                    _animationHandler.Settings.Rotation = (float)(90 * Math.PI / 180); 
                     break;
             }
         }
-
-        public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
-        {
-            spriteBatch.Draw(_texture, 
-                             _position,
-                             _frame,
-                             Color.White * _opacity,
-                             _rotation,
-                             _origin, 
-                             1, 
-                             _spriteEffects, 
-                             _layer);
-        }
-
-        public void Update(GameTime gameTime)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool IsRemoveAble { get; set; }
     }
 
     public enum TileModifier
