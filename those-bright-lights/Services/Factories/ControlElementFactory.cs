@@ -393,7 +393,7 @@ namespace SE_Praktikum.Services.Factories
                     Vector2.Zero
                 )
             };
-            var soundEffect = _contentManager.Load<SoundEffect>("Audio/Sound_Effects/Button/Button_dry");
+            var soundEffect = _contentManager.Load<SoundEffect>("Audio/Sound_Effects/Button/Button_slider_block_single");
             return new Slider(initialValue, min, max,  position, new Slider.SliderBlade(_sliderBladeHandler, camera), handlers, soundEffect, camera);
         }
     }
