@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using NLog;
@@ -28,6 +29,8 @@ namespace SE_Praktikum.Components.Controls
 
         private MouseState _previousMouse;
 
+        private SoundEffect _soundEffect;
+
         #endregion
 
         #region Properties
@@ -47,6 +50,7 @@ namespace SE_Praktikum.Components.Controls
 
         public MenuButton(List<AnimationHandler> handler,
                           SpriteFont font,
+                          SoundEffect soundEffect,
                           Color? textColor = null,
                           Vector2? position = null,
                           Camera camera = null,
@@ -55,6 +59,8 @@ namespace SE_Praktikum.Components.Controls
             _logger = LogManager.GetCurrentClassLogger();
             _position = position ?? Vector2.Zero;
             _font = font;
+            _soundEffect = soundEffect; 
+
             _textOffSetWhenPressed = textOffSetWhenPressed;
             TextColor = textColor ?? Color.CornflowerBlue;
             Text = text;
@@ -107,7 +113,10 @@ namespace SE_Praktikum.Components.Controls
                 {
                     Clicked = true;
                     if(_currentMouse.LeftButton == ButtonState.Released)
+                    {
+                        _soundEffect.Play();
                         Click?.Invoke(this, new EventArgs());
+                    }
                 }
                 else
                 {

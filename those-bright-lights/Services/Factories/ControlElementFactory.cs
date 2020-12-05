@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Net.Mime;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using NLog;
@@ -350,7 +351,8 @@ namespace SE_Praktikum.Services.Factories
                     handlers.Add(handler);
                 }
             }
-            return new MenuButton(handlers, _font, text: text, position: position, camera: camera, textOffSetWhenPressed: 3);;
+            var soundEffect = _contentManager.Load<SoundEffect>("Audio/Sound_Effects/Button/Button_high_reverb");
+            return new MenuButton(handlers, _font, soundEffect, text: text, position: position, camera: camera, textOffSetWhenPressed: 3);;
         }
 
         public Slider GetSlider(
