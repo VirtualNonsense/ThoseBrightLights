@@ -3,6 +3,7 @@ using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Media;
 using NLog;
 using NLog.Fluent;
 using SE_Praktikum.Components;
@@ -19,12 +20,15 @@ namespace SE_Praktikum.Core.GameStates
         private readonly ControlElementFactory _factory;
         private ComponentGrid _buttons;
         private Logger _logger;
+        private Song _song;
+        private ContentManager _contentManager;
 
-        public MainMenu(IScreen screen, ControlElementFactory factory)
+        public MainMenu(IScreen screen, ControlElementFactory factory, ContentManager contentManager)
         {
             _logger = LogManager.GetCurrentClassLogger();
             _screen = screen;
             _factory = factory;
+            _contentManager = contentManager;
         }
 
         public override void LoadContent()
@@ -34,6 +38,13 @@ namespace SE_Praktikum.Core.GameStates
                 return;
             }
 
+            if (_song == null)
+            {
+                _song = _contentManager.Load<Song>("Audio/Music/Song3_remaster2_mp3");
+                MediaPlayer.Play(_song);
+                MediaPlayer.IsRepeating = true;
+            }
+            
             _logger.Debug("LoadingContent");
             _buttons = new ComponentGrid(new Vector2(0,0), 
                                       _screen.Camera.GetPerspectiveScreenWidth(),
