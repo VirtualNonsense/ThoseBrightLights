@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Media;
 using Newtonsoft.Json;
 using NLog;
 using SE_Praktikum.Components;
@@ -20,6 +21,7 @@ namespace SE_Praktikum.Core.GameStates
         private Logger _logger;
         private MapFactory MapFactory;
         private readonly ContentManager _contentManager;
+        private Song _song;
 
         public InGame(IScreen parent, ExplosionEmitter explosionEmitter, MapFactory mapFactory, ContentManager contentManager)
         {
@@ -40,6 +42,9 @@ namespace SE_Praktikum.Core.GameStates
                     File.ReadAllText(@".\Content\Level\TestLevel\TestLevel.json"));
             TestMap = MapFactory.LoadMap(LevelBlueprint);
 
+            _song = _contentManager.Load<Song>("Audio/Music/Death_mp3");
+            MediaPlayer.Play(_song);
+            MediaPlayer.IsRepeating = true;
         }
 
         public override void UnloadContent()
