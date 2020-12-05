@@ -27,7 +27,7 @@ namespace SE_Praktikum.Core.GameStates
         
         public override void LoadContent()
         {
-            _song = _contentManager.Load<Song>("Audio/Music/Death_mp3");
+            _song = _contentManager.Load<Song>("Audio/Music/Intro_mp3");
             MediaPlayer.Play(_song);
             MediaPlayer.IsRepeating = true;
         }

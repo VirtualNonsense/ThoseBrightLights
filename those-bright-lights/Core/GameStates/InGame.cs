@@ -42,7 +42,7 @@ namespace SE_Praktikum.Core.GameStates
                     File.ReadAllText(@".\Content\Level\TestLevel\TestLevel.json"));
             TestMap = MapFactory.LoadMap(LevelBlueprint);
 
-            _song = _contentManager.Load<Song>("Audio/Music/Death_mp3");
+            _song = _contentManager.Load<Song>("Audio/Music/Song3_remaster2_mp3");
             MediaPlayer.Play(_song);
             MediaPlayer.IsRepeating = true;
         }
