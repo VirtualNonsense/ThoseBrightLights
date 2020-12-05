@@ -38,7 +38,7 @@ namespace SE_Praktikum.Core.GameStates
                 return;
             }
 
-            if (_song == null)
+            if (_song == null || MediaPlayer.Queue.ActiveSong != _song)
             {
                 _song = _contentManager.Load<Song>("Audio/Music/Song3_remaster2_mp3");
                 MediaPlayer.Play(_song);
