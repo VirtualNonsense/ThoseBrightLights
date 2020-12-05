@@ -23,6 +23,7 @@ namespace SE_Praktikum.Components.Controls
         private MouseState _currentMouse;
         private const float sliderWidth = 4;
         private SoundEffect _soundEffect;
+        private float _elapsedTime;
         
         public event EventHandler OnValueChanged;
         public float Value
@@ -87,7 +88,7 @@ namespace SE_Praktikum.Components.Controls
 
         public override void Update(GameTime gameTime)
         {
-            
+            _elapsedTime += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
             _previousMouse = _currentMouse;
             _currentMouse = Mouse.GetState();
             var pos = _camera is null? new Vector2(_currentMouse.X, _currentMouse.Y) : 
@@ -110,7 +111,11 @@ namespace SE_Praktikum.Components.Controls
                 if (newValue != Value)
                 {
                     Value = newValue;
-                    _soundEffect.Play();
+                    if (75 < _elapsedTime)
+                    {
+                        _soundEffect.Play();
+                        _elapsedTime = 0;
+                    }
                     ValueChanged();
                 }
             }
