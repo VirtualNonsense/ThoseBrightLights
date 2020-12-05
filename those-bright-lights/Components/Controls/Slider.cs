@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using NLog;
@@ -21,6 +22,7 @@ namespace SE_Praktikum.Components.Controls
         private MouseState _previousMouse;
         private MouseState _currentMouse;
         private const float sliderWidth = 4;
+        private SoundEffect _soundEffect;
         
         public event EventHandler OnValueChanged;
         public float Value
@@ -61,7 +63,7 @@ namespace SE_Praktikum.Components.Controls
         private float UpperPos => _position.X + Frame.Width/2f - sliderWidth;
         private float LowerPos => _position.X - Frame.Width/2f + sliderWidth;
         
-        public Slider(float initialValue, float min, float max, Vector2 position, SliderBlade sliderBlade, List<AnimationHandler> handler, Camera camera) : base(handler, camera)
+        public Slider(float initialValue, float min, float max, Vector2 position, SliderBlade sliderBlade, List<AnimationHandler> handler, SoundEffect soundEffect, Camera camera) : base(handler, camera)
         {
             _logger = LogManager.GetCurrentClassLogger();
             _value = initialValue;
@@ -70,6 +72,7 @@ namespace SE_Praktikum.Components.Controls
             _sliderBlade = sliderBlade;
             Position = position;
             _sliderBlade.Position = Position;
+            _soundEffect = soundEffect;
         }
          
 
@@ -103,8 +106,13 @@ namespace SE_Praktikum.Components.Controls
 
             if (_sliderBlade.Drag)
             {
-                Value = getValue(pos.X);
-                ValueChanged();
+                var newValue = getValue(pos.X);
+                if (newValue != Value)
+                {
+                    Value = newValue;
+                    _soundEffect.Play();
+                    ValueChanged();
+                }
             }
             _sliderBlade.Update(gameTime);
             

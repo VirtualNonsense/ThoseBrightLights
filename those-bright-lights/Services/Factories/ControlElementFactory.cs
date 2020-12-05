@@ -310,7 +310,7 @@ namespace SE_Praktikum.Services.Factories
                     handlers.Add(handler);
                 }
             }
-            var soundEffect = _contentManager.Load<SoundEffect>("Audio/Sound_Effects/Button/Button_high_reverb");
+            var soundEffect = _contentManager.Load<SoundEffect>("Audio/Sound_Effects/Button/Button_dry");
             return new MenuButton(handlers, _font, soundEffect, text: text, position: position, camera: camera, textOffSetWhenPressed: 3);;
         }
 
@@ -393,7 +393,8 @@ namespace SE_Praktikum.Services.Factories
                     Vector2.Zero
                 )
             };
-            return new Slider(initialValue, min, max,  position, new Slider.SliderBlade(_sliderBladeHandler, camera), handlers, camera);
+            var soundEffect = _contentManager.Load<SoundEffect>("Audio/Sound_Effects/Button/Button_dry");
+            return new Slider(initialValue, min, max,  position, new Slider.SliderBlade(_sliderBladeHandler, camera), handlers, soundEffect, camera);
         }
     }
     
