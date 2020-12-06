@@ -16,6 +16,9 @@ namespace SE_Praktikum.Components.Sprites
             _logger = LogManager.GetCurrentClassLogger();
             base._animationHandler.Origin = new Vector2(_animationHandler.FrameWidth/2f, animationHandler.FrameWidth/2f);
             SetTileModifier(tileModifier);
+            Damage = 4;
+            _indestructible = true;
+
         }
 
         public void SetTileModifier(TileModifier tileModifier)

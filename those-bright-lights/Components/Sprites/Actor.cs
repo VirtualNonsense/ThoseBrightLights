@@ -32,7 +32,7 @@ namespace SE_Praktikum.Components.Sprites
         public Rectangle HitBox => _hitbox ?? Rectangle;
         protected float Damage;
         protected float Health { get; set; }
-        private bool _indestructible;
+        protected bool _indestructible;
         protected Particle Explosion;
 
 
