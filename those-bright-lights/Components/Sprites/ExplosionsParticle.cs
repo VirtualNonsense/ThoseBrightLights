@@ -9,7 +9,7 @@ namespace SE_Praktikum.Components.Sprites
 {
     public class ExplosionsParticle : Particle
     {
-        private IScreen _parent;
+        private readonly IScreen _parent;
 
         public ExplosionsParticle(AnimationHandler animationHandler, IScreen Parent) : base(animationHandler, Parent)
         {
