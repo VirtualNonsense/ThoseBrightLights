@@ -79,19 +79,8 @@ namespace SE_Praktikum.Core
                     //collision detected
                     if(!(collisionPosition is null))
                     {
-                        //if one actor is of type bullet remove that actor and create explosion
-                        #region Actor is Bullet
-                        if (actor1 is Bullet b1)
-                        {
-                            b1.IsRemoveAble = true;
-                            explosions.Add(b1.Explosion);
-                        }
-                        if (actor2 is Bullet b2)
-                        {
-                            b2.IsRemoveAble = true;
-                            explosions.Add(b2.Explosion);
-                        }
-                        #endregion
+                        actor1.TakeDamage(actor2);
+                        actor2.TakeDamage(actor1);
                     }
                 }
             }
@@ -128,12 +117,22 @@ namespace SE_Praktikum.Core
             player.OnShoot += (sender, args) =>
             {
                 if (!(args is LevelEvent e)) return;
-                OnLevelEvent(e, player.Position);
-            };  
+                OnLevelEvent(e);
+            };
+            player.OnExplosion += (sender, args) =>
+            {
+                if (!(args is LevelEvent e)) return;
+                OnLevelEvent(e);
+            };
             _components.Add(player);
 
             var enemy = _enemyFactory.GetInstance(contentManager);
             _components.Add(enemy);
+            enemy.OnExplosion += (sender, args) =>
+            {
+                if (!(args is LevelEvent e)) return;
+                OnLevelEvent(e);
+            };
 
             // //TODO: try to load the json map via the contentmanager
             // _components.Add(_mapFactory.LoadMap(contentManager,

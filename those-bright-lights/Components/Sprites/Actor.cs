@@ -38,7 +38,15 @@ namespace SE_Praktikum.Components.Sprites
         #endregion
 
 
-
+        public virtual void TakeDamage(Actor enemy)
+        {
+            if (_indestructible) return;
+            Health -= enemy.Damage;
+            _logger.Info(Health);
+            if (!(Health <= 0)) return;
+            IsRemoveAble = true;
+            InvokeExplosion();
+        }
 
         public Vector2? Intersects(Actor actor)
         {
