@@ -14,13 +14,15 @@ namespace SE_Praktikum.Components.Sprites.Weapons
         private readonly TileSet _textureTileSet;
         private readonly ParticleFactory _particleFactory;
         private Logger _logger;
+        private SoundEffect _midAirSound;
 
-        public Lasergun(AnimationHandlerFactory animationHandlerFactory, TileSet textureTileSet, ParticleFactory particleFactory, SoundEffect shoot) : base(shoot)
+        public Lasergun(AnimationHandlerFactory animationHandlerFactory, TileSet textureTileSet, ParticleFactory particleFactory, SoundEffect shoot, SoundEffect midAirSound) : base(shoot)
         {
             _animationHandlerFactory = animationHandlerFactory;
             _textureTileSet = textureTileSet;
             _particleFactory = particleFactory;
             _logger = LogManager.GetCurrentClassLogger();
+            _midAirSound = midAirSound;
         }
 
         public override Bullet GetBullet(Vector2 velocitySpaceship, Vector2 positionSpaceship,float rotation, Actor parent)
@@ -28,7 +30,7 @@ namespace SE_Praktikum.Components.Sprites.Weapons
             var particle = _particleFactory.BuildLaserExplosionParticle();
             particle.Layer = parent.Layer;
             var l = new Laser(_animationHandlerFactory.GetAnimationHandler(_textureTileSet,
-                new AnimationSettings(1, isPlaying: false)), positionSpaceship, rotation, particle, parent)
+                new AnimationSettings(1, isPlaying: false)), positionSpaceship, rotation, particle, parent, _midAirSound)
             {
                 Layer = parent.Layer
             };

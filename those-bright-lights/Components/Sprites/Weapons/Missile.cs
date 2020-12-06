@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using SE_Praktikum.Services;
 
@@ -12,7 +13,7 @@ namespace SE_Praktikum.Components.Sprites.Weapons
         private readonly Vector2 _offSet;
         private float _elapsedTime = 0;
 
-        public Missile(AnimationHandler animationHandler, Vector2 spaceShipVelocity,Vector2 spaceShipPosition,float rotation, AnimationHandler propulsion, Particle explosion, Sprite parent) : base(animationHandler, explosion)
+        public Missile(AnimationHandler animationHandler, Vector2 spaceShipVelocity,Vector2 spaceShipPosition,float rotation, AnimationHandler propulsion, Particle explosion, Sprite parent, SoundEffect midAirSound) : base(animationHandler, explosion, midAirSound)
         {
             Rotation = rotation;
             Parent = parent;
@@ -31,9 +32,15 @@ namespace SE_Praktikum.Components.Sprites.Weapons
         public override void Update(GameTime gameTime)
         {
             _elapsedTime += gameTime.ElapsedGameTime.Milliseconds / 1000f;
+            _timeSinceUsedMidAir += gameTime.ElapsedGameTime.Milliseconds;
             Position = Movement(_spaceShipVelocity,_elapsedTime);
             _propulsionAnimationHandler.Position =  Position + _offSet; 
             _propulsionAnimationHandler.Update(gameTime);
+            if (_midAirSoundCooldown < _timeSinceUsedMidAir)
+            {
+                _timeSinceUsedMidAir = 0;
+                _midAirSound.Play();
+            }
             base.Update(gameTime);
         }
 

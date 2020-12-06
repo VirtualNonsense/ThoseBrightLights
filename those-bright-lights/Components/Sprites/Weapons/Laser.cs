@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using SE_Praktikum.Services;
 
@@ -9,7 +10,7 @@ namespace SE_Praktikum.Components.Sprites.Weapons
         private readonly Vector2 _spaceShipVelocity;
         private float _elapsedTime = 0;
 
-        public Laser(AnimationHandler animationHandler,Vector2 positionSpaceship,float rotation, Particle explosion, Sprite parent) : base(animationHandler, explosion)
+        public Laser(AnimationHandler animationHandler,Vector2 positionSpaceship,float rotation, Particle explosion, Sprite parent, SoundEffect midAirSound) : base(animationHandler, explosion, midAirSound)
         {
             Rotation = rotation;
             Parent = parent;
@@ -19,12 +20,20 @@ namespace SE_Praktikum.Components.Sprites.Weapons
             _spaceShipVelocity = Vector2.Zero;
             MaxTime = 5;
             Damage = 5;
+            _midAirSoundCooldown = 1000;
+            _timeSinceUsedMidAir = _midAirSoundCooldown;
         }
         
         public override void Update(GameTime gameTime)
         {
             _elapsedTime += gameTime.ElapsedGameTime.Milliseconds / 1000f;
+            _timeSinceUsedMidAir += gameTime.ElapsedGameTime.Milliseconds;
             Position = Movement(_spaceShipVelocity,_elapsedTime);
+            if (_midAirSoundCooldown < _timeSinceUsedMidAir)
+            {
+                _timeSinceUsedMidAir = 0;
+                _midAirSound.Play();
+            }
             base.Update(gameTime);
         }
 

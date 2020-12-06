@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Text;
 using NLog;
 using SE_Praktikum.Models;
+using Microsoft.Xna.Framework.Audio;
 
 namespace SE_Praktikum.Components.Sprites.Weapons
 {
@@ -17,12 +18,16 @@ namespace SE_Praktikum.Components.Sprites.Weapons
         protected float MaxTime;
         private float TimeAlive;
         private readonly Logger _logger;
+        protected SoundEffect _midAirSound;
+        protected float _midAirSoundCooldown;
+        protected float _timeSinceUsedMidAir;
 
-        protected Bullet(AnimationHandler animationHandler, Particle explosion) : base(animationHandler)
+        protected Bullet(AnimationHandler animationHandler, Particle explosion, SoundEffect midAirSound) : base(animationHandler)
         {
             Explosion = explosion;
             Velocity = 0;
             Acceleration = 0;
+            _midAirSound = midAirSound;
             _logger = LogManager.GetCurrentClassLogger();
         }
 
