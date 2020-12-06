@@ -13,7 +13,7 @@ using SE_Praktikum.Services;
 
 namespace SE_Praktikum.Components.Controls
 {
-    public class MenuButton : IComponent
+    public class Menubutton : IComponent
     {
         #region Fields
 
@@ -73,7 +73,7 @@ namespace SE_Praktikum.Components.Controls
 
         #region Methods
 
-        public MenuButton(List<AnimationHandler> handler,
+        public Menubutton(List<AnimationHandler> handler,
                           SpriteFont font,
                           Color? textColor = null,
                           Vector2? position = null,

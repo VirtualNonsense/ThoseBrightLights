@@ -15,7 +15,7 @@ namespace SE_Praktikum.Core.GameStates
     public class LevelSelect : GameState
     {
         private readonly IScreen _screen;
-        private List<MenuButton> _buttons;
+        private List<Menubutton> _buttons;
         private Logger _logger;
 
         public LevelSelect(IScreen screen)
@@ -64,7 +64,7 @@ namespace SE_Praktikum.Core.GameStates
             //     TextColor = Color.White
             // });
             // _buttons.Last().Click += (sender, args) => { _logger.Debug("back"); _subject.OnNext(GameStateMachine.GameStateMachineTrigger.Back);};
-            _buttons = new List<MenuButton>();
+            _buttons = new List<Menubutton>();
             _logger.Debug("LoadingContent");
             var font = contentManager.Load<SpriteFont>("Font/Font2");
             var texture = contentManager.Load<Texture2D>("Artwork/Controls/button");

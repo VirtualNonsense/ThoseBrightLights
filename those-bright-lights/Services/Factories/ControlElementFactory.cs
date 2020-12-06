@@ -30,7 +30,7 @@ namespace SE_Praktikum.Services.Factories
                 _tileHeight);
         }
 
-        public MenuButton GetMenuButtonByDimension(ContentManager contentManager, uint width, uint height, Vector2 position,
+        public Menubutton GetMenuButtonByDimension(ContentManager contentManager, uint width, uint height, Vector2 position,
             string text = "", bool useCenterAsOrigin = true, Camera camera = null)
         {
             loadAssetsIfNecessary(contentManager);
@@ -38,7 +38,7 @@ namespace SE_Praktikum.Services.Factories
             uint tilesY = (uint) (height / _buttonsAndSwitches.TileDimY);
             return GetMenuButton(contentManager,tilesX, tilesY, position, text, useCenterAsOrigin, camera);
         }
-        public MenuButton GetMenuButton(ContentManager contentManager, uint tilesX, uint tilesY, Vector2 position, string text = "", bool useCenterAsOrigin = true, Camera camera = null)
+        public Menubutton GetMenuButton(ContentManager contentManager, uint tilesX, uint tilesY, Vector2 position, string text = "", bool useCenterAsOrigin = true, Camera camera = null)
         {
             List<AnimationHandler> handlers = new List<AnimationHandler>();
             loadAssetsIfNecessary(contentManager);
@@ -232,7 +232,7 @@ namespace SE_Praktikum.Services.Factories
                     handlers.Add(handler);
                 }
             }
-            return new MenuButton(handlers, contentManager.Load<SpriteFont>("Font/Font2"), text: text, position: position, useCenterAsOrigin: useCenterAsOrigin, camera: camera);;
+            return new Menubutton(handlers, contentManager.Load<SpriteFont>("Font/Font2"), text: text, position: position, useCenterAsOrigin: useCenterAsOrigin, camera: camera);;
         }
         
     }
