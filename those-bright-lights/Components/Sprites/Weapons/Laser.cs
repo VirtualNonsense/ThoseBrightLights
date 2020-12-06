@@ -18,6 +18,7 @@ namespace SE_Praktikum.Components.Sprites.Weapons
             Acceleration = 0;
             _spaceShipVelocity = Vector2.Zero;
             MaxTime = 5;
+            Damage = 5;
         }
         
         public override void Update(GameTime gameTime)

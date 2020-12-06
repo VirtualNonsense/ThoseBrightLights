@@ -20,7 +20,6 @@ namespace SE_Praktikum.Components.Sprites
         private int _currentWeapon;
         protected float Speed;
         private Logger _logger;
-        protected float Health;
         protected KeyboardState CurrentKey;
         protected KeyboardState PreviousKey;
 

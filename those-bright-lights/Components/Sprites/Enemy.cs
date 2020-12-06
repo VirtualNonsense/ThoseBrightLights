@@ -15,7 +15,6 @@ namespace SE_Praktikum.Components.Sprites
         public Enemy(AnimationHandler animationHandler, float speed = 3, float health = 50) : base(animationHandler, speed, health)
         {
             _logger = LogManager.GetCurrentClassLogger();
-            Health = health;
         }
         
         

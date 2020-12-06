@@ -24,6 +24,7 @@ namespace SE_Praktikum.Components.Sprites.Weapons
             _propulsionAnimationHandler.Settings.Layer = Layer;
             Acceleration = 5;
             MaxTime = 5;
+            Damage = 20;
         }
 
 

@@ -23,7 +23,11 @@ namespace SE_Praktikum.Components.Sprites
 
         private Rectangle? _hitbox = null;
         public Rectangle HitBox => _hitbox ?? Rectangle;
-        
+        protected float Damage;
+        protected float Health { get; set; }
+        private bool _indestructible;
+        protected Particle Explosion;
+
 
         public event EventHandler<EventArgs> OnCollide; 
         
