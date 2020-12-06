@@ -349,6 +349,18 @@
 /processorParam:TextureFormat=Color
 /build:Artwork/Tilemaps/Sun1.png
 
+#begin Artwork/Tilemaps/Tardis.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Artwork/Tilemaps/Tardis.png
+
 #begin Artwork/Tilemaps/TileSet_Space.png
 /importer:TextureImporter
 /processor:TextureProcessor
