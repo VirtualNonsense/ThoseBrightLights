@@ -6,34 +6,64 @@ using Microsoft.Xna.Framework.Graphics;
 using NLog;
 using SE_Praktikum.Services;
 using SE_Praktikum.Components;
-using SE_Praktikum.Components.Sprites.SplashScreen;
+using SE_Praktikum.Components.Sprites;
+using SE_Praktikum.Components.Sprites.Weapons;
 using SE_Praktikum.Models;
 
 namespace SE_Praktikum.Components.Sprites
 {
-    public abstract class Actor : Sprite, ICollideAble
+    public abstract class Actor : Sprite
     {
 
         public bool CollisionEnabled = true;
+        private Logger _logger;
+        
 
         public Actor(AnimationHandler animationHandler) : base(animationHandler)
         {
+            _logger = LogManager.GetCurrentClassLogger();
         }
 
-        public event EventHandler<EventArgs> OnCollide; 
-        
+        private Rectangle? _hitbox = null;
+        public Rectangle HitBox => _hitbox ?? Rectangle;
+        protected float Damage;
+        protected float Health { get; set; }
+        private bool _indestructible;
+        protected Particle Explosion;
 
-        public abstract void BaseCollide(Actor actor);
-        
-        
-        
+
+        #region Events
+        public event EventHandler<EventArgs> OnCollide;
+        public event EventHandler<EventArgs> OnExplosion; 
+        #endregion
+
+
+        public virtual void TakeDamage(Actor enemy)
+        {
+            if (_indestructible) return;
+            Health -= enemy.Damage;
+            _logger.Info(Health);
+            if (!(Health <= 0)) return;
+            IsRemoveAble = true;
+            InvokeExplosion();
+        }
+
         public Vector2? Intersects(Actor actor)
         {
+            //actors can't collide with themselves
             if (this == actor) return null;
-            var t1 = _animationHandler.GetDataOfFrame();
-            var t2 = actor._animationHandler.GetDataOfFrame();
             if (!CollisionEnabled || !actor.CollisionEnabled) return null;
             if (Math.Abs(actor.Layer - Layer) > float.Epsilon ) return null;
+            //if actors are not rotated, use faster method Intersects of Rectangle for now, 
+            //-> no exact value for the collision position
+            //TODO: doesn't work currently
+            if (Rotation == 0 && actor.Rotation == 0)
+            {
+                if (!HitBox.Intersects(actor.HitBox))
+                    return null;
+            }
+            var t1 = _animationHandler.GetDataOfFrame();
+            var t2 = actor._animationHandler.GetDataOfFrame();
             // Calculate a matrix which transforms from A's local space into
             // world space and then into B's local space
             var transformAToB = Transform * Matrix.Invert(actor.Transform);
@@ -70,7 +100,7 @@ namespace SE_Praktikum.Components.Sprites
                         // If both pixel are not completely transparent
                         if (alphaA != 0 && alphaB != 0)
                         {
-                            OnOnCollide();
+                            InvokeOnCollide();
                             return new Vector2(xB,yB);
                         }
                     }
@@ -87,10 +117,17 @@ namespace SE_Praktikum.Components.Sprites
             return null;
         }
 
-
-        protected virtual void OnOnCollide()
+        #region EventInvoker
+        protected virtual void InvokeOnCollide()
         {
             OnCollide?.Invoke(this, EventArgs.Empty);
         }
+
+        protected virtual void InvokeExplosion()
+        {
+            var explosionArgs = new LevelEvent.Explosion {Particle = Explosion};
+            OnExplosion?.Invoke(this, explosionArgs);
+        }
+        #endregion
     }
 }

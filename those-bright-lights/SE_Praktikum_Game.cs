@@ -80,7 +80,7 @@ namespace SE_Praktikum
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Black);
             _currentState.Draw(gameTime, _spriteBatch);
 
             base.Draw(gameTime);

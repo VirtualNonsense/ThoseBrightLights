@@ -62,7 +62,7 @@ namespace SE_Praktikum.Services
             Tileset = tileset;
             Settings = settings;
             Position = position ?? new Vector2(0,0);
-            Origin = origin ?? Tileset.GetFrameCenter();
+            Origin = origin ?? new Vector2(0,0);
             Offset = Vector2.Zero;
         }
 
@@ -108,7 +108,7 @@ namespace SE_Praktikum.Services
                         CurrentIndex = 0;
                         return;
                     }
-                    OnOnAnimationComplete();
+                    InvokeOnAnimationComplete();
                     Settings.IsPlaying = false;
                 }
             }
@@ -119,7 +119,7 @@ namespace SE_Praktikum.Services
             return MemberwiseClone();
         }
 
-        protected virtual void OnOnAnimationComplete()
+        protected virtual void InvokeOnAnimationComplete()
         {
             OnAnimationComplete?.Invoke(this, EventArgs.Empty);
         }

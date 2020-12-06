@@ -11,6 +11,10 @@ namespace SE_Praktikum.NinjectModules
             Bind<AnimationHandlerFactory>().ToSelf().InSingletonScope();
             Bind<MapFactory>().ToSelf().InSingletonScope();
             Bind<TileFactory>().ToSelf().InSingletonScope();
+            Bind<PlayerFactory>().ToSelf().InSingletonScope();
+            Bind<InputFactory>().ToSelf().InSingletonScope();
+            Bind<WeaponFactory>().ToSelf().InSingletonScope();
+            Bind<EnemyFactory>().ToSelf().InSingletonScope();
             Bind<ControlElementFactory>().ToSelf().InSingletonScope();
         }
     }

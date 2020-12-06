@@ -9,7 +9,7 @@ namespace SE_Praktikum.Components.Sprites
 {
     public class ExplosionsParticle : Particle
     {
-        private IScreen _parent;
+        private readonly IScreen _parent;
 
         public ExplosionsParticle(AnimationHandler animationHandler, IScreen Parent) : base(animationHandler, Parent)
         {
@@ -28,6 +28,11 @@ namespace SE_Praktikum.Components.Sprites
             if (Position.Y > (_parent.ScreenHeight + _animationHandler?.FrameHeight))
                 IsRemoveAble = true;
             base.Update(gameTime);
+        }
+
+        public override Particle Clone()
+        {
+            return this.MemberwiseClone() as Particle;
         }
     }
 }
