@@ -3,6 +3,7 @@ using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Media;
 using NLog;
 using NLog.Fluent;
 using SE_Praktikum.Components;
@@ -19,21 +20,31 @@ namespace SE_Praktikum.Core.GameStates
         private readonly ControlElementFactory _factory;
         private ComponentGrid _buttons;
         private Logger _logger;
+        private Song _song;
+        private ContentManager _contentManager;
 
-        public MainMenu(IScreen screen, ControlElementFactory factory)
+        public MainMenu(IScreen screen, ControlElementFactory factory, ContentManager contentManager)
         {
             _logger = LogManager.GetCurrentClassLogger();
             _screen = screen;
             _factory = factory;
+            _contentManager = contentManager;
         }
 
-        public override void LoadContent(ContentManager contentManager)
+        public override void LoadContent()
         {
             if (_buttons != null)
             {
                 return;
             }
 
+            if (_song == null || MediaPlayer.Queue.ActiveSong != _song)
+            {
+                _song = _contentManager.Load<Song>("Audio/Music/Death_mp3");
+                MediaPlayer.Play(_song);
+                MediaPlayer.IsRepeating = true;
+            }
+            
             _logger.Debug("LoadingContent");
             _buttons = new ComponentGrid(new Vector2(0,0), 
                                       _screen.Camera.GetPerspectiveScreenWidth(),
@@ -42,35 +53,31 @@ namespace SE_Praktikum.Core.GameStates
             var buttons = 3;
             uint width = (uint) (_screen.Camera.GetPerspectiveScreenWidth() / buttons);
             uint height = (uint) (_screen.Camera.GetPerspectiveScreenHeight() / buttons);
-            Menubutton b = _factory.GetMenuButtonByDimension(contentManager,
+            MenuButton b = _factory.GetButton(
                 width,
                 height,
                 new Vector2(0, 0),
                 "New Game",
-                true,
                 _screen.Camera);
             b.Click += (sender, args) => { _logger.Debug("Start new game"); _subject.OnNext(GameStateMachine.GameStateMachineTrigger.StartGame); };
             _buttons.Add(b);
-            b = _factory.GetMenuButtonByDimension(contentManager,
+            b = _factory.GetButton(
                 width,
                 height,
                 new Vector2(0, 0),
                 "Settings",
-                true,
                 _screen.Camera);
             b.Click += (sender, args) => { _logger.Debug("Go to settings"); _subject.OnNext(GameStateMachine.GameStateMachineTrigger.StartSettings); };
             _buttons.Add(b);
-            b = _factory.GetMenuButtonByDimension(contentManager,
+            b = _factory.GetButton(
                 width,
                 height,
                 new Vector2(0, 0),
                 "Quit",
-                true,
                 _screen.Camera);
             b.Click += (sender, args) => { _logger.Debug("Quit game"); _subject.OnNext(GameStateMachine.GameStateMachineTrigger.QuitGame); };
             _buttons.Add(b);
             
-            _logger.Error(_buttons.Count);
         }
 
         public override void UnloadContent()

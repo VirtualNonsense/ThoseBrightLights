@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Media;
 using Newtonsoft.Json;
 using NLog;
 using SE_Praktikum.Components;
@@ -17,17 +18,23 @@ namespace SE_Praktikum.Core.GameStates
         private IScreen _screen;
         private Logger _logger;
         private readonly Level _level;
+        private readonly ContentManager _contentManager;
+        private Song _song;
 
-        public InGame(IScreen parent, MapFactory mapFactory, Level level)
+        public InGame(IScreen parent, Level level, ContentManager contentManager)
         {
             _logger = LogManager.GetCurrentClassLogger();
             _screen = parent;
             _level = level;
+            _contentManager = contentManager;
         }
 
-        public override void LoadContent(ContentManager contentManager)
+        public override void LoadContent()
         {
-            _level.LoadContent(contentManager);
+            _level.LoadContent(_contentManager);
+            _song = _contentManager.Load<Song>("Audio/Music/Song3_remaster2_mp3");
+            MediaPlayer.Play(_song);
+            MediaPlayer.IsRepeating = true;
 
         }
 

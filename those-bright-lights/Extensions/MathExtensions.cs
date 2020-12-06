@@ -8,6 +8,10 @@ namespace SE_Praktikum.Extensions
         {
             if (oldLower > oldHigher) return Remap( value, oldHigher,  oldLower,  newLower,  newHigher);
             if (newLower > newHigher) return Remap( value,  oldLower,  oldHigher,   newHigher, newLower);
+            if (value > oldHigher)
+                value = oldHigher;
+            else if (value < oldLower)
+                value = oldLower;
             return (value - oldLower) / (oldHigher - oldLower) * (newHigher - newLower) + newLower;
         }
 

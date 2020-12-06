@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 using NLog;
 using SE_Praktikum.Models;
 using SE_Praktikum.Services.StateMachines;
@@ -14,21 +15,27 @@ namespace SE_Praktikum.Core.GameStates
         private IScreen _screen;
         private float _elapsedTime = 0;
         private int _splashscreenTime = 60;
+        private Song _song;
+        private ContentManager _contentManager;
 
-        public Splashscreen(IScreen parent)
+        public Splashscreen(IScreen parent, ContentManager contentManager)
         {
             _logger = LogManager.GetCurrentClassLogger();
             _screen = parent;
+            _contentManager = contentManager;
         }
         
-        public override void LoadContent(ContentManager contentManager)
+        public override void LoadContent()
         {
-
+            _song = _contentManager.Load<Song>("Audio/Music/Intro_mp3");
+            MediaPlayer.Play(_song);
+            MediaPlayer.IsRepeating = true;
         }
 
         public override void UnloadContent()
         {
             _logger.Debug("unloading content");
+            MediaPlayer.Stop();
         }
 
         public override void Update(GameTime gameTime)

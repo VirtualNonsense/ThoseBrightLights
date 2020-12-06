@@ -51,7 +51,7 @@ namespace SE_Praktikum
         {
             _logger.Debug("loading content");
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-            _currentState?.LoadContent(Content);
+            _currentState?.LoadContent();
         }
 
         protected override void UnloadContent()
@@ -68,7 +68,7 @@ namespace SE_Praktikum
                 _logger.Debug("Performing Reload");
                 _currentState?.UnloadContent();
                 _currentState = _nextState;
-                _currentState.LoadContent(Content);
+                _currentState.LoadContent();
                 _nextState = null;
                 
             }
