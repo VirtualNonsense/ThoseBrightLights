@@ -69,7 +69,6 @@ namespace SE_Praktikum.Core
         private void CheckForCollisions()
         {
             
-            var explosions = new List<IComponent>();
             var actorList = _components.OfType<Actor>().ToList();
             for (var i = 0; i < actorList.Count()-1; i++)
             {
@@ -93,7 +92,6 @@ namespace SE_Praktikum.Core
                     }
                 }
             }
-            _components.AddRange(explosions);
 
             var index = 0;
             while (index < _components.Count)
