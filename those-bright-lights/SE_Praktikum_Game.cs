@@ -40,7 +40,7 @@ namespace SE_Praktikum
             _graphics.PreferredBackBufferHeight = ScreenHeight;
             _graphics.ApplyChanges();
             IsMouseVisible = true;
-            Camera = new Camera(new Vector3(0,0,100),
+            Camera = new Camera(new Vector3(0,0,150),
                 120, 
                 _graphics.GraphicsDevice.Viewport, 
                 new BasicEffect(_graphics.GraphicsDevice) {TextureEnabled = true});
