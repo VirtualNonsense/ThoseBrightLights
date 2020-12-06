@@ -25,7 +25,7 @@ namespace SE_Praktikum.Services.Factories
             Texture2D propulsion = contentManager.Load<Texture2D>("Artwork/projectiles/missile_propulsion_15_15");
             TileSet propulsionTileSet = new TileSet(propulsion,15,15);
             var m = new MissileLauncher(_animationHandlerFactory,textureTileSet, propulsionTileSet,
-                () => _particleFactory.BuildExplosionParticle(contentManager));
+                _particleFactory);
             return m;
         }
 
@@ -33,7 +33,7 @@ namespace SE_Praktikum.Services.Factories
         {
             Texture2D texture = contentManager.Load<Texture2D>("Artwork/projectiles/laser");
             TileSet textureTileSet = new TileSet(texture);
-            var l = new Lasergun(_animationHandlerFactory, textureTileSet, () => _particleFactory.BuildLaserExplosionParticle(contentManager));
+            var l = new Lasergun(_animationHandlerFactory, textureTileSet, _particleFactory);
             return l;
         }
     }

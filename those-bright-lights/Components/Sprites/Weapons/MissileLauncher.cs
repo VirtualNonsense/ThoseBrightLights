@@ -13,17 +13,17 @@ namespace SE_Praktikum.Components.Sprites.Weapons
         private readonly AnimationHandlerFactory _animationHandlerFactory;
         private readonly TileSet _textureTileSet;
         private readonly TileSet _propulsion;
-        private readonly Func<Particle> _getParticle;
+        private readonly ParticleFactory _particleFactory;
         private const int _clipSize = 50;
         private int _ammo;
         private readonly Logger _logger;
 
-        public MissileLauncher(AnimationHandlerFactory animationHandlerFactory,TileSet textureTileSet, TileSet propulsion, Func <Particle> getParticle)
+        public MissileLauncher(AnimationHandlerFactory animationHandlerFactory,TileSet textureTileSet, TileSet propulsion, ParticleFactory particleFactory)
         {
             _animationHandlerFactory = animationHandlerFactory;
             _textureTileSet = textureTileSet;
             _propulsion = propulsion;
-            _getParticle = getParticle;
+            _particleFactory = particleFactory;
             _ammo = _clipSize;
             _logger = LogManager.GetCurrentClassLogger();
         }
@@ -35,13 +35,15 @@ namespace SE_Praktikum.Components.Sprites.Weapons
             {
                 _logger.Warn("No Ammo left!");
                 return null;
-            }   
+            }
             _ammo--;
+            var particle = _particleFactory.BuildExplosionParticle();
+            particle.Layer = parent.Layer;
             var m = new Missile(_animationHandlerFactory.GetAnimationHandler(_textureTileSet,
                     new AnimationSettings(1, isPlaying: false)), velocitySpaceship, positionSpaceship, rotation,
                 _animationHandlerFactory.GetAnimationHandler(_propulsion,
                     new AnimationSettings(6, 50, isLooping: true)),
-                _getParticle(), parent) {Layer = parent.Layer};
+                particle, parent) {Layer = parent.Layer};
             return m;
         }
 
