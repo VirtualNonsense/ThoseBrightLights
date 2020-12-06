@@ -103,14 +103,25 @@ namespace SE_Praktikum.Core
         }
 
 
-        public void OnLevelEvent(LevelEvent levelEvent, Vector2 playerPosition)
+        private void OnLevelEvent(LevelEvent levelEvent)
         {
-            var t = (LevelEvent.ShootBullet)levelEvent;
-            //if player or enemy shoots the ShootBullet event triggers
-            if (t!=null)                                    
+            switch (levelEvent)
             {
-                _components.Add(t.Bullet);
-                _logger.Info("Shot bullet!");
+                //if player or enemy shoots the ShootBullet event triggers
+                case LevelEvent.ShootBullet t:
+                    _components.Add(t.Bullet);
+                    t.Bullet.OnExplosion += (sender, args) =>
+                    {
+                        if (!(args is LevelEvent e)) return;
+                        OnLevelEvent(e);
+                    };
+                    _logger.Info("Shot bullet!");
+                    return;
+                case LevelEvent.Explosion s:
+                    if (s.Particle is null) return;
+                    _components.Add(s.Particle);
+                    _logger.Info("Added Particle");
+                    return;
             }
         }
 
