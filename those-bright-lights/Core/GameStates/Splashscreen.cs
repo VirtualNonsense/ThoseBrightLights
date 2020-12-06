@@ -5,6 +5,8 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using NLog;
 using SE_Praktikum.Models;
+using SE_Praktikum.Services;
+using SE_Praktikum.Services.Factories;
 using SE_Praktikum.Services.StateMachines;
 
 namespace SE_Praktikum.Core.GameStates
@@ -14,12 +16,16 @@ namespace SE_Praktikum.Core.GameStates
         private Logger _logger;
         private IScreen _screen;
         private float _elapsedTime = 0;
-        private int _splashscreenTime = 60;
+        private int _splashscreenTime = 10;
         private Song _song;
         private ContentManager _contentManager;
+        private AnimationHandler _teamname;
+        private AnimationHandlerFactory _factory;
+        private AnimationHandler _gameengine;
 
-        public Splashscreen(IScreen parent, ContentManager contentManager)
+        public Splashscreen(IScreen parent, ContentManager contentManager, AnimationHandlerFactory factory)
         {
+            _factory = factory;
             _logger = LogManager.GetCurrentClassLogger();
             _screen = parent;
             _contentManager = contentManager;
@@ -27,6 +33,16 @@ namespace SE_Praktikum.Core.GameStates
         
         public override void LoadContent()
         {
+
+            var settings = new AnimationSettings(1, isPlaying: false, layer: 1);
+
+            var tileset = new TileSet(_contentManager.Load<Texture2D>("NWWP"));
+
+            _teamname = _factory.GetAnimationHandler(tileset, settings,origin:new Vector2(tileset.FrameWidth/2, tileset.FrameHeight/2));
+
+            settings = new AnimationSettings(1, isPlaying: false, layer: 1,scale:0.2f);
+            tileset = new TileSet(_contentManager.Load<Texture2D>("MonoGame"));
+            _gameengine = _factory.GetAnimationHandler(tileset, settings, origin: new Vector2(tileset.FrameWidth / 2, tileset.FrameHeight / 2));
             _song = _contentManager.Load<Song>("Audio/Music/Intro_mp3");
             MediaPlayer.Play(_song);
             MediaPlayer.IsRepeating = true;
@@ -63,6 +79,14 @@ namespace SE_Praktikum.Core.GameStates
                               null,
                               RasterizerState.CullCounterClockwise, // Render only the texture side that faces the camara to boost performance 
                               _screen.Camera.GetCameraEffect());
+            
+            if(_elapsedTime>_splashscreenTime/2)
+            {
+                _teamname.Draw(spriteBatch);
+            }
+            else
+                _gameengine.Draw(spriteBatch);
+
             spriteBatch.End();
         }
     }

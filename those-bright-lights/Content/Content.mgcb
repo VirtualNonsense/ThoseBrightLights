@@ -415,12 +415,6 @@
 /processorParam:Quality=Best
 /build:Audio/Music/Song4_remaster.wav
 
-#begin Audio/Sound_Effects/Button/Savepoint_remaster.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Audio/Sound_Effects/Button/Savepoint_remaster.wav
-
 #begin Audio/Sound_Effects/Airborne/Flight_plane_c.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -511,6 +505,12 @@
 /processorParam:Quality=Best
 /build:Audio/Sound_Effects/Button/Button_Sonar.wav
 
+#begin Audio/Sound_Effects/Button/Savepoint_remaster.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound_Effects/Button/Savepoint_remaster.wav
+
 #begin Audio/Sound_Effects/Collusion/Big_Explo.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -584,6 +584,18 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
 /build:Font/Font2.spritefont
+
+#begin MonoGame.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:MonoGame.png
 
 #begin NWWP.png
 /importer:TextureImporter
