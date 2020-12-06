@@ -43,12 +43,23 @@ namespace SE_Praktikum.Components.Sprites.Weapons
             }
             _ammo--;
             var particle = _particleFactory.BuildExplosionParticle();
-            particle.Layer = parent.Layer;
-            var m = new Missile(_animationHandlerFactory.GetAnimationHandler(_textureTileSet,
-                    new AnimationSettings(1, isPlaying: false)), velocitySpaceship, positionSpaceship, rotation,
-                _animationHandlerFactory.GetAnimationHandler(_propulsion,
-                    new AnimationSettings(6, 50, isLooping: true)),
-                particle, parent, _midAirSound, _impactSound) {Layer = parent.Layer};
+            var m = new Missile(
+                _animationHandlerFactory.GetAnimationHandler(
+                    _textureTileSet,
+                    new AnimationSettings(1, isPlaying: false, layer: parent.Layer)
+                ),
+                velocitySpaceship,
+                positionSpaceship,
+                rotation,
+                _animationHandlerFactory.GetAnimationHandler(
+                    _propulsion,
+                    new AnimationSettings(6, 50, isLooping: true, layer: parent.Layer)
+                ),
+                particle,
+                parent,
+                _midAirSound,
+                _impactSound
+            );
             _shoot?.Play();
             return m;
         }
