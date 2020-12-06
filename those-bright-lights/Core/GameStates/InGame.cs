@@ -15,26 +15,19 @@ namespace SE_Praktikum.Core.GameStates
     public class InGame : GameState
     {
         private IScreen _screen;
-        private int _splashscreenTime = 60;
-        private Map TestMap;
         private Logger _logger;
-        private MapFactory MapFactory;
+        private readonly Level _level;
 
-        public InGame(IScreen parent, MapFactory mapFactory)
+        public InGame(IScreen parent, MapFactory mapFactory, Level level)
         {
             _logger = LogManager.GetCurrentClassLogger();
             _screen = parent;
-            MapFactory = mapFactory;
+            _level = level;
         }
 
         public override void LoadContent(ContentManager contentManager)
         {
-            var p = new TileSet(contentManager.Load<Texture2D>("Artwork/Effects/explosion_45_45"), 45, 45, 0);
-            //_explosionEmitter.SpawnArea = new Rectangle(500, 100, 500, 100);
-            var LevelBlueprint =
-                JsonConvert.DeserializeObject<LevelBlueprint>(
-                    File.ReadAllText(@".\Content\Level\TestLevel\TestLevel.json"));
-            TestMap = MapFactory.LoadMap(contentManager, LevelBlueprint);
+            _level.LoadContent(contentManager);
 
         }
 
@@ -47,6 +40,7 @@ namespace SE_Praktikum.Core.GameStates
         {
 
             _screen.Camera.Update(gameTime);
+            _level.Update(gameTime);
         }
 
         public override void PostUpdate(GameTime gameTime)
@@ -63,7 +57,7 @@ namespace SE_Praktikum.Core.GameStates
                 RasterizerState
                     .CullCounterClockwise, // Render only the texture side that faces the camara to boost performance 
                 _screen.Camera.GetCameraEffect());
-            TestMap.Draw(gameTime, spriteBatch);
+            _level.Draw(gameTime, spriteBatch);
             spriteBatch.End();
         }
     }
