@@ -64,10 +64,13 @@ namespace SE_Praktikum.Core
         {
             
             var explosions = new List<IComponent>();
-            foreach(var actor1 in _components.OfType<Actor>())
+            var actorList = _components.OfType<Actor>().ToList();
+            for (var i = 0; i < actorList.Count()-1; i++)
             {
-                foreach(var actor2 in _components.OfType<Actor>())
+                var actor1 = actorList[i];
+                for (var j = i + 1; j < actorList.Count(); j++)
                 {
+                    var actor2 = actorList[j];
                     //check if one actor has the other actor as parent
                     if (actor1.Parent != null && actor1.Parent == actor2)
                         continue;
