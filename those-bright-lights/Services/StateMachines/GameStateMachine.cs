@@ -35,7 +35,7 @@ namespace SE_Praktikum.Services.StateMachines
             };
             _machine = new StateMachine<State, GameStateMachineTrigger>(State.SplashScreen);
             _machine.Configure(State.SplashScreen).OnEntry(onEntry)
-                .Permit(GameStateMachineTrigger.SkipSplashScreen, State.SaveSlotSelection);
+                .Permit(GameStateMachineTrigger.SkipSplashScreen, State.Menu);
 
 
             _machine.Configure(State.SaveSlotSelection).OnEntry(onEntry)
