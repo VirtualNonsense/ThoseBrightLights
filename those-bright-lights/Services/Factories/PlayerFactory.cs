@@ -23,7 +23,7 @@ namespace SE_Praktikum.Services.Factories
 
         public Player GetInstance(ContentManager contentManager)
         {
-            var texture2D = contentManager.Load<Texture2D>("Artwork/Actors/spaceship");
+            var texture2D = contentManager.Load<Texture2D>("Artwork/Actors/ship_135_86");
             var tileSet = new TileSet(texture2D);
             var animationSettings = new AnimationSettings(1,isPlaying:false);
             var input = _inputFactory.GetInstance();
