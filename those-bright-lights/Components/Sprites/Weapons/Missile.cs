@@ -22,7 +22,6 @@ namespace SE_Praktikum.Components.Sprites.Weapons
             Position = spaceShipPosition + positionOffset;
             _propulsionAnimationHandler = propulsion;
             _offSet = new Vector2(-animationHandler.FrameWidth/2-_propulsionAnimationHandler.FrameWidth/2,0);
-            _propulsionAnimationHandler.Settings.Layer = Layer;
             Acceleration = 5;
             MaxTime = 5;
             Damage = 20;
