@@ -85,5 +85,6 @@ namespace SE_Praktikum.Components.Controls
         
         public  abstract void Draw(GameTime gameTime, SpriteBatch spriteBatch);
         public abstract void Update(GameTime gameTime);
+        public bool IsRemoveAble { get; set; }
     }
 }
