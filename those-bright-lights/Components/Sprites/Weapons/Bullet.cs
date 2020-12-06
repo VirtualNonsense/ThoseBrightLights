@@ -11,18 +11,19 @@ namespace SE_Praktikum.Components.Sprites.Weapons
 {
     public class Bullet : Actor
     {
-        public readonly Particle Explosion;
         private Vector2 Direction => new Vector2((float)Math.Cos(Rotation),(float)Math.Sin(Rotation));
         protected new float Velocity;
         protected float Acceleration;
         protected float MaxTime;
-        protected float TimeAlive;
+        private float TimeAlive;
+        private readonly Logger _logger;
 
         protected Bullet(AnimationHandler animationHandler, Particle explosion) : base(animationHandler)
         {
             Explosion = explosion;
             Velocity = 0;
             Acceleration = 0;
+            _logger = LogManager.GetCurrentClassLogger();
         }
 
         protected Vector2 Movement(Vector2 spaceshipVelocity, float elapsedTime)
@@ -46,12 +47,14 @@ namespace SE_Praktikum.Components.Sprites.Weapons
             if (TimeAlive >= MaxTime)
             {
                 IsRemoveAble = true;
+                _logger.Info("Removed Bullet because it was on the screen for to long");
             }
 
             Explosion.Position =
                 Position + new Vector2(_animationHandler.FrameWidth / 2, _animationHandler.FrameHeight / 2);
             base.Update(gameTime);
         }
+
 
         protected override void InvokeOnCollide()
         {
