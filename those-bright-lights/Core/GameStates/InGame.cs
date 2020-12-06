@@ -60,7 +60,12 @@ namespace SE_Praktikum.Core.GameStates
                 new Vector2(0, 0),
                 "Back to main menu",
                 _screen.Camera);
-            backButton.Click += (sender, args) => { _logger.Debug("Back to main menu"); _subject.OnNext(GameStateMachine.GameStateMachineTrigger.SaveAndBackToMenu); };
+            backButton.Click += (sender, args) =>
+            {
+                _logger.Debug("Back to main menu");
+                _screen.Camera.StopFollowing();
+                _subject.OnNext(GameStateMachine.GameStateMachineTrigger.SaveAndBackToMenu);
+            };
             _components.Add(backButton);
         }
 

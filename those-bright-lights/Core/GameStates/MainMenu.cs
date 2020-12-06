@@ -37,7 +37,7 @@ namespace SE_Praktikum.Core.GameStates
             {
                 return;
             }
-
+            _screen.Camera.Position = new Vector3(0, 0,150);
             if (_song == null || MediaPlayer.Queue.ActiveSong != _song)
             {
                 _song = _contentManager.Load<Song>("Audio/Music/Death_mp3");
