@@ -16,9 +16,12 @@ namespace SE_Praktikum.Components.Sprites
     {
 
         public bool CollisionEnabled = true;
+        private Logger _logger;
+        
 
         public Actor(AnimationHandler animationHandler) : base(animationHandler)
         {
+            _logger = LogManager.GetCurrentClassLogger();
         }
 
         private Rectangle? _hitbox = null;
@@ -29,8 +32,11 @@ namespace SE_Praktikum.Components.Sprites
         protected Particle Explosion;
 
 
-        public event EventHandler<EventArgs> OnCollide; 
-        
+        #region Events
+        public event EventHandler<EventArgs> OnCollide;
+        public event EventHandler<EventArgs> OnExplosion; 
+        #endregion
+
 
 
 
@@ -103,10 +109,17 @@ namespace SE_Praktikum.Components.Sprites
             return null;
         }
 
-
+        #region EventInvoker
         protected virtual void InvokeOnCollide()
         {
             OnCollide?.Invoke(this, EventArgs.Empty);
         }
+
+        protected virtual void InvokeExplosion()
+        {
+            var explosionArgs = new LevelEvent.Explosion {Particle = Explosion};
+            OnExplosion?.Invoke(this, explosionArgs);
+        }
+        #endregion
     }
 }
