@@ -1,49 +1,92 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
+using NLog;
 using SE_Praktikum.Models;
-using SE_Praktikum.Services.ParticleEmitter;
+using SE_Praktikum.Services;
+using SE_Praktikum.Services.Factories;
+using SE_Praktikum.Services.StateMachines;
 
 namespace SE_Praktikum.Core.GameStates
 {
     public class Splashscreen : GameState
     {
+        private Logger _logger;
         private IScreen _screen;
-        private readonly ExplosionEmitter _explosionEmitter;
+        private float _elapsedTime = 0;
+        private int _splashscreenTime = 10;
+        private Song _song;
+        private ContentManager _contentManager;
+        private AnimationHandler _teamname;
+        private AnimationHandlerFactory _factory;
+        private AnimationHandler _gameengine;
 
-        public Splashscreen(IScreen parent, ExplosionEmitter explosionEmitter)
+        public Splashscreen(IScreen parent, ContentManager contentManager, AnimationHandlerFactory factory)
         {
+            _factory = factory;
+            _logger = LogManager.GetCurrentClassLogger();
             _screen = parent;
-            _explosionEmitter = explosionEmitter;
+            _contentManager = contentManager;
         }
         
-        public override void LoadContent(ContentManager contentManager)
+        public override void LoadContent()
         {
-            var p = new Animation(contentManager.Load<Texture2D>("Artwork/Effects/explosion_45_45"), 7);
-            _explosionEmitter.Animation = p;
-            //_explosionEmitter.SpawnArea = new Rectangle(500, 100, 500, 100);
 
+            var settings = new AnimationSettings(1, isPlaying: false, layer: 1);
+
+            var tileset = new TileSet(_contentManager.Load<Texture2D>("NWWP"));
+
+            _teamname = _factory.GetAnimationHandler(tileset, settings,origin:new Vector2(tileset.TextureWidth/2, tileset.TextureHeight/2));
+
+            settings = new AnimationSettings(1, isPlaying: false, layer: 1,scale:0.2f);
+            tileset = new TileSet(_contentManager.Load<Texture2D>("MonoGame"));
+            _gameengine = _factory.GetAnimationHandler(tileset, settings, origin: new Vector2(tileset.TextureWidth / 2, tileset.TextureHeight / 2));
+            _song = _contentManager.Load<Song>("Audio/Music/Intro_mp3");
+            MediaPlayer.Play(_song);
+            MediaPlayer.IsRepeating = true;
         }
 
         public override void UnloadContent()
         {
-            throw new System.NotImplementedException();
+            _logger.Debug("unloading content");
+            MediaPlayer.Stop();
         }
 
         public override void Update(GameTime gameTime)
         {
-            _explosionEmitter.Update(gameTime);
+            _elapsedTime += gameTime.ElapsedGameTime.Milliseconds/1000f;
+            _logger.Trace(_elapsedTime);
+            if(Keyboard.GetState().IsKeyDown(Keys.Escape) || _splashscreenTime < _elapsedTime)
+            {
+                _logger.Debug("exiting splashscreen");
+                _subject.OnNext(GameStateMachine.GameStateMachineTrigger.SkipSplashScreen);
+            }
+            _screen.Camera.Update(gameTime); 
         }
 
-        public override void PostUpdate()
+        public override void PostUpdate(GameTime gameTime)
         {
-            //throw new System.NotImplementedException();
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            spriteBatch.Begin(SpriteSortMode.FrontToBack);
-            _explosionEmitter.Draw(gameTime, spriteBatch);
+            
+            spriteBatch.Begin(SpriteSortMode.FrontToBack,
+                              null,
+                              SamplerState.PointClamp, // Sharp Pixel rendering
+                              null,
+                              RasterizerState.CullCounterClockwise, // Render only the texture side that faces the camara to boost performance 
+                              _screen.Camera.GetCameraEffect());
+            
+            if(_elapsedTime>_splashscreenTime/2)
+            {
+                _teamname.Draw(spriteBatch);
+            }
+            else
+                _gameengine.Draw(spriteBatch);
+
             spriteBatch.End();
         }
     }

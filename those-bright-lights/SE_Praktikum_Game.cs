@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using NLog;
+using SE_Praktikum.Core;
 using SE_Praktikum.Core.GameStates;
 using SE_Praktikum.Models;
 
@@ -34,9 +35,15 @@ namespace SE_Praktikum
         protected override void Initialize()
         {
             _logger.Debug("Start Initialisiation");
+            
             _graphics.PreferredBackBufferWidth = ScreenWidth;
             _graphics.PreferredBackBufferHeight = ScreenHeight;
             _graphics.ApplyChanges();
+            IsMouseVisible = true;
+            Camera = new Camera(new Vector3(0,0,100),
+                120, 
+                _graphics.GraphicsDevice.Viewport, 
+                new BasicEffect(_graphics.GraphicsDevice) {TextureEnabled = true});
             base.Initialize();
         }
 
@@ -44,41 +51,36 @@ namespace SE_Praktikum
         {
             _logger.Debug("loading content");
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-            _currentState?.LoadContent(Content);
+            _currentState?.LoadContent();
         }
 
         protected override void UnloadContent()
         {
             _logger.Debug("unloading content");
+            _currentState?.UnloadContent();
             base.UnloadContent();
         }
 
         protected override void Update(GameTime gameTime)
         {
-            
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed ||
-                Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
-
             if (_nextState != null)
             {
                 _logger.Debug("Performing Reload");
                 _currentState?.UnloadContent();
                 _currentState = _nextState;
-                _currentState.LoadContent(Content);
+                _currentState.LoadContent();
                 _nextState = null;
                 
             }
             //_logger.Debug("Update!");
-
             _currentState?.Update(gameTime);
+            _currentState?.PostUpdate(gameTime);
             base.Update(gameTime);
-            
         }
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Black);
             _currentState.Draw(gameTime, _spriteBatch);
 
             base.Draw(gameTime);
@@ -92,7 +94,8 @@ namespace SE_Praktikum
 
         public void OnCompleted()
         {
-            throw new NotImplementedException();
+            _logger.Debug("OnCompleted(): shutting down");
+            Exit();
         }
 
         public void OnError(Exception error)
@@ -103,5 +106,6 @@ namespace SE_Praktikum
 
         public int ScreenHeight { get; }
         public int ScreenWidth { get; }
+        public Camera Camera { get; private set; }
     }
 }
