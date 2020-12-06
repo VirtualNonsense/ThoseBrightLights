@@ -38,11 +38,11 @@ namespace SE_Praktikum.Core.GameStates
 
             var tileset = new TileSet(_contentManager.Load<Texture2D>("NWWP"));
 
-            _teamname = _factory.GetAnimationHandler(tileset, settings,origin:new Vector2(tileset.FrameWidth/2, tileset.FrameHeight/2));
+            _teamname = _factory.GetAnimationHandler(tileset, settings,origin:new Vector2(tileset.TextureWidth/2, tileset.TextureHeight/2));
 
             settings = new AnimationSettings(1, isPlaying: false, layer: 1,scale:0.2f);
             tileset = new TileSet(_contentManager.Load<Texture2D>("MonoGame"));
-            _gameengine = _factory.GetAnimationHandler(tileset, settings, origin: new Vector2(tileset.FrameWidth / 2, tileset.FrameHeight / 2));
+            _gameengine = _factory.GetAnimationHandler(tileset, settings, origin: new Vector2(tileset.TextureWidth / 2, tileset.TextureHeight / 2));
             _song = _contentManager.Load<Song>("Audio/Music/Intro_mp3");
             MediaPlayer.Play(_song);
             MediaPlayer.IsRepeating = true;

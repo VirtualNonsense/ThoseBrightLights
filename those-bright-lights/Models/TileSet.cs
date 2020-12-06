@@ -17,8 +17,8 @@ namespace SE_Praktikum.Models
         public int StartEntry;
         private ILogger _logger;
         public int FrameCount => Columns * Rows;
-        public int FrameWidth => Rows * TileDimX;
-        public int FrameHeight => Columns * TileDimY;
+        public int TextureWidth => Texture.Width;
+        public int TextureHeight => Texture.Height;
 
         
         public TileSet(Texture2D texture, int tileDimX, int tileDimY, int startEntry=0)

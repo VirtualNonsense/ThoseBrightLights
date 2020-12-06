@@ -155,6 +155,7 @@ namespace SE_Praktikum.Core
             _components.Add(player);
 
             var enemy = _enemyFactory.GetInstance(contentManager);
+            enemy.Layer = player.Layer;
             _components.Add(enemy);
             enemy.OnExplosion += (sender, args) =>
             {
