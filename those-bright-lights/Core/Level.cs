@@ -179,6 +179,19 @@ namespace SE_Praktikum.Core
             enemy.X = 500;
             enemy.Y = 4128;
             _components.Add(enemy);
+            
+            enemy = _enemyFactory.GetInstance(contentManager);
+            enemy.Layer = player.Layer;
+            enemy.X = 500 + 20 + enemy.Rectangle.Width;
+            enemy.Y = 4128;
+            _components.Add(enemy);
+            
+            enemy = _enemyFactory.GetInstance(contentManager);
+            enemy.Layer = player.Layer;
+            enemy.X = 500 + 20 + enemy.Rectangle.Width;
+            enemy.Y = 4128 - 20 - enemy.Rectangle.Height;
+            _components.Add(enemy);
+            
             enemy.OnExplosion += (sender, args) =>
             {
                 if (!(args is LevelEvent e)) return;
