@@ -7,7 +7,7 @@ namespace SE_Praktikum.Components
 {
     public class ComponentGrid : IEnumerable<IComponent>
     {
-        private readonly Vector2 _center;
+        private Vector2 _center;
         private readonly float _width;
         private readonly float _height;
         private readonly uint _columns;
@@ -20,6 +20,16 @@ namespace SE_Praktikum.Components
             _height = height;
             _columns = columns;
             _components = new List<IComponent>();
+        }
+
+        public Vector2 Position
+        {
+            get => _center;
+            set
+            {
+                _center = value;
+                AlignComponents();
+            }
         }
 
         public void Add(IComponent component)
