@@ -7,6 +7,7 @@ using NLog;
 using SE_Praktikum.Services;
 using SE_Praktikum.Components;
 using SE_Praktikum.Components.Sprites;
+using SE_Praktikum.Components.Sprites.Weapons;
 using SE_Praktikum.Models;
 
 namespace SE_Praktikum.Components.Sprites
@@ -15,19 +16,37 @@ namespace SE_Praktikum.Components.Sprites
     {
 
         public bool CollisionEnabled = true;
+        private Logger _logger;
+        
 
         public Actor(AnimationHandler animationHandler) : base(animationHandler)
         {
+            _logger = LogManager.GetCurrentClassLogger();
         }
 
         private Rectangle? _hitbox = null;
         public Rectangle HitBox => _hitbox ?? Rectangle;
-        
+        protected float Damage;
+        protected float Health { get; set; }
+        private bool _indestructible;
+        protected Particle Explosion;
 
-        public event EventHandler<EventArgs> OnCollide; 
-        
+
+        #region Events
+        public event EventHandler<EventArgs> OnCollide;
+        public event EventHandler<EventArgs> OnExplosion; 
+        #endregion
 
 
+        public virtual void TakeDamage(Actor enemy)
+        {
+            if (_indestructible) return;
+            Health -= enemy.Damage;
+            _logger.Info(Health);
+            if (!(Health <= 0)) return;
+            IsRemoveAble = true;
+            InvokeExplosion();
+        }
 
         public Vector2? Intersects(Actor actor)
         {
@@ -37,11 +56,11 @@ namespace SE_Praktikum.Components.Sprites
             if (Math.Abs(actor.Layer - Layer) > float.Epsilon ) return null;
             //if actors are not rotated, use faster method Intersects of Rectangle for now, 
             //-> no exact value for the collision position
+            //TODO: doesn't work currently
             if (Rotation == 0 && actor.Rotation == 0)
             {
-                if (HitBox.Intersects(actor.HitBox))
-                    return Position;
-                return null;
+                if (!HitBox.Intersects(actor.HitBox))
+                    return null;
             }
             var t1 = _animationHandler.GetDataOfFrame();
             var t2 = actor._animationHandler.GetDataOfFrame();
@@ -98,10 +117,17 @@ namespace SE_Praktikum.Components.Sprites
             return null;
         }
 
-
+        #region EventInvoker
         protected virtual void InvokeOnCollide()
         {
             OnCollide?.Invoke(this, EventArgs.Empty);
         }
+
+        protected virtual void InvokeExplosion()
+        {
+            var explosionArgs = new LevelEvent.Explosion {Particle = Explosion};
+            OnExplosion?.Invoke(this, explosionArgs);
+        }
+        #endregion
     }
 }

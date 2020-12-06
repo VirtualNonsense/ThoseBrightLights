@@ -11,17 +11,17 @@ namespace SE_Praktikum.Components.Sprites.Weapons
     public class MissileLauncher : Weapon
     {
         private readonly AnimationHandlerFactory _animationHandlerFactory;
-        private readonly TileSet _texture;
+        private readonly TileSet _textureTileSet;
         private readonly TileSet _propulsion;
         private readonly Func<Particle> _getParticle;
-        private readonly int _clipSize = 50;
+        private const int _clipSize = 50;
         private int _ammo;
-        private Logger _logger;
+        private readonly Logger _logger;
 
-        public MissileLauncher(AnimationHandlerFactory animationHandlerFactory,TileSet texture, TileSet propulsion, Func <Particle> getParticle)
+        public MissileLauncher(AnimationHandlerFactory animationHandlerFactory,TileSet textureTileSet, TileSet propulsion, Func <Particle> getParticle)
         {
             _animationHandlerFactory = animationHandlerFactory;
-            _texture = texture;
+            _textureTileSet = textureTileSet;
             _propulsion = propulsion;
             _getParticle = getParticle;
             _ammo = _clipSize;
@@ -29,7 +29,7 @@ namespace SE_Praktikum.Components.Sprites.Weapons
         }
 
 
-        public override Bullet GetBullet(Vector2 velocitySpaceship)
+        public override Bullet GetBullet(Vector2 velocitySpaceship, Vector2 positionSpaceship,float rotation, Actor parent)
         {
             if (_ammo <= 0)
             {
@@ -37,9 +37,10 @@ namespace SE_Praktikum.Components.Sprites.Weapons
                 return null;
             }   
             _ammo--;
-            Missile m = new Missile(_animationHandlerFactory.GetAnimationHandler(_texture,
-                new AnimationSettings(1, isPlaying: false)),velocitySpaceship,
-                _animationHandlerFactory.GetAnimationHandler(_propulsion,new AnimationSettings(6,50, isLooping:true)),_getParticle());
+            Missile m = new Missile(_animationHandlerFactory.GetAnimationHandler(_textureTileSet,
+                new AnimationSettings(1, isPlaying: false)),velocitySpaceship, positionSpaceship,rotation,
+                _animationHandlerFactory.GetAnimationHandler(_propulsion,new AnimationSettings(6,50, isLooping:true)),
+                _getParticle(), parent);
             return m;
         }
 

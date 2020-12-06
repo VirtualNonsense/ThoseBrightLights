@@ -1,4 +1,5 @@
 ﻿using System.Reflection.Metadata;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using SE_Praktikum.Components.Sprites;
@@ -11,7 +12,7 @@ namespace SE_Praktikum.Services.Factories
     {
         private readonly AnimationHandlerFactory _animationHandlerFactory;
         private readonly InputFactory _inputFactory;
-        private WeaponFactory _weaponFactory;
+        private readonly WeaponFactory _weaponFactory;
 
         public PlayerFactory(AnimationHandlerFactory animationHandlerFactory, InputFactory inputFactory, WeaponFactory weaponFactory)
         {
@@ -27,7 +28,8 @@ namespace SE_Praktikum.Services.Factories
             var animationSettings = new AnimationSettings(1,isPlaying:false);
             var input = _inputFactory.GetInstance();
             var p = new Player(_animationHandlerFactory.GetAnimationHandler(tileSet,animationSettings),input);
-            p.AddWeapon(_weaponFactory.GetMissileLauncher(contentManager));
+            p.Position = new Vector2(-50,50);
+            p.AddWeapon(_weaponFactory.GetLasergun(contentManager));
 
             return p;
         } 

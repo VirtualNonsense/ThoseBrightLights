@@ -1,36 +1,38 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using SE_Praktikum.Components.Sprites.Weapons;
-using SE_Praktikum.Models;
 using SE_Praktikum.Services;
 
-namespace SE_Praktikum.Components.Sprites
+namespace SE_Praktikum.Components.Sprites.Weapons
 {
     public class Missile : Bullet
     {
         private readonly Vector2 _spaceShipVelocity;
-        private AnimationHandler _propulsionAnimationHandler;
-        private Vector2 OffSet;
-        private Vector2 _velocity;
+        private readonly AnimationHandler _propulsionAnimationHandler;
+        private readonly Vector2 _offSet;
         private float _elapsedTime = 0;
 
-        public Missile(AnimationHandler animationHandler, Vector2 spaceShipVelocity, AnimationHandler propulsion, Particle explosion) : base(animationHandler, explosion)
+        public Missile(AnimationHandler animationHandler, Vector2 spaceShipVelocity,Vector2 spaceShipPosition,float rotation, AnimationHandler propulsion, Particle explosion, Sprite parent) : base(animationHandler, explosion)
         {
+            Rotation = rotation;
+            Parent = parent;
             _spaceShipVelocity = spaceShipVelocity;
+            var positionOffset = new Vector2(0,10);
+            Position = spaceShipPosition + positionOffset;
             _propulsionAnimationHandler = propulsion;
-            OffSet = new Vector2(-animationHandler.FrameWidth/2-_propulsionAnimationHandler.FrameWidth/2,0);
-            Layer -= 2 * Single.Epsilon;
+            _offSet = new Vector2(-animationHandler.FrameWidth/2-_propulsionAnimationHandler.FrameWidth/2,0);
             _propulsionAnimationHandler.Settings.Layer = Layer;
-            _velocity = new Vector2(2,0);
+            Acceleration = 5;
+            MaxTime = 5;
+            Damage = 20;
         }
 
 
         public override void Update(GameTime gameTime)
         {
             _elapsedTime += gameTime.ElapsedGameTime.Milliseconds / 1000f;
-            Position += _spaceShipVelocity + _velocity*_elapsedTime;
-            _propulsionAnimationHandler.Position = Position + OffSet; 
+            Position = Movement(_spaceShipVelocity,_elapsedTime);
+            _propulsionAnimationHandler.Position =  Position + _offSet; 
             _propulsionAnimationHandler.Update(gameTime);
             base.Update(gameTime);
         }

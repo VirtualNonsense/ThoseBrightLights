@@ -21,18 +21,20 @@ namespace SE_Praktikum.Core
         private readonly MapFactory _mapFactory;
         private readonly PlayerFactory _playerFactory;
         private readonly ParticleFactory _particleFactory;
-        private List<IComponent> _components;
+        private readonly EnemyFactory _enemyFactory;
+        private readonly List<IComponent> _components;
+        private readonly Logger _logger;
         private Map _map;
-        private Logger _logger;
 
         private event EventHandler OnExplosion;
 
         //Constructor
-        public Level(MapFactory mapFactory, PlayerFactory playerFactory, ParticleFactory particleFactory)
+        public Level(MapFactory mapFactory, PlayerFactory playerFactory, ParticleFactory particleFactory, EnemyFactory enemyFactory)
         {
             _mapFactory = mapFactory;
             _playerFactory = playerFactory;
             _particleFactory = particleFactory;
+            _enemyFactory = enemyFactory;
             _components = new List<IComponent>();
             _logger = LogManager.GetCurrentClassLogger();
         }
@@ -55,45 +57,41 @@ namespace SE_Praktikum.Core
                 _components[index].Update(gameTime);
                 index++;
             }
-            foreach(var actor1 in _components.OfType<Actor>())
+
+            CheckForCollisions();
+            
+        }
+
+        private void CheckForCollisions()
+        {
+            
+            var explosions = new List<IComponent>();
+            var actorList = _components.OfType<Actor>().ToList();
+            for (var i = 0; i < actorList.Count()-1; i++)
             {
-                foreach(var actor2 in _components.OfType<Actor>())
+                var actor1 = actorList[i];
+                for (var j = i + 1; j < actorList.Count(); j++)
                 {
+                    var actor2 = actorList[j];
+                    //check if one actor has the other actor as parent
+                    if (actor1.Parent != null && actor1.Parent == actor2)
+                        continue;
+                    if (actor2.Parent != null && actor2.Parent == actor1)
+                        continue;
+                    
+                        
                     var collisionPosition = actor1.Intersects(actor2);
+                    //collision detected
                     if(!(collisionPosition is null))
                     {
-                        
-                    }
-                }
-            }
-            var explosions = new List<IComponent>();
-            foreach (var bullet in _components.OfType<Bullet>())
-            {
-                foreach (var bullet2 in _components.OfType<Bullet>())
-                {
-                    var intersect = bullet.Intersects(bullet2);
-                    if (!(intersect is null))
-                    {
-                        bullet.IsRemoveAble = true;
-                        explosions.Add(bullet.Explosion);
+                        actor1.TakeDamage(actor2);
+                        actor2.TakeDamage(actor1);
                     }
                 }
             }
             _components.AddRange(explosions);
 
-            foreach (var player in _components.OfType<Player>())
-            {
-                foreach (var tile in _map)
-                {
-                    var c =player.Intersects(tile);
-                    if (c != null)
-                    {
-                        _logger.Trace("map collision");
-                    }
-                }
-            }
-
-            index = 0;
+            var index = 0;
             while (index < _components.Count)
             {
                 if (_components[index].IsRemoveAble == true)
@@ -108,16 +106,25 @@ namespace SE_Praktikum.Core
         }
 
 
-
-        public void OnLevelEvent(LevelEvent levelEvent, Vector2 playerPosition)
+        private void OnLevelEvent(LevelEvent levelEvent)
         {
-            var t = (LevelEvent.ShootBullet)levelEvent;
-            //if player or enemy shoots the ShootBullet event triggers
-            if (t!=null)                                    
+            switch (levelEvent)
             {
-                _components.Add(t.Bullet);
-                t.Bullet.Position = playerPosition;
-                _logger.Info("Shot bullet!");
+                //if player or enemy shoots the ShootBullet event triggers
+                case LevelEvent.ShootBullet t:
+                    _components.Add(t.Bullet);
+                    t.Bullet.OnExplosion += (sender, args) =>
+                    {
+                        if (!(args is LevelEvent e)) return;
+                        OnLevelEvent(e);
+                    };
+                    _logger.Info("Shot bullet!");
+                    return;
+                case LevelEvent.Explosion s:
+                    if (s.Particle is null) return;
+                    _components.Add(s.Particle);
+                    _logger.Info("Added Particle");
+                    return;
             }
         }
 
@@ -134,11 +141,27 @@ namespace SE_Praktikum.Core
             player.OnShoot += (sender, args) =>
             {
                 if (!(args is LevelEvent e)) return;
-                OnLevelEvent(e, player.Position);
-            };  
+                OnLevelEvent(e);
+            };
+            player.OnExplosion += (sender, args) =>
+            {
+                if (!(args is LevelEvent e)) return;
+                OnLevelEvent(e);
+            };
             _components.Add(player);
-            
-            
+
+            var enemy = _enemyFactory.GetInstance(contentManager);
+            _components.Add(enemy);
+            enemy.OnExplosion += (sender, args) =>
+            {
+                if (!(args is LevelEvent e)) return;
+                OnLevelEvent(e);
+            };
+
+            // //TODO: try to load the json map via the contentmanager
+            // _components.Add(_mapFactory.LoadMap(contentManager,
+            //     JsonConvert.DeserializeObject<LevelBlueprint>(File.ReadAllText(@".\Content\Level\TestLevel\TestLevel.json"))));
+            //
         }
 
     }

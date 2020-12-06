@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using SE_Praktikum.Components.Sprites;
 using SE_Praktikum.Core;
 
 namespace SE_Praktikum.Models
@@ -20,7 +21,7 @@ namespace SE_Praktikum.Models
 
         public class Explosion : LevelEvent
         {
-            public Animation Animation;
+            public Particle Particle;
         }
 
 

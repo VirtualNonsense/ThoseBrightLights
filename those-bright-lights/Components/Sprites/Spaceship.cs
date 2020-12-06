@@ -20,7 +20,6 @@ namespace SE_Praktikum.Components.Sprites
         private int _currentWeapon;
         protected float Speed;
         private Logger _logger;
-        protected float Health;
         protected KeyboardState CurrentKey;
         protected KeyboardState PreviousKey;
 
@@ -57,11 +56,10 @@ namespace SE_Praktikum.Components.Sprites
         }
         protected virtual void InvokeOnShoot(Vector2 velocity)
         {
-            var e = new LevelEvent.ShootBullet {Bullet = _weapons[_currentWeapon].GetBullet(velocity)};
+            var e = new LevelEvent.ShootBullet {Bullet = _weapons[_currentWeapon].GetBullet(velocity,Position,Rotation, this)};
             if (e.Bullet is null)
                 return;
             OnShoot?.Invoke(this,e);
-            //TODO: wie löse ich jetzt hier das shootbullet event in level aus?
         }
 
         public virtual void AddWeapon(Weapon weapon)
