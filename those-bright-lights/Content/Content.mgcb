@@ -401,8 +401,7 @@
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Audio/Music/Song3_remaster2.wav
-Audio/Music/Not_usable.wav
+/build:Audio/Music/Song3_remaster2.wav;Audio/Music/Not_usable.wav
 
 #begin Audio/Music/Song3_remaster2_mp3.mp3
 /importer:Mp3Importer
