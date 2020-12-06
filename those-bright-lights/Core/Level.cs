@@ -93,6 +93,24 @@ namespace SE_Praktikum.Core
                 }
             }
 
+            for (var i = 0; i < actorList.Count()-1; i++)
+            {
+                var actor = actorList[i];
+                foreach (var tile in _map)
+                {
+                    var collision = tile.Intersects(actor);
+                    if (!(collision is null))
+                    {
+                        var t = (actor.Origin - (Vector2) collision);
+                        t.Normalize();
+                        actor.Position += 3 * t;
+                        actor.TakeDamage(tile);
+                        tile.TakeDamage(actor);
+                        _logger.Debug($"map collision { t  }");
+                    }
+                }
+            }
+
             var index = 0;
             while (index < _components.Count)
             {
@@ -161,6 +179,19 @@ namespace SE_Praktikum.Core
             enemy.X = 500;
             enemy.Y = 4128;
             _components.Add(enemy);
+            
+            enemy = _enemyFactory.GetInstance(contentManager);
+            enemy.Layer = player.Layer;
+            enemy.X = 500 + 20 + enemy.Rectangle.Width;
+            enemy.Y = 4128;
+            _components.Add(enemy);
+            
+            enemy = _enemyFactory.GetInstance(contentManager);
+            enemy.Layer = player.Layer;
+            enemy.X = 500 + 20 + enemy.Rectangle.Width;
+            enemy.Y = 4128 - 20 - enemy.Rectangle.Height;
+            _components.Add(enemy);
+            
             enemy.OnExplosion += (sender, args) =>
             {
                 if (!(args is LevelEvent e)) return;

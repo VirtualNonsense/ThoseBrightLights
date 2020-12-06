@@ -66,25 +66,24 @@ namespace SE_Praktikum.Models
         
         public Byte[] GetDataOfFrame(int tile)
         {
+            tile -= StartEntry;
             int rowOfTile = tile / Columns;
             int columnOfTile = tile % Columns;
 
-            var texturewidth = TileDimX * Columns;
-            var textureheight = TileDimY * Rows;
 
             var tilewidth = TileDimX;
             var tileheight = TileDimY;
 
             //offset for all rows of all tiles above the tilerow we want
-            var rowOffsetForAllTilesAbove = texturewidth * tileheight*rowOfTile ;
+            var rowOffsetForAllTilesAbove = TextureWidth * tileheight*rowOfTile ;
             //offset for all pixels in one tile calculated with the columnnumber 
             var pixelColumnOffset = columnOfTile * tilewidth;
 
             //array for one tile to copy sth in 
-            Byte[] pixelArray = new Byte[tilewidth *tileheight];
+            Byte[] pixelArray = new Byte[TextureWidth * TextureHeight];
             
             //array filled with all tiles from tileset 
-            Color[] allTiles = new Color[texturewidth*textureheight];
+            Color[] allTiles = new Color[TextureWidth * TextureHeight];
             Texture.GetData(allTiles);
 
 
@@ -93,7 +92,7 @@ namespace SE_Praktikum.Models
             for(int row = 0; row < TileDimY; row++)
             {
                 //offset for pixels in each row
-                var rowPixelOffset = row * texturewidth;
+                var rowPixelOffset = row * TextureWidth;
                 //iterating over the tilewidth in column steps in one row step
                 for(int column = 0; column < TileDimX; column++)
                 {

@@ -65,10 +65,10 @@ namespace SE_Praktikum.Core.GameStates
                 _screen.Camera);
             backButton.Click += (sender, args) => { _logger.Debug("Back to main menu"); _subject.OnNext(GameStateMachine.GameStateMachineTrigger.Back); };
             _components.Add(musicVolumeLabel);
-            _components.Add(soundEffectVolumeLabel);
+           // _components.Add(soundEffectVolumeLabel);
             _components.Add(backButton);
             _components.Add(musicVolumeSlider);
-            _components.Add(soundEffectVolumeSlider);
+           // _components.Add(soundEffectVolumeSlider);
         }
 
         public Settings(IScreen screen, ControlElementFactory factory)
