@@ -37,10 +37,11 @@ namespace SE_Praktikum.Components.Sprites.Weapons
                 return null;
             }   
             _ammo--;
-            Missile m = new Missile(_animationHandlerFactory.GetAnimationHandler(_textureTileSet,
-                new AnimationSettings(1, isPlaying: false)),velocitySpaceship, positionSpaceship,rotation,
-                _animationHandlerFactory.GetAnimationHandler(_propulsion,new AnimationSettings(6,50, isLooping:true)),
-                _getParticle(), parent);
+            var m = new Missile(_animationHandlerFactory.GetAnimationHandler(_textureTileSet,
+                    new AnimationSettings(1, isPlaying: false)), velocitySpaceship, positionSpaceship, rotation,
+                _animationHandlerFactory.GetAnimationHandler(_propulsion,
+                    new AnimationSettings(6, 50, isLooping: true)),
+                _getParticle(), parent) {Layer = parent.Layer};
             return m;
         }
 
