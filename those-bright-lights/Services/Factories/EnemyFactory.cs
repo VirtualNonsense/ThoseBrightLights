@@ -19,7 +19,7 @@ namespace SE_Praktikum.Services.Factories
 
         public Enemy GetInstance(ContentManager contentManager)
         {
-            var texture2D = contentManager.Load<Texture2D>("Artwork/Actors/alien_ship_65_65");
+            var texture2D = contentManager.Load<Texture2D>("Artwork/Actors/alien_ship_56_59");
             var tileSet = new TileSet(texture2D);
             var animationSettings = new AnimationSettings(1,isPlaying:false);
             var e = new Enemy(_animationHandlerFactory.GetAnimationHandler(tileSet,animationSettings));
