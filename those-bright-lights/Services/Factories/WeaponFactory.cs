@@ -1,4 +1,5 @@
 ﻿using System.Linq.Expressions;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using SE_Praktikum.Components.Sprites;
@@ -25,7 +26,7 @@ namespace SE_Praktikum.Services.Factories
             Texture2D propulsion = contentManager.Load<Texture2D>("Artwork/projectiles/missile_propulsion_15_15");
             TileSet propulsionTileSet = new TileSet(propulsion,15,15);
             var m = new MissileLauncher(_animationHandlerFactory,textureTileSet, propulsionTileSet,
-                _particleFactory);
+                _particleFactory, null);
             return m;
         }
 
@@ -33,7 +34,8 @@ namespace SE_Praktikum.Services.Factories
         {
             Texture2D texture = contentManager.Load<Texture2D>("Artwork/projectiles/laser");
             TileSet textureTileSet = new TileSet(texture);
-            var l = new Lasergun(_animationHandlerFactory, textureTileSet, _particleFactory);
+            SoundEffect soundEffect = contentManager.Load<SoundEffect>("Audio/Sound_Effects/Shot/Laser_Short");
+            var l = new Lasergun(_animationHandlerFactory, textureTileSet, _particleFactory, soundEffect);
             return l;
         }
     }

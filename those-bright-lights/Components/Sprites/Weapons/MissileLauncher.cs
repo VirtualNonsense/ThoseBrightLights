@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using NLog;
 using SE_Praktikum.Components.Sprites;
 using SE_Praktikum.Models;
@@ -18,7 +19,7 @@ namespace SE_Praktikum.Components.Sprites.Weapons
         private int _ammo;
         private readonly Logger _logger;
 
-        public MissileLauncher(AnimationHandlerFactory animationHandlerFactory,TileSet textureTileSet, TileSet propulsion, ParticleFactory particleFactory)
+        public MissileLauncher(AnimationHandlerFactory animationHandlerFactory,TileSet textureTileSet, TileSet propulsion, ParticleFactory particleFactory, SoundEffect shoot) : base(shoot)
         {
             _animationHandlerFactory = animationHandlerFactory;
             _textureTileSet = textureTileSet;
@@ -44,6 +45,7 @@ namespace SE_Praktikum.Components.Sprites.Weapons
                 _animationHandlerFactory.GetAnimationHandler(_propulsion,
                     new AnimationSettings(6, 50, isLooping: true)),
                 particle, parent) {Layer = parent.Layer};
+            _shoot?.Play();
             return m;
         }
 

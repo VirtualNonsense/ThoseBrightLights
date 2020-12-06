@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using NLog;
 using SE_Praktikum.Models;
@@ -14,7 +15,7 @@ namespace SE_Praktikum.Components.Sprites.Weapons
         private readonly ParticleFactory _particleFactory;
         private Logger _logger;
 
-        public Lasergun(AnimationHandlerFactory animationHandlerFactory, TileSet textureTileSet, ParticleFactory particleFactory)
+        public Lasergun(AnimationHandlerFactory animationHandlerFactory, TileSet textureTileSet, ParticleFactory particleFactory, SoundEffect shoot) : base(shoot)
         {
             _animationHandlerFactory = animationHandlerFactory;
             _textureTileSet = textureTileSet;
@@ -31,6 +32,7 @@ namespace SE_Praktikum.Components.Sprites.Weapons
             {
                 Layer = parent.Layer
             };
+            _shoot.Play();
             return l;
         }
     }
