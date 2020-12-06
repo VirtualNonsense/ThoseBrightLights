@@ -25,8 +25,6 @@ namespace SE_Praktikum.Components.Sprites
         public override void Update(GameTime gameTime)
         {
             Position += Velocity;
-            if (Position.Y > (_parent.ScreenHeight + _animationHandler?.FrameHeight))
-                IsRemoveAble = true;
             base.Update(gameTime);
         }
 
