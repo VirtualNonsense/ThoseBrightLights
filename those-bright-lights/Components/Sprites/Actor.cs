@@ -9,6 +9,7 @@ using SE_Praktikum.Components;
 using SE_Praktikum.Components.Sprites;
 using SE_Praktikum.Components.Sprites.Weapons;
 using SE_Praktikum.Models;
+using Microsoft.Xna.Framework.Audio;
 
 namespace SE_Praktikum.Components.Sprites
 {
@@ -17,11 +18,13 @@ namespace SE_Praktikum.Components.Sprites
 
         public bool CollisionEnabled = true;
         private Logger _logger;
+        protected SoundEffect _impactSound;
         
 
-        public Actor(AnimationHandler animationHandler) : base(animationHandler)
+        public Actor(AnimationHandler animationHandler, SoundEffect impactSound) : base(animationHandler)
         {
             _logger = LogManager.GetCurrentClassLogger();
+            _impactSound = impactSound;
         }
 
         private Rectangle? _hitbox = null;
@@ -120,6 +123,7 @@ namespace SE_Praktikum.Components.Sprites
         #region EventInvoker
         protected virtual void InvokeOnCollide()
         {
+            _impactSound?.Play();
             OnCollide?.Invoke(this, EventArgs.Empty);
         }
 

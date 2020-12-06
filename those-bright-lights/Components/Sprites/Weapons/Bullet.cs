@@ -22,7 +22,7 @@ namespace SE_Praktikum.Components.Sprites.Weapons
         protected float _midAirSoundCooldown;
         protected float _timeSinceUsedMidAir;
 
-        protected Bullet(AnimationHandler animationHandler, Particle explosion, SoundEffect midAirSound) : base(animationHandler)
+        protected Bullet(AnimationHandler animationHandler, Particle explosion, SoundEffect midAirSound, SoundEffect impactSound) : base(animationHandler, impactSound)
         {
             Explosion = explosion;
             Velocity = 0;

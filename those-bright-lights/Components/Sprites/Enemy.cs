@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Input;
 using NLog;
 using SE_Praktikum.Models;
@@ -12,7 +13,7 @@ namespace SE_Praktikum.Components.Sprites
         private bool _shot = false;
         private bool _hasToShoot;
 
-        public Enemy(AnimationHandler animationHandler, float speed = 3, float health = 50) : base(animationHandler, speed, health)
+        public Enemy(AnimationHandler animationHandler, float speed = 3, float health = 50, SoundEffect impactSound = null) : base(animationHandler, speed, health, impactSound)
         {
             _logger = LogManager.GetCurrentClassLogger();
         }

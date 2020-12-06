@@ -160,6 +160,8 @@ namespace SE_Praktikum.Core
 
             var enemy = _enemyFactory.GetInstance(contentManager);
             enemy.Layer = player.Layer;
+            enemy.X = 500;
+            enemy.Y = 4128;
             _components.Add(enemy);
             enemy.OnExplosion += (sender, args) =>
             {

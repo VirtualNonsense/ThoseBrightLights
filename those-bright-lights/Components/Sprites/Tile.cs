@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using NLog;
 using SE_Praktikum.Services;
+using Microsoft.Xna.Framework.Audio;
 
 namespace SE_Praktikum.Components.Sprites
 {
@@ -10,7 +11,7 @@ namespace SE_Praktikum.Components.Sprites
     {
         private Logger _logger;
 
-        public Tile(AnimationHandler animationHandler, TileModifier tileModifier = TileModifier.None) : base(animationHandler)
+        public Tile(AnimationHandler animationHandler, TileModifier tileModifier = TileModifier.None, SoundEffect impactSound = null) : base(animationHandler, impactSound)
         {
             _logger = LogManager.GetCurrentClassLogger();
             base._animationHandler.Origin = new Vector2(_animationHandler.FrameWidth/2f, animationHandler.FrameWidth/2f);

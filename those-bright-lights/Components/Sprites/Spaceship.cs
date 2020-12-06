@@ -11,6 +11,7 @@ using NLog;
 using SE_Praktikum.Core;
 using SE_Praktikum.Models;
 using SE_Praktikum.Services;
+using Microsoft.Xna.Framework.Audio;
 
 namespace SE_Praktikum.Components.Sprites
 {
@@ -34,8 +35,8 @@ namespace SE_Praktikum.Components.Sprites
         #endregion
 
 
-        public Spaceship(AnimationHandler animationHandler, float speed = 3, float health = 100) : base(
-            animationHandler)
+        public Spaceship(AnimationHandler animationHandler, float speed = 3, float health = 100, SoundEffect impactSound = null) : base(
+            animationHandler, impactSound)
         {
             Speed = speed;
             Health = health;

@@ -10,7 +10,7 @@ namespace SE_Praktikum.Components.Sprites.Weapons
         private readonly Vector2 _spaceShipVelocity;
         private float _elapsedTime = 0;
 
-        public Laser(AnimationHandler animationHandler,Vector2 positionSpaceship,float rotation, Particle explosion, Sprite parent, SoundEffect midAirSound) : base(animationHandler, explosion, midAirSound)
+        public Laser(AnimationHandler animationHandler,Vector2 positionSpaceship,float rotation, Particle explosion, Sprite parent, SoundEffect midAirSound, SoundEffect impactSound) : base(animationHandler, explosion, midAirSound, impactSound)
         {
             Rotation = rotation;
             Parent = parent;

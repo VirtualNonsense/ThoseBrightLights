@@ -26,8 +26,9 @@ namespace SE_Praktikum.Services.Factories
             Texture2D propulsion = contentManager.Load<Texture2D>("Artwork/projectiles/missile_propulsion_15_15");
             TileSet propulsionTileSet = new TileSet(propulsion,15,15);
             SoundEffect flightEffect = contentManager.Load<SoundEffect>("Audio/Sound_Effects/Airborne/Flight_plane_c");
+            SoundEffect impactSound = contentManager.Load<SoundEffect>("Audio/Sound_Effects/Collusion/Big_Explo");
             var m = new MissileLauncher(_animationHandlerFactory,textureTileSet, propulsionTileSet,
-                _particleFactory, null, flightEffect);
+                _particleFactory, null, flightEffect, impactSound);
             return m;
         }
 
@@ -37,7 +38,8 @@ namespace SE_Praktikum.Services.Factories
             TileSet textureTileSet = new TileSet(texture);
             SoundEffect soundEffect = contentManager.Load<SoundEffect>("Audio/Sound_Effects/Shot/Laser_Short");
             SoundEffect flightEffect = contentManager.Load<SoundEffect>("Audio/Sound_Effects/Airborne/Wobble_test");
-            var l = new Lasergun(_animationHandlerFactory, textureTileSet, _particleFactory, soundEffect, flightEffect);
+            SoundEffect impactSound = contentManager.Load<SoundEffect>("Audio/Sound_Effects/Collusion/Clink");
+            var l = new Lasergun(_animationHandlerFactory, textureTileSet, _particleFactory, soundEffect, flightEffect, impactSound);
             return l;
         }
     }

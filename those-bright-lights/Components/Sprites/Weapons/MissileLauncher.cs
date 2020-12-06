@@ -19,8 +19,9 @@ namespace SE_Praktikum.Components.Sprites.Weapons
         private int _ammo;
         private readonly Logger _logger;
         private SoundEffect _midAirSound;
+        private SoundEffect _impactSound;
 
-        public MissileLauncher(AnimationHandlerFactory animationHandlerFactory,TileSet textureTileSet, TileSet propulsion, ParticleFactory particleFactory, SoundEffect shoot, SoundEffect midAirSound) : base(shoot)
+        public MissileLauncher(AnimationHandlerFactory animationHandlerFactory,TileSet textureTileSet, TileSet propulsion, ParticleFactory particleFactory, SoundEffect shoot, SoundEffect midAirSound, SoundEffect impactSound) : base(shoot)
         {
             _animationHandlerFactory = animationHandlerFactory;
             _textureTileSet = textureTileSet;
@@ -29,6 +30,7 @@ namespace SE_Praktikum.Components.Sprites.Weapons
             _ammo = _clipSize;
             _logger = LogManager.GetCurrentClassLogger();
             _midAirSound = midAirSound;
+            _impactSound = impactSound;
         }
 
 
@@ -46,7 +48,7 @@ namespace SE_Praktikum.Components.Sprites.Weapons
                     new AnimationSettings(1, isPlaying: false)), velocitySpaceship, positionSpaceship, rotation,
                 _animationHandlerFactory.GetAnimationHandler(_propulsion,
                     new AnimationSettings(6, 50, isLooping: true)),
-                particle, parent, _midAirSound) {Layer = parent.Layer};
+                particle, parent, _midAirSound, _impactSound) {Layer = parent.Layer};
             _shoot?.Play();
             return m;
         }

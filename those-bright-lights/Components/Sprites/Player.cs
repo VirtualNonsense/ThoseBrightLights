@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Input;
 using NLog;
 using SE_Praktikum.Models;
@@ -13,8 +14,8 @@ namespace SE_Praktikum.Components.Sprites
         private Input _input;
         private Logger _logger;
         private bool _shot = false;
-        public Player(AnimationHandler animationHandler, Input input=null, int health=100, float speed = 5) 
-            : base(animationHandler, health, speed)
+        public Player(AnimationHandler animationHandler, Input input=null, int health=100, float speed = 5, SoundEffect impactSound = null) 
+            : base(animationHandler, health, speed, impactSound)
         {
             _input = input;
             Health = health;
