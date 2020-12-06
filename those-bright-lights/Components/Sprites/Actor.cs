@@ -10,6 +10,7 @@ using SE_Praktikum.Components.Sprites;
 using SE_Praktikum.Components.Sprites.Weapons;
 using SE_Praktikum.Models;
 using Microsoft.Xna.Framework.Audio;
+using SE_Praktikum.Extensions;
 
 namespace SE_Praktikum.Components.Sprites
 {
@@ -51,20 +52,48 @@ namespace SE_Praktikum.Components.Sprites
             InvokeExplosion();
         }
 
+        public bool RoughHitBoxCollision(Actor actor)
+        {
+
+            if (Rotation == 0 && actor.Rotation == 0)
+                return HitBox.Intersects(actor.HitBox);
+            var p = Position;
+            var a = new Vector2((float)Math.Cos(Rotation) * HitBox.Width, (float)Math.Sin(Rotation) * HitBox.Width);
+            var b = new Vector2((float)Math.Sin(Rotation) * HitBox.Height, (float)Math.Cos(Rotation) * HitBox.Height);
+
+            var TR = p + a;
+            var BL = p + b;
+            var BR = p + a + b;
+            
+            var new_origin = new Vector2(Math.Min(Math.Min(p.X, TR.X), Math.Min(BL.X, BR.X)), Math.Min(Math.Min(p.Y, TR.Y), Math.Min(BL.Y, BR.Y)));
+            var new_BottomRight = new Vector2(Math.Max(Math.Max(p.X, TR.X), Math.Max(BL.X, BR.X)), Math.Max(Math.Max(p.Y, TR.Y), Math.Max(BL.Y, BR.Y)));
+            var new_div = new_BottomRight - new_origin;
+            Rectangle t = new Rectangle((int)new_origin.X, (int)new_origin.Y, (int)new_div.X, (int)new_div.Y);
+            
+            p = actor.Position;
+            a = new Vector2((float)Math.Cos(Rotation) * HitBox.Width, (float)Math.Sin(Rotation) * HitBox.Width);
+            b = new Vector2((float)Math.Sin(Rotation) * HitBox.Height, (float)Math.Cos(Rotation) * HitBox.Height);
+            
+            TR = p + a;
+            BL = p + b;
+            BR = p + a + b;
+            
+            new_origin = new Vector2(Math.Min(Math.Min(p.X, TR.X), Math.Min(BL.X, BR.X)), Math.Min(Math.Min(p.Y, TR.Y), Math.Min(BL.Y, BR.Y)));
+            new_BottomRight = new Vector2(Math.Max(Math.Max(p.X, TR.X), Math.Max(BL.X, BR.X)), Math.Max(Math.Max(p.Y, TR.Y), Math.Max(BL.Y, BR.Y)));
+            new_div = new_BottomRight - new_origin;
+            Rectangle t2 = new Rectangle((int)new_origin.X, (int)new_origin.Y, (int)new_div.X, (int)new_div.Y);
+            return t.Intersects(t2);
+        }
+
         public Vector2? Intersects(Actor actor)
         {
             //actors can't collide with themselves
             if (this == actor) return null;
             if (!CollisionEnabled || !actor.CollisionEnabled) return null;
             if (Math.Abs(actor.Layer - Layer) > float.Epsilon ) return null;
-            //if actors are not rotated, use faster method Intersects of Rectangle for now, 
-            //-> no exact value for the collision position
-            //TODO: doesn't work currently
-            if (Rotation == 0 && actor.Rotation == 0)
-            {
-                if (!HitBox.Intersects(actor.HitBox))
-                    return null;
-            }
+            
+            if (!RoughHitBoxCollision(actor)) return null;
+            
             var t1 = _animationHandler.GetDataOfFrame();
             var t2 = actor._animationHandler.GetDataOfFrame();
             // Calculate a matrix which transforms from A's local space into
@@ -103,7 +132,7 @@ namespace SE_Praktikum.Components.Sprites
                         // If both pixel are not completely transparent
                         if (alphaA != 0 && alphaB != 0)
                         {
-                            InvokeOnCollide();
+                            //InvokeOnCollide();
                             return new Vector2(xB,yB);
                         }
                     }
