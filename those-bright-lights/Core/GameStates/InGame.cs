@@ -41,6 +41,7 @@ namespace SE_Praktikum.Core.GameStates
 
         public override void LoadContent()
         {
+            _pause = false;
             _level.LoadContent(_contentManager);
             _song = _contentManager.Load<Song>("Audio/Music/Song3_remaster2_mp3");
             MediaPlayer.Play(_song);
