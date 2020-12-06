@@ -93,6 +93,24 @@ namespace SE_Praktikum.Core
                 }
             }
 
+            for (var i = 0; i < actorList.Count()-1; i++)
+            {
+                var actor = actorList[i];
+                foreach (var tile in _map)
+                {
+                    var collision = tile.Intersects(actor);
+                    if (!(collision is null))
+                    {
+                        var t = (actor.Origin - (Vector2) collision);
+                        t.Normalize();
+                        actor.Position += 3 * t;
+                        actor.TakeDamage(tile);
+                        tile.TakeDamage(actor);
+                        _logger.Debug($"map collision { t  }");
+                    }
+                }
+            }
+
             var index = 0;
             while (index < _components.Count)
             {
