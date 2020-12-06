@@ -25,12 +25,14 @@ namespace SE_Praktikum.Core
         private readonly List<IComponent> _components;
         private readonly Logger _logger;
         private Map _map;
+        
 
         private event EventHandler OnExplosion;
 
         //Constructor
         public Level(MapFactory mapFactory, PlayerFactory playerFactory, ParticleFactory particleFactory, EnemyFactory enemyFactory)
         {
+            
             _mapFactory = mapFactory;
             _playerFactory = playerFactory;
             _particleFactory = particleFactory;
@@ -133,9 +135,12 @@ namespace SE_Praktikum.Core
             
             //TODO: try to load the json map via the contentmanager
             _map = _mapFactory.LoadMap(JsonConvert.DeserializeObject<LevelBlueprint>(File.ReadAllText(@".\Content\Level\AlphaLevel\AlphaMap.json")));
-            
+
             //TODO: Set player level to _map.TopLayer
+            
             var player = _playerFactory.GetInstance(contentManager);
+            player.X = 160;
+            player.Y = 4128;
             player.Layer = _map.TopLayer;
             player.OnShoot += (sender, args) =>
             {
