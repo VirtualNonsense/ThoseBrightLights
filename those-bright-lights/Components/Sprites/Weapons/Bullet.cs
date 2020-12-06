@@ -51,7 +51,7 @@ namespace SE_Praktikum.Components.Sprites.Weapons
             }
 
             Explosion.Position =
-                Position + new Vector2(_animationHandler.FrameWidth / 2, _animationHandler.FrameHeight / 2);
+                Position;
             base.Update(gameTime);
         }
 

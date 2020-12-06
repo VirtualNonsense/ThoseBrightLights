@@ -22,7 +22,7 @@ namespace SE_Praktikum.Services.Factories
                                                     Vector2? position = null, 
                                                     Vector2? origin = null)
         {
-            origin ??= new Vector2(animation.FrameWidth / 2f, animation.FrameHeight / 2f);
+            origin ??= new Vector2(animation.TileDimX / 2f, animation.TileDimY / 2f);
             return new AnimationHandler(animation, settings, position, origin);
         }
     }
