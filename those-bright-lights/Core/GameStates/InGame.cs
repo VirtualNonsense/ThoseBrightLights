@@ -45,8 +45,6 @@ namespace SE_Praktikum.Core.GameStates
 
         public override void Update(GameTime gameTime)
         {
-
-            _screen.Camera.Update(gameTime);
             _level.Update(gameTime);
         }
 

@@ -2,7 +2,10 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Ninject;
 using NLog;
+using SE_Praktikum.Components;
+using SE_Praktikum.Components.Sprites;
 using SE_Praktikum.Extensions;
 using SE_Praktikum.Models;
 
@@ -16,11 +19,13 @@ namespace SE_Praktikum.Core
         private readonly Viewport _viewport;
         private readonly BasicEffect _spriteEffect;
         private Logger _logger;
+        private IComponent _target;
         private int _rotation;
 
         public Vector3 Position
         {
             get => _position;
+            set => _position = value;
         }
         public float FieldOfView { get; set; }
         public float ZNearPlane { get; }
@@ -75,6 +80,16 @@ namespace SE_Praktikum.Core
                                                        Keys.O );
         }
 
+        public void Follow(IComponent target)
+        {
+            _target = target;
+        }
+
+        public void StopFollowing()
+        {
+            _target = null;
+        }
+
         private Matrix View()
         {
             var p = new Plane(new Vector3(0, 1, 0), 1);
@@ -89,47 +104,55 @@ namespace SE_Praktikum.Core
 
         public void Update(GameTime gameTime)
         {
-            if (_controls == null || Keyboard.GetState().GetPressedKeyCount() == 0) return;
-            var time = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            if (Keyboard.GetState().IsKeyDown(_controls.Down))
-                _position.Y += CameraSpeed * time + _position.Z/2 * time;
-
-            if (Keyboard.GetState().IsKeyDown(_controls.Up))
-                _position.Y -= CameraSpeed * time + _position.Z/2 * time;
-
-            if (Keyboard.GetState().IsKeyDown(_controls.Right))
-                _position.X += CameraSpeed * time + _position.Z/2 * time;
             
-            if (Keyboard.GetState().IsKeyDown(_controls.Left))
-                _position.X -= CameraSpeed * time + _position.Z/2 * time;
+            if(_target is null)
+            {
+                if (_controls == null || Keyboard.GetState().GetPressedKeyCount() == 0) return;
+                var time = (float) gameTime.ElapsedGameTime.TotalSeconds;
+                if (Keyboard.GetState().IsKeyDown(_controls.Down))
+                    _position.Y += CameraSpeed * time + _position.Z / 2 * time;
 
-            if (Keyboard.GetState().IsKeyDown(_controls.ZoomOut))
-            {
-                _position.Z += CameraZoomSpeed * time;
-                if (_position.Z > ZFarPlane)
-                    _position.Z = ZFarPlane - float.Epsilon;
-            }
-                
-            if (Keyboard.GetState().IsKeyDown(_controls.ZoomIn))
-            {
-                _position.Z -= CameraZoomSpeed * time;
-                if (_position.Z < ZNearPlane)
-                    _position.Z = 0 + float.Epsilon;
+                if (Keyboard.GetState().IsKeyDown(_controls.Up))
+                    _position.Y -= CameraSpeed * time + _position.Z / 2 * time;
+
+                if (Keyboard.GetState().IsKeyDown(_controls.Right))
+                    _position.X += CameraSpeed * time + _position.Z / 2 * time;
+
+                if (Keyboard.GetState().IsKeyDown(_controls.Left))
+                    _position.X -= CameraSpeed * time + _position.Z / 2 * time;
+
+                if (Keyboard.GetState().IsKeyDown(_controls.ZoomOut))
+                {
+                    _position.Z += CameraZoomSpeed * time;
+                    if (_position.Z > ZFarPlane)
+                        _position.Z = ZFarPlane - float.Epsilon;
+                }
+
+                if (Keyboard.GetState().IsKeyDown(_controls.ZoomIn))
+                {
+                    _position.Z -= CameraZoomSpeed * time;
+                    if (_position.Z < ZNearPlane)
+                        _position.Z = 0 + float.Epsilon;
+                }
+
+                if (Keyboard.GetState().IsKeyDown(_controls.TurnRight))
+                {
+                    _rotation += 1;
+                    if (_rotation > 359)
+                        _rotation = 0;
+                }
+
+                if (Keyboard.GetState().IsKeyDown(_controls.TurnLeft))
+                {
+                    _rotation -= 1;
+                    if (_rotation < 0)
+                        _rotation = 359;
+                }
+
+                return;
             }
 
-            if (Keyboard.GetState().IsKeyDown(_controls.TurnRight))
-            {
-                _rotation += 1;
-                if (_rotation > 359)
-                    _rotation = 0;
-            }
-            
-            if (Keyboard.GetState().IsKeyDown(_controls.TurnLeft))
-            {
-                _rotation -= 1;
-                if (_rotation < 0)
-                    _rotation = 359;
-            }
+            _position = new Vector3(_target.Position, _position.Z);
         }
 
         public class CameraControls : Input

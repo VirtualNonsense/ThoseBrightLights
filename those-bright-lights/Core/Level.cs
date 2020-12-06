@@ -22,6 +22,7 @@ namespace SE_Praktikum.Core
         private readonly PlayerFactory _playerFactory;
         private readonly ParticleFactory _particleFactory;
         private readonly EnemyFactory _enemyFactory;
+        private readonly IScreen _screen;
         private readonly List<IComponent> _components;
         private readonly Logger _logger;
         private Map _map;
@@ -30,13 +31,14 @@ namespace SE_Praktikum.Core
         private event EventHandler OnExplosion;
 
         //Constructor
-        public Level(MapFactory mapFactory, PlayerFactory playerFactory, ParticleFactory particleFactory, EnemyFactory enemyFactory)
+        public Level(MapFactory mapFactory, PlayerFactory playerFactory, ParticleFactory particleFactory, EnemyFactory enemyFactory, IScreen screen)
         {
             
             _mapFactory = mapFactory;
             _playerFactory = playerFactory;
             _particleFactory = particleFactory;
             _enemyFactory = enemyFactory;
+            _screen = screen;
             _components = new List<IComponent>();
             _logger = LogManager.GetCurrentClassLogger();
         }
@@ -59,9 +61,9 @@ namespace SE_Praktikum.Core
                 _components[index].Update(gameTime);
                 index++;
             }
-
-            CheckForCollisions();
             
+            CheckForCollisions();
+            _screen.Camera.Update(gameTime);
         }
 
         private void CheckForCollisions()
@@ -152,6 +154,8 @@ namespace SE_Praktikum.Core
                 if (!(args is LevelEvent e)) return;
                 OnLevelEvent(e);
             };
+            _screen.Camera.Follow(player);
+            _screen.Camera.Position += new Vector3(0, 0, _map.TopLayer);
             _components.Add(player);
 
             var enemy = _enemyFactory.GetInstance(contentManager);
