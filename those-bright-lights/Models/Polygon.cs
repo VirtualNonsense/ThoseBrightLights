@@ -47,6 +47,21 @@ namespace SE_Praktikum.Models
             return normals;
         }
 
+        private float[] VectorProjection(Vector2 normal)
+        {
+            var minMax = new float[2];
+            minMax[1] = float.PositiveInfinity;
+            minMax[2] = float.NegativeInfinity;
+            for (var j = 0; j < _points.Count; j++)
+            {
+                var dp = (normal.X * _points[j].X + normal.Y * _points[j].Y);
+                if (dp < minMax[1])
+                    minMax[1] = dp;
+                if (dp > minMax[2])
+                    minMax[2] = dp;
+            }
+            return minMax;
+        }
 
 
 
