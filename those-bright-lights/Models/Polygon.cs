@@ -63,10 +63,36 @@ namespace SE_Praktikum.Models
             return minMax;
         }
 
+        public bool Overlap(Polygon other)
+        {
+            for (var repetition = 0; repetition < 2; repetition++)
+            {
+                Polygon p1;
+                Polygon p2;
+                if (repetition == 0)
+                {
+                    p1 = this;
+                    p2 = other;
+                }
+                else
+                {
+                    p1 = other;
+                    p2 = this;
+                }
+                var normals = p1.GetNormals();
 
+                foreach (var normal in normals)
+                {
+                    var minMax = p1.VectorProjection(normal);
+                    var otherMinMax = p2.VectorProjection(normal);
 
+                    if (!(otherMinMax[2] > minMax[1] && minMax[2] > otherMinMax[1]))
+                        return false;
+                }
+            }
 
-
+            return true;
+        }
 
     }
 }
