@@ -47,12 +47,36 @@ namespace SE_Praktikum.Models
 
         public int getIndex(Rectangle rect) // DO NOT FORGET!!! : For collision I suspect all kind of forms (not just a rectangle)
         {
+            // If it is not completely in a node then index must be -1
             int index = -1;
             double vertMiddle = boundary.X + boundary.Width / 2;
             double horiMiddle = boundary.Y + boundary.Height / 2;
 
-            // Something smart
+            bool top = (rect.Y - rect.Height) > horiMiddle;
+            bool bottom = rect.Y < vertMiddle;
 
+            if ((rect.X + rect.Width) < vertMiddle)
+            {
+                if (top)
+                {
+                    index = 1;
+                }
+                else if (bottom)
+                {
+                    index = 2;
+                }
+            }
+            else if (rect.X > vertMiddle)
+            {
+                if (top)
+                {
+                    index = 3;
+                }
+                else if (bottom)
+                {
+                    index = 0;
+                }
+            }
             return index;
         }
 
