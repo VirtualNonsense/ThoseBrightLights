@@ -50,13 +50,17 @@ namespace SE_Praktikum.Models
         private float[] VectorProjection(Vector2 normal)
         {
             var minMax = new float[2];
+            //initialize minMax
             minMax[1] = float.PositiveInfinity;
             minMax[2] = float.NegativeInfinity;
+            //dp == dotprodukt (Skalarprodukt)
             for (var j = 0; j < _points.Count; j++)
             {
                 var dp = (normal.X * _points[j].X + normal.Y * _points[j].Y);
+                //is dp smaller than current minimum
                 if (dp < minMax[1])
                     minMax[1] = dp;
+                //dp greater than current max?
                 if (dp > minMax[2])
                     minMax[2] = dp;
             }
