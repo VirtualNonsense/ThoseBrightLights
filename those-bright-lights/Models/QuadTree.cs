@@ -45,7 +45,7 @@ namespace SE_Praktikum.Models
 
         //TODO: Index funtion, insert function, collide function
 
-        public int getIndex(Rectangle rect)
+        public int getIndex(Rectangle rect) // DO NOT FORGET!!! : For collision I suspect all kind of forms (not just a rectangle)
         {
             int index = -1;
             double vertMiddle = boundary.X + boundary.Width / 2;
