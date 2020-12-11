@@ -45,5 +45,18 @@ namespace SE_Praktikum.Models
 
         //TODO: Index funtion, insert function, collide function
 
+        public int getIndex(Rectangle rect)
+        {
+            int index = -1;
+            double vertMiddle = boundary.X + boundary.Width / 2;
+            double horiMiddle = boundary.Y + boundary.Height / 2;
+
+            // Something smart
+
+            return index;
+        }
+
+        
+
     }
 }
