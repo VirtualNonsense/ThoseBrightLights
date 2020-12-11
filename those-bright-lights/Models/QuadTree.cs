@@ -43,7 +43,7 @@ namespace SE_Praktikum.Models
             nodes[3] = new QuadTree<T>(level + 1, new Rectangle(x + newWidth, y + newHeight, newWidth, newHeight));
         }
 
-        //TODO: Index funtion, insert function, collide function
+        //TODO: insert function, collide function
 
         public int getIndex(Rectangle rect) // DO NOT FORGET!!! : For collision I suspect all kind of forms (not just a rectangle)
         {
@@ -80,7 +80,16 @@ namespace SE_Praktikum.Models
             return index;
         }
 
-        
+        public void Insert(Rectangle rect)
+        {
+            int index = getIndex(rect);
 
+            if (index != -1)
+            {
+                nodes[index].Insert(rect);
+
+                return;
+            }
+        }
     }
 }
