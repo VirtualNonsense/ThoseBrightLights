@@ -28,7 +28,7 @@ namespace SE_Praktikum.Models
             for (var i = 0; i < _points.Count; i++)
             {
                 //calculate next i modulo length of points to also get the edge from last to first point
-                var nextI = i % _points.Count;
+                var nextI = i+1 % _points.Count;
                 l.Add(new Vector2(_points[nextI].X - _points[i].X, _points[new Index()].Y - _points[i].Y));
             }
 
