@@ -119,5 +119,12 @@ namespace SE_Praktikum.Models
                 }
             }
         }
+
+        public List<Rectangle> Retrieve(Rectangle actor)
+        {
+            int index = getIndex(actor);
+
+            return nodes[index].objects;
+        }
     }
 }
