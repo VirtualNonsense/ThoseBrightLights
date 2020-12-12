@@ -53,13 +53,13 @@ namespace SE_Praktikum.Models
         {
             // If it is not completely in a node then index must be -1
             int index = -1;
-            double vertMiddle = boundary.X + boundary.Width / 2;
-            double horiMiddle = boundary.Y + boundary.Height / 2;
+            double midPointForHorizontal = boundary.X + boundary.Width / 2;
+            double midPointForVertical = boundary.Y + boundary.Height / 2;
 
-            bool top = (rect.Y - rect.Height) > horiMiddle;
-            bool bottom = rect.Y < vertMiddle;
+            bool top = (rect.Y - rect.Height) > midPointForVertical;
+            bool bottom = rect.Y < midPointForHorizontal;
 
-            if ((rect.X + rect.Width) < vertMiddle)
+            if ((rect.X + rect.Width) < midPointForHorizontal)
             {
                 if (top)
                 {
@@ -70,7 +70,7 @@ namespace SE_Praktikum.Models
                     index = 2;
                 }
             }
-            else if (rect.X > vertMiddle)
+            else if (rect.X > midPointForHorizontal)
             {
                 if (top)
                 {
