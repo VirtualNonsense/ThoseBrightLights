@@ -120,6 +120,7 @@ namespace SE_Praktikum.Models
             }
         }
 
+        // then again: The actor could be something different than a Rectangle (Just for logic purposes)
         public List<Rectangle> Retrieve(Rectangle actor)
         {
             int index = getIndex(actor);
