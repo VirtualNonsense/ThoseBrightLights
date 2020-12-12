@@ -56,6 +56,7 @@ namespace SE_Praktikum.Models
             double midPointForHorizontal = boundary.X + boundary.Width / 2;
             double midPointForVertical = boundary.Y - boundary.Height / 2;
 
+            // Could be more beautiful with switch-case... and declare a variable for rect.Something (after checking utility) 
             bool top = (rect.Y - rect.Height) > midPointForVertical;
             bool bottom = rect.Y < midPointForHorizontal;
 
