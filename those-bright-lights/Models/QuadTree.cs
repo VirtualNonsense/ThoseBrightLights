@@ -54,7 +54,7 @@ namespace SE_Praktikum.Models
             // If it is not completely in a node then index must be -1
             int index = -1;
             double midPointForHorizontal = boundary.X + boundary.Width / 2;
-            double midPointForVertical = boundary.Y + boundary.Height / 2;
+            double midPointForVertical = boundary.Y - boundary.Height / 2;
 
             bool top = (rect.Y - rect.Height) > midPointForVertical;
             bool bottom = rect.Y < midPointForHorizontal;
