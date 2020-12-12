@@ -12,6 +12,9 @@ namespace SE_Praktikum.Models
         Rectangle boundary;
         QuadTree<T>[] nodes;
 
+        int maxLevel = 5;
+        int maxObjects = 10;
+
         public QuadTree(int level, Rectangle boundary)
         {
             this.level = level;
