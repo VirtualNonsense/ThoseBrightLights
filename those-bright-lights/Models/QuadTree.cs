@@ -46,7 +46,7 @@ namespace SE_Praktikum.Models
             nodes[3] = new QuadTree<T>(level + 1, new Rectangle(x + newWidth, y + newHeight, newWidth, newHeight));
         }
 
-        //TODO: insert function, collide function
+        //TODO: retrieve function
 
         public int getIndex(Rectangle rect) // DO NOT FORGET!!! : For collision I suspect all kind of forms (not just a rectangle)
         {
@@ -95,6 +95,28 @@ namespace SE_Praktikum.Models
             }
 
             objects.Add(rect);
+
+            // If added too many objects 
+            if (objects.Count > maxObjects && level < maxLevel)
+            {
+                Divide();
+
+                int i = 0;
+                while (i < objects.Count)
+                {
+                    int index2 = getIndex(objects[i]);
+
+                    if (index2 != -1)
+                    {
+                        // Test if the index changes in node split
+                        nodes[index2].Insert(objects[i]);
+                    }
+                    else
+                    {
+                        i++;
+                    }
+                }
+            }
         }
     }
 }
