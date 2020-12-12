@@ -44,7 +44,7 @@ namespace SE_Praktikum.Models
             nodes[0] = new QuadTree<T>(level + 1, new Rectangle(x + newWidth, y, newWidth, newHeight));
             nodes[1] = new QuadTree<T>(level + 1, new Rectangle(x, y, newWidth, newHeight));
             nodes[2] = new QuadTree<T>(level + 1, new Rectangle(x, y + newHeight, newWidth, newHeight));
-            nodes[3] = new QuadTree<T>(level + 1, new Rectangle(x + newWidth, y + newHeight, newWidth, newHeight));
+            nodes[3] = new QuadTree<T>(level + 1, new Rectangle(x + newWidth, y - newHeight, newWidth, newHeight));
         }
 
         //TODO: retrieve function
