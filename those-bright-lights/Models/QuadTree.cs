@@ -7,7 +7,7 @@ namespace SE_Praktikum.Models
 {
     public class QuadTree<T>
     {
-        List<T> objects;
+        List<Rectangle> objects; // changed from T to Rectangle
         int level;
         Rectangle boundary;
         QuadTree<T>[] nodes;
@@ -15,7 +15,7 @@ namespace SE_Praktikum.Models
         public QuadTree(int level, Rectangle boundary)
         {
             this.level = level;
-            objects = new List<T>();
+            objects = new List<Rectangle>();
             this.boundary = boundary;
             nodes = new QuadTree<T>[4];
         }
@@ -90,6 +90,8 @@ namespace SE_Praktikum.Models
 
                 return;
             }
+
+            objects.Add(rect);
         }
     }
 }
