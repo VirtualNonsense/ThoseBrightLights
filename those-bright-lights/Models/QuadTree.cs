@@ -49,7 +49,7 @@ namespace SE_Praktikum.Models
 
         //TODO: retrieve function
 
-        public int getIndex(Rectangle rect) // DO NOT FORGET!!! : For collision I suspect all kind of forms (not just a rectangle)
+        public int GetIndex(Rectangle rect) // DO NOT FORGET!!! : For collision I suspect all kind of forms (not just a rectangle)
         {
             // If it is not completely in a node then index must be -1
             int index = -1;
@@ -86,7 +86,7 @@ namespace SE_Praktikum.Models
 
         public void Insert(Rectangle rect)
         {
-            int index = getIndex(rect);
+            int index = GetIndex(rect);
 
             if (index != -1)
             {
@@ -105,7 +105,7 @@ namespace SE_Praktikum.Models
                 int i = 0;
                 while (i < objects.Count)
                 {
-                    int index2 = getIndex(objects[i]);
+                    int index2 = GetIndex(objects[i]);
 
                     if (index2 != -1)
                     {
@@ -123,7 +123,7 @@ namespace SE_Praktikum.Models
         // then again: The actor could be something different than a Rectangle (Just for logic purposes)
         public List<Rectangle> Retrieve(Rectangle actor)
         {
-            int index = getIndex(actor);
+            int index = GetIndex(actor);
 
             return nodes[index].objects;
         }
