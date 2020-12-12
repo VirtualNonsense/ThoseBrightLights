@@ -74,11 +74,11 @@ namespace SE_Praktikum.Models
             {
                 if (top)
                 {
-                    index = 3;
+                    index = 0;
                 }
                 else if (bottom)
                 {
-                    index = 0;
+                    index = 3;
                 }
             }
             return index;
