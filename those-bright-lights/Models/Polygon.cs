@@ -11,12 +11,14 @@ namespace SE_Praktikum.Models
 {
     public class Polygon
     {
-
         /// <summary>
         /// Simple polygon class
-        /// it is able to handle collision between
+        /// it is able to handle to calculate whether two convex polygon intersect
         /// </summary>
-        /// <param name="vertices"></param>
+        /// <param name="position">World coordinate of origin</param>
+        /// <param name="origin">Zero point offset in body space</param>
+        /// <param name="layer"></param>
+        /// <param name="vertices">Corner points of convex polygon. please enter them clockwise and body coordinates</param>
         public Polygon(Vector2 position, Vector2 origin, float layer, List<Vector2> vertices)
         {
             Position = position;
