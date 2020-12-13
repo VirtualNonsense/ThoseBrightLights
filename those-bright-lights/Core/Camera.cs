@@ -171,9 +171,19 @@ namespace SE_Praktikum.Core
 
         public BasicEffect GetCameraEffect()
         {
+            _spriteEffect.VertexColorEnabled = false;
+            _spriteEffect.TextureEnabled = true;
             _spriteEffect.View = View();
             _spriteEffect.Projection = GetProjection();
             return _spriteEffect;
+        }
+
+        public BasicEffect GetCameraEffectForPrimitives()
+        {
+            var t = GetCameraEffect();
+            t.TextureEnabled = false;
+            t.VertexColorEnabled = true;
+            return t;
         }
 
         public Vector2 ProjectScreenPosIntoWorld(Vector2 position)
