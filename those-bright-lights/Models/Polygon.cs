@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using SE_Praktikum.Extensions;
 using System.Runtime.InteropServices;
 using System.Text;
 
@@ -9,9 +11,18 @@ namespace SE_Praktikum.Models
 {
     public class Polygon
     {
-        public Polygon(List<Vector2> points)
+
+        /// <summary>
+        /// Simple polygon class
+        /// it is able to handle collision between
+        /// </summary>
+        /// <param name="vertices"></param>
+        public Polygon(Vector2 position, Vector2 origin, float layer, List<Vector2> vertices)
         {
-            _points = points;
+            Position = position;
+            Origin = origin;
+            Layer = layer;
+            _vertices = vertices;
         }
 
         public float Rotation { get; set; }
@@ -20,16 +31,20 @@ namespace SE_Praktikum.Models
 
         public Vector2 Origin { get; set; }
 
-        private List<Vector2> _points { get; }
+        public Vector2 Center => Position - Origin;
+        
+        public float Layer { get; set; }
+
+        private List<Vector2> _vertices { get; }
 
         private List<Vector2> GetEdges()
         {
             var l = new List<Vector2>();
-            for (var i = 0; i < _points.Count; i++)
+            for (var i = 0; i < _vertices.Count; i++)
             {
                 //calculate next i modulo length of points to also get the edge from last to first point
-                var nextI = i+1 % _points.Count;
-                l.Add(new Vector2(_points[nextI].X - _points[i].X, _points[new Index()].Y - _points[i].Y));
+                var nextI = i+1 % _vertices.Count;
+                l.Add(new Vector2(_vertices[nextI].X - _vertices[i].X, _vertices[new Index()].Y - _vertices[i].Y));
             }
 
             return l;
@@ -54,9 +69,9 @@ namespace SE_Praktikum.Models
             minMax[1] = float.PositiveInfinity;
             minMax[2] = float.NegativeInfinity;
             //dp == dotprodukt (Skalarprodukt)
-            for (var j = 0; j < _points.Count; j++)
+            for (var j = 0; j < _vertices.Count; j++)
             {
-                var dp = (normal.X * _points[j].X + normal.Y * _points[j].Y);
+                var dp = (normal.X * _vertices[j].X + normal.Y * _vertices[j].Y);
                 //is dp smaller than current minimum
                 if (dp < minMax[1])
                     minMax[1] = dp;
