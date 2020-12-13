@@ -11,6 +11,10 @@ namespace SE_Praktikum.Models
 {
     public class Polygon
     {
+
+        private Vector2 _origin;
+        private Vector2 _position;
+        private List<Vector2> _vertices;
         /// <summary>
         /// Simple polygon class
         /// it is able to handle to calculate whether two convex polygon intersect
@@ -29,15 +33,77 @@ namespace SE_Praktikum.Models
 
         public float Rotation { get; set; }
 
-        public Vector2 Position { get; set; }
+        public Vector2 Position
+        {
+            get => _position;
+            set
+            {
+                _position = value;
+                Vertices2D = GetVector2InWorldSpace();
+                Vertices3D = GetVector3InWorldSpace();
+            }
+        }
 
-        public Vector2 Origin { get; set; }
+        public Vector2 Origin
+        {
+            
+            get => _origin;
+            set
+            {
+                _origin = value;
+                Vertices2D = GetVector2InWorldSpace();
+                Vertices3D = GetVector3InWorldSpace();
+            }
+        }
+
+        public Vector2[] Vertices2D
+        {
+            get;
+            private set;
+        }
+
+        public Vector3[] Vertices3D
+        {
+            get;
+            private set;
+        }
 
         public Vector2 Center => Position - Origin;
         
         public float Layer { get; set; }
 
-        private List<Vector2> _vertices { get; }
+        public bool Overlap(Polygon other)
+        {
+            for (var repetition = 0; repetition < 2; repetition++)
+            {
+                Polygon p1;
+                Polygon p2;
+                if (repetition == 0)
+                {
+                    p1 = this;
+                    p2 = other;
+                }
+                else
+                {
+                    p1 = other;
+                    p2 = this;
+                }
+                var normals = p1.GetNormals();
+
+                foreach (var normal in normals)
+                {
+                    var minMax = p1.VectorProjection(normal);
+                    var otherMinMax = p2.VectorProjection(normal);
+
+                    if (!(otherMinMax[2] > minMax[1] && minMax[2] > otherMinMax[1]))
+                        return false;
+                }
+            }
+
+            return true;
+        }
+
+        #region Private Methods
 
         private List<Vector2> GetEdges()
         {
@@ -84,38 +150,7 @@ namespace SE_Praktikum.Models
             return minMax;
         }
 
-        public bool Overlap(Polygon other)
-        {
-            for (var repetition = 0; repetition < 2; repetition++)
-            {
-                Polygon p1;
-                Polygon p2;
-                if (repetition == 0)
-                {
-                    p1 = this;
-                    p2 = other;
-                }
-                else
-                {
-                    p1 = other;
-                    p2 = this;
-                }
-                var normals = p1.GetNormals();
-
-                foreach (var normal in normals)
-                {
-                    var minMax = p1.VectorProjection(normal);
-                    var otherMinMax = p2.VectorProjection(normal);
-
-                    if (!(otherMinMax[2] > minMax[1] && minMax[2] > otherMinMax[1]))
-                        return false;
-                }
-            }
-
-            return true;
-        }
-
-        public Vector2[] GetVector2InWorldSpace()
+        private Vector2[] GetVector2InWorldSpace()
         {
             Vector2[] v = new Vector2[_vertices.Count];
 
@@ -127,7 +162,7 @@ namespace SE_Praktikum.Models
             return v;
         }
 
-        public Vector3[] GetVector3InWorldSpace()
+        private Vector3[] GetVector3InWorldSpace()
         {
             var v3 = new Vector3[_vertices.Count()];
             for (var index = 0; index < v3.Count(); index++)
@@ -137,5 +172,6 @@ namespace SE_Praktikum.Models
             return v3;
         }
 
+        #endregion
     }
 }
