@@ -19,6 +19,7 @@ namespace SE_Praktikum.Core.GameStates
     public class Settings : GameState
     {
         private Logger _logger;
+        private readonly IGameEngine _engine;
         private readonly IScreen _screen;
         private readonly ControlElementFactory _factory;
         private ComponentGrid _components;
@@ -71,9 +72,10 @@ namespace SE_Praktikum.Core.GameStates
            // _components.Add(soundEffectVolumeSlider);
         }
 
-        public Settings(IScreen screen, ControlElementFactory factory)
+        public Settings(IGameEngine engine, IScreen screen, ControlElementFactory factory)
         {
             _logger = LogManager.GetCurrentClassLogger();
+            _engine = engine;
             _screen = screen;
             _factory = factory;
         }
@@ -103,24 +105,13 @@ namespace SE_Praktikum.Core.GameStates
         }
         
         
-        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        public override void Draw()
         {
             if (_components == null)
             {
                 return;
             }
-            spriteBatch.Begin(SpriteSortMode.FrontToBack,
-                BlendState.AlphaBlend,
-                SamplerState.PointClamp, // Sharp Pixel rendering
-                DepthStencilState.DepthRead,
-                RasterizerState.CullCounterClockwise, // Render only the texture side that faces the camara to boost performance 
-                _screen.Camera.GetCameraEffect()
-            );
-            foreach (var button in _components)
-            {
-                button.Draw(spriteBatch);
-            }
-            spriteBatch.End();
+            _engine.Render(_components);
         }
     }
 }

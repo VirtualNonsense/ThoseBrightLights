@@ -16,6 +16,7 @@ namespace SE_Praktikum.Core.GameStates
 {
     public class MainMenu : GameState
     {
+        private readonly IGameEngine _engine;
         private readonly IScreen _screen;
         private readonly ControlElementFactory _factory;
         private ComponentGrid _buttons;
@@ -23,9 +24,10 @@ namespace SE_Praktikum.Core.GameStates
         private Song _song;
         private ContentManager _contentManager;
 
-        public MainMenu(IScreen screen, ControlElementFactory factory, ContentManager contentManager)
+        public MainMenu(IGameEngine engine, IScreen screen, ControlElementFactory factory, ContentManager contentManager)
         {
             _logger = LogManager.GetCurrentClassLogger();
+            _engine = engine;
             _screen = screen;
             _factory = factory;
             _contentManager = contentManager;
@@ -102,25 +104,13 @@ namespace SE_Praktikum.Core.GameStates
         {
         }
 
-        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        public override void Draw()
         {
             if (_buttons == null)
             {
                 return;
             }
-
-            spriteBatch.Begin(SpriteSortMode.FrontToBack,
-                BlendState.AlphaBlend,
-                SamplerState.PointClamp, // Sharp Pixel rendering
-                DepthStencilState.DepthRead,
-                RasterizerState.CullCounterClockwise, // Render only the texture side that faces the camara to boost performance 
-                _screen.Camera.GetCameraEffect()
-                );
-            foreach (var button in _buttons)
-            {
-                button.Draw(spriteBatch);
-            }
-            spriteBatch.End();
+            _engine.Render(_buttons);
         }
     }
 }

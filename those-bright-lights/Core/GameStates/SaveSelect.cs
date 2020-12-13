@@ -11,14 +11,16 @@ namespace SE_Praktikum.Core.GameStates
 {
     public class SaveSelect : GameState
     {
+        private readonly IGameEngine _engine;
         private readonly IScreen _screen;
         private readonly ControlElementFactory _factory;
         private ComponentGrid _components;
         private Logger _logger;
 
-        public SaveSelect(IScreen screen, ControlElementFactory factory)
+        public SaveSelect(IGameEngine engine, IScreen screen, ControlElementFactory factory)
         {
             _logger = LogManager.GetCurrentClassLogger();
+            _engine = engine;
             _screen = screen;
             _factory = factory;
         }
@@ -67,19 +69,9 @@ namespace SE_Praktikum.Core.GameStates
         {
         }
 
-        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        public override void Draw()
         {
-            spriteBatch.Begin(SpriteSortMode.FrontToBack,
-                null,
-                SamplerState.PointClamp, // Sharp Pixel rendering
-                null,
-                RasterizerState.CullCounterClockwise, // Render only the texture side that faces the camara to boost performance 
-                _screen.Camera.GetCameraEffect());
-            foreach (var component in _components)
-            {
-                component.Draw(spriteBatch);
-            }
-            spriteBatch.End();
+            _engine.Render(_components);
         }
     }
 }

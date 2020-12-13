@@ -35,7 +35,7 @@ namespace SE_Praktikum.Core.GameStates
         /// </summary>
         /// <param name="gameTime"></param>
         /// <param name="spriteBatch"></param>
-        public abstract void Draw(GameTime gameTime, SpriteBatch spriteBatch);
+        public abstract void Draw();
 
 
         public IDisposable Subscribe(IObserver<GameStateMachine.GameStateMachineTrigger> observer)

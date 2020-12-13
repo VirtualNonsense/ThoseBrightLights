@@ -22,12 +22,14 @@ namespace SE_Praktikum.Core.GameStates
         private Song _song;
         private ContentManager _contentManager;
         private AnimationHandler _teamname;
+        private readonly IGameEngine _engine;
         private AnimationHandlerFactory _factory;
         private AnimationHandler _gameengine;
         private Polygon _p;
 
-        public Splashscreen(IScreen _screen, ContentManager contentManager, AnimationHandlerFactory factory)
+        public Splashscreen(IGameEngine engine, IScreen _screen, ContentManager contentManager, AnimationHandlerFactory factory)
         {
+            _engine = engine;
             _factory = factory;
             _logger = LogManager.GetCurrentClassLogger();
             this._screen = _screen;
@@ -83,31 +85,17 @@ namespace SE_Praktikum.Core.GameStates
         {
         }
 
-        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        public override void Draw()
         {
+            _engine.Render(new List<Polygon>{_p});
             
-            var effect = _screen.Camera.GetCameraEffectForPrimitives();
-            foreach (var pass in effect.CurrentTechnique.Passes)
-            {
-                pass.Apply();
-                effect.GraphicsDevice.DrawUserIndexedPrimitives(
-                    PrimitiveType.TriangleList, _p.DrawAbleVertices, 0, _p.DrawAbleVertices.Length, _p.VertexDrawingOrder, 0, _p.TriangleCount);
-            }
-            spriteBatch.Begin(SpriteSortMode.FrontToBack,
-                              BlendState.Opaque,
-                              SamplerState.PointClamp, // Sharp Pixel rendering
-                              DepthStencilState.Default,
-                              RasterizerState.CullCounterClockwise, // Render only the texture side that faces the camara to boost performance 
-                              _screen.Camera.GetCameraEffect());
-            
-            if(_elapsedTime>_splashscreenTime/2)
-            {
-                _teamname.Draw(spriteBatch);
-            }
-            else
-                _gameengine.Draw(spriteBatch);
+            // if(_elapsedTime>_splashscreenTime/2)
+            // {
+            //     _teamname.Draw(spriteBatch);
+            // }
+            // else
+            //     _gameengine.Draw(spriteBatch);
 
-            spriteBatch.End();
         }
     }
 }

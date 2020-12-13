@@ -12,12 +12,14 @@ namespace SE_Praktikum.Core.GameStates
 {
     public class Testscreen : GameState
     {
+        private readonly IGameEngine _engine;
         private IScreen _screen;
         private Logger _logger;
-        public List<Actor> List;
+        public List<Actor> _actors;
         
-        public Testscreen(IScreen parent)
+        public Testscreen(IGameEngine engine, IScreen parent)
         {
+            _engine = engine;
             _screen = parent;
             _logger = LogManager.GetCurrentClassLogger();
         }
@@ -33,7 +35,7 @@ namespace SE_Praktikum.Core.GameStates
 
         public override void Update(GameTime gameTime)
         {
-            foreach (Actor actor in List)
+            foreach (Actor actor in _actors)
             {
                 actor.Update(gameTime);
             }
@@ -41,29 +43,27 @@ namespace SE_Praktikum.Core.GameStates
 
         public override void PostUpdate(GameTime gameTime)
         {
-            foreach (Actor actor in List)
+            foreach (Actor actor in _actors)
             {
-                foreach (Actor collide in List)
+                foreach (Actor collide in _actors)
                 {
                     actor.Intersects(collide);
                 }
             }
             
             var count = 0;
-            while (count < List.Count)
+            while (count < _actors.Count)
             {
-                if (List[count].IsRemoveAble)
-                    List.RemoveAt(count);
+                if (_actors[count].IsRemoveAble)
+                    _actors.RemoveAt(count);
                 else
                     count++;
             }
         }
 
-        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        public override void Draw()
         {
-            spriteBatch.Begin(SpriteSortMode.FrontToBack);
-            foreach(Actor actor in List) actor.Draw(spriteBatch);
-            spriteBatch.End();
+            _engine.Render(_actors);
         }
     }
 }

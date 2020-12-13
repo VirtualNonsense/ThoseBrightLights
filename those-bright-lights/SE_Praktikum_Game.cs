@@ -83,7 +83,7 @@ namespace SE_Praktikum
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Black);
-            _currentState.Draw(gameTime, _spriteBatch);
+            _currentState.Draw();
 
             base.Draw(gameTime);
         }
@@ -112,7 +112,7 @@ namespace SE_Praktikum
         public void Render(IEnumerable<IComponent> components)
         {
             _spriteBatch.Begin(SpriteSortMode.FrontToBack,
-                BlendState.Opaque,
+                null,
                 SamplerState.PointClamp, // Sharp Pixel rendering
                 DepthStencilState.Default,
                 RasterizerState.CullCounterClockwise, // Render only the texture side that faces the camara to boost performance 
@@ -126,6 +126,7 @@ namespace SE_Praktikum
 
         public void Render(IEnumerable<Polygon> polygons)
         {
+            GraphicsDevice.BlendState = BlendState.Opaque;
             var effect = Camera.GetCameraEffectForPrimitives();
             foreach (var polygon in polygons)
             {
