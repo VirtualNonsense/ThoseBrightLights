@@ -93,6 +93,22 @@ namespace SE_Praktikum.Models
         }
         
         /// <summary>
+        /// accesses to vertices in body space
+        /// </summary>
+        public List<Vector2> Vertices
+        {
+            get => _vertices;
+            set
+            {
+                _vertices = value;
+                Vertices2D = GetVector2InWorldSpace();
+                Vertices3D = GetVector3InWorldSpace();
+                VertexDrawingOrder = GetIndexMeshInts();
+                DrawAbleVertices = GetDrawAbleVertices();
+            }
+        }
+
+        /// <summary>
         /// returns the vertices in world space
         /// </summary>
         public Vector2[] Vertices2D
