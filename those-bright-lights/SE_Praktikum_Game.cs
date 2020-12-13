@@ -1,15 +1,17 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using NLog;
+using SE_Praktikum.Components;
 using SE_Praktikum.Core;
 using SE_Praktikum.Core.GameStates;
 using SE_Praktikum.Models;
 
 namespace SE_Praktikum
 {
-    public class SE_Praktikum_Game : Game, IScreen, IObserver<GameState>
+    public class SE_Praktikum_Game : Game, IGameEngine, IScreen, IObserver<GameState>
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
@@ -107,5 +109,39 @@ namespace SE_Praktikum
         public int ScreenHeight { get; }
         public int ScreenWidth { get; }
         public Camera Camera { get; private set; }
+        public void Render(IEnumerable<IComponent> components)
+        {
+            _spriteBatch.Begin(SpriteSortMode.FrontToBack,
+                BlendState.Opaque,
+                SamplerState.PointClamp, // Sharp Pixel rendering
+                DepthStencilState.Default,
+                RasterizerState.CullCounterClockwise, // Render only the texture side that faces the camara to boost performance 
+                Camera.GetCameraEffect());
+            foreach (var component in components)
+            {
+                component.Draw(_spriteBatch);
+            }
+            _spriteBatch.End();
+        }
+
+        public void Render(IEnumerable<Polygon> polygons)
+        {
+            var effect = Camera.GetCameraEffectForPrimitives();
+            foreach (var polygon in polygons)
+            {
+                foreach (var pass in effect.CurrentTechnique.Passes)
+                {
+                    pass.Apply();
+                    effect.GraphicsDevice.DrawUserIndexedPrimitives(
+                        PrimitiveType.TriangleList,
+                        polygon.DrawAbleVertices, 
+                        0,
+                        polygon.DrawAbleVertices.Length,
+                        polygon.VertexDrawingOrder, 
+                        0,
+                        polygon.TriangleCount);
+                }
+            }
+        }
     }
 }

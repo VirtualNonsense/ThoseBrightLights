@@ -155,7 +155,7 @@ namespace SE_Praktikum.Components.Sprites
       _animationHandler.Update(gameTime);
     }
 
-    public virtual void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+    public virtual void Draw(SpriteBatch spriteBatch)
     {
       _animationHandler.Draw(spriteBatch);
     }

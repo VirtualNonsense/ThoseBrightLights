@@ -48,9 +48,9 @@ namespace SE_Praktikum.Core
         {
             foreach(var i in _components)
             {
-                i.Draw(gameTime, spriteBatch);
+                i.Draw(spriteBatch);
             }
-            _map.Draw(gameTime, spriteBatch);
+            _map.Draw(spriteBatch);
         }
 
         public void Update(GameTime gameTime)

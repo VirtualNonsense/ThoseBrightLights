@@ -118,7 +118,7 @@ namespace SE_Praktikum.Core.GameStates
                 );
             foreach (var button in _buttons)
             {
-                button.Draw(gameTime, spriteBatch);
+                button.Draw(spriteBatch);
             }
             spriteBatch.End();
         }

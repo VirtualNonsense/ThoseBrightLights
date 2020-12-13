@@ -16,8 +16,7 @@ namespace SE_Praktikum.NinjectModules
     {
         public override void Load()
         {
-            Bind<SE_Praktikum_Game>().ToSelf().InSingletonScope();
-            Bind<IScreen>().ToMethod(c => c.Kernel.Get<SE_Praktikum_Game>());
+            Bind<SE_Praktikum_Game, IScreen, IGameEngine>().To<SE_Praktikum_Game>().InSingletonScope();
             Bind<ContentManager>().ToMethod(c => c.Kernel.Get<SE_Praktikum_Game>().Content);
             Bind<IObservable<GameState>>().To<GameStateMachine>();
             Bind<ExplosionEmitter>().ToSelf();

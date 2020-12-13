@@ -62,7 +62,7 @@ namespace SE_Praktikum.Core.GameStates
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             spriteBatch.Begin(SpriteSortMode.FrontToBack);
-            foreach(Actor actor in List) actor.Draw(gameTime, spriteBatch);
+            foreach(Actor actor in List) actor.Draw(spriteBatch);
             spriteBatch.End();
         }
     }

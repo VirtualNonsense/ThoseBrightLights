@@ -21,7 +21,7 @@ namespace SE_Praktikum.Components.Controls
             TextColor = textColor;
         }
 
-        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        public override void Draw(SpriteBatch spriteBatch)
         {
             foreach (var animationHandler in _handler)
             {

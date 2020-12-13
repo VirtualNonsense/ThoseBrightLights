@@ -32,11 +32,11 @@ namespace SE_Praktikum.Components
 
         public Vector2 Position { get=>throw new NotImplementedException(); set=>throw new NotImplementedException(); }
 
-        public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        public void Draw(SpriteBatch spriteBatch)
         {
             foreach(var tile in _tiles)
             {
-                tile.Draw(gameTime, spriteBatch);
+                tile.Draw(spriteBatch);
             }
         }
 

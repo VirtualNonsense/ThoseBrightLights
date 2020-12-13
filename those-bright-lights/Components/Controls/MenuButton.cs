@@ -66,7 +66,7 @@ namespace SE_Praktikum.Components.Controls
             Text = text;
         }
 
-        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        public override void Draw(SpriteBatch spriteBatch)
         {
             var co = Color.White;
 

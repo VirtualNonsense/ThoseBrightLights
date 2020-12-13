@@ -77,7 +77,7 @@ namespace SE_Praktikum.Core.GameStates
                 _screen.Camera.GetCameraEffect());
             foreach (var component in _components)
             {
-                component.Draw(gameTime, spriteBatch);
+                component.Draw(spriteBatch);
             }
             spriteBatch.End();
         }

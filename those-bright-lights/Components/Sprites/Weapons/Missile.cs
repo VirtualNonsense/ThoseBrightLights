@@ -43,15 +43,10 @@ namespace SE_Praktikum.Components.Sprites.Weapons
             base.Update(gameTime);
         }
 
-        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        public override void Draw(SpriteBatch spriteBatch)
         {
             _propulsionAnimationHandler.Draw(spriteBatch);
-            base.Draw(gameTime, spriteBatch);
-        }
-
-        protected override void InvokeOnCollide()
-        {
-            base.InvokeOnCollide();
+            base.Draw(spriteBatch);
         }
     }
 }
