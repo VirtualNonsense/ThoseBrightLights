@@ -47,8 +47,6 @@ namespace SE_Praktikum.Models
             nodes[3] = new QuadTree<T>(level + 1, new Rectangle(x + newWidth, y - newHeight, newWidth, newHeight));
         }
 
-        //TODO: retrieve function
-
         public int GetIndex(Rectangle rect) // DO NOT FORGET!!! : For collision I suspect all kind of forms (not just a rectangle)
         {
             // If it is not completely in a node then index must be -1
@@ -111,6 +109,7 @@ namespace SE_Praktikum.Models
                     if (index2 != -1)
                     {
                         // Test if the index changes in node split
+                        // PLEASE CHECK IF LISTS ARE DOUBLE IN THERE (I think it is)
                         nodes[index2].Insert(objects[i]);
                     }
                     else
@@ -124,6 +123,7 @@ namespace SE_Praktikum.Models
         // then again: The actor could be something different than a Rectangle (Just for logic purposes)
         public List<Rectangle> Retrieve(Rectangle actor)
         {
+            // Check if node is null
             int index = GetIndex(actor);
 
             return nodes[index].objects;
