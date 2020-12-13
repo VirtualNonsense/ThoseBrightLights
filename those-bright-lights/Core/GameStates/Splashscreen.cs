@@ -1,9 +1,11 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using NLog;
+using SE_Praktikum.Extensions;
 using SE_Praktikum.Models;
 using SE_Praktikum.Services;
 using SE_Praktikum.Services.Factories;
@@ -16,18 +18,19 @@ namespace SE_Praktikum.Core.GameStates
         private Logger _logger;
         private IScreen _screen;
         private float _elapsedTime = 0;
-        private int _splashscreenTime = 10;
+        private int _splashscreenTime = 100;
         private Song _song;
         private ContentManager _contentManager;
         private AnimationHandler _teamname;
         private AnimationHandlerFactory _factory;
         private AnimationHandler _gameengine;
+        private Polygon _p;
 
-        public Splashscreen(IScreen parent, ContentManager contentManager, AnimationHandlerFactory factory)
+        public Splashscreen(IScreen _screen, ContentManager contentManager, AnimationHandlerFactory factory)
         {
             _factory = factory;
             _logger = LogManager.GetCurrentClassLogger();
-            _screen = parent;
+            this._screen = _screen;
             _contentManager = contentManager;
         }
         
@@ -37,6 +40,15 @@ namespace SE_Praktikum.Core.GameStates
             var settings = new AnimationSettings(1, isPlaying: false, layer: 1);
 
             var tileset = new TileSet(_contentManager.Load<Texture2D>("NWWP"));
+            _p = new Polygon(Vector2.Zero, Vector2.Zero, 0, new List<Vector2>
+            {
+                new Vector2(-1 * 100, 1* 100),
+                new Vector2(1* 100, 1* 100),
+                new Vector2(1* 100, -1* 100),
+                new Vector2(-1* 100, -1* 100),
+            });
+
+            _p.Origin = _p.Vertices[0];
 
             _teamname = _factory.GetAnimationHandler(tileset, settings,origin:new Vector2(tileset.TextureWidth/2, tileset.TextureHeight/2));
 
@@ -63,7 +75,8 @@ namespace SE_Praktikum.Core.GameStates
                 _logger.Debug("exiting splashscreen");
                 _subject.OnNext(GameStateMachine.GameStateMachineTrigger.SkipSplashScreen);
             }
-            _screen.Camera.Update(gameTime); 
+            _screen.Camera.Update(gameTime);
+            _p.Rotation += MathExtensions.DegToRad(1);
         }
 
         public override void PostUpdate(GameTime gameTime)
@@ -73,10 +86,17 @@ namespace SE_Praktikum.Core.GameStates
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             
+            var effect = _screen.Camera.GetCameraEffectForPrimitives();
+            foreach (var pass in effect.CurrentTechnique.Passes)
+            {
+                pass.Apply();
+                effect.GraphicsDevice.DrawUserIndexedPrimitives(
+                    PrimitiveType.TriangleList, _p.DrawAbleVertices, 0, _p.DrawAbleVertices.Length, _p.VertexDrawingOrder, 0, _p.TriangleCount);
+            }
             spriteBatch.Begin(SpriteSortMode.FrontToBack,
-                              null,
+                              BlendState.Opaque,
                               SamplerState.PointClamp, // Sharp Pixel rendering
-                              null,
+                              DepthStencilState.Default,
                               RasterizerState.CullCounterClockwise, // Render only the texture side that faces the camara to boost performance 
                               _screen.Camera.GetCameraEffect());
             
