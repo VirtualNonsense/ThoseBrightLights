@@ -113,5 +113,27 @@ namespace SE_Praktikum.Models
             return true;
         }
 
+        public Vector2[] GetVector2InWorldSpace()
+        {
+            Vector2[] v = new Vector2[_vertices.Count];
+
+            for (var index = 0; index < v.Count(); index++)
+            {
+                v[index] = Center + _vertices[index].Rotate(Rotation);
+            }
+
+            return v;
+        }
+
+        public Vector3[] GetVector3InWorldSpace()
+        {
+            var v3 = new Vector3[_vertices.Count()];
+            for (var index = 0; index < v3.Count(); index++)
+            {
+                v3[index] = new Vector3(Center + _vertices[index].Rotate(Rotation), Layer);
+            }
+            return v3;
+        }
+
     }
 }
