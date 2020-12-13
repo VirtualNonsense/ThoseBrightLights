@@ -91,13 +91,19 @@ namespace SE_Praktikum.Models
                 DrawAbleVertices = GetDrawAbleVertices();
             }
         }
-
+        
+        /// <summary>
+        /// returns the vertices in world space
+        /// </summary>
         public Vector2[] Vertices2D
         {
             get;
             private set;
         }
 
+        /// <summary>
+        /// returns the 3d vertices in world space
+        /// </summary>
         public Vector3[] Vertices3D
         {
             get;
