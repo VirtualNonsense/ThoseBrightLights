@@ -241,7 +241,7 @@ namespace SE_Praktikum.Models
 
             for (var index = 0; index < v.Count(); index++)
             {
-                v[index] = Center + _vertices[index].Rotate(Rotation);
+                v[index] = Position + (-Origin + _vertices[index]).Rotate(Rotation);
             }
 
             return v;
@@ -252,7 +252,7 @@ namespace SE_Praktikum.Models
             var v3 = new Vector3[_vertices.Count()];
             for (var index = 0; index < v3.Count(); index++)
             {
-                v3[index] = new Vector3(Center + _vertices[index].Rotate(Rotation), Layer);
+                v3[index] = new Vector3(Position + (-Origin + _vertices[index]).Rotate(Rotation), Layer);
             }
             return v3;
         }
