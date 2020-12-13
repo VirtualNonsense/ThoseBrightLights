@@ -72,6 +72,8 @@ namespace SE_Praktikum.Models
         
         public float Layer { get; set; }
 
+        #region Methods
+
         public bool Overlap(Polygon other)
         {
             for (var repetition = 0; repetition < 2; repetition++)
@@ -102,6 +104,8 @@ namespace SE_Praktikum.Models
 
             return true;
         }
+
+        #endregion
 
         #region Private Methods
 
