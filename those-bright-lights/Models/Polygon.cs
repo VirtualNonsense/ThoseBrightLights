@@ -5,6 +5,7 @@ using System.Linq;
 using SE_Praktikum.Extensions;
 using System.Runtime.InteropServices;
 using System.Text;
+using Microsoft.Xna.Framework.Graphics;
 
 
 namespace SE_Praktikum.Models
@@ -15,6 +16,9 @@ namespace SE_Praktikum.Models
         private Vector2 _origin;
         private Vector2 _position;
         private List<Vector2> _vertices;
+        private float _rotation;
+        private float _layer;
+        private Color _color;
         /// <summary>
         /// Simple polygon class
         /// it is able to handle to calculate whether two convex polygon intersect
@@ -23,15 +27,33 @@ namespace SE_Praktikum.Models
         /// <param name="origin">Zero point offset in body space</param>
         /// <param name="layer"></param>
         /// <param name="vertices">Corner points of convex polygon. please enter them clockwise and body coordinates</param>
-        public Polygon(Vector2 position, Vector2 origin, float layer, List<Vector2> vertices)
+        public Polygon(Vector2 position, Vector2 origin, float layer, List<Vector2> vertices, Color? color = null)
         {
-            Position = position;
-            Origin = origin;
-            Layer = layer;
             _vertices = vertices;
+            _position = position;
+            _origin = origin;
+            _layer = layer;
+            _color = color ?? Color.Yellow;
+            Vertices2D = GetVector2InWorldSpace();
+            Vertices3D = GetVector3InWorldSpace();
+            VertexDrawingOrder = GetIndexMeshInts();
+            DrawAbleVertices = GetDrawAbleVertices();
         }
 
-        public float Rotation { get; set; }
+
+        public float Rotation
+        {
+            
+            get => _rotation;
+            set
+            {
+                _rotation = value;
+                Vertices2D = GetVector2InWorldSpace();
+                Vertices3D = GetVector3InWorldSpace();
+                VertexDrawingOrder = GetIndexMeshInts();
+                DrawAbleVertices = GetDrawAbleVertices();
+            }
+        }
 
         public Vector2 Position
         {
@@ -41,6 +63,18 @@ namespace SE_Praktikum.Models
                 _position = value;
                 Vertices2D = GetVector2InWorldSpace();
                 Vertices3D = GetVector3InWorldSpace();
+                VertexDrawingOrder = GetIndexMeshInts();
+                DrawAbleVertices = GetDrawAbleVertices();
+            }
+        }
+
+        public Color Color
+        {
+            get => _color;
+            set
+            {
+                _color = value;
+                DrawAbleVertices = GetDrawAbleVertices();
             }
         }
 
@@ -53,6 +87,8 @@ namespace SE_Praktikum.Models
                 _origin = value;
                 Vertices2D = GetVector2InWorldSpace();
                 Vertices3D = GetVector3InWorldSpace();
+                VertexDrawingOrder = GetIndexMeshInts();
+                DrawAbleVertices = GetDrawAbleVertices();
             }
         }
 
@@ -68,9 +104,32 @@ namespace SE_Praktikum.Models
             private set;
         }
 
+        public VertexPositionColor[] DrawAbleVertices
+        {
+            get;
+            private set;
+        }
+
+        public int TriangleCount => VertexDrawingOrder.Count()/ 3;
+        public int[] VertexDrawingOrder
+        {
+            get;
+            private set;
+        }
+
         public Vector2 Center => Position - Origin;
-        
-        public float Layer { get; set; }
+
+        public float Layer
+        {
+            get => _layer;
+            set
+            {
+                _layer = value;
+                Vertices3D = GetVector3InWorldSpace();
+                VertexDrawingOrder = GetIndexMeshInts();
+                DrawAbleVertices = GetDrawAbleVertices();
+            }
+        }
 
         #region Methods
 
@@ -175,6 +234,33 @@ namespace SE_Praktikum.Models
             }
             return v3;
         }
+
+        private int[] GetIndexMeshInts()
+        {
+            var diagonals = _vertices.Count - 3;
+            var ind = new int[_vertices.Count + diagonals * 2];
+            for(var i = 0; i < diagonals+1; i++)
+            {
+                var index = i * 3;
+                ind[index] = 0;
+                ind[index+1] = i+2;
+                ind[index+2] = i+1;
+            }
+            return ind;
+        }
+
+        private VertexPositionColor[] GetDrawAbleVertices()
+        {
+            var n = _vertices.Count;
+            var v = new VertexPositionColor[n];
+            for (int i = 0; i < n; i++)
+            {
+                v[i].Position = Vertices3D[i];
+                v[i].Color = Color;
+            }
+            return v;
+        }
+        
 
         #endregion
     }
