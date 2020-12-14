@@ -127,21 +127,28 @@ namespace SE_Praktikum
         public void Render(IEnumerable<Polygon> polygons)
         {
             GraphicsDevice.BlendState = BlendState.Opaque;
-            var effect = Camera.GetCameraEffectForPrimitives();
             foreach (var polygon in polygons)
             {
-                foreach (var pass in effect.CurrentTechnique.Passes)
-                {
-                    pass.Apply();
-                    effect.GraphicsDevice.DrawUserIndexedPrimitives(
-                        PrimitiveType.TriangleList,
-                        polygon.DrawAbleVertices, 
-                        0,
-                        polygon.DrawAbleVertices.Length,
-                        polygon.VertexDrawingOrder, 
-                        0,
-                        polygon.TriangleCount);
-                }
+                Render(polygon);
+            }
+        }
+
+        public void Render(Polygon polygon)
+        {
+            
+            if(!polygon.DrawAble) return;
+            var effect = Camera.GetCameraEffectForPrimitives();
+            foreach (var pass in effect.CurrentTechnique.Passes)
+            {
+                pass.Apply();
+                effect.GraphicsDevice.DrawUserIndexedPrimitives(
+                    PrimitiveType.TriangleList,
+                    polygon.DrawAbleVertices, 
+                    0,
+                    polygon.DrawAbleVertices.Length,
+                    polygon.VertexDrawingOrder, 
+                    0,
+                    polygon.TriangleCount);
             }
         }
     }

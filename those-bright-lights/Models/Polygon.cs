@@ -19,6 +19,7 @@ namespace SE_Praktikum.Models
         private float _rotation;
         private float _layer;
         private Color _color;
+        private bool _drawAble;
         /// <summary>
         /// Simple polygon class
         /// it is able to handle to calculate whether two convex polygon intersect
@@ -27,17 +28,31 @@ namespace SE_Praktikum.Models
         /// <param name="origin">Zero point offset in body space</param>
         /// <param name="layer"></param>
         /// <param name="vertices">Corner points of convex polygon. please enter them clockwise and body coordinates</param>
-        public Polygon(Vector2 position, Vector2 origin, float layer, List<Vector2> vertices, Color? color = null)
+        public Polygon(Vector2 position, Vector2 origin, float layer, List<Vector2> vertices, Color? color = null, bool drawAble = false)
         {
             _vertices = vertices;
             _position = position;
             _origin = origin;
             _layer = layer;
             _color = color ?? Color.Yellow;
+            _drawAble = drawAble;
             Vertices2D = GetVector2InWorldSpace();
             Vertices3D = GetVector3InWorldSpace();
             VertexDrawingOrder = GetIndexMeshInts();
             DrawAbleVertices = GetDrawAbleVertices();
+        }
+
+        public bool DrawAble
+        {
+            get => _drawAble;
+            set
+            {
+                _drawAble = value;
+                Vertices2D = GetVector2InWorldSpace();
+                Vertices3D = GetVector3InWorldSpace();
+                VertexDrawingOrder = GetIndexMeshInts();
+                DrawAbleVertices = GetDrawAbleVertices();
+            }
         }
 
 
@@ -249,6 +264,7 @@ namespace SE_Praktikum.Models
 
         private Vector3[] GetVector3InWorldSpace()
         {
+            if (!_drawAble) return null;
             var v3 = new Vector3[_vertices.Count()];
             for (var index = 0; index < v3.Count(); index++)
             {
@@ -259,6 +275,7 @@ namespace SE_Praktikum.Models
 
         private int[] GetIndexMeshInts()
         {
+            if (!_drawAble) return null;
             var diagonals = _vertices.Count - 3;
             var ind = new int[_vertices.Count + diagonals * 2];
             for(var i = 0; i < diagonals+1; i++)
@@ -273,6 +290,7 @@ namespace SE_Praktikum.Models
 
         private VertexPositionColor[] GetDrawAbleVertices()
         {
+            if (!_drawAble) return null;
             var n = _vertices.Count;
             var v = new VertexPositionColor[n];
             for (int i = 0; i < n; i++)
