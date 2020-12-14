@@ -47,7 +47,7 @@ namespace SE_Praktikum.Core.GameStates
             {
                 foreach (Actor collide in _actors)
                 {
-                    actor.Intersects(collide);
+                    actor.PixelPerfectCollide(collide);
                 }
             }
             

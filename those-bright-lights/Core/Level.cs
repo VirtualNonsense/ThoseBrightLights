@@ -83,7 +83,7 @@ namespace SE_Praktikum.Core
                         continue;
                     
                         
-                    var collisionPosition = actor1.Intersects(actor2);
+                    var collisionPosition = actor1.PixelPerfectCollide(actor2);
                     //collision detected
                     if(!(collisionPosition is null))
                     {
@@ -98,7 +98,7 @@ namespace SE_Praktikum.Core
                 var actor = actorList[i];
                 foreach (var tile in _map)
                 {
-                    var collision = tile.Intersects(actor);
+                    var collision = tile.PixelPerfectCollide(actor);
                     if (!(collision is null))
                     {
                         var t = (actor.Origin - (Vector2) collision);

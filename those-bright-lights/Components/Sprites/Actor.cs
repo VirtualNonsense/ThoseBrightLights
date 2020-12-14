@@ -84,15 +84,14 @@ namespace SE_Praktikum.Components.Sprites
             Rectangle t2 = new Rectangle((int)new_origin.X, (int)new_origin.Y, (int)new_div.X, (int)new_div.Y);
             return t.Intersects(t2);
         }
-
-        public Vector2? Intersects(Actor actor)
+        
+        public Vector2? PixelPerfectCollide(Actor actor)
         {
             //actors can't collide with themselves
             if (this == actor) return null;
             if (!CollisionEnabled || !actor.CollisionEnabled) return null;
             if (Math.Abs(actor.Layer - Layer) > float.Epsilon ) return null;
             
-            if (!RoughHitBoxCollision(actor)) return null;
             
             var t1 = _animationHandler.GetDataOfFrame();
             var t2 = actor._animationHandler.GetDataOfFrame();
