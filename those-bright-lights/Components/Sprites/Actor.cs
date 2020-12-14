@@ -22,14 +22,14 @@ namespace SE_Praktikum.Components.Sprites
         protected SoundEffect _impactSound;
         
 
-        public Actor(AnimationHandler animationHandler, SoundEffect impactSound) : base(animationHandler)
+        public Actor(AnimationHandler animationHandler, SoundEffect impactSound, Polygon[] hitBox) : base(animationHandler)
         {
             _logger = LogManager.GetCurrentClassLogger();
             _impactSound = impactSound;
+            HitBox = hitBox;
         }
 
-        private Rectangle? _hitbox = null;
-        public Rectangle HitBox => _hitbox ?? Rectangle;
+        public Polygon[] HitBox { get; protected set; }
         protected float Damage;
         protected float Health { get; set; }
         protected bool _indestructible;
@@ -52,39 +52,7 @@ namespace SE_Praktikum.Components.Sprites
             InvokeExplosion();
         }
 
-        public bool RoughHitBoxCollision(Actor actor)
-        {
 
-            if (Rotation == 0 && actor.Rotation == 0)
-                return HitBox.Intersects(actor.HitBox);
-            var p = Position;
-            var a = new Vector2((float)Math.Cos(Rotation) * HitBox.Width, (float)Math.Sin(Rotation) * HitBox.Width);
-            var b = new Vector2((float)Math.Sin(Rotation) * HitBox.Height, (float)Math.Cos(Rotation) * HitBox.Height);
-
-            var TR = p + a;
-            var BL = p + b;
-            var BR = p + a + b;
-            
-            var new_origin = new Vector2(Math.Min(Math.Min(p.X, TR.X), Math.Min(BL.X, BR.X)), Math.Min(Math.Min(p.Y, TR.Y), Math.Min(BL.Y, BR.Y)));
-            var new_BottomRight = new Vector2(Math.Max(Math.Max(p.X, TR.X), Math.Max(BL.X, BR.X)), Math.Max(Math.Max(p.Y, TR.Y), Math.Max(BL.Y, BR.Y)));
-            var new_div = new_BottomRight - new_origin;
-            Rectangle t = new Rectangle((int)new_origin.X, (int)new_origin.Y, (int)new_div.X, (int)new_div.Y);
-            
-            p = actor.Position;
-            a = new Vector2((float)Math.Cos(Rotation) * HitBox.Width, (float)Math.Sin(Rotation) * HitBox.Width);
-            b = new Vector2((float)Math.Sin(Rotation) * HitBox.Height, (float)Math.Cos(Rotation) * HitBox.Height);
-            
-            TR = p + a;
-            BL = p + b;
-            BR = p + a + b;
-            
-            new_origin = new Vector2(Math.Min(Math.Min(p.X, TR.X), Math.Min(BL.X, BR.X)), Math.Min(Math.Min(p.Y, TR.Y), Math.Min(BL.Y, BR.Y)));
-            new_BottomRight = new Vector2(Math.Max(Math.Max(p.X, TR.X), Math.Max(BL.X, BR.X)), Math.Max(Math.Max(p.Y, TR.Y), Math.Max(BL.Y, BR.Y)));
-            new_div = new_BottomRight - new_origin;
-            Rectangle t2 = new Rectangle((int)new_origin.X, (int)new_origin.Y, (int)new_div.X, (int)new_div.Y);
-            return t.Intersects(t2);
-        }
-        
         public Vector2? PixelPerfectCollide(Actor actor)
         {
             //actors can't collide with themselves
