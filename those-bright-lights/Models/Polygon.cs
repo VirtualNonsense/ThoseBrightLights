@@ -28,7 +28,7 @@ namespace SE_Praktikum.Models
         /// <param name="origin">Zero point offset in body space</param>
         /// <param name="layer"></param>
         /// <param name="vertices">Corner points of convex polygon. please enter them clockwise and body coordinates</param>
-        public Polygon(Vector2 position, Vector2 origin, float layer, List<Vector2> vertices, Color? color = null, bool drawAble = false)
+        public Polygon(Vector2 position, Vector2 origin, float layer, List<Vector2> vertices, Color? color = null, bool drawAble = true)
         {
             _vertices = vertices;
             _position = position;
