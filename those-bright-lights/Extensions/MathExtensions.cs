@@ -15,18 +15,6 @@ namespace SE_Praktikum.Extensions
                 value = oldLower;
             return (value - oldLower) / (oldHigher - oldLower) * (newHigher - newLower) + newLower;
         }
-        public static Vector2 Rotate(this Vector2 vector, float rad)
-        {
-            var x = (float) (Math.Cos(rad) * vector.X - Math.Sin(rad) * vector.Y);
-            var y = (float) (Math.Sin(rad) * vector.X + Math.Cos(rad) * vector.Y);
-            return new Vector2(x, y);
-        }
-        public static Vector3 RotateZ(this Vector3 vector, float rad)
-        {
-            var x = (float) (Math.Cos(rad) * vector.X - Math.Sin(rad) * vector.Y);
-            var y = (float) (Math.Sin(rad) * vector.X + Math.Cos(rad) * vector.Y);
-            return new Vector3(x, y, vector.Z);
-        }
 
         public static float DegToRad(float deg)
         {

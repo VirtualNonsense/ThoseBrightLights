@@ -1,13 +1,26 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using SE_Praktikum.Models;
 using System.Linq;
-using Rectangle = System.Drawing.Rectangle;
 
 namespace SE_Praktikum.Extensions
 {
     public static class GeometryExtensions
     {
+        public static Vector2 Rotate(this Vector2 vector, float rad)
+        {
+            var x = (float) (Math.Cos(rad) * vector.X - Math.Sin(rad) * vector.Y);
+            var y = (float) (Math.Sin(rad) * vector.X + Math.Cos(rad) * vector.Y);
+            return new Vector2(x, y);
+        }
+        public static Vector3 RotateZ(this Vector3 vector, float rad)
+        {
+            var x = (float) (Math.Cos(rad) * vector.X - Math.Sin(rad) * vector.Y);
+            var y = (float) (Math.Sin(rad) * vector.X + Math.Cos(rad) * vector.Y);
+            return new Vector3(x, y, vector.Z);
+        }
+        
         /// <summary>
         /// Converts Monogame rectangle into a Polygon
         /// </summary>
@@ -17,7 +30,7 @@ namespace SE_Praktikum.Extensions
         {
             Polygon r = new Polygon(
                 new Vector2(rectangle.X, rectangle.Y),
-                new Vector2(rectangle.Width/2f, rectangle.Height/2),
+                new Vector2(rectangle.Width/2f, rectangle.Height/2f),
                 0,
                 new List<Vector2>
                 {
