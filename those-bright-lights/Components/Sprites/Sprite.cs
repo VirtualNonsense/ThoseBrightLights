@@ -8,7 +8,7 @@ using SE_Praktikum.Services.Factories;
 
 namespace SE_Praktikum.Components.Sprites
 {
-  public abstract class Sprite : IComponent
+  public class Sprite : IComponent
   {
     // #################################################################################################################
     // Fields
@@ -22,7 +22,7 @@ namespace SE_Praktikum.Components.Sprites
     // Constructor
     // #################################################################################################################
 
-    protected Sprite(AnimationHandler animationHandler)
+    public Sprite(AnimationHandler animationHandler)
     {
       _animationHandler = animationHandler;
     }
