@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using NLog;
+using SE_Praktikum.Components.Sprites;
 using SE_Praktikum.Extensions;
 using SE_Praktikum.Models;
 using SE_Praktikum.Services;
@@ -18,13 +19,13 @@ namespace SE_Praktikum.Core.GameStates
         private Logger _logger;
         private IScreen _screen;
         private float _elapsedTime = 0;
-        private int _splashscreenTime = 100;
+        private int _splashscreenTime = 10;
         private Song _song;
         private ContentManager _contentManager;
-        private AnimationHandler _teamname;
+        private Sprite _teamName;
         private readonly IGameEngine _engine;
         private AnimationHandlerFactory _factory;
-        private AnimationHandler _gameengine;
+        private Sprite _gameEngineLogo;
         private Polygon _p;
 
         public Splashscreen(IGameEngine engine, IScreen _screen, ContentManager contentManager, AnimationHandlerFactory factory)
@@ -52,12 +53,13 @@ namespace SE_Praktikum.Core.GameStates
 
             _p.Origin = _p.Vertices[0];
 
-            _teamname = _factory.GetAnimationHandler(tileset, settings,origin:new Vector2(tileset.TextureWidth/2, tileset.TextureHeight/2));
+            _teamName = new Sprite(_factory.GetAnimationHandler(tileset, settings,origin:new Vector2(tileset.TextureWidth/2f, tileset.TextureHeight/2f)));_factory.GetAnimationHandler(tileset, settings,origin:new Vector2(tileset.TextureWidth/2, tileset.TextureHeight/2));
 
             settings = new AnimationSettings(1, isPlaying: false, layer: 1,scale:0.2f);
             tileset = new TileSet(_contentManager.Load<Texture2D>("MonoGame"));
-            _gameengine = _factory.GetAnimationHandler(tileset, settings, origin: new Vector2(tileset.TextureWidth / 2, tileset.TextureHeight / 2));
+            _gameEngineLogo = new Sprite(_factory.GetAnimationHandler(tileset, settings, origin: new Vector2(tileset.TextureWidth / 2f, tileset.TextureHeight / 2f)));
             _song = _contentManager.Load<Song>("Audio/Music/Intro_mp3");
+            
             MediaPlayer.Play(_song);
             MediaPlayer.IsRepeating = true;
         }
@@ -71,7 +73,6 @@ namespace SE_Praktikum.Core.GameStates
         public override void Update(GameTime gameTime)
         {
             _elapsedTime += gameTime.ElapsedGameTime.Milliseconds/1000f;
-            _logger.Trace(_elapsedTime);
             if(Keyboard.GetState().IsKeyDown(Keys.Escape) || _splashscreenTime < _elapsedTime)
             {
                 _logger.Debug("exiting splashscreen");
@@ -87,15 +88,13 @@ namespace SE_Praktikum.Core.GameStates
 
         public override void Draw()
         {
-            _engine.Render(new List<Polygon>{_p});
-            
-            // if(_elapsedTime>_splashscreenTime/2)
-            // {
-            //     _teamname.Draw(spriteBatch);
-            // }
-            // else
-            //     _gameengine.Draw(spriteBatch);
-
+            _engine.Render(_p);
+            if(_elapsedTime>_splashscreenTime/2f)
+            {
+                _engine.Render(_teamName);
+            }
+            else
+                _engine.Render(_gameEngineLogo);
         }
     }
 }

@@ -109,6 +109,19 @@ namespace SE_Praktikum
         public int ScreenHeight { get; }
         public int ScreenWidth { get; }
         public Camera Camera { get; private set; }
+
+        public void Render(IComponent component)
+        {
+            _spriteBatch.Begin(SpriteSortMode.FrontToBack,
+                null,
+                SamplerState.PointClamp, // Sharp Pixel rendering
+                DepthStencilState.Default,
+                RasterizerState.CullCounterClockwise, // Render only the texture side that faces the camara to boost performance 
+                Camera.GetCameraEffect());
+            component.Draw(_spriteBatch);
+            _spriteBatch.End();
+        }
+
         public void Render(IEnumerable<IComponent> components)
         {
             _spriteBatch.Begin(SpriteSortMode.FrontToBack,
