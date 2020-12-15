@@ -22,11 +22,10 @@ namespace SE_Praktikum.Components.Sprites
         protected SoundEffect _impactSound;
         
 
-        public Actor(AnimationHandler animationHandler, SoundEffect impactSound, Polygon[] hitBox) : base(animationHandler)
+        public Actor(AnimationHandler animationHandler, SoundEffect impactSound) : base(animationHandler)
         {
             _logger = LogManager.GetCurrentClassLogger();
             _impactSound = impactSound;
-            HitBox = hitBox;
         }
 
         public Polygon[] HitBox { get; protected set; }

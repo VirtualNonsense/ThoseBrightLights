@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using NLog;
 using System;
+using System.Collections.Generic;
 
 namespace SE_Praktikum.Models
 {
@@ -15,13 +16,14 @@ namespace SE_Praktikum.Models
         public Texture2D Texture;
         public int Tiles => Columns * Rows;
         public int StartEntry;
+        private readonly Dictionary<int, Polygon[]> _hitBoxDict;
         private ILogger _logger;
         public int FrameCount => Columns * Rows;
         public int TextureWidth => Texture.Width;
         public int TextureHeight => Texture.Height;
 
         
-        public TileSet(Texture2D texture, int tileDimX, int tileDimY, int startEntry=0)
+        public TileSet(Texture2D texture, int tileDimX, int tileDimY, Dictionary<int, Polygon[]> hitBoxDict, int startEntry=0)
         {
             _logger = LogManager.GetCurrentClassLogger();
             Texture = texture;
@@ -30,6 +32,7 @@ namespace SE_Praktikum.Models
             Columns = Texture.Width / TileDimX;
             Rows = Texture.Height / TileDimY;
             StartEntry = startEntry;
+            _hitBoxDict = hitBoxDict;
         }
 
         public TileSet(Texture2D texture, int startEntry = 0)
@@ -64,6 +67,7 @@ namespace SE_Praktikum.Models
             return new Vector2(TileDimX/2f, TileDimY/2f);
         }
         
+        [Obsolete]
         public Byte[] GetDataOfFrame(int tile)
         {
             tile -= StartEntry;
@@ -101,8 +105,19 @@ namespace SE_Praktikum.Models
                 }
             }
             return pixelArray;
+        }
 
-
+        public Polygon[] GetHitBox(int currentIndex)
+        {
+            if (_hitBoxDict == null)
+            {
+                _logger.Warn("Hitbox does not exist");
+                return null;
+            }
+            if(_hitBoxDict.ContainsKey(currentIndex - StartEntry))
+                return _hitBoxDict[currentIndex - StartEntry];
+            _logger.Warn($"hitbox of {currentIndex} ({currentIndex-StartEntry}) not found");
+            return null;
         }
     }
 }

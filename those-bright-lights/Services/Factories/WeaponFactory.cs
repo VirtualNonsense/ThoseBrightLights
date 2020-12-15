@@ -24,7 +24,7 @@ namespace SE_Praktikum.Services.Factories
             Texture2D texture = contentManager.Load<Texture2D>("Artwork/projectiles/missile");
             TileSet textureTileSet = new TileSet(texture);
             Texture2D propulsion = contentManager.Load<Texture2D>("Artwork/projectiles/missile_propulsion_15_15");
-            TileSet propulsionTileSet = new TileSet(propulsion,15,15);
+            TileSet propulsionTileSet = new TileSet(propulsion,15,15, null);
             SoundEffect flightEffect = null; //contentManager.Load<SoundEffect>("Audio/Sound_Effects/Airborne/Flight_plane_c");
             SoundEffect impactSound = contentManager.Load<SoundEffect>("Audio/Sound_Effects/Collusion/Big_Explo");
             var m = new MissileLauncher(_animationHandlerFactory,textureTileSet, propulsionTileSet,

@@ -35,6 +35,8 @@ namespace SE_Praktikum.Services
         //TODO: find better name, frame is for rectangle
         public (int, float) CurrentFrame => Settings.UpdateList[_currentIndex];
 
+        public Polygon[] CurrentHitBox => Tileset.GetHitBox(_currentIndex);
+
         private ILogger _logger;
         
         public int FrameWidth => Tileset.TileDimX;

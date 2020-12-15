@@ -33,7 +33,7 @@ namespace SE_Praktikum.Services.Factories
         private void loadAssetsIfNecessary()
         {
             _buttonsAndSwitches ??= new TileSet(_contentManager.Load<Texture2D>("Artwork/Tilemaps/ButtonsAndSwitches"), _tileWidth,
-                _tileHeight);
+                _tileHeight, null);
             _font ??= _contentManager.Load<SpriteFont>("Font/Font2");
         }
 
