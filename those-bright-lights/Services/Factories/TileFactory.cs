@@ -108,7 +108,7 @@ namespace SE_Praktikum.Services.Factories
         }
         private TileSet GetModel()
         {
-
+            throw new NotImplementedException();
         }
 
     }
