@@ -4,8 +4,9 @@ using Microsoft.Xna.Framework.Graphics;
 using NLog;
 using System;
 using System.Collections.Generic;
+ using System.Linq;
 
-namespace SE_Praktikum.Models
+ namespace SE_Praktikum.Models
 {
     public class TileSet
     {
@@ -117,11 +118,15 @@ namespace SE_Praktikum.Models
         {
             if (_hitBoxDict == null)
             {
-                // _logger.Warn("Hitbox does not exist");
+                _logger.Warn("Hitbox does not exist");
                 return null;
             }
-            if(_hitBoxDict.ContainsKey(currentIndex - StartEntry))
-                return _hitBoxDict[currentIndex - StartEntry];
+
+            if (_hitBoxDict.ContainsKey(currentIndex - StartEntry))
+            {
+                return _hitBoxDict[currentIndex - StartEntry].Select(polygon => (Polygon) polygon.Clone()).ToArray();
+            }
+
             _logger.Warn($"hitbox of {currentIndex} ({currentIndex-StartEntry}) not found");
             return null;
         }
