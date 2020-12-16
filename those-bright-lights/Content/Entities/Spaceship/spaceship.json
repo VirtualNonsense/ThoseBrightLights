@@ -1,0 +1,14 @@
+{ "columns":1,
+ "image":"..\/..\/Artwork\/Actors\/spaceship.png",
+ "imageheight":84,
+ "imagewidth":133,
+ "margin":0,
+ "name":"spaceship",
+ "spacing":0,
+ "tilecount":1,
+ "tiledversion":"1.4.2",
+ "tileheight":84,
+ "tilewidth":133,
+ "type":"tileset",
+ "version":1.4
+}
