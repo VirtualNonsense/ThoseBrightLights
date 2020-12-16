@@ -96,6 +96,7 @@ namespace SE_Praktikum.Core.GameStates
 
         public override void PostUpdate(GameTime gameTime)
         {
+            _level.PostUpdate();
         }
 
         public override void Draw()

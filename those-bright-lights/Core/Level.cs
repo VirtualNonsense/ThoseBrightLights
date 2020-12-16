@@ -12,6 +12,7 @@ using SE_Praktikum.Components.Sprites;
 using SE_Praktikum.Components.Sprites.Weapons;
 using SE_Praktikum.Models;
 using SE_Praktikum.Models.Tiled;
+using SE_Praktikum.Services;
 using SE_Praktikum.Services.Factories;
 
 namespace SE_Praktikum.Core
@@ -47,6 +48,11 @@ namespace SE_Praktikum.Core
 
         public void Draw()
         {
+            foreach (var actor in _components.OfType<Actor>())
+            {
+                if(actor.IsCollideAble)
+                    _gameEngine.Render(actor.HitBox);
+            }
             _gameEngine.Render(_components);
         }
 
@@ -58,9 +64,29 @@ namespace SE_Praktikum.Core
                 _components[index].Update(gameTime);
                 index++;
             }
-            
-            CheckForCollisions();
             _screen.Camera.Update(gameTime);
+        }
+        
+        
+
+        public void PostUpdate()
+        {
+            CheckForCollisions();
+            RemoveDeadActors();
+        }
+
+        private void RemoveDeadActors()
+        {
+            for (int i = 0; i < _components.Count;)
+            {
+                var c = _components[i];
+                if (!c.IsRemoveAble)
+                {
+                    i++;
+                    continue;
+                }
+                _components.RemoveAt(i);
+            }
         }
 
         private void CheckForCollisions()
