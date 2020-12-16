@@ -56,7 +56,7 @@ namespace SE_Praktikum.Components.Sprites
             InvokeExplosion();
         }
 
-
+        [Obsolete]
         public Vector2? PixelPerfectCollide(Actor actor)
         {
             //actors can't collide with themselves
