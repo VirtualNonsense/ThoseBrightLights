@@ -28,21 +28,26 @@ namespace SE_Praktikum.Services
             set
             {
                 if (_currentIndex == value) return;
-                var oldValue = _currentIndex;
                 if (value < 0)
                     _currentIndex = 0;
                 else if (value >= _settings.UpdateList.Count)
                     _currentIndex = _settings.UpdateList.Count - 1;
                 else
                     _currentIndex = value;
-                HitBoxTransition(oldValue, _currentIndex);
+
+                CurrentHitBox = Tileset.GetHitBox(_currentIndex);
+                HitBoxTransition();
             }
         }
 
         //TODO: find better name, frame is for rectangle
         public (int, float) CurrentFrame => _settings.UpdateList[_currentIndex];
 
-        public Polygon[] CurrentHitBox => Tileset.GetHitBox(_currentIndex);
+        public Polygon[] CurrentHitBox
+        {
+            get;
+            private set;
+        }
 
         private ILogger _logger;
         
@@ -163,6 +168,7 @@ namespace SE_Praktikum.Services
             Position = position ?? new Vector2(0,0);
             Origin = origin ?? new Vector2(0,0);
             Offset = Vector2.Zero;
+            CurrentHitBox = Tileset.GetHitBox(_currentIndex);
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -228,7 +234,7 @@ namespace SE_Praktikum.Services
         {
             return Tileset.GetDataOfFrame(CurrentFrame.Item1);
         }
-        private void HitBoxTransition(int oldIndex, int newIndex)
+        private void HitBoxTransition()
         {
             if (CurrentHitBox == null) return;
             foreach (var polygon in CurrentHitBox)
