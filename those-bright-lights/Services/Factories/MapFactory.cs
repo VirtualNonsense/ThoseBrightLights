@@ -16,13 +16,15 @@ namespace SE_Praktikum.Services.Factories
     public class MapFactory
     {
         private readonly ILogger _logger;
+        private readonly TileSetFactory _setFactory;
         private readonly TileFactory tileFactory;
         private readonly ContentManager _contentManager;
 
-        public MapFactory(TileFactory tileFactory, ContentManager contentManager)
+        public MapFactory(TileSetFactory _setFactory, TileFactory tileFactory, ContentManager contentManager)
         {
             _logger = LogManager.GetCurrentClassLogger();
-            
+
+            this._setFactory = _setFactory;
             this.tileFactory = tileFactory;
             _contentManager = contentManager;
         }
