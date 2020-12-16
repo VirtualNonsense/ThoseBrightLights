@@ -37,14 +37,6 @@ namespace SE_Praktikum.Components.Sprites.Weapons
                            0.5f * Acceleration * Direction * elapsedTime + Velocity *Direction + Position;
             return position;
         }
-        
-
-        public override void Draw(SpriteBatch spriteBatch)
-        {
-            base.Draw(spriteBatch);
-        }
-
-       
 
         public override void Update(GameTime gameTime)
         {
@@ -57,6 +49,7 @@ namespace SE_Praktikum.Components.Sprites.Weapons
 
             Explosion.Position =
                 Position;
+            Explosion.Rotation = Rotation;
             base.Update(gameTime);
         }
         
@@ -66,15 +59,9 @@ namespace SE_Praktikum.Components.Sprites.Weapons
             {
                 default:
                     IsRemoveAble = true;
+                    InvokeExplosion();
                     break;
             }
         }
-
-        protected override void InvokeOnCollide()
-        {
-            base.InvokeOnCollide();
-        }
-        
-
     }
 }
