@@ -22,6 +22,7 @@ namespace SE_Praktikum.Models
         public int TextureWidth => Texture.Width;
         public int TextureHeight => Texture.Height;
 
+        public bool HasHitBox => _hitBoxDict != null;
         
         public TileSet(Texture2D texture, int tileDimX, int tileDimY, Dictionary<int, Polygon[]> hitBoxDict, int startEntry=0)
         {

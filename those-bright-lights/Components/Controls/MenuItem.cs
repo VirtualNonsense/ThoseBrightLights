@@ -50,12 +50,12 @@ namespace SE_Praktikum.Components.Controls
 
         public virtual float Layer
         {
-            get => _handler.First().Settings.Layer;
+            get => _handler.First().Layer;
             set
             {
                 foreach (var animationHandler in _handler)
                 {
-                    animationHandler.Settings.Layer = value;
+                    animationHandler.Layer = value;
                 }
             }
         }

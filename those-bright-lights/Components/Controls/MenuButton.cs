@@ -80,7 +80,7 @@ namespace SE_Praktikum.Components.Controls
 
             foreach (var handler in _handler)
             {
-                handler.Settings.Color = co;
+                handler.Color = co;
                 handler.CurrentIndex = Clicked? 1 : 0;
                 handler.Offset = Offset;
                 handler.Draw(spriteBatch);

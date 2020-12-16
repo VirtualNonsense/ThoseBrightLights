@@ -29,10 +29,8 @@ namespace SE_Praktikum.Components.Sprites
     // #################################################################################################################
     // Properties
     // #################################################################################################################
-    
-    public AnimationSettings AnimationSettings => _animationHandler.Settings;
-    
-    
+
+
     public List<Sprite> Children { get; set; }
     
     public Vector2 Origin { 
@@ -63,27 +61,22 @@ namespace SE_Praktikum.Components.Sprites
     //TODO: does layer have to be float? maybe use int instead
     public float Layer
     {
-      get => _animationHandler.Settings.Layer;
-      set => _animationHandler.Settings.Layer = value;
+      get => _animationHandler.Layer;
+      set => _animationHandler.Layer = value;
     }
 
     public float Rotation
     {
-      get => _animationHandler.Settings.Rotation;
-      set => _animationHandler.Settings.Rotation = value;
+      get => _animationHandler.Rotation;
+      set => _animationHandler.Rotation = value;
     }
 
     public float Scale
     {
-      get => _animationHandler.Settings.Scale;
-      set => _animationHandler.Settings.Scale = value;
+      get => _animationHandler.Scale;
+      set => _animationHandler.Scale = value;
     }
-
-    public float Opacity
-    {
-      get => _animationHandler.Settings.Opacity;
-      set => _animationHandler.Settings.Opacity = value;
-    }
+    
     public Matrix Transform =>
       Matrix.CreateTranslation(new Vector3(-Origin, 0)) *
       Matrix.CreateRotationZ(Rotation) *
