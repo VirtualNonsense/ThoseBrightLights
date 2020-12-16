@@ -69,7 +69,7 @@ namespace SE_Praktikum.Core
             var actor = _components.OfType<Actor>().ToList();
             for (int i = 0; i < actor.Count; i++)
             {
-                for (int j = i+1; i < actor.Count; i++)
+                for (int j = i+1; j < actor.Count; j++)
                 {
                     actor[i].InterAct(actor[j]); 
                 }
@@ -172,7 +172,7 @@ namespace SE_Praktikum.Core
             enemy.Y = 4128 - 20 - enemy.Rectangle.Height;
             _components.Add(enemy);
             
-            _components.AddRange(map);
+            //_components.AddRange(map);
             
             enemy.OnExplosion += (sender, args) =>
             {
