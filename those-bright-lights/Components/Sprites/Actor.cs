@@ -150,11 +150,6 @@ namespace SE_Praktikum.Components.Sprites
         }
 
         #region EventInvoker
-        protected virtual void InvokeOnCollide()
-        {
-            _impactSound?.Play();
-            OnCollide?.Invoke(this, EventArgs.Empty);
-        }
 
         protected virtual void InvokeExplosion()
         {

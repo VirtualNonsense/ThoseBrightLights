@@ -72,21 +72,6 @@ namespace SE_Praktikum.Components.Sprites
             base.Update(gameTime);
         }
 
-        protected override void InvokeOnCollide()
-        {
-            Health -= 1;
-            if (Health <= 0)
-            {
-                _logger.Error("Dead!");
-                IsRemoveAble = true;
-            }
-            else
-            {
-                _logger.Info(Health);
-            }
-            base.InvokeOnCollide();
-        }
-
         protected override void InvokeOnTakeDamage(float damage)
         {
             Health -= damage;
