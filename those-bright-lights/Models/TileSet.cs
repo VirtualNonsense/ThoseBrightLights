@@ -36,15 +36,20 @@ namespace SE_Praktikum.Models
             _hitBoxDict = hitBoxDict;
         }
 
-        public TileSet(Texture2D texture, int startEntry = 0)
+        public TileSet(Texture2D texture, Polygon[] hitBox = null, int startEntry = 0)
         {
             _logger = LogManager.GetCurrentClassLogger();
             Texture = texture;
             TileDimX = Texture.Width;
             TileDimY = Texture.Height;
-            Columns = Texture.Width / TileDimX;
-            Rows = Texture.Height / TileDimY;
+            Columns = 1;
+            Rows = 1;
             StartEntry = startEntry;
+            if (hitBox == null) return;
+            _hitBoxDict = new Dictionary<int, Polygon[]>
+            {
+                {0, hitBox}
+            };
         }
 
         internal Rectangle GetFrame(uint index)
