@@ -27,6 +27,7 @@ namespace SE_Praktikum.Core
         private readonly IGameEngine _gameEngine;
         private readonly List<IComponent> _components;
         private readonly Logger _logger;
+        private float _collisionLayer;
         
 
         private event EventHandler OnExplosion;
@@ -132,14 +133,15 @@ namespace SE_Praktikum.Core
         {
             
             //TODO: try to load the json map via the contentmanager
-            var map = _mapFactory.LoadMap(JsonConvert.DeserializeObject<LevelBlueprint>(File.ReadAllText(@".\Content\Level\AlphaLevel\AlphaMap.json")));
-
+            var map = _mapFactory.LoadMap(JsonConvert.DeserializeObject<LevelBlueprint>(File.ReadAllText(@".\Content\Level\TestLevel\TestLevel.json")));
+            // var map = _mapFactory.LoadMap(JsonConvert.DeserializeObject<LevelBlueprint>(File.ReadAllText(@".\Content\Level\AlphaLevel\AlphaMap.json")));
+            _collisionLayer = map.TopLayer;
             //TODO: Set player level to _map.TopLayer
             
             var player = _playerFactory.GetInstance(contentManager);
-            player.X = 160;
-            player.Y = 4128;
-            player.Layer = map.TopLayer;
+            player.X = 0;
+            player.Y = 0;
+            player.Layer = _collisionLayer;
             player.OnShoot += (sender, args) =>
             {
                 if (!(args is LevelEvent e)) return;
@@ -151,28 +153,16 @@ namespace SE_Praktikum.Core
                 OnLevelEvent(e);
             };
             _screen.Camera.Follow(player);
-            _screen.Camera.Position += new Vector3(0, 0, map.TopLayer);
+            _screen.Camera.Position += new Vector3(0, 0, player.Layer);
             _components.Add(player);
 
             var enemy = _enemyFactory.GetInstance(contentManager);
             enemy.Layer = player.Layer;
-            enemy.X = 500;
-            enemy.Y = 4128;
+            enemy.X = 200;
+            enemy.Y = 0;
             _components.Add(enemy);
             
-            enemy = _enemyFactory.GetInstance(contentManager);
-            enemy.Layer = player.Layer;
-            enemy.X = 500 + 20 + enemy.Rectangle.Width;
-            enemy.Y = 4128;
-            _components.Add(enemy);
-            
-            enemy = _enemyFactory.GetInstance(contentManager);
-            enemy.Layer = player.Layer;
-            enemy.X = 500 + 20 + enemy.Rectangle.Width;
-            enemy.Y = 4128 - 20 - enemy.Rectangle.Height;
-            _components.Add(enemy);
-            
-            //_components.AddRange(map);
+            _components.AddRange(map);
             
             enemy.OnExplosion += (sender, args) =>
             {
