@@ -73,6 +73,7 @@ namespace SE_Praktikum.Components.Sprites
                     // bullet shouldn't damage it's parent
                     if (this == b.Parent) return;
                     Health -= b.Damage;
+                    _impactSound?.Play();
                     break;
             }
         }
