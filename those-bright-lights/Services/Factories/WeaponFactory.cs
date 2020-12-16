@@ -1,4 +1,6 @@
-﻿using System.Linq.Expressions;
+﻿using System.Collections.Generic;
+using System.Linq.Expressions;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -35,7 +37,16 @@ namespace SE_Praktikum.Services.Factories
         public Lasergun GetLasergun(ContentManager contentManager)
         {
             Texture2D texture = contentManager.Load<Texture2D>("Artwork/projectiles/laser");
-            TileSet textureTileSet = new TileSet(texture);
+            TileSet textureTileSet = new TileSet(texture, new []
+            {
+                new Polygon(Vector2.Zero, new Vector2(8, 2), 0, new List<Vector2>
+                {
+                    new Vector2(-8, -2),
+                    new Vector2(8, -2),
+                    new Vector2(8, 2),
+                    new Vector2(-8, 2),
+                }), 
+            });
             SoundEffect soundEffect = contentManager.Load<SoundEffect>("Audio/Sound_Effects/Shot/Laser_Short");
             SoundEffect flightEffect = contentManager.Load<SoundEffect>("Audio/Sound_Effects/Airborne/Wobble_test");
             SoundEffect impactSound = contentManager.Load<SoundEffect>("Audio/Sound_Effects/Collusion/Clink");
