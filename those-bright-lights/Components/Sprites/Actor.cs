@@ -43,15 +43,6 @@ namespace SE_Praktikum.Components.Sprites
 
         public override void Update(GameTime gameTime)
         {
-            //Update HitboxPosition
-            foreach (var polygon in HitBox)
-            {
-                // Check if update is necessary to avoid unnecessary vertices update
-                if(polygon.Position != Position)
-                    polygon.Position = Position;
-                if (Math.Abs(polygon.Rotation - Rotation) > float.Epsilon)
-                    polygon.Rotation = Rotation;
-            }
             base.Update(gameTime);
         }
 
