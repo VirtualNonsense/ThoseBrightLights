@@ -195,14 +195,14 @@ namespace SE_Praktikum.Models
                     p1 = other;
                     p2 = this;
                 }
-                var normals = p1.GetNormals();
+                var normals = p1.GetGlobalNormals();
 
                 foreach (var normal in normals)
                 {
                     var minMax = p1.VectorProjection(normal);
                     var otherMinMax = p2.VectorProjection(normal);
 
-                    if (!(otherMinMax[2] > minMax[1] && minMax[2] > otherMinMax[1]))
+                    if (!(otherMinMax[1] > minMax[0] && minMax[1] > otherMinMax[0]))
                         return false;
                 }
             }
@@ -243,18 +243,18 @@ namespace SE_Praktikum.Models
         {
             var minMax = new float[2];
             //initialize minMax
-            minMax[1] = float.PositiveInfinity;
-            minMax[2] = float.NegativeInfinity;
+            minMax[0] = float.PositiveInfinity;
+            minMax[1] = float.NegativeInfinity;
             //dp == dotprodukt (Skalarprodukt)
             for (var j = 0; j < Vertices2D.Length; j++)
             {
                 var dp = (normal.X * Vertices2D[j].X + normal.Y * Vertices2D[j].Y);
                 //is dp smaller than current minimum
-                if (dp < minMax[1])
-                    minMax[1] = dp;
+                if (dp < minMax[0])
+                    minMax[0] = dp;
                 //dp greater than current max?
-                if (dp > minMax[2])
-                    minMax[2] = dp;
+                if (dp > minMax[1])
+                    minMax[1] = dp;
             }
             return minMax;
         }
