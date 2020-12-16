@@ -106,6 +106,10 @@ namespace SE_Praktikum.Services.Factories
             return output;
 
         }
+        private TileSet GetModel()
+        {
+
+        }
 
     }
 }
