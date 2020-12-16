@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -22,7 +23,16 @@ namespace SE_Praktikum.Services.Factories
         {
             var texture2D = contentManager.Load<Texture2D>("Artwork/Actors/alien_ship_56_59");
             SoundEffect impactSound = contentManager.Load<SoundEffect>("Audio/Sound_Effects/Collusion/ClinkBell");
-            var tileSet = new TileSet(texture2D);
+            var tileSet = new TileSet(texture2D, new []
+            {
+                new Polygon(Vector2.Zero, Vector2.Zero, 0, new List<Vector2>
+                {
+                    new Vector2(-32.5f, 32.5f),
+                    new Vector2(32.5f, 32.5f),
+                    new Vector2(32.5f, -32.5f),
+                    new Vector2(-32.5f, -32.5f),
+                }), 
+            });
             var animationSettings = new AnimationSettings(1,isPlaying:false);
             var e = new Enemy(_animationHandlerFactory.GetAnimationHandler(tileSet,animationSettings), impactSound:impactSound);
             e.Position = new Vector2(100,50);
