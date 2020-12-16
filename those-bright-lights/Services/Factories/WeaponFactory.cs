@@ -39,7 +39,8 @@ namespace SE_Praktikum.Services.Factories
             Texture2D texture = contentManager.Load<Texture2D>("Artwork/projectiles/laser");
             TileSet textureTileSet = new TileSet(texture, new []
             {
-                new Polygon(Vector2.Zero, new Vector2(8, 2), 0, new List<Vector2>
+                // Origin must be Vector2.Zero for some reason i have to investigate.....
+                new Polygon(Vector2.Zero, new Vector2(0, 0), 0, new List<Vector2>
                 {
                     new Vector2(-8, 2),
                     new Vector2(8, 2),
