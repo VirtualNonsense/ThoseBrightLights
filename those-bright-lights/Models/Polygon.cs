@@ -214,22 +214,22 @@ namespace SE_Praktikum.Models
 
         #region Private Methods
 
-        private List<Vector2> GetEdges()
+        private List<Vector2> GetGlobalEdges()
         {
             var l = new List<Vector2>();
-            for (var i = 0; i < _vertices.Count; i++)
+            for (var i = 0; i < Vertices2D.Length; i++)
             {
                 //calculate next i modulo length of points to also get the edge from last to first point
-                var nextI = i+1 % _vertices.Count;
-                l.Add(new Vector2(_vertices[nextI].X - _vertices[i].X, _vertices[new Index()].Y - _vertices[i].Y));
+                var nextI = (i+1) % Vertices2D.Length;
+                l.Add(new Vector2(Vertices2D[nextI].X - Vertices2D[i].X, Vertices2D[nextI].Y - Vertices2D[i].Y));
             }
 
             return l;
         }
 
-        private List<Vector2> GetNormals()
+        private List<Vector2> GetGlobalNormals()
         {
-            var edges = GetEdges();
+            var edges = GetGlobalEdges();
             var normals = new List<Vector2>();
             for (var i = 0; i < edges.Count; i++)
             {
@@ -246,9 +246,9 @@ namespace SE_Praktikum.Models
             minMax[1] = float.PositiveInfinity;
             minMax[2] = float.NegativeInfinity;
             //dp == dotprodukt (Skalarprodukt)
-            for (var j = 0; j < _vertices.Count; j++)
+            for (var j = 0; j < Vertices2D.Length; j++)
             {
-                var dp = (normal.X * _vertices[j].X + normal.Y * _vertices[j].Y);
+                var dp = (normal.X * Vertices2D[j].X + normal.Y * Vertices2D[j].Y);
                 //is dp smaller than current minimum
                 if (dp < minMax[1])
                     minMax[1] = dp;
