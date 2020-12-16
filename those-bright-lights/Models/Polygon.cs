@@ -47,6 +47,7 @@ namespace SE_Praktikum.Models
             get => _drawAble;
             set
             {
+                if (_drawAble == value) return;
                 _drawAble = value;
                 Vertices2D = GetVector2InWorldSpace();
                 Vertices3D = GetVector3InWorldSpace();
@@ -62,6 +63,7 @@ namespace SE_Praktikum.Models
             get => _rotation;
             set
             {
+                if (Math.Abs(_rotation - value) < float.Epsilon) return;
                 _rotation = value;
                 Vertices2D = GetVector2InWorldSpace();
                 Vertices3D = GetVector3InWorldSpace();
@@ -75,6 +77,8 @@ namespace SE_Praktikum.Models
             get => _position;
             set
             {
+                
+                if (_position == value) return;
                 _position = value;
                 Vertices2D = GetVector2InWorldSpace();
                 Vertices3D = GetVector3InWorldSpace();
@@ -88,6 +92,8 @@ namespace SE_Praktikum.Models
             get => _color;
             set
             {
+                
+                if (_color == value) return;
                 _color = value;
                 DrawAbleVertices = GetDrawAbleVertices();
             }
@@ -99,6 +105,7 @@ namespace SE_Praktikum.Models
             get => _origin;
             set
             {
+                if (_origin == value) return;
                 _origin = value;
                 Vertices2D = GetVector2InWorldSpace();
                 Vertices3D = GetVector3InWorldSpace();
@@ -115,6 +122,7 @@ namespace SE_Praktikum.Models
             get => _vertices;
             set
             {
+                if (_vertices == value) return;
                 _vertices = value;
                 Vertices2D = GetVector2InWorldSpace();
                 Vertices3D = GetVector3InWorldSpace();
@@ -161,6 +169,7 @@ namespace SE_Praktikum.Models
             get => _layer;
             set
             {
+                if (Math.Abs(_layer - value) < float.Epsilon) return;
                 _layer = value;
                 Vertices3D = GetVector3InWorldSpace();
                 VertexDrawingOrder = GetIndexMeshInts();
