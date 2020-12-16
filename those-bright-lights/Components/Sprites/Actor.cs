@@ -28,8 +28,8 @@ namespace SE_Praktikum.Components.Sprites
             _impactSound = impactSound;
         }
 
-        public bool IsCollideAble => _animationHandler.CurrentHitBox != null;
-        public Polygon[] HitBox { get; protected set; }
+        public bool IsCollideAble => HitBox != null;
+        public Polygon[] HitBox => _animationHandler.CurrentHitBox;
         protected float Damage;
         protected float Health { get; set; }
         protected bool _indestructible;
