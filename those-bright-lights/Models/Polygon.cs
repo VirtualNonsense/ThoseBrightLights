@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace SE_Praktikum.Models
 {
-    public class Polygon
+    public class Polygon : ICloneable
     {
 
         private Vector2 _origin;
@@ -312,5 +312,10 @@ namespace SE_Praktikum.Models
         
 
         #endregion
+
+        public object Clone()
+        {
+            return new Polygon(Position, Origin, _layer, _vertices);
+        }
     }
 }
