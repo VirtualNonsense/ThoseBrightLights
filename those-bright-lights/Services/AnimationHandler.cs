@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using NLog;
+using SE_Praktikum.Components.Sprites;
 using SE_Praktikum.Models;
 
 namespace SE_Praktikum.Services
@@ -34,6 +35,7 @@ namespace SE_Praktikum.Services
                     _currentIndex = _settings.UpdateList.Count - 1;
                 else
                     _currentIndex = value;
+                HitBoxTransition(oldValue, _currentIndex);
             }
         }
 
@@ -54,7 +56,7 @@ namespace SE_Praktikum.Services
             set
             {
                 _position = value;
-                if (!Tileset.HasHitBox) return;
+                if (CurrentHitBox==null) return;
                 foreach (var polygon in CurrentHitBox)
                 {
                     polygon.Position = _position + _offset;
@@ -68,7 +70,7 @@ namespace SE_Praktikum.Services
             set
             {
                 _settings.Rotation = value;
-                if (!Tileset.HasHitBox) return;
+                if (CurrentHitBox==null) return;
                 foreach (var polygon in CurrentHitBox)
                 {
                     polygon.Rotation = value;
@@ -105,7 +107,7 @@ namespace SE_Praktikum.Services
             set
             {
                 _offset = value;
-                if (!Tileset.HasHitBox) return;
+                if (CurrentHitBox==null) return;
                 foreach (var polygon in CurrentHitBox)
                 {
                     polygon.Position = _position + _offset;
@@ -119,7 +121,7 @@ namespace SE_Praktikum.Services
             set
             {
                 _origin = value;
-                if (!Tileset.HasHitBox) return;
+                if (CurrentHitBox==null) return;
                 foreach (var polygon in CurrentHitBox)
                 {
                     polygon.Origin = _origin;
@@ -140,7 +142,7 @@ namespace SE_Praktikum.Services
             set
             {
                 _settings.Layer = value;
-                if (!Tileset.HasHitBox) return;
+                if (CurrentHitBox==null) return;
                 foreach (var polygon in CurrentHitBox)
                 {
                     polygon.Layer = _settings.Layer;
@@ -228,6 +230,7 @@ namespace SE_Praktikum.Services
         }
         private void HitBoxTransition(int oldIndex, int newIndex)
         {
+            if (CurrentHitBox == null) return;
             foreach (var polygon in CurrentHitBox)
             {
                     polygon.Position = Position + Offset;
