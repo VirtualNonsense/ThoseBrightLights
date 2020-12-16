@@ -62,7 +62,17 @@ namespace SE_Praktikum.Core
             while (index < _components.Count)
             {
                 _components[index].Update(gameTime);
+                // append only so it should be fine
                 index++;
+            }
+
+            var actor = _components.OfType<Actor>().ToList();
+            for (int i = 0; i < actor.Count; i++)
+            {
+                for (int j = i+1; i < actor.Count; i++)
+                {
+                    actor[i].InterAct(actor[j]); 
+                }
             }
             _screen.Camera.Update(gameTime);
         }

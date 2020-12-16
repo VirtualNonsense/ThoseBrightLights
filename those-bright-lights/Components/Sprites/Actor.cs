@@ -30,8 +30,8 @@ namespace SE_Praktikum.Components.Sprites
 
         public bool IsCollideAble => HitBox != null;
         public Polygon[] HitBox => _animationHandler.CurrentHitBox;
-        protected float Damage;
-        protected float Health { get; set; }
+        public float Damage { get; protected set; }
+        public float Health { get; set; }
         protected bool _indestructible;
         protected Particle Explosion;
 
@@ -41,21 +41,35 @@ namespace SE_Praktikum.Components.Sprites
         public event EventHandler<EventArgs> OnExplosion; 
         #endregion
 
-        public override void Update(GameTime gameTime)
+        public virtual void InterAct(Actor other)
         {
-            base.Update(gameTime);
+            if (this == other || !(CollisionEnabled && IsCollideAble && other.CollisionEnabled && other.IsCollideAble)) return;
+            if (!Collide(other)) return;
+            switch (other)
+            {
+                default:
+                    Health -= other.Damage;
+                    other.Health -= Damage;
+                    break;
+            }
         }
 
-        public virtual void TakeDamage(Actor enemy)
+        protected bool Collide(Actor other)
         {
-            if (_indestructible) return;
-            Health -= enemy.Damage;
-            _logger.Info(Health);
-            if (!(Health <= 0)) return;
-            IsRemoveAble = true;
-            InvokeExplosion();
+            if ( this == other || 
+                 Math.Abs(Layer - other.Layer) > float.Epsilon || 
+                 !(CollisionEnabled && IsCollideAble && other.CollisionEnabled && other.IsCollideAble)) 
+                return false;
+            foreach (var polygon in HitBox)
+            {
+                foreach (var polygon1 in other.HitBox)
+                {
+                    if(polygon.Overlap(polygon1)) return true;
+                }
+            }
+            return false;
         }
-
+        
         [Obsolete]
         public Vector2? PixelPerfectCollide(Actor actor)
         {

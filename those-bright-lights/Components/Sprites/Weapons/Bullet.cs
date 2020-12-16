@@ -60,11 +60,24 @@ namespace SE_Praktikum.Components.Sprites.Weapons
             base.Update(gameTime);
         }
 
+        
+        public override void InterAct(Actor other)
+        {
+            if (this == other || !(CollisionEnabled && IsCollideAble && other.CollisionEnabled && other.IsCollideAble)) return;
+            switch (other)
+            {
+                default:
+                    Health -= other.Damage;
+                    other.Health -= Damage;
+                    break;
+            }
+        }
 
         protected override void InvokeOnCollide()
         {
             base.InvokeOnCollide();
         }
+        
 
     }
 }
