@@ -102,7 +102,7 @@ namespace SE_Praktikum.Core.GameStates
         {
             
             if(!_pause)
-                _logger.Debug("level.draw");
+                _level.Draw();
             else
             {
                 _engine.Render(_components);

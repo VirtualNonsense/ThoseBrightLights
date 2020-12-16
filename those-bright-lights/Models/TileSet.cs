@@ -1,4 +1,4 @@
-﻿using Microsoft.Xna.Framework;
+﻿﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using NLog;
@@ -112,7 +112,7 @@ namespace SE_Praktikum.Models
         {
             if (_hitBoxDict == null)
             {
-                _logger.Warn("Hitbox does not exist");
+                // _logger.Warn("Hitbox does not exist");
                 return null;
             }
             if(_hitBoxDict.ContainsKey(currentIndex - StartEntry))

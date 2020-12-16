@@ -2,15 +2,10 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using SE_Praktikum.Services;
 using SE_Praktikum.Components.Sprites.Weapons;
-using SE_Praktikum.Components.Controls;
 using System;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using NLog;
-using SE_Praktikum.Core;
 using SE_Praktikum.Models;
-using SE_Praktikum.Services;
 using Microsoft.Xna.Framework.Audio;
 
 namespace SE_Praktikum.Components.Sprites

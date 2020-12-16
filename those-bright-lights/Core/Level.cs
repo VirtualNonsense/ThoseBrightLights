@@ -23,15 +23,15 @@ namespace SE_Praktikum.Core
         private readonly ParticleFactory _particleFactory;
         private readonly EnemyFactory _enemyFactory;
         private readonly IScreen _screen;
+        private readonly IGameEngine _gameEngine;
         private readonly List<IComponent> _components;
         private readonly Logger _logger;
-        private Map _map;
         
 
         private event EventHandler OnExplosion;
 
         //Constructor
-        public Level(MapFactory mapFactory, PlayerFactory playerFactory, ParticleFactory particleFactory, EnemyFactory enemyFactory, IScreen screen)
+        public Level(MapFactory mapFactory, PlayerFactory playerFactory, ParticleFactory particleFactory, EnemyFactory enemyFactory, IScreen screen, IGameEngine gameEngine)
         {
             
             _mapFactory = mapFactory;
@@ -39,18 +39,15 @@ namespace SE_Praktikum.Core
             _particleFactory = particleFactory;
             _enemyFactory = enemyFactory;
             _screen = screen;
+            _gameEngine = gameEngine;
             _components = new List<IComponent>();
             _logger = LogManager.GetCurrentClassLogger();
         }
 
 
-        public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        public void Draw()
         {
-            foreach(var i in _components)
-            {
-                i.Draw(spriteBatch);
-            }
-            _map.Draw(spriteBatch);
+            _gameEngine.Render(_components);
         }
 
         public void Update(GameTime gameTime)
@@ -69,59 +66,6 @@ namespace SE_Praktikum.Core
         private void CheckForCollisions()
         {
             
-            var actorList = _components.OfType<Actor>().ToList();
-            for (var i = 0; i < actorList.Count()-1; i++)
-            {
-                var actor1 = actorList[i];
-                for (var j = i + 1; j < actorList.Count(); j++)
-                {
-                    var actor2 = actorList[j];
-                    //check if one actor has the other actor as parent
-                    if (actor1.Parent != null && actor1.Parent == actor2)
-                        continue;
-                    if (actor2.Parent != null && actor2.Parent == actor1)
-                        continue;
-                    
-                        
-                    var collisionPosition = actor1.PixelPerfectCollide(actor2);
-                    //collision detected
-                    if(!(collisionPosition is null))
-                    {
-                        actor1.TakeDamage(actor2);
-                        actor2.TakeDamage(actor1);
-                    }
-                }
-            }
-
-            for (var i = 0; i < actorList.Count()-1; i++)
-            {
-                var actor = actorList[i];
-                foreach (var tile in _map)
-                {
-                    var collision = tile.PixelPerfectCollide(actor);
-                    if (!(collision is null))
-                    {
-                        var t = (actor.Origin - (Vector2) collision);
-                        t.Normalize();
-                        actor.Position += 3 * t;
-                        actor.TakeDamage(tile);
-                        tile.TakeDamage(actor);
-                        _logger.Debug($"map collision { t  }");
-                    }
-                }
-            }
-
-            var index = 0;
-            while (index < _components.Count)
-            {
-                if (_components[index].IsRemoveAble == true)
-                {
-                    _components.RemoveAt(index);
-                    continue;
-                }
-
-                index++;
-            }
 
         }
 
@@ -152,14 +96,14 @@ namespace SE_Praktikum.Core
         {
             
             //TODO: try to load the json map via the contentmanager
-            _map = _mapFactory.LoadMap(JsonConvert.DeserializeObject<LevelBlueprint>(File.ReadAllText(@".\Content\Level\AlphaLevel\AlphaMap.json")));
+            var map = _mapFactory.LoadMap(JsonConvert.DeserializeObject<LevelBlueprint>(File.ReadAllText(@".\Content\Level\AlphaLevel\AlphaMap.json")));
 
             //TODO: Set player level to _map.TopLayer
             
             var player = _playerFactory.GetInstance(contentManager);
             player.X = 160;
             player.Y = 4128;
-            player.Layer = _map.TopLayer;
+            player.Layer = map.TopLayer;
             player.OnShoot += (sender, args) =>
             {
                 if (!(args is LevelEvent e)) return;
@@ -171,7 +115,7 @@ namespace SE_Praktikum.Core
                 OnLevelEvent(e);
             };
             _screen.Camera.Follow(player);
-            _screen.Camera.Position += new Vector3(0, 0, _map.TopLayer);
+            _screen.Camera.Position += new Vector3(0, 0, map.TopLayer);
             _components.Add(player);
 
             var enemy = _enemyFactory.GetInstance(contentManager);
@@ -191,6 +135,8 @@ namespace SE_Praktikum.Core
             enemy.X = 500 + 20 + enemy.Rectangle.Width;
             enemy.Y = 4128 - 20 - enemy.Rectangle.Height;
             _components.Add(enemy);
+            
+            _components.AddRange(map);
             
             enemy.OnExplosion += (sender, args) =>
             {
