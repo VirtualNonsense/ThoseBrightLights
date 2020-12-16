@@ -17,6 +17,7 @@ namespace SE_Praktikum.Components.Sprites
     public abstract class Actor : Sprite
     {
 
+        private float _health;
         public bool CollisionEnabled = true;
         private Logger _logger;
         protected SoundEffect _impactSound;
@@ -31,14 +32,27 @@ namespace SE_Praktikum.Components.Sprites
         public bool IsCollideAble => HitBox != null;
         public Polygon[] HitBox => _animationHandler.CurrentHitBox;
         public float Damage { get; protected set; }
-        public float Health { get; set; }
+        public float Health {
+            get=> _health;
+            set
+            {
+                if (value <= 0)
+                {
+                    _health = 0;
+                    IsRemoveAble = true;
+                    return;
+                }
+
+                _health = value;
+            }
+        }
         protected bool _indestructible;
         protected Particle Explosion;
 
 
         #region Events
-        public event EventHandler<EventArgs> OnCollide;
-        public event EventHandler<EventArgs> OnExplosion; 
+        public event EventHandler<EventArgs> OnExplosion;
+        public event EventHandler<EventArgs> OnDeath;
         #endregion
 
         public virtual void InterAct(Actor other)
@@ -147,6 +161,12 @@ namespace SE_Praktikum.Components.Sprites
             var explosionArgs = new LevelEvent.Explosion {Particle = Explosion};
             OnExplosion?.Invoke(this, explosionArgs);
         }
+
+        protected virtual void InvokeDeath()
+        {
+            OnDeath?.Invoke(this, EventArgs.Empty);
+        }
+
         #endregion
     }
 }
