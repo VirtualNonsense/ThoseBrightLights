@@ -41,10 +41,10 @@ namespace SE_Praktikum.Services.Factories
             {
                 new Polygon(Vector2.Zero, new Vector2(8, 2), 0, new List<Vector2>
                 {
-                    new Vector2(-8, -2),
-                    new Vector2(8, -2),
-                    new Vector2(8, 2),
                     new Vector2(-8, 2),
+                    new Vector2(8, 2),
+                    new Vector2(8, -2),
+                    new Vector2(-8, -2),
                 }), 
             });
             SoundEffect soundEffect = contentManager.Load<SoundEffect>("Audio/Sound_Effects/Shot/Laser_Short");
