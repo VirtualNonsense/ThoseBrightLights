@@ -51,7 +51,14 @@ namespace SE_Praktikum.Components.Sprites
                     break;
             }
         }
+        
+
+        protected override void ExecuteInteraction(Actor other)
+        {
+        }
     }
+    
+    
 
     public enum TileModifier
     {

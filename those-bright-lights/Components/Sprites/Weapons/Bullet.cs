@@ -59,16 +59,13 @@ namespace SE_Praktikum.Components.Sprites.Weapons
                 Position;
             base.Update(gameTime);
         }
-
         
-        public override void InterAct(Actor other)
+        protected override void ExecuteInteraction(Actor other)
         {
-            if (this == other || !(CollisionEnabled && IsCollideAble && other.CollisionEnabled && other.IsCollideAble)) return;
             switch (other)
             {
                 default:
-                    Health -= other.Damage;
-                    other.Health -= Damage;
+                    IsRemoveAble = true;
                     break;
             }
         }

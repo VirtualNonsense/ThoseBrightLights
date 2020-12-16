@@ -45,14 +45,15 @@ namespace SE_Praktikum.Components.Sprites
         {
             if (this == other || !(CollisionEnabled && IsCollideAble && other.CollisionEnabled && other.IsCollideAble)) return;
             if (!Collide(other)) return;
-            switch (other)
-            {
-                default:
-                    Health -= other.Damage;
-                    other.Health -= Damage;
-                    break;
-            }
+            ExecuteInteraction(other);
+            other.ExecuteInteraction(this);
         }
+        
+        /// <summary>
+        /// This method implements the effect of other on this
+        /// </summary>
+        /// <param name="other"></param>
+        protected abstract void ExecuteInteraction(Actor other);
 
         protected bool Collide(Actor other)
         {

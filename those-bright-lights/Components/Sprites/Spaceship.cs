@@ -64,21 +64,15 @@ namespace SE_Praktikum.Components.Sprites
             _currentWeapon = _weapons.Count - 1;
             OnPickUpWeapon?.Invoke(this, EventArgs.Empty);
         }
-        public override void InterAct(Actor other)
+
+        protected override void ExecuteInteraction(Actor other)
         {
-            if (this == other || !(CollisionEnabled && IsCollideAble && other.CollisionEnabled && other.IsCollideAble)) return;
-            if (!Collide(other)) return;
             switch (other)
             {
                 case Bullet b:
-                    if(this == b.Parent)
-                        return;
-                    Health -= other.Damage;
-                    other.IsRemoveAble = true;
-                    break;
-                default:
-                    Health -= other.Damage;
-                    other.Health -= Damage;
+                    // bullet shouldn't damage it's parent
+                    if (this == b.Parent) return;
+                    Health -= b.Damage;
                     break;
             }
         }
