@@ -174,51 +174,51 @@
  "tilesets":[
         {
          "firstgid":1,
-         "source":"..\/..\/..\/Artwork\/Tilemaps\/JSONs\/CollisionBlocks.json"
+         "source":"..\/TileSets\/CollisionBlocks.json"
         }, 
         {
          "firstgid":65,
-         "source":"..\/..\/..\/Artwork\/Tilemaps\/JSONs\/TileSet_Space.json"
+         "source":"..\/TileSets\/TileSet_Space.json"
         }, 
         {
          "firstgid":129,
-         "source":"..\/..\/..\/Artwork\/Tilemaps\/JSONs\/JupiterObject.json"
+         "source":"..\/TileSets\/JupiterObject.json"
         }, 
         {
          "firstgid":193,
-         "source":"..\/..\/..\/Artwork\/Tilemaps\/JSONs\/Sun1.json"
+         "source":"..\/TileSets\/Sun1.json"
         }, 
         {
          "firstgid":257,
-         "source":"..\/..\/..\/Artwork\/Tilemaps\/JSONs\/MarsObject.json"
+         "source":"..\/TileSets\/MarsObject.json"
         }, 
         {
          "firstgid":321,
-         "source":"..\/..\/..\/Artwork\/Tilemaps\/JSONs\/EarthObject.json"
+         "source":"..\/TileSets\/EarthObject.json"
         }, 
         {
          "firstgid":385,
-         "source":"..\/..\/..\/Artwork\/Tilemaps\/JSONs\/Venus.json"
+         "source":"..\/TileSets\/Venus.json"
         }, 
         {
          "firstgid":449,
-         "source":"..\/..\/..\/Artwork\/Tilemaps\/JSONs\/MerkurObject.json"
+         "source":"..\/TileSets\/MerkurObject.json"
         }, 
         {
          "firstgid":513,
-         "source":"..\/..\/..\/Artwork\/Tilemaps\/JSONs\/UranusObject.json"
+         "source":"..\/TileSets\/UranusObject.json"
         }, 
         {
          "firstgid":577,
-         "source":"..\/..\/..\/Artwork\/Tilemaps\/JSONs\/NeptunObject.json"
+         "source":"..\/TileSets\/NeptunObject.json"
         }, 
         {
          "firstgid":641,
-         "source":"..\/..\/..\/Artwork\/Tilemaps\/JSONs\/SaturnObject.json"
+         "source":"..\/TileSets\/SaturnObject.json"
         }, 
         {
          "firstgid":705,
-         "source":"..\/..\/..\/Artwork\/Tilemaps\/JSONs\/Tardis.json"
+         "source":"..\/TileSets\/Tardis.json"
         }],
  "tilewidth":32,
  "type":"map",

@@ -229,7 +229,7 @@
 /processorParam:TextureFormat=Color
 /build:Artwork/Projectiles/missile_propulsion_15_15.png
 
-#begin Artwork/Tilemaps/PNGs/Blocks_32_32.png
+#begin Artwork/Tilemaps/Blocks_32_32.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -239,9 +239,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Artwork/Tilemaps/PNGs/Blocks_32_32.png
+/build:Artwork/Tilemaps/Blocks_32_32.png
 
-#begin Artwork/Tilemaps/PNGs/ButtonsAndSwitches.png
+#begin Artwork/Tilemaps/ButtonsAndSwitches.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -251,9 +251,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Artwork/Tilemaps/PNGs/ButtonsAndSwitches.png
+/build:Artwork/Tilemaps/ButtonsAndSwitches.png
 
-#begin Artwork/Tilemaps/PNGs/CollisionBlocks.png
+#begin Artwork/Tilemaps/CollisionBlocks.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -263,9 +263,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Artwork/Tilemaps/PNGs/CollisionBlocks.png
+/build:Artwork/Tilemaps/CollisionBlocks.png
 
-#begin Artwork/Tilemaps/PNGs/EarthObject.png
+#begin Artwork/Tilemaps/EarthObject.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -275,9 +275,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Artwork/Tilemaps/PNGs/EarthObject.png
+/build:Artwork/Tilemaps/EarthObject.png
 
-#begin Artwork/Tilemaps/PNGs/JupiterObject.png
+#begin Artwork/Tilemaps/JupiterObject.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -287,9 +287,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Artwork/Tilemaps/PNGs/JupiterObject.png
+/build:Artwork/Tilemaps/JupiterObject.png
 
-#begin Artwork/Tilemaps/PNGs/MarsObject.png
+#begin Artwork/Tilemaps/MarsObject.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -299,9 +299,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Artwork/Tilemaps/PNGs/MarsObject.png
+/build:Artwork/Tilemaps/MarsObject.png
 
-#begin Artwork/Tilemaps/PNGs/MerkurObject.png
+#begin Artwork/Tilemaps/MerkurObject.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -311,9 +311,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Artwork/Tilemaps/PNGs/MerkurObject.png
+/build:Artwork/Tilemaps/MerkurObject.png
 
-#begin Artwork/Tilemaps/PNGs/NeptunObject.png
+#begin Artwork/Tilemaps/NeptunObject.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -323,9 +323,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Artwork/Tilemaps/PNGs/NeptunObject.png
+/build:Artwork/Tilemaps/NeptunObject.png
 
-#begin Artwork/Tilemaps/PNGs/SaturnObject.png
+#begin Artwork/Tilemaps/SaturnObject.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -335,9 +335,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Artwork/Tilemaps/PNGs/SaturnObject.png
+/build:Artwork/Tilemaps/SaturnObject.png
 
-#begin Artwork/Tilemaps/PNGs/Space_32_32.png
+#begin Artwork/Tilemaps/Space_32_32.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -347,9 +347,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Artwork/Tilemaps/PNGs/Space_32_32.png
+/build:Artwork/Tilemaps/Space_32_32.png
 
-#begin Artwork/Tilemaps/PNGs/Sun1.png
+#begin Artwork/Tilemaps/Sun1.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -359,9 +359,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Artwork/Tilemaps/PNGs/Sun1.png
+/build:Artwork/Tilemaps/Sun1.png
 
-#begin Artwork/Tilemaps/PNGs/Tardis.png
+#begin Artwork/Tilemaps/Tardis.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -371,9 +371,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Artwork/Tilemaps/PNGs/Tardis.png
+/build:Artwork/Tilemaps/Tardis.png
 
-#begin Artwork/Tilemaps/PNGs/TileSet_Space.png
+#begin Artwork/Tilemaps/TileSet_Space.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -383,9 +383,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Artwork/Tilemaps/PNGs/TileSet_Space.png
+/build:Artwork/Tilemaps/TileSet_Space.png
 
-#begin Artwork/Tilemaps/PNGs/Uranus.png
+#begin Artwork/Tilemaps/Uranus.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -395,9 +395,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Artwork/Tilemaps/PNGs/Uranus.png
+/build:Artwork/Tilemaps/Uranus.png
 
-#begin Artwork/Tilemaps/PNGs/UranusObject.png
+#begin Artwork/Tilemaps/UranusObject.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -407,9 +407,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Artwork/Tilemaps/PNGs/UranusObject.png
+/build:Artwork/Tilemaps/UranusObject.png
 
-#begin Artwork/Tilemaps/PNGs/Venus.png
+#begin Artwork/Tilemaps/Venus.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -419,7 +419,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Artwork/Tilemaps/PNGs/Venus.png
+/build:Artwork/Tilemaps/Venus.png
 
 #begin Audio/Music/Death.wav
 /importer:WavImporter

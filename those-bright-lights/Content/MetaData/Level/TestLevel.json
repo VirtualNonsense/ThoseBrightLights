@@ -42,11 +42,11 @@
  "tilesets":[
         {
          "firstgid":1,
-         "source":"..\/..\/..\/Artwork\/Tilemaps\/JSONs\/Space_32_32.json"
+         "source":"..\/TileSets\/Space_32_32.json"
         }, 
         {
          "firstgid":17,
-         "source":"..\/..\/..\/Artwork\/Tilemaps\/JSONs\/Blocks_32_32.json"
+         "source":"..\/TileSets\/Blocks_32_32.json"
         }],
  "tilewidth":8,
  "type":"map",
