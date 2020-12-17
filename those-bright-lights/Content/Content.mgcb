@@ -607,6 +607,26 @@
 /processorParam:Quality=Best
 /build:Audio/Sound_Effects/Shot2.wav
 
+#begin Entities/Map/AlphaMap.json
+/importer:
+/processor:
+/build:Entities/Map/AlphaMap.json
+
+#begin Entities/Map/AlphaMapCC.json
+/importer:
+/processor:
+/build:Entities/Map/AlphaMapCC.json
+
+#begin Entities/Spaceship/spaceship.json
+/importer:
+/processor:
+/build:Entities/Spaceship/spaceship.json
+
+#begin Entities/Spaceship/spaceshipC.json
+/importer:
+/processor:
+/build:Entities/Spaceship/spaceshipC.json
+
 #begin Font/Font.spritefont
 /importer:FontDescriptionImporter
 /processor:LocalizedFontProcessor
