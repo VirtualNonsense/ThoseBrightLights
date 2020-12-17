@@ -39,7 +39,7 @@ namespace SE_Praktikum.Services.Factories
                 var title = array[array.Count() - 1];
                 try
                 {
-                    tileSets.Add(new TileSet(_contentManager.Load<Texture2D>($"Artwork/Tilemaps/PNGs/{title}"), blueprint.TileWidth, blueprint.TileHeight, null, tileSet.FirstGId));
+                    tileSets.Add(new TileSet(_contentManager.Load<Texture2D>($"Artwork/Tilemaps/{title}"), blueprint.TileWidth, blueprint.TileHeight, null, tileSet.FirstGId));
                 }
                 catch (ContentLoadException e)
                 {
