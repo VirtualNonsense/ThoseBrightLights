@@ -174,51 +174,51 @@
  "tilesets":[
         {
          "firstgid":1,
-         "source":"CollisionBlocks.json"
+         "source":"..\/..\/..\/Artwork\/Tilemaps\/JSONs\/CollisionBlocks.json"
         }, 
         {
          "firstgid":65,
-         "source":"TileSet_Space.json"
+         "source":"..\/..\/..\/Artwork\/Tilemaps\/JSONs\/TileSet_Space.json"
         }, 
         {
          "firstgid":129,
-         "source":"JupiterObject.json"
+         "source":"..\/..\/..\/Artwork\/Tilemaps\/JSONs\/JupiterObject.json"
         }, 
         {
          "firstgid":193,
-         "source":"Sun1.json"
+         "source":"..\/..\/..\/Artwork\/Tilemaps\/JSONs\/Sun1.json"
         }, 
         {
          "firstgid":257,
-         "source":"MarsObject.json"
+         "source":"..\/..\/..\/Artwork\/Tilemaps\/JSONs\/MarsObject.json"
         }, 
         {
          "firstgid":321,
-         "source":"EarthObject.json"
+         "source":"..\/..\/..\/Artwork\/Tilemaps\/JSONs\/EarthObject.json"
         }, 
         {
          "firstgid":385,
-         "source":"Venus.json"
+         "source":"..\/..\/..\/Artwork\/Tilemaps\/JSONs\/Venus.json"
         }, 
         {
          "firstgid":449,
-         "source":"MerkurObject.json"
+         "source":"..\/..\/..\/Artwork\/Tilemaps\/JSONs\/MerkurObject.json"
         }, 
         {
          "firstgid":513,
-         "source":"UranusObject.json"
+         "source":"..\/..\/..\/Artwork\/Tilemaps\/JSONs\/UranusObject.json"
         }, 
         {
          "firstgid":577,
-         "source":"NeptunObject.json"
+         "source":"..\/..\/..\/Artwork\/Tilemaps\/JSONs\/NeptunObject.json"
         }, 
         {
          "firstgid":641,
-         "source":"SaturnObject.json"
+         "source":"..\/..\/..\/Artwork\/Tilemaps\/JSONs\/SaturnObject.json"
         }, 
         {
          "firstgid":705,
-         "source":"Tardis.json"
+         "source":"..\/..\/..\/Artwork\/Tilemaps\/JSONs\/Tardis.json"
         }],
  "tilewidth":32,
  "type":"map",
