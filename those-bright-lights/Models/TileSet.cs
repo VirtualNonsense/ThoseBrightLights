@@ -118,7 +118,8 @@ using System.Collections.Generic;
         {
             if (_hitBoxDict == null)
             {
-                _logger.Warn("Hitbox does not exist");
+                // logging is quite slow
+                // _logger.Warn("Hitbox does not exist");
                 return null;
             }
 
