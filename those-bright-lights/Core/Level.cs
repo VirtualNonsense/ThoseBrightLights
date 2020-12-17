@@ -133,8 +133,8 @@ namespace SE_Praktikum.Core
         {
             
             //TODO: try to load the json map via the contentmanager
-            var map = _mapFactory.LoadMap(JsonConvert.DeserializeObject<LevelBlueprint>(File.ReadAllText(@".\Content\MetaData\Level\AlphaLevel\AlphaMap.json")));
-            // var map = _mapFactory.LoadMap(JsonConvert.DeserializeObject<LevelBlueprint>(File.ReadAllText(@".\Content\Level\AlphaLevel\AlphaMap.json")));
+            // var map = _mapFactory.LoadMap(JsonConvert.DeserializeObject<LevelBlueprint>(File.ReadAllText(@".\Content\MetaData\Level\AlphaLevel\AlphaMap.json")));
+            var map = _mapFactory.LoadMap(JsonConvert.DeserializeObject<LevelBlueprint>(File.ReadAllText(@".\Content\MetaData\Level\TestLevel\TestLevel.json")));
             _collisionLayer = map.TopLayer;
             //TODO: Set player level to _map.TopLayer
             

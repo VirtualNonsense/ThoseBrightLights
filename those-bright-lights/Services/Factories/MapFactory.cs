@@ -35,10 +35,11 @@ namespace SE_Praktikum.Services.Factories
             List<TileSet> tileSets = new List<TileSet>();
             foreach (var tileSet in blueprint.tilesets)
             {
-                var title = tileSet.Source.Split(".")[0];
+                var array = tileSet.Source.Split(".json")[0].Split("/");
+                var title = array[array.Count() - 1];
                 try
                 {
-                    tileSets.Add(new TileSet(_contentManager.Load<Texture2D>($"Artwork/Tilemaps/{title}"), blueprint.TileWidth, blueprint.TileHeight, null, tileSet.FirstGId));
+                    tileSets.Add(new TileSet(_contentManager.Load<Texture2D>($"Artwork/Tilemaps/PNGs/{title}"), blueprint.TileWidth, blueprint.TileHeight, null, tileSet.FirstGId));
                 }
                 catch (ContentLoadException e)
                 {
