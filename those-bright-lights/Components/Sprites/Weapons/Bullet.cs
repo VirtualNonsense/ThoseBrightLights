@@ -58,6 +58,7 @@ namespace SE_Praktikum.Components.Sprites.Weapons
             switch (other)
             {
                 default:
+                    if (Parent == other) return;
                     IsRemoveAble = true;
                     InvokeExplosion();
                     break;
