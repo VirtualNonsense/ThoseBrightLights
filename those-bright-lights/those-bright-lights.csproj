@@ -13,10 +13,16 @@
     <ItemGroup>
         <None Remove="Icon.ico" />
         <None Remove="Icon.bmp" />
-        <None Update="Content\Level\AlphaLevel\AlphaLevel.json">
+        <None Update="Content\Entities\Map\AlphaMap.json">
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
-        <None Update="Content\Level\AlphaLevel\AlphaMap.json">
+        <None Update="Content\Entities\Map\AlphaMapCC.json">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Update="Content\Entities\Spaceship\spaceship.json">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Update="Content\Entities\Spaceship\spaceshipC.json">
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
         <None Update="Content\Level\AnimationLevel\AnimationLevel.json">
