@@ -21,11 +21,18 @@ namespace SE_Praktikum.Components.Sprites
         public Enemy(AnimationHandler animationHandler, float speed = 3, float health = 50, SoundEffect impactSound = null) : base(animationHandler, speed, health, impactSound)
         {
             _logger = LogManager.GetCurrentClassLogger();
+            _shootIntervall = 2000;
         }
         
         
         public override void Update(GameTime gameTime)
         {
+            _timeSinceLastShot += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+            if (_timeSinceLastShot >= _shootIntervall)
+            {
+                _canShoot = true;
+                _timeSinceLastShot = 0;
+            }
             Vector2 velocity = Vector2.Zero;
             if (_hasToShoot)
             {
