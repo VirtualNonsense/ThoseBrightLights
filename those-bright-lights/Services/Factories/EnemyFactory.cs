@@ -36,6 +36,12 @@ namespace SE_Praktikum.Services.Factories
             var animationSettings = new AnimationSettings(1,isPlaying:false);
             var e = new Enemy(_animationHandlerFactory.GetAnimationHandler(tileSet,animationSettings), impactSound:impactSound);
             e.Position = new Vector2(100,50);
+            e.ViewBox = new Polygon(Vector2.Zero, Vector2.Zero, 0, new List<Vector2>
+            {
+                new Vector2(0,0),
+                new Vector2(-300,-100),
+                new Vector2(-300,100),
+            });
             e.AddWeapon(_weaponFactory.GetLasergun(contentManager));
 
             return e;

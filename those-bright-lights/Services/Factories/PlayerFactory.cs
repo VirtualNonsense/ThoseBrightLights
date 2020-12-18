@@ -24,7 +24,16 @@ namespace SE_Praktikum.Services.Factories
         public Player GetInstance(ContentManager contentManager)
         {
             var texture2D = contentManager.Load<Texture2D>("Artwork/Actors/spaceship");
-            var tileSet = new TileSet(texture2D);
+            var tileSet = new TileSet(texture2D, new []
+            {
+                new Polygon(Vector2.Zero, Vector2.Zero, 0, new List<Vector2>
+                {
+                    new Vector2(-32.5f, 32.5f),
+                    new Vector2(32.5f, 32.5f),
+                    new Vector2(32.5f, -32.5f),
+                    new Vector2(-32.5f, -32.5f),
+                }), 
+            });
             var animationSettings = new AnimationSettings(1,isPlaying:false);
             var input = _inputFactory.GetInstance();
             var p = new Player(_animationHandlerFactory.GetAnimationHandler(tileSet,animationSettings),input);

@@ -53,6 +53,8 @@ namespace SE_Praktikum.Core
             {
                 if(actor.IsCollideAble)
                     _gameEngine.Render(actor.HitBox);
+                if(actor is Enemy e)
+                    _gameEngine.Render(e.ViewBox);
             }
             _gameEngine.Render(_components);
         }

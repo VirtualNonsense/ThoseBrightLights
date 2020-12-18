@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Input;
 using NLog;
+using SE_Praktikum.Components.Sprites.Weapons;
 using SE_Praktikum.Models;
 using SE_Praktikum.Services;
 
@@ -11,7 +12,11 @@ namespace SE_Praktikum.Components.Sprites
     {
         private Logger _logger;
         private bool _shot = false;
-        private bool _hasToShoot;
+        public Polygon ViewBox;
+        private float _shootIntervall;
+        private float _timeSinceLastShot = 0;
+        private bool _canShoot;
+        
 
         public Enemy(AnimationHandler animationHandler, float speed = 3, float health = 50, SoundEffect impactSound = null) : base(animationHandler, speed, health, impactSound)
         {
@@ -30,6 +35,9 @@ namespace SE_Praktikum.Components.Sprites
            
             
             base.Update(gameTime);
+            ViewBox.Position = Position;
+            ViewBox.Rotation = Rotation;
+            ViewBox.Layer = Layer;
         }
 
         
