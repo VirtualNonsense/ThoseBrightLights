@@ -1,7 +1,11 @@
 ﻿using System;
+using System.IO;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
+using Newtonsoft.Json;
 using NLog;
 using SE_Praktikum.Models;
+using SE_Praktikum.Models.Tiled;
 
 namespace SE_Praktikum.Services.Factories
 {
@@ -19,9 +23,11 @@ namespace SE_Praktikum.Services.Factories
             _logger = LogManager.GetCurrentClassLogger();
         }
 
-        public TileSet GetInstance()
+        public TileSet GetInstance(string jsonpath)
         {
-            throw new NotImplementedException();
+            var TileSet = JsonConvert.DeserializeObject<TileSetBlueprint>(File.ReadAllText(jsonpath));
+            var Texture = _contentManager.Load<Texture2D>(TileSet.image);
+
         }
     }
 }
