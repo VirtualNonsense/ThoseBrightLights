@@ -1,4 +1,6 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Input;
 using NLog;
@@ -34,12 +36,6 @@ namespace SE_Praktikum.Components.Sprites
                 _timeSinceLastShot = 0;
             }
             Vector2 velocity = Vector2.Zero;
-            if (_hasToShoot)
-            {
-                InvokeOnShoot(velocity);
-            }
-            
-           
             
             base.Update(gameTime);
             ViewBox.Position = Position;
@@ -54,6 +50,35 @@ namespace SE_Praktikum.Components.Sprites
             _logger.Info(Health);
             Health -= damage;
             base.InvokeOnTakeDamage(damage);
+        }
+        
+
+        protected override bool InteractAble(Actor other)
+        {
+            switch (other)
+            {
+                case Player p:
+                    foreach (var polygon in p.HitBox)
+                    {
+                        if (ViewBox.Overlap(polygon))
+                        {
+                            InvokeOnShootPlayer(Velocity,p);
+                            return true;
+                        }
+                    }
+
+                    break;
+            }
+            return base.InteractAble(other);
+        }
+        
+
+        protected override void InvokeOnShootPlayer(Vector2 velocity, Actor player)
+        {
+            if (!_canShoot)
+                return;
+            _canShoot = false;
+            base.InvokeOnShootPlayer(velocity, player);
         }
     }
 }

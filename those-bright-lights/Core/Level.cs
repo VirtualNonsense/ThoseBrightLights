@@ -162,6 +162,11 @@ namespace SE_Praktikum.Core
             enemy.Layer = player.Layer;
             enemy.X = 200;
             enemy.Y = 0;
+            enemy.OnShootPlayer += (sender, args) =>
+            {
+                if (!(args is LevelEvent e)) return;
+                OnLevelEvent(e);
+            };
             _components.Add(enemy);
             
             _components.AddRange(map);

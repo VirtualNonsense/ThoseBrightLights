@@ -25,6 +25,8 @@ namespace SE_Praktikum.Components.Sprites
         public event EventHandler OnDie;
         public event EventHandler OnPickUpWeapon;
         public event EventHandler OnTakeDamage;
+
+        public event EventHandler OnShootPlayer;
         
         
         #endregion
@@ -36,6 +38,7 @@ namespace SE_Praktikum.Components.Sprites
             Speed = speed;
             Health = health;
             _weapons = new List<Weapon>();
+            _logger = LogManager.GetCurrentClassLogger();
         }
         
 
@@ -56,6 +59,18 @@ namespace SE_Praktikum.Components.Sprites
             if (e.Bullet is null)
                 return;
             OnShoot?.Invoke(this,e);
+        }
+
+        protected virtual void InvokeOnShootPlayer(Vector2 velocity, Actor player)
+        {
+            Vector2 vector = player.Position - Position;
+            float rotation = (float)Math.Asin(vector.Y / vector.Length());
+            _logger.Trace(rotation);
+            var e = new LevelEvent.ShootBullet
+            {Bullet = _weapons[_currentWeapon].GetBullet(velocity, Position, rotation, this)};
+            if (e.Bullet is null)
+                return;
+            OnShootPlayer?.Invoke(this,e);
         }
 
         public virtual void AddWeapon(Weapon weapon)
