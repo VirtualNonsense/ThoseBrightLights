@@ -55,12 +55,23 @@ namespace SE_Praktikum.Components.Sprites
         public event EventHandler<EventArgs> OnDeath;
         #endregion
 
-        public virtual void InterAct(Actor other)
+        public void InterAct(Actor other)
         {
-            if (this == other || !(CollisionEnabled && IsCollideAble && other.CollisionEnabled && other.IsCollideAble)) return;
-            if (!Collide(other)) return;
-            ExecuteInteraction(other);
-            other.ExecuteInteraction(this);
+            if(InteractAble(other))
+                ExecuteInteraction(other);
+            
+            if(other.InteractAble(this))
+                other.ExecuteInteraction(this);
+        }
+
+        /// <summary>
+        /// This method checks whether the other has an impact on this
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        protected virtual bool InteractAble(Actor other)
+        {
+            return this != other && (CollisionEnabled && IsCollideAble && other.CollisionEnabled && other.IsCollideAble) && Collide(other);
         }
         
         /// <summary>
