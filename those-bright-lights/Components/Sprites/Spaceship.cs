@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Input;
 using NLog;
 using SE_Praktikum.Models;
 using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Graphics;
 using SE_Praktikum.Extensions;
 
 namespace SE_Praktikum.Components.Sprites
@@ -19,7 +20,6 @@ namespace SE_Praktikum.Components.Sprites
         private Logger _logger;
         protected KeyboardState CurrentKey;
         protected KeyboardState PreviousKey;
-        private float _rotation;
         protected bool FlippedHorizontal;
         
 
@@ -34,21 +34,24 @@ namespace SE_Praktikum.Components.Sprites
 
         public override float Rotation
         {
-            get => _rotation;
+            get => base.Rotation;
             set
             {
-                if (Math.Abs(MathExtensions.RadToDeg(value)) > 90 && !FlippedHorizontal)
+                base.Rotation = value;
+                if (Rotation < 3 * Math.PI/2 && Rotation > Math.PI/2)
                 {
+                    if (FlippedHorizontal) return;
                     HitBox.MirrorHorizontal(Position);
+                    _animationHandler.SpriteEffects = SpriteEffects.FlipVertically;
                     FlippedHorizontal = true;
                 }
-                else if (Math.Abs(MathExtensions.RadToDeg(value)) < 90 && FlippedHorizontal)
+                else if (FlippedHorizontal)
                 {
                     HitBox.MirrorHorizontal(Position);
+                    _animationHandler.SpriteEffects = SpriteEffects.None;
                     FlippedHorizontal = false;
                 }
 
-                _rotation = value;
             }
         }
 
