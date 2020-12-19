@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Input;
 using NLog;
 using SE_Praktikum.Components.Sprites.Weapons;
+using SE_Praktikum.Extensions;
 using SE_Praktikum.Models;
 using SE_Praktikum.Services;
 
@@ -19,7 +20,26 @@ namespace SE_Praktikum.Components.Sprites
         private float _timeSinceLastShot = 0;
         private bool _canShoot;
         private InterAction _i;
-        
+
+
+        public override float Rotation
+        {
+            get => base.Rotation;
+            set
+            {
+                if (Math.Abs(MathExtensions.RadToDeg(value)) > 90 && !FlippedHorizontal)
+                {
+                    HitBox.MirrorHorizontal(Position);
+                }
+                else if (Math.Abs(MathExtensions.RadToDeg(value)) < 90 && FlippedHorizontal)
+                {
+                    HitBox.MirrorHorizontal(Position);
+                }
+
+                base.Rotation = value;
+            }
+        }
+
 
         public Enemy(AnimationHandler animationHandler, float speed = 3, float health = 50, SoundEffect impactSound = null) : base(animationHandler, speed, health, impactSound)
         {

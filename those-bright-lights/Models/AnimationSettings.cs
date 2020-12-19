@@ -43,7 +43,7 @@ namespace SE_Praktikum.Models
         }
         
         public AnimationSettings(int frames = 1, float duration = 100f, float layer = 1, bool isLooping = false,  Color? color = null, 
-                                 float rotation = 0f, float scale = 1f, float opacity = 1, bool isPlaying = true)
+                                 float rotation = 0f, float scale = 1f, float opacity = 1, bool isPlaying = true, SpriteEffects? spriteEffects = null)
         {
             Layer = layer;
             IsLooping = isLooping;
@@ -52,7 +52,7 @@ namespace SE_Praktikum.Models
             {
                 UpdateList.Add((i,duration));
             }     
-            SpriteEffects = SpriteEffects.None;
+            SpriteEffects = spriteEffects??SpriteEffects.None;
             Color = color??Color.White;
             Rotation = rotation;
             Scale = scale;

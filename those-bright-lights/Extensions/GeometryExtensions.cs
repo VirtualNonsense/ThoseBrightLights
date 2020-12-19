@@ -56,18 +56,48 @@ namespace SE_Praktikum.Extensions
             return new Rectangle((int)minX, (int)minY, (int) (maxX-minX), (int) (maxY-minY));
         }
 
-        public static Polygon MirrorHorizontal(this Polygon p)
+        public static Polygon[] MirrorHorizontal(this Polygon[] polygonArray, Vector2 mirrorPoint)
+        {
+            var newPolygonArray = new Polygon[polygonArray.Length];
+            for (int i = 0; i < newPolygonArray.Length; i++)
+            {
+                newPolygonArray[i] = polygonArray[i].MirrorSingleHorizontal(mirrorPoint);
+            }
+
+            return newPolygonArray;
+        }
+        
+        public static Polygon[] MirrorVertical(this Polygon[] polygonArray, Vector2 mirrorPoint)
+        {
+            var newPolygonArray = new Polygon[polygonArray.Length];
+            for (int i = 0; i < newPolygonArray.Length; i++)
+            {
+                newPolygonArray[i] = polygonArray[i].MirrorSingleVertical(mirrorPoint);
+            }
+
+            return newPolygonArray;
+        }
+        
+        
+
+        public static Polygon MirrorSingleHorizontal(this Polygon p, Vector2 mirrorPoint)
         {
             var mirroredPolygon = new Polygon(p.Position, p.Origin, p.Layer, p.Vertices, p.Color, p.DrawAble);
             var newVertices = mirroredPolygon.Vertices.Select(point => new Vector2(-point.X, point.Y)).ToList();
             mirroredPolygon.Vertices = newVertices;
+            mirroredPolygon.Position =
+                new Vector2(mirroredPolygon.Position.X - 2 * (mirroredPolygon.Position.X - mirrorPoint.X),
+                    mirroredPolygon.Position.Y);
             return mirroredPolygon;
         }
-        public static Polygon MirrorVertical(this Polygon p)
+        public static Polygon MirrorSingleVertical(this Polygon p, Vector2 mirrorPoint)
         {
             var mirroredPolygon = new Polygon(p.Position, p.Origin, p.Layer, p.Vertices, p.Color, p.DrawAble);
             var newVertices = mirroredPolygon.Vertices.Select(point => new Vector2(point.X, -point.Y)).ToList();
             mirroredPolygon.Vertices = newVertices;
+            mirroredPolygon.Position =
+                new Vector2(mirroredPolygon.Position.X,
+                    mirroredPolygon.Position.Y - 2 * (mirroredPolygon.Position.Y - mirrorPoint.Y));
             return mirroredPolygon;
         }
     }

@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Input;
 using NLog;
 using SE_Praktikum.Models;
 using Microsoft.Xna.Framework.Audio;
+using SE_Praktikum.Extensions;
 
 namespace SE_Praktikum.Components.Sprites
 {
@@ -18,6 +19,9 @@ namespace SE_Praktikum.Components.Sprites
         private Logger _logger;
         protected KeyboardState CurrentKey;
         protected KeyboardState PreviousKey;
+        private float _rotation;
+        protected bool FlippedHorizontal;
+        
 
 
         #region Events
@@ -26,9 +30,27 @@ namespace SE_Praktikum.Components.Sprites
         public event EventHandler OnPickUpWeapon;
         public event EventHandler OnTakeDamage;
 
-        
-        
         #endregion
+
+        public override float Rotation
+        {
+            get => _rotation;
+            set
+            {
+                if (Math.Abs(MathExtensions.RadToDeg(value)) > 90 && !FlippedHorizontal)
+                {
+                    HitBox.MirrorHorizontal(Position);
+                    FlippedHorizontal = true;
+                }
+                else if (Math.Abs(MathExtensions.RadToDeg(value)) < 90 && FlippedHorizontal)
+                {
+                    HitBox.MirrorHorizontal(Position);
+                    FlippedHorizontal = false;
+                }
+
+                _rotation = value;
+            }
+        }
 
 
         public Spaceship(AnimationHandler animationHandler, float speed = 3, float health = 100, SoundEffect impactSound = null) : base(
