@@ -12,8 +12,8 @@ namespace SE_Praktikum.Components.Sprites
 {
     public abstract class Spaceship : Actor
     {
-        private List<Weapon> _weapons;
-        private int _currentWeapon;
+        protected List<Weapon> Weapons;
+        protected int CurrentWeapon;
         protected float Speed;
         private Logger _logger;
         protected KeyboardState CurrentKey;
@@ -26,7 +26,6 @@ namespace SE_Praktikum.Components.Sprites
         public event EventHandler OnPickUpWeapon;
         public event EventHandler OnTakeDamage;
 
-        public event EventHandler OnShootPlayer;
         
         
         #endregion
@@ -37,12 +36,19 @@ namespace SE_Praktikum.Components.Sprites
         {
             Speed = speed;
             Health = health;
-            _weapons = new List<Weapon>();
+            Weapons = new List<Weapon>();
             _logger = LogManager.GetCurrentClassLogger();
         }
-        
 
-       
+        public override void Update(GameTime gameTime)
+        {
+            foreach (var weapon in Weapons)
+            {
+                weapon.Update(gameTime);
+            }
+            base.Update(gameTime);
+        }
+
 
         protected virtual void InvokeOnTakeDamage(float damage)
         {
@@ -53,30 +59,30 @@ namespace SE_Praktikum.Components.Sprites
         {
             OnDie?.Invoke(this, EventArgs.Empty);
         }
-        protected virtual void InvokeOnShoot(Vector2 velocity)
+        protected virtual void InvokeOnShoot(Bullet b)
         {
-            var e = new LevelEvent.ShootBullet {Bullet = _weapons[_currentWeapon].GetBullet(velocity,Position,Rotation, this)};
+            var e = new LevelEvent.ShootBullet {Bullet = b};
             if (e.Bullet is null)
                 return;
             OnShoot?.Invoke(this,e);
         }
 
-        protected virtual void InvokeOnShootPlayer(Vector2 velocity, Actor player)
-        {
-            Vector2 vector = player.Position - Position;
-            float rotation = (float)Math.Asin(vector.Y / vector.Length());
-            _logger.Trace(rotation);
-            var e = new LevelEvent.ShootBullet
-            {Bullet = _weapons[_currentWeapon].GetBullet(velocity, Position, rotation, this)};
-            if (e.Bullet is null)
-                return;
-            OnShootPlayer?.Invoke(this,e);
-        }
+        // protected virtual void InvokeOnShootPlayer(Vector2 velocity, Actor player)
+        // {
+        //     Vector2 vector = player.Position - Position;
+        //     float rotation = (float)Math.Asin(vector.Y / vector.Length());
+        //     _logger.Trace(rotation);
+        //     var e = new LevelEvent.ShootBullet
+        //     {Bullet = _weapons[_currentWeapon].GetBullet(velocity, Position, rotation, this)};
+        //     if (e.Bullet is null)
+        //         return;
+        //     OnShootPlayer?.Invoke(this,e);
+        // }
 
         public virtual void AddWeapon(Weapon weapon)
         {
-            _weapons.Add(weapon);
-            _currentWeapon = _weapons.Count - 1;
+            Weapons.Add(weapon);
+            CurrentWeapon = Weapons.Count - 1;
             OnPickUpWeapon?.Invoke(this, EventArgs.Empty);
         }
 
