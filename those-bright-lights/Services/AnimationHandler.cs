@@ -74,11 +74,18 @@ namespace SE_Praktikum.Services
             get => _settings.Rotation;
             set
             {
-                _settings.Rotation = value;
+                if (Math.Abs(value - _settings.Rotation) < float.Epsilon) return;
+                if (value >= 2 * Math.PI)
+                    _settings.Rotation = 0;
+                else if (value < 0)
+                    _settings.Rotation = (float) (2 * Math.PI - float.Epsilon);
+                else
+                    _settings.Rotation = value;
+                _logger.Debug(_settings.Rotation);
                 if (CurrentHitBox==null) return;
                 foreach (var polygon in CurrentHitBox)
                 {
-                    polygon.Rotation = value;
+                    polygon.Rotation = _settings.Rotation;
                 }
             }
         }
