@@ -32,7 +32,7 @@ namespace SE_Praktikum.Components.Sprites.Weapons
             if (MidAirSoundCooldown < TimeSinceUsedMidAir)
             {
                 TimeSinceUsedMidAir = 0;
-                MidAirSound?.Play();
+                //MidAirSound?.Play();
             }
             base.Update(gameTime);
         }
