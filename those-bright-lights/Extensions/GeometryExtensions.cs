@@ -55,5 +55,20 @@ namespace SE_Praktikum.Extensions
             var maxY = polygon.Vertices2D.Max(vector2 => vector2.Y);
             return new Rectangle((int)minX, (int)minY, (int) (maxX-minX), (int) (maxY-minY));
         }
+
+        public static Polygon MirrorHorizontal(this Polygon p)
+        {
+            var mirroredPolygon = new Polygon(p.Position, p.Origin, p.Layer, p.Vertices, p.Color, p.DrawAble);
+            var newVertices = mirroredPolygon.Vertices.Select(point => new Vector2(-point.X, point.Y)).ToList();
+            mirroredPolygon.Vertices = newVertices;
+            return mirroredPolygon;
+        }
+        public static Polygon MirrorVertical(this Polygon p)
+        {
+            var mirroredPolygon = new Polygon(p.Position, p.Origin, p.Layer, p.Vertices, p.Color, p.DrawAble);
+            var newVertices = mirroredPolygon.Vertices.Select(point => new Vector2(point.X, -point.Y)).ToList();
+            mirroredPolygon.Vertices = newVertices;
+            return mirroredPolygon;
+        }
     }
 }
