@@ -116,6 +116,15 @@ namespace SE_Praktikum.Components.Sprites
                     }
                     break;
                 case InterAction.BodyCollision:
+                    switch (other)
+                    {
+                        default:
+                            if (other.Parent == this) return;
+                            Health -= other.Damage;
+                            _logger.Debug($"health {Health}");
+                            _impactSound?.Play();
+                            break;
+                    }
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
