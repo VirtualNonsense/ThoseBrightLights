@@ -31,14 +31,14 @@ namespace SE_Praktikum.Components.Sprites.Weapons
         public override void Update(GameTime gameTime)
         {
             _elapsedTime += gameTime.ElapsedGameTime.Milliseconds / 1000f;
-            _timeSinceUsedMidAir += gameTime.ElapsedGameTime.Milliseconds;
+            TimeSinceUsedMidAir += gameTime.ElapsedGameTime.Milliseconds;
             Position = Movement(_spaceShipVelocity,_elapsedTime);
             _propulsionAnimationHandler.Position =  Position + _offSet; 
             _propulsionAnimationHandler.Update(gameTime);
-            if (_midAirSoundCooldown < _timeSinceUsedMidAir)
+            if (MidAirSoundCooldown < TimeSinceUsedMidAir)
             {
-                _timeSinceUsedMidAir = 0;
-                _midAirSound?.Play();
+                TimeSinceUsedMidAir = 0;
+                MidAirSound?.Play();
             }
             base.Update(gameTime);
         }

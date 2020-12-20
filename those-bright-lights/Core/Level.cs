@@ -53,6 +53,8 @@ namespace SE_Praktikum.Core
             {
                 if(actor.IsCollideAble)
                     _gameEngine.Render(actor.HitBox);
+                if(actor is Enemy e)
+                    _gameEngine.Render(e.ViewBox);
             }
             _gameEngine.Render(_components);
         }
@@ -160,6 +162,11 @@ namespace SE_Praktikum.Core
             enemy.Layer = player.Layer;
             enemy.X = 200;
             enemy.Y = 0;
+            enemy.OnShoot += (sender, args) =>
+            {
+                if (!(args is LevelEvent e)) return;
+                OnLevelEvent(e);
+            };
             _components.Add(enemy);
             
             _components.AddRange(map);

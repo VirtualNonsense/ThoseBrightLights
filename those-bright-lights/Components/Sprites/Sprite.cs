@@ -65,7 +65,7 @@ namespace SE_Praktikum.Components.Sprites
       set => _animationHandler.Layer = value;
     }
 
-    public float Rotation
+    public virtual float Rotation
     {
       get => _animationHandler.Rotation;
       set => _animationHandler.Rotation = value;

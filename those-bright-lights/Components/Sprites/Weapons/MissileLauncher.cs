@@ -36,6 +36,7 @@ namespace SE_Praktikum.Components.Sprites.Weapons
 
         public override Bullet GetBullet(Vector2 velocitySpaceship, Vector2 positionSpaceship,float rotation, Actor parent)
         {
+            if (!TryShoot()) return null;
             if (_ammo <= 0)
             {
                 _logger.Warn("No Ammo left!");
