@@ -113,7 +113,14 @@ namespace SE_Praktikum.Services
         public float Scale
         {
             get => _settings.Scale;
-            set => _settings.Scale = value;
+            set
+            {
+                _settings.Scale = value;
+                foreach (var polygon in CurrentHitBox)
+                {
+                    polygon.Scale = value;
+                }
+            }
         }
 
         /// <summary>
@@ -260,6 +267,8 @@ namespace SE_Praktikum.Services
                     polygon.Rotation = Rotation;
 
                     polygon.Layer = Layer;
+
+                    polygon.Scale = Scale;
 
 
             }
