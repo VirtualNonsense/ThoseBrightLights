@@ -82,7 +82,7 @@ namespace SE_Praktikum.Extensions
 
         public static Polygon MirrorSingleHorizontal(this Polygon p, Vector2 mirrorPoint)
         {
-            var mirroredPolygon = new Polygon(p.Position, p.Origin, p.Layer, p.Vertices, p.Color, p.DrawAble);
+            var mirroredPolygon = (Polygon) p.Clone();
             var newVertices = mirroredPolygon.Vertices.Select(point => new Vector2(-point.X, point.Y)).ToList();
             mirroredPolygon.Vertices = newVertices;
             mirroredPolygon.Position =
@@ -92,7 +92,7 @@ namespace SE_Praktikum.Extensions
         }
         public static Polygon MirrorSingleVertical(this Polygon p, Vector2 mirrorPoint)
         {
-            var mirroredPolygon = new Polygon(p.Position, p.Origin, p.Layer, p.Vertices, p.Color, p.DrawAble);
+            var mirroredPolygon = (Polygon) p.Clone();
             var newVertices = mirroredPolygon.Vertices.Select(point => new Vector2(point.X, -point.Y)).ToList();
             mirroredPolygon.Vertices = newVertices;
             mirroredPolygon.Position =
