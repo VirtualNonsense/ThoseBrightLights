@@ -33,7 +33,7 @@ namespace SE_Praktikum.Services.Factories
                     new Vector2(-32.5f, -32.5f),
                 }), 
             });
-            var animationSettings = new AnimationSettings(1,isPlaying:false, spriteEffects: SpriteEffects.FlipHorizontally);
+            var animationSettings = new AnimationSettings(1,isPlaying:false);
             var e = new Enemy(_animationHandlerFactory.GetAnimationHandler(tileSet,animationSettings), impactSound:impactSound);
             e.Position = new Vector2(100,50);
             e.ViewBox = new Polygon(Vector2.Zero, Vector2.Zero, 0, new List<Vector2>
