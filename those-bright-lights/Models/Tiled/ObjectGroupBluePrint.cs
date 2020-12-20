@@ -4,7 +4,7 @@ using System.Text;
 
 namespace SE_Praktikum.Models.Tiled
 {
-    class ObjectGroupBluePrint
+    public class ObjectGroupBluePrint
     {
         public string draworder;
         public int id;
@@ -14,6 +14,7 @@ namespace SE_Praktikum.Models.Tiled
         public bool visible;
         public float x;
         public float y;
+        public ObjectBluePrint[] objects;
 
 
         
