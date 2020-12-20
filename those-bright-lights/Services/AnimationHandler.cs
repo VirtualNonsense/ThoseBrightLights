@@ -79,10 +79,7 @@ namespace SE_Praktikum.Services
                     _settings.Rotation = value > 0? 
                         (float) (value  % (2 * Math.PI)) : 
                         (float)(2 * Math.PI + value % (2 * Math.PI));
-                
-                
-                _logger.Debug(_settings.Rotation);
-                if (CurrentHitBox==null) return;
+                    if (CurrentHitBox==null) return;
                 foreach (var polygon in CurrentHitBox)
                 {
                     polygon.Rotation = _settings.Rotation;
