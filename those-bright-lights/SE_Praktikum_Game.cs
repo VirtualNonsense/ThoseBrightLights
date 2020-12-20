@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -152,16 +153,25 @@ namespace SE_Praktikum
         {
             
             if(!polygon.DrawAble) return;
+            var type = PrimitiveType.TriangleList;
             var effect = Camera.GetCameraEffectForPrimitives();
             foreach (var pass in effect.CurrentTechnique.Passes)
             {
                 pass.Apply();
                 effect.GraphicsDevice.DrawUserIndexedPrimitives(
-                    PrimitiveType.TriangleList,
+                    type,
                     polygon.DrawAbleVertices, 
                     0,
                     polygon.DrawAbleVertices.Length,
                     polygon.VertexDrawingOrder, 
+                    0,
+                    polygon.TriangleCount);
+                effect.GraphicsDevice.DrawUserIndexedPrimitives(
+                    type,
+                    polygon.DrawAbleVertices, 
+                    0,
+                    polygon.DrawAbleVertices.Length,
+                    polygon.VertexDrawingOrder.Reverse().ToArray(), 
                     0,
                     polygon.TriangleCount);
             }
