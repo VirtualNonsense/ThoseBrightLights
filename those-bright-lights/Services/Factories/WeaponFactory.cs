@@ -24,7 +24,17 @@ namespace SE_Praktikum.Services.Factories
         public MissileLauncher GetMissileLauncher(ContentManager contentManager)
         {
             Texture2D texture = contentManager.Load<Texture2D>("Artwork/projectiles/missile");
-            TileSet textureTileSet = new TileSet(texture);
+            TileSet textureTileSet = new TileSet(texture, new []
+            {
+                // Origin must be Vector2.Zero for some reason i have to investigate.....
+                new Polygon(Vector2.Zero, new Vector2(0, 0), 0, new List<Vector2>
+                {
+                    new Vector2(-12, 8),
+                    new Vector2(12, 8),
+                    new Vector2(12, -8),
+                    new Vector2(-12, -8),
+                }), 
+            });
             Texture2D propulsion = contentManager.Load<Texture2D>("Artwork/projectiles/missile_propulsion_15_15");
             TileSet propulsionTileSet = new TileSet(propulsion,15,15, null);
             SoundEffect flightEffect = null; //contentManager.Load<SoundEffect>("Audio/Sound_Effects/Airborne/Flight_plane_c");

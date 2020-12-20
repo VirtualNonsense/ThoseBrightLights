@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Input;
@@ -16,10 +17,11 @@ namespace SE_Praktikum.Components.Sprites
         private Logger _logger;
         private bool _shot = false;
         public Polygon ViewBox;
-        private float _shootIntervall;
-        private float _timeSinceLastShot = 0;
-        private bool _canShoot;
         private InterAction _i;
+        private Actor _target;
+        protected CooldownAbility ForgetTarget;
+        protected CooldownAbility Shoot;
+        
 
         private bool _hitBoxFlipped = false;
         public override float Rotation
@@ -46,25 +48,37 @@ namespace SE_Praktikum.Components.Sprites
         public Enemy(AnimationHandler animationHandler, float speed = 3, float health = 50, SoundEffect impactSound = null) : base(animationHandler, speed, health, impactSound)
         {
             _logger = LogManager.GetCurrentClassLogger();
-            _shootIntervall = 2000;
+            Shoot = new CooldownAbility(2000, _shootTarget);
             _i = InterAction.None;
+        }
+
+        private void _shootTarget()
+        {
+            float rotation = 0;
+            var vector = _target.Position - Position;
+            if(Math.Abs(vector.X) > Math.Abs(vector.Y)) 
+                rotation = (float)Math.Asin(vector.Y / vector.Length());
+            if(Math.Abs(vector.X) < Math.Abs(vector.Y)) 
+                rotation = (float)Math.Acos(vector.X / vector.Length());
+            // _logger.Trace(rotation);
+            var b =  Weapons[CurrentWeapon].GetBullet(Velocity, Position, rotation, this);
+            InvokeOnShoot(b);
         }
         
         
         public override void Update(GameTime gameTime)
         {
-            _timeSinceLastShot += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-            if (_timeSinceLastShot >= _shootIntervall)
-            {
-                _canShoot = true;
-                _timeSinceLastShot = 0;
-            }
+            Shoot.Update(gameTime);
+            if (_i == InterAction.InView && _target != null)
+                Shoot.Fire();
+            
             Vector2 velocity = Vector2.Zero;
 
             ViewBox.Position = Position;
             ViewBox.Rotation = Rotation;
             ViewBox.Layer = Layer;
             base.Update(gameTime);
+
         }
 
         
@@ -82,13 +96,10 @@ namespace SE_Praktikum.Components.Sprites
             switch (other)
             {
                 case Player p:
-                    foreach (var polygon in p.HitBox)
+                    if (p.HitBox.Any(polygon => ViewBox.Overlap(polygon)))
                     {
-                        if (ViewBox.Overlap(polygon))
-                        {
-                            _i = InterAction.InView;
-                            return true;
-                        }
+                        _i = InterAction.InView;
+                        return true;
                     }
 
                     break;
@@ -101,46 +112,23 @@ namespace SE_Praktikum.Components.Sprites
 
         protected override void ExecuteInteraction(Actor other)
         {
-            switch (_i)
+            switch (other)
             {
-                case InterAction.None:
-                    break;
-                case InterAction.InView:
-                    switch (other)
-                    {
-                        case Player p:
-                            Vector2 vector = p.Position - Position;
-                            float rotation = (float)Math.Asin(vector.Y / vector.Length());
-                            // _logger.Trace(rotation);
-                            var b =  Weapons[CurrentWeapon].GetBullet(Velocity, Position, rotation, this);
-                            InvokeOnShoot(b);
-                            break;
-                    }
-                    break;
-                case InterAction.BodyCollision:
-                    switch (other)
-                    {
-                        default:
-                            if (other.Parent == this) return;
-                            Health -= other.Damage;
-                            _logger.Debug($"health {Health}");
-                            _impactSound?.Play();
-                            break;
-                    }
+                case Player p:
+                    _target = p;
+                    if(_i != InterAction.BodyCollision) return;
+                    Health -= p.Damage;
                     break;
                 default:
-                    throw new ArgumentOutOfRangeException();
+                    if (other.Parent == this) return;
+                    Health -= other.Damage;
+                    _logger.Debug($"health {Health}");
+                    _impactSound?.Play();
+                    break;
             }
         }
 
 
-        // protected override void InvokeOnShootPlayer(Vector2 velocity, Actor player)
-        // {
-        //     if (!_canShoot)
-        //         return;
-        //     _canShoot = false;
-        //     base.InvokeOnShootPlayer(velocity, player);
-        // }
     }
 
     public enum InterAction

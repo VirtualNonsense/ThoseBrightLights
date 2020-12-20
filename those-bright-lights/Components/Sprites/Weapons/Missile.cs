@@ -21,6 +21,7 @@ namespace SE_Praktikum.Components.Sprites.Weapons
             var positionOffset = new Vector2(0,10);
             Position = spaceShipPosition + positionOffset;
             _propulsionAnimationHandler = propulsion;
+            _propulsionAnimationHandler.Origin = new Vector2(_propulsionAnimationHandler.FrameWidth + animationHandler.FrameWidth/2,animationHandler.FrameHeight/2);
             _offSet = new Vector2(-animationHandler.FrameWidth/2-_propulsionAnimationHandler.FrameWidth/2,0);
             Acceleration = 5;
             MaxTime = 5;
@@ -33,7 +34,8 @@ namespace SE_Praktikum.Components.Sprites.Weapons
             _elapsedTime += gameTime.ElapsedGameTime.Milliseconds / 1000f;
             TimeSinceUsedMidAir += gameTime.ElapsedGameTime.Milliseconds;
             Position = Movement(_spaceShipVelocity,_elapsedTime);
-            _propulsionAnimationHandler.Position =  Position + _offSet; 
+            _propulsionAnimationHandler.Position =  Position; 
+            _propulsionAnimationHandler.Rotation = Rotation;
             _propulsionAnimationHandler.Update(gameTime);
             if (MidAirSoundCooldown < TimeSinceUsedMidAir)
             {
