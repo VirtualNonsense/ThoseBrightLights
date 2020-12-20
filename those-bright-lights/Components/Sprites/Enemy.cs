@@ -16,10 +16,11 @@ namespace SE_Praktikum.Components.Sprites
         private Logger _logger;
         private bool _shot = false;
         public Polygon ViewBox;
-        private float _shootIntervall;
-        private float _timeSinceLastShot = 0;
-        private bool _canShoot;
         private InterAction _i;
+        private Actor _target;
+        protected CooldownAbility ForgetTarget;
+        protected CooldownAbility Shoot;
+        
 
         private bool _hitBoxFlipped = false;
         public override float Rotation
@@ -46,25 +47,37 @@ namespace SE_Praktikum.Components.Sprites
         public Enemy(AnimationHandler animationHandler, float speed = 3, float health = 50, SoundEffect impactSound = null) : base(animationHandler, speed, health, impactSound)
         {
             _logger = LogManager.GetCurrentClassLogger();
-            _shootIntervall = 2000;
+            Shoot = new CooldownAbility(2000, _shootTarget);
             _i = InterAction.None;
+        }
+
+        private void _shootTarget()
+        {
+            float rotation = 0;
+            var vector = _target.Position - Position;
+            if(Math.Abs(vector.X) > Math.Abs(vector.Y)) 
+                rotation = (float)Math.Asin(vector.Y / vector.Length());
+            if(Math.Abs(vector.X) < Math.Abs(vector.Y)) 
+                rotation = (float)Math.Acos(vector.X / vector.Length());
+            // _logger.Trace(rotation);
+            var b =  Weapons[CurrentWeapon].GetBullet(Velocity, Position, rotation, this);
+            InvokeOnShoot(b);
         }
         
         
         public override void Update(GameTime gameTime)
         {
-            _timeSinceLastShot += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-            if (_timeSinceLastShot >= _shootIntervall)
-            {
-                _canShoot = true;
-                _timeSinceLastShot = 0;
-            }
+            Shoot.Update(gameTime);
+            if (_i == InterAction.InView && _target != null)
+                Shoot.Fire();
+            
             Vector2 velocity = Vector2.Zero;
 
             ViewBox.Position = Position;
             ViewBox.Rotation = Rotation;
             ViewBox.Layer = Layer;
             base.Update(gameTime);
+
         }
 
         
