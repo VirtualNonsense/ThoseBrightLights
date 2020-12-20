@@ -20,7 +20,7 @@ namespace SE_Praktikum.Components.Sprites
         private Logger _logger;
         protected KeyboardState CurrentKey;
         protected KeyboardState PreviousKey;
-        protected bool FlippedHorizontal;
+        protected bool FlippedHorizontal => _animationHandler.SpriteEffects == SpriteEffects.FlipVertically;
         
 
 
@@ -41,15 +41,11 @@ namespace SE_Praktikum.Components.Sprites
                 if (Rotation < 3 * Math.PI/2 && Rotation > Math.PI/2)
                 {
                     if (FlippedHorizontal) return;
-                    HitBox.MirrorHorizontal(Position);
                     _animationHandler.SpriteEffects = SpriteEffects.FlipVertically;
-                    FlippedHorizontal = true;
                 }
                 else if (FlippedHorizontal)
                 {
-                    HitBox.MirrorHorizontal(Position);
                     _animationHandler.SpriteEffects = SpriteEffects.None;
-                    FlippedHorizontal = false;
                 }
 
             }

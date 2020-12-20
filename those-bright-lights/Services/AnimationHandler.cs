@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using NLog;
 using SE_Praktikum.Components.Sprites;
+using SE_Praktikum.Extensions;
 using SE_Praktikum.Models;
 
 namespace SE_Praktikum.Services
@@ -93,7 +94,17 @@ namespace SE_Praktikum.Services
         public SpriteEffects SpriteEffects
         {
             get=>_settings.SpriteEffects;
-            set=>_settings.SpriteEffects=value;
+            set
+            {
+                if (value == SpriteEffects) return;
+                if (SpriteEffects != SpriteEffects.None)
+                {
+                    // resetting HitBox to make transition easier
+                    CurrentHitBox = Tileset.GetHitBox(_currentIndex);
+                }
+                _settings.SpriteEffects = value;
+                HitBoxTransition();
+            }
         }
 
         public Color Color
@@ -248,13 +259,26 @@ namespace SE_Praktikum.Services
             {
                     polygon.Position = Position + Offset;
 
-                    polygon.Origin = Origin;
+                    // polygon.Origin = Origin;
 
                     polygon.Rotation = Rotation;
 
                     polygon.Layer = Layer;
 
 
+            }
+            switch (SpriteEffects)
+            {
+                case SpriteEffects.None:
+                    break;
+                case SpriteEffects.FlipHorizontally:
+                    CurrentHitBox = CurrentHitBox.MirrorHorizontal(Position);
+                    break;
+                case SpriteEffects.FlipVertically:
+                    CurrentHitBox = CurrentHitBox.MirrorVertical(Position);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
         }
 
