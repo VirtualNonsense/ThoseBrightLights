@@ -20,6 +20,8 @@ namespace SE_Praktikum.Models
         private float _layer;
         private Color _color;
         private bool _drawAble;
+        private float _scale;
+
         /// <summary>
         /// Simple polygon class
         /// it is able to handle to calculate whether two convex polygon intersect
@@ -28,7 +30,18 @@ namespace SE_Praktikum.Models
         /// <param name="origin">Zero point offset in body space</param>
         /// <param name="layer"></param>
         /// <param name="vertices">Corner points of convex polygon. please enter them clockwise and body coordinates</param>
-        public Polygon(Vector2 position, Vector2 origin, float layer, List<Vector2> vertices, float rotation = 0, Color? color = null, bool drawAble = true)
+        /// <param name="rotation"></param>
+        /// <param name="scale"></param>
+        /// <param name="color"></param>
+        /// <param name="drawAble">disabling part of the calculation routine. Might boost performance in the final state of the game</param>
+        public Polygon(Vector2 position,
+                       Vector2 origin,
+                       float layer,
+                       List<Vector2> vertices,
+                       float rotation = 0,
+                       float scale = 1,
+                       Color? color = null,
+                       bool drawAble = true)
         {
             _vertices = vertices;
             _position = position;
@@ -37,6 +50,7 @@ namespace SE_Praktikum.Models
             _color = color ?? Color.Yellow;
             _drawAble = drawAble;
             _rotation = rotation;
+            _scale = scale;
             Vertices2D = GetVector2InWorldSpace();
             Vertices3D = GetVector3InWorldSpace();
             VertexDrawingOrder = GetIndexMeshInts();
@@ -81,6 +95,23 @@ namespace SE_Praktikum.Models
                 
                 if (_position == value) return;
                 _position = value;
+                Vertices2D = GetVector2InWorldSpace();
+                Vertices3D = GetVector3InWorldSpace();
+                VertexDrawingOrder = GetIndexMeshInts();
+                DrawAbleVertices = GetDrawAbleVertices();
+            }
+        }
+        
+        
+
+        public float Scale
+        {
+            get => _scale;
+            set
+            {
+                
+                if (Math.Abs(_scale - value) < float.Epsilon) return;
+                _scale = value;
                 Vertices2D = GetVector2InWorldSpace();
                 Vertices3D = GetVector3InWorldSpace();
                 VertexDrawingOrder = GetIndexMeshInts();
@@ -266,7 +297,7 @@ namespace SE_Praktikum.Models
 
             for (var index = 0; index < v.Count(); index++)
             {
-                v[index] = Position + (-Origin + _vertices[index]).Rotate(Rotation);
+                v[index] = Position + (-Origin + _scale * _vertices[index]).Rotate(Rotation);
             }
 
             return v;
@@ -278,7 +309,7 @@ namespace SE_Praktikum.Models
             var v3 = new Vector3[_vertices.Count()];
             for (var index = 0; index < v3.Count(); index++)
             {
-                v3[index] = new Vector3(Position + (-Origin + _vertices[index]).Rotate(Rotation), Layer);
+                v3[index] = new Vector3(Position + (-Origin + _scale * _vertices[index]).Rotate(Rotation), Layer);
             }
             return v3;
         }
@@ -316,7 +347,7 @@ namespace SE_Praktikum.Models
 
         public object Clone()
         {
-            return new Polygon(Position, Origin, _layer, _vertices, _rotation, _color, _drawAble);
+            return new Polygon(Position, Origin, _layer, _vertices, _rotation, _scale, _color, _drawAble);
         }
     }
 }
