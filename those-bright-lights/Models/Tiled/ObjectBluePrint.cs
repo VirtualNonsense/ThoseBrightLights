@@ -5,7 +5,7 @@ using System.Text;
 
 namespace SE_Praktikum.Models.Tiled
 {
-    class ObjectBluePrint
+    public class ObjectBluePrint
     {
         public float height;
         public int id;
