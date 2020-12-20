@@ -19,6 +19,8 @@ namespace SE_Praktikum.Models.Tiled
         public int tilewidth;
         public string type;
         public float version;
+        public TileBluePrint[] tiles;
+        
 
         public TileSetBlueprint(int columns, string image, int imageheight, int imagewidth, int margin, string name, int spacing, int tilecount, string tiledversion, int tileheight, int tilewidth, string type, float version)
         {
