@@ -76,12 +76,11 @@ namespace SE_Praktikum.Services
             set
             {
                 if (Math.Abs(value - _settings.Rotation) < float.Epsilon) return;
-                if (value >= 2 * Math.PI)
-                    _settings.Rotation = 0;
-                else if (value < 0)
-                    _settings.Rotation = (float) (2 * Math.PI - float.Epsilon);
-                else
-                    _settings.Rotation = value;
+                    _settings.Rotation = (value > 0)? 
+                        (float) (value  % (2 * Math.PI)) : 
+                        (float)(2 * Math.PI + (value % (2 * Math.PI)));
+                
+                
                 _logger.Debug(_settings.Rotation);
                 if (CurrentHitBox==null) return;
                 foreach (var polygon in CurrentHitBox)
