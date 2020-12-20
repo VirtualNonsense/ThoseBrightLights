@@ -28,7 +28,7 @@ namespace SE_Praktikum.Models
         /// <param name="origin">Zero point offset in body space</param>
         /// <param name="layer"></param>
         /// <param name="vertices">Corner points of convex polygon. please enter them clockwise and body coordinates</param>
-        public Polygon(Vector2 position, Vector2 origin, float layer, List<Vector2> vertices, Color? color = null, bool drawAble = true)
+        public Polygon(Vector2 position, Vector2 origin, float layer, List<Vector2> vertices, float rotation = 0, Color? color = null, bool drawAble = true)
         {
             _vertices = vertices;
             _position = position;
@@ -36,6 +36,7 @@ namespace SE_Praktikum.Models
             _layer = layer;
             _color = color ?? Color.Yellow;
             _drawAble = drawAble;
+            _rotation = rotation;
             Vertices2D = GetVector2InWorldSpace();
             Vertices3D = GetVector3InWorldSpace();
             VertexDrawingOrder = GetIndexMeshInts();
@@ -315,7 +316,7 @@ namespace SE_Praktikum.Models
 
         public object Clone()
         {
-            return new Polygon(Position, Origin, _layer, _vertices);
+            return new Polygon(Position, Origin, _layer, _vertices, _rotation, _color, _drawAble);
         }
     }
 }
