@@ -27,6 +27,7 @@ namespace SE_Praktikum.Services.Factories
             this._setFactory = _setFactory;
             this.tileFactory = tileFactory;
             _contentManager = contentManager;
+
         }
 
         public Map LoadMap(LevelBlueprint blueprint)
@@ -39,7 +40,8 @@ namespace SE_Praktikum.Services.Factories
                 var title = array[array.Count() - 1];
                 try
                 {
-                    tileSets.Add(new TileSet(_contentManager.Load<Texture2D>($"Artwork/Tilemaps/{title}"), blueprint.TileWidth, blueprint.TileHeight, null, tileSet.FirstGId));
+                    //tileSets.Add(new TileSet(_contentManager.Load<Texture2D>($"Artwork/Tilemaps/{title}"), blueprint.TileWidth, blueprint.TileHeight, null, tileSet.FirstGId));
+                    tileSets.Add(_setFactory.GetInstance(tileSet.Source, tileSet.FirstGId));
                 }
                 catch (ContentLoadException e)
                 {
