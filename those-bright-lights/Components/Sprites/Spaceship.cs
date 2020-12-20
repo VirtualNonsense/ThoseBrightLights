@@ -82,23 +82,12 @@ namespace SE_Praktikum.Components.Sprites
         }
         protected virtual void InvokeOnShoot(Bullet b)
         {
+            b.Layer = this.Layer;
             var e = new LevelEvent.ShootBullet {Bullet = b};
             if (e.Bullet is null)
                 return;
             OnShoot?.Invoke(this,e);
         }
-
-        // protected virtual void InvokeOnShootPlayer(Vector2 velocity, Actor player)
-        // {
-        //     Vector2 vector = player.Position - Position;
-        //     float rotation = (float)Math.Asin(vector.Y / vector.Length());
-        //     _logger.Trace(rotation);
-        //     var e = new LevelEvent.ShootBullet
-        //     {Bullet = _weapons[_currentWeapon].GetBullet(velocity, Position, rotation, this)};
-        //     if (e.Bullet is null)
-        //         return;
-        //     OnShootPlayer?.Invoke(this,e);
-        // }
 
         public virtual void AddWeapon(Weapon weapon)
         {

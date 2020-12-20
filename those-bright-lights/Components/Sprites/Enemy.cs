@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Input;
@@ -95,13 +96,10 @@ namespace SE_Praktikum.Components.Sprites
             switch (other)
             {
                 case Player p:
-                    foreach (var polygon in p.HitBox)
+                    if (p.HitBox.Any(polygon => ViewBox.Overlap(polygon)))
                     {
-                        if (ViewBox.Overlap(polygon))
-                        {
-                            _i = InterAction.InView;
-                            return true;
-                        }
+                        _i = InterAction.InView;
+                        return true;
                     }
 
                     break;
@@ -114,46 +112,23 @@ namespace SE_Praktikum.Components.Sprites
 
         protected override void ExecuteInteraction(Actor other)
         {
-            switch (_i)
+            switch (other)
             {
-                case InterAction.None:
-                    break;
-                case InterAction.InView:
-                    switch (other)
-                    {
-                        case Player p:
-                            Vector2 vector = p.Position - Position;
-                            float rotation = (float)Math.Asin(vector.Y / vector.Length());
-                            // _logger.Trace(rotation);
-                            var b =  Weapons[CurrentWeapon].GetBullet(Velocity, Position, rotation, this);
-                            InvokeOnShoot(b);
-                            break;
-                    }
-                    break;
-                case InterAction.BodyCollision:
-                    switch (other)
-                    {
-                        default:
-                            if (other.Parent == this) return;
-                            Health -= other.Damage;
-                            _logger.Debug($"health {Health}");
-                            _impactSound?.Play();
-                            break;
-                    }
+                case Player p:
+                    _target = p;
+                    if(_i != InterAction.BodyCollision) return;
+                    Health -= p.Damage;
                     break;
                 default:
-                    throw new ArgumentOutOfRangeException();
+                    if (other.Parent == this) return;
+                    Health -= other.Damage;
+                    _logger.Debug($"health {Health}");
+                    _impactSound?.Play();
+                    break;
             }
         }
 
 
-        // protected override void InvokeOnShootPlayer(Vector2 velocity, Actor player)
-        // {
-        //     if (!_canShoot)
-        //         return;
-        //     _canShoot = false;
-        //     base.InvokeOnShootPlayer(velocity, player);
-        // }
     }
 
     public enum InterAction
