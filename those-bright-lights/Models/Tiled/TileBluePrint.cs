@@ -4,9 +4,10 @@ using System.Text;
 
 namespace SE_Praktikum.Models.Tiled
 {
-    class TileBluePrint
+    public class TileBluePrint
     {
         public int id;
+        public ObjectGroupBluePrint objectroup;
         
     }
 }
