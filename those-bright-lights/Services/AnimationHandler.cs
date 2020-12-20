@@ -76,9 +76,9 @@ namespace SE_Praktikum.Services
             set
             {
                 if (Math.Abs(value - _settings.Rotation) < float.Epsilon) return;
-                    _settings.Rotation = (value > 0)? 
+                    _settings.Rotation = value > 0? 
                         (float) (value  % (2 * Math.PI)) : 
-                        (float)(2 * Math.PI + (value % (2 * Math.PI)));
+                        (float)(2 * Math.PI + value % (2 * Math.PI));
                 
                 
                 _logger.Debug(_settings.Rotation);
