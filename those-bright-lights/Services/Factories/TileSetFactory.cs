@@ -47,7 +47,7 @@ namespace SE_Praktikum.Services.Factories
                         List<Vector2> Vector2List = new List<Vector2>();
                         foreach(var p in objectt.polygon)
                         {
-                            Vector2List.Add(new Vector2(p.x, p.y));
+                            Vector2List.Add(new Vector2(p.x + objectt.x, p.y + objectt.y));
                         }
                         polygon = new Polygon(Vector2.Zero, Vector2.Zero, 0, Vector2List);
                     }
