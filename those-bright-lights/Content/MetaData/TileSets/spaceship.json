@@ -7,7 +7,7 @@
          "target":"."
         }
     },
- "image":"..\/..\/..\/Artwork\/Actors\/spaceship.png",
+ "image":"..\/..\/Artwork\/Actors\/spaceship.png",
  "imageheight":84,
  "imagewidth":133,
  "margin":0,
@@ -22,7 +22,7 @@
          "objectgroup":
             {
              "draworder":"index",
-             "id":2,
+             
              "name":"",
              "objects":[
                     {
