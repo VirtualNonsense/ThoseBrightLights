@@ -347,7 +347,8 @@ namespace SE_Praktikum.Models
 
         public object Clone()
         {
-            return new Polygon(Position, Origin, _layer, _vertices, _rotation, _scale, _color, _drawAble);
+            var v = _vertices.Select(t => new Vector2(t.X, t.Y)).ToList();
+            return new Polygon(Position, Origin, _layer, v, _rotation, _scale, _color, _drawAble);
         }
     }
 }
