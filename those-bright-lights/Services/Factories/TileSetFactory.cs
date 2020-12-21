@@ -41,20 +41,32 @@ namespace SE_Praktikum.Services.Factories
                 var index = tile.id + startindex;
                 foreach(var objectt in tile.objectgroup.objects)
                 {
+                    Polygon polygon;
                     if (objectt.polygon != null)
-                        continue;
-                    var polygon = new Polygon(
-                        Vector2.Zero,
-                        new Vector2(objectt.width/2,objectt.height/2),
-                        0,
-                        new List<Vector2> 
+                    {
+                        List<Vector2> Vector2List = new List<Vector2>();
+                        foreach(var p in objectt.polygon)
                         {
+                            Vector2List.Add(new Vector2(p.x, p.y));
+                        }
+                        polygon = new Polygon(Vector2.Zero, Vector2.Zero, 0, Vector2List);
+                    }
+                    else
+                    {
+                       polygon = new Polygon(
+                       Vector2.Zero,
+                       new Vector2(objectt.width / 2, objectt.height / 2),
+                       0,
+                       new List<Vector2>
+                       {
                             new Vector2(0,0),
                             new Vector2(objectt.width,0),
                             new Vector2(objectt.width,objectt.height),
                             new Vector2(0,objectt.height)
-                        }
-                        );
+                       }
+                       );
+                    }
+                       
                     if(!(Dictionary.ContainsKey(index)))
                     {
                         Dictionary.Add(index, new Polygon[tile.objectgroup.objects.Length]);
