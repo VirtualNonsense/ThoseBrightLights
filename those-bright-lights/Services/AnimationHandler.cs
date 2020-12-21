@@ -36,7 +36,7 @@ namespace SE_Praktikum.Services
                 else
                     _currentIndex = value;
 
-                CurrentHitBox = Tileset.GetHitBox(_currentIndex);
+                CurrentHitBox = Tileset.GetHitBox(_settings.UpdateList[_currentIndex].Item1);
                 HitBoxTransition();
             }
         }
@@ -96,7 +96,7 @@ namespace SE_Praktikum.Services
                 if (SpriteEffects != SpriteEffects.None)
                 {
                     // resetting HitBox to make transition easier
-                    CurrentHitBox = Tileset.GetHitBox(_currentIndex);
+                    CurrentHitBox = Tileset.GetHitBox(_settings.UpdateList[_currentIndex].Item1);
                 }
                 _settings.SpriteEffects = value;
                 HitBoxTransition();
@@ -189,7 +189,7 @@ namespace SE_Praktikum.Services
             Position = position ?? new Vector2(0,0);
             Origin = origin ?? new Vector2(0,0);
             Offset = Vector2.Zero;
-            CurrentHitBox = Tileset.GetHitBox(_currentIndex);
+            CurrentHitBox = Tileset.GetHitBox(_settings.UpdateList[_currentIndex].Item1);
         }
 
         public void Draw(SpriteBatch spriteBatch)
