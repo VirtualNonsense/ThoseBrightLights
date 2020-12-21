@@ -114,7 +114,7 @@ using System.Collections.Generic;
             return pixelArray;
         }
 
-        public Polygon[] GetHitBox(int currentIndex)
+        public Polygon[] GetHitBox(int index)
         {
             if (_hitBoxDict == null)
             {
@@ -123,12 +123,12 @@ using System.Collections.Generic;
                 return null;
             }
 
-            if (_hitBoxDict.ContainsKey(currentIndex - StartEntry))
+            if (_hitBoxDict.ContainsKey(index))
             {
-                return _hitBoxDict[currentIndex - StartEntry].Select(polygon => (Polygon) polygon.Clone()).ToArray();
+                return _hitBoxDict[index].Select(polygon => (Polygon) polygon.Clone()).ToArray();
             }
 
-            _logger.Warn($"hitbox of {currentIndex} ({currentIndex-StartEntry}) not found");
+            _logger.Warn($"hitbox of {index} ({index}) not found");
             return null;
         }
     }
