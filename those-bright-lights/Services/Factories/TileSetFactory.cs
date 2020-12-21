@@ -28,7 +28,9 @@ namespace SE_Praktikum.Services.Factories
         public TileSet GetInstance(string jsonpath, int startindex)
         {
             var TileSet = JsonConvert.DeserializeObject<TileSetBlueprint>(File.ReadAllText(jsonpath));
-            var Texture = _contentManager.Load<Texture2D>(TileSet.image);
+            var tileSetPath = TileSet.image.Split(".png")[0].Substring(6);
+            _logger.Debug(tileSetPath);
+            var Texture = _contentManager.Load<Texture2D>(tileSetPath);
             var Dictionary = new Dictionary<int, Polygon[]>();
             
             foreach(var tile in TileSet.tiles)
