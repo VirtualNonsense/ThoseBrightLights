@@ -22,7 +22,7 @@ namespace SE_Praktikum.Models.Tiled
         public TileBluePrint[] tiles;
         
 
-        public TileSetBlueprint(int columns, string image, int imageheight, int imagewidth, int margin, string name, int spacing, int tilecount, string tiledversion, int tileheight, int tilewidth, string type, float version)
+        public TileSetBlueprint(int columns, string image, int imageheight, int imagewidth, int margin, string name, int spacing, int tilecount, string tiledversion, int tileheight, int tilewidth, string type, float version, TileBluePrint []tiles)
         {
             this.columns = columns;
             this.image = image;
@@ -37,6 +37,7 @@ namespace SE_Praktikum.Models.Tiled
             this.tilewidth = tilewidth;
             this.type = type;
             this.version = version;
+            this.tiles = tiles;
         }
 
 
