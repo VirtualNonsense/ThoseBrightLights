@@ -38,6 +38,7 @@ namespace SE_Praktikum.Services.Factories
             foreach(var tile in TileSet.tiles)
             {
                 var count = 0;
+                var index = tile.id + startindex;
                 foreach(var objectt in tile.objectgroup.objects)
                 {
                     if (objectt.polygon != null)
@@ -54,12 +55,12 @@ namespace SE_Praktikum.Services.Factories
                             new Vector2(0,objectt.height)
                         }
                         );
-                    if(!(Dictionary.ContainsKey(objectt.id)))
+                    if(!(Dictionary.ContainsKey(index)))
                     {
-                        Dictionary.Add(objectt.id, new Polygon[tile.objectgroup.objects.Length]);
+                        Dictionary.Add(index, new Polygon[tile.objectgroup.objects.Length]);
 
                     }
-                    Dictionary[objectt.id][count] = polygon;
+                    Dictionary[index][count] = polygon;
                     count++;
                     
 
