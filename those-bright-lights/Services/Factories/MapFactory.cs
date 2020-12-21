@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Newtonsoft.Json;
 using NLog;
 using SE_Praktikum.Components;
 using SE_Praktikum.Components.Sprites;
@@ -30,8 +31,10 @@ namespace SE_Praktikum.Services.Factories
 
         }
 
-        public Map LoadMap(LevelBlueprint blueprint)
+        public Map LoadMap(string path)
         {
+            var absPath = Path.GetFullPath(path);
+            LevelBlueprint blueprint = JsonConvert.DeserializeObject<LevelBlueprint>(File.ReadAllText(absPath));
             // Loading all necessary tile sets
             List<TileSet> tileSets = new List<TileSet>();
             foreach (var tileSet in blueprint.tilesets)
@@ -40,12 +43,14 @@ namespace SE_Praktikum.Services.Factories
                 var title = array[array.Count() - 1];
                 try
                 {
-                    //tileSets.Add(new TileSet(_contentManager.Load<Texture2D>($"Artwork/Tilemaps/{title}"), blueprint.TileWidth, blueprint.TileHeight, null, tileSet.FirstGId));
-                    tileSets.Add(_setFactory.GetInstance(tileSet.Source, tileSet.FirstGId));
+                    var tileSetPath = Path.GetFullPath(
+                        @"..\/"+tileSet.Source, //first part is necessary to get rid of the file in absPath
+                        absPath);
+                    tileSets.Add(_setFactory.GetInstance(tileSetPath, tileSet.FirstGId));
                 }
                 catch (ContentLoadException e)
                 {
-                    _logger.Warn($"Texture {title} is missing: ", e);
+                    _logger.Warn($"Texture {title} is missing: {e}");
                     var lastFirstGId = tileSets.Count > 0 ? tileSets.Last().StartEntry + tileSets.Last().Tiles - 1 : 0;
                     tileSets.Add(new TileSet(_contentManager.Load<Texture2D>($"Artwork/missing_texture"), blueprint.TileWidth, blueprint.TileHeight, null, lastFirstGId + 1 ));
                 }
