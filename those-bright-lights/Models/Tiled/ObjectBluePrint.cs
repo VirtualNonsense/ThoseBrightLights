@@ -16,7 +16,12 @@ namespace SE_Praktikum.Models.Tiled
         public float width;
         public float x;
         public float y;
-        public Vector2[] polygon;
+        public ObjectVector2[] polygon;
+        public class ObjectVector2
+        {
+            public float x;
+            public float y;
+        }
 
     }
 }
