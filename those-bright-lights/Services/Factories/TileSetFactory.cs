@@ -31,6 +31,8 @@ namespace SE_Praktikum.Services.Factories
             var tileSetPath = TileSet.image.Split(".png")[0].Substring(6);
             _logger.Debug(tileSetPath);
             var Texture = _contentManager.Load<Texture2D>(tileSetPath);
+            if(TileSet.tiles == null)
+                return new TileSet(Texture, TileSet.tilewidth, TileSet.tileheight, null, startindex);
             var Dictionary = new Dictionary<int, Polygon[]>();
             
             foreach(var tile in TileSet.tiles)
