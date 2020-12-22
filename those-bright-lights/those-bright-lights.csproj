@@ -58,13 +58,25 @@
         <None Update="Content\MetaData\TileSets\EarthObject.json">
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
+        <None Update="Content\MetaData\TileSets\enemylaser.json">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Update="Content\MetaData\TileSets\explosion_45_45.json">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
         <None Update="Content\MetaData\TileSets\JupiterObject.json">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Update="Content\MetaData\TileSets\laesr_explosion_6_6_6.json">
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
         <None Update="Content\MetaData\TileSets\MarsObject.json">
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
         <None Update="Content\MetaData\TileSets\MerkurObject.json">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Update="Content\MetaData\TileSets\missile_propulsion_15_15.json">
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
         <None Update="Content\MetaData\TileSets\NeptunObject.json">
