@@ -85,36 +85,21 @@ namespace SE_Praktikum.Models
 
         public void Insert(Rectangle rect)
         {
-            int index = GetIndex(rect);
-
-            if (index != -1)
+            if (wasDivided == false)
             {
-                nodes[index].Insert(rect);
-
-                return;
+                objects.Add(rect);
             }
 
-            objects.Add(rect);
-
-            // If added too many objects 
             if (objects.Count > maxObjects)
             {
                 Divide();
 
-                int i = 0;
-                while (i < objects.Count)
+                for (int i = 0; i < objects.Count; i++)
                 {
-                    int index2 = GetIndex(objects[i]);
-
-                    if (index2 != -1)
+                    int index = GetIndex(objects[i]);
+                    if (index != -1)
                     {
-                        // Test if the index changes in node split
-                        // PLEASE CHECK IF LISTS ARE DOUBLE IN THERE (I think it is)
-                        nodes[index2].Insert(objects[i]);
-                    }
-                    else
-                    {
-                        i++;
+                        nodes[index].Insert(objects[i]);
                     }
                 }
             }
