@@ -12,27 +12,19 @@ namespace SE_Praktikum.Services.Factories
     {
         private readonly AnimationHandlerFactory _animationHandlerFactory;
         private readonly WeaponFactory _weaponFactory;
+        private readonly TileSetFactory _tileSetFactory;
 
-        public EnemyFactory(AnimationHandlerFactory animationHandlerFactory, WeaponFactory weaponFactory)
+        public EnemyFactory(AnimationHandlerFactory animationHandlerFactory, WeaponFactory weaponFactory, TileSetFactory tileSetFactory)
         {
             _animationHandlerFactory = animationHandlerFactory;
             _weaponFactory = weaponFactory;
+            _tileSetFactory = tileSetFactory;
         }
 
         public Enemy GetInstance(ContentManager contentManager)
         {
-            var texture2D = contentManager.Load<Texture2D>("Artwork/Actors/alien_ship_56_59");
             SoundEffect impactSound = contentManager.Load<SoundEffect>("Audio/Sound_Effects/Collusion/ClinkBell");
-            var tileSet = new TileSet(texture2D, new []
-            {
-                new Polygon(Vector2.Zero, new Vector2(0, 0), 0, new List<Vector2>
-                {
-                    new Vector2(0,2* 32.5f),
-                    new Vector2(2*32.5f, 2*32.5f),
-                    new Vector2(2*32.5f, 0),
-                    new Vector2(0, 0),
-                }), 
-            });
+            var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\alien_ship.json",0);
             var animationSettings = new AnimationSettings(1,isPlaying:false);
             var e = new Enemy(_animationHandlerFactory.GetAnimationHandler(tileSet,animationSettings), impactSound:impactSound);
             e.Position = new Vector2(100,50);
