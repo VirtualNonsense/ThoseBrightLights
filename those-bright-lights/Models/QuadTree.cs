@@ -12,8 +12,7 @@ namespace SE_Praktikum.Models
         Rectangle boundary;
         QuadTree<T>[] nodes;
 
-        // Not sure if 5 and 10 are reasonable values... PLEASE CHECK
-        int maxLevel = 5;
+        // Deleted maxLevel, cuz the tile must be added no matter what (maybe other idea someday)
         int maxObjects = 10;        
 
         public QuadTree(int level, Rectangle boundary)
@@ -97,7 +96,7 @@ namespace SE_Praktikum.Models
             objects.Add(rect);
 
             // If added too many objects 
-            if (objects.Count > maxObjects && level < maxLevel)
+            if (objects.Count > maxObjects)
             {
                 Divide();
 
