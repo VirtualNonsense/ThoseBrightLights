@@ -1,0 +1,14 @@
+{ "columns":1,
+ "image":"..\/..\/Artwork\/Effects\/laesr_explosion_6_6_6.png",
+ "imageheight":6,
+ "imagewidth":36,
+ "margin":0,
+ "name":"laesr_explosion_6_6_6",
+ "spacing":0,
+ "tilecount":1,
+ "tiledversion":"1.4.2",
+ "tileheight":6,
+ "tilewidth":36,
+ "type":"tileset",
+ "version":1.4
+}
