@@ -42,7 +42,7 @@ namespace SE_Praktikum.Services.Factories
             var input = _inputFactory.GetInstance();
             var p = new Player(_animationHandlerFactory.GetAnimationHandler(tileSet,animationSettings),input);
             p.Position = new Vector2(-50,50);
-            p.AddWeapon(_weaponFactory.GetMissileLauncher(contentManager));
+            p.AddWeapon(_weaponFactory.GetLasergun(contentManager));
 
             return p;
         } 

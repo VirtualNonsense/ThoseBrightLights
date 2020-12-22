@@ -34,7 +34,7 @@ namespace SE_Praktikum.Services.Factories
                 new Vector2(300,-100),
                 new Vector2(300,100),
             });
-            e.AddWeapon(_weaponFactory.GetLasergun(contentManager));
+            e.AddWeapon(_weaponFactory.EnemyGetLasergun(contentManager));
 
             return e;
         } 
