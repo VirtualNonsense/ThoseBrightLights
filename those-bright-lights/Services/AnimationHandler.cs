@@ -2,7 +2,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using NLog;
-using SE_Praktikum.Components.Sprites;
 using SE_Praktikum.Extensions;
 using SE_Praktikum.Models;
 
@@ -38,6 +37,7 @@ namespace SE_Praktikum.Services
 
                 CurrentHitBox = Tileset.GetHitBox(_settings.UpdateList[_currentIndex].Item1);
                 HitBoxTransition();
+                HitBoxUpdate();
             }
         }
 
@@ -97,9 +97,10 @@ namespace SE_Praktikum.Services
                 {
                     // resetting HitBox to make transition easier
                     CurrentHitBox = Tileset.GetHitBox(_settings.UpdateList[_currentIndex].Item1);
+                    HitBoxTransition();
                 }
                 _settings.SpriteEffects = value;
-                HitBoxTransition();
+                HitBoxUpdate();
             }
         }
 
@@ -144,15 +145,7 @@ namespace SE_Praktikum.Services
         public Vector2 Origin
         {
             get => _origin;
-            set
-            {
-                _origin = value;
-                if (CurrentHitBox==null) return;
-                foreach (var polygon in CurrentHitBox)
-                {
-                    polygon.Origin = _origin;
-                }
-            }
+            set => _origin = value;
         }
 
         public float Opacity
@@ -186,10 +179,12 @@ namespace SE_Praktikum.Services
             _logger = LogManager.GetCurrentClassLogger();
             Tileset = tileset;
             _settings = settings;
-            Position = position ?? new Vector2(0,0);
-            Origin = origin ?? new Vector2(0,0);
-            Offset = Vector2.Zero;
+            _position = position ?? new Vector2(0,0);
+            _origin = origin ?? new Vector2(0,0);
+            _offset = Vector2.Zero;
             CurrentHitBox = Tileset.GetHitBox(_settings.UpdateList[_currentIndex].Item1);
+            HitBoxTransition();
+            HitBoxUpdate();
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -255,22 +250,30 @@ namespace SE_Praktikum.Services
         {
             return Tileset.GetDataOfFrame(CurrentFrame.Item1);
         }
+
         private void HitBoxTransition()
         {
             if (CurrentHitBox == null) return;
             foreach (var polygon in CurrentHitBox)
             {
-                    polygon.Position = Position + Offset;
+                if (polygon.Origin != Vector2.Zero) return;
+                polygon.MoveVertices(-Origin);
+            }
+        }
+        
+        
+        private void HitBoxUpdate()
+        {
+            if (CurrentHitBox == null) return;
+            foreach (var polygon in CurrentHitBox)
+            {
+                polygon.Position = Position + Offset;
 
-                    // polygon.Origin = Origin;
+                polygon.Rotation = Rotation;
 
-                    polygon.Rotation = Rotation;
+                polygon.Layer = Layer;
 
-                    polygon.Layer = Layer;
-
-                    polygon.Scale = Scale;
-
-
+                polygon.Scale = Scale;
             }
             switch (SpriteEffects)
             {
