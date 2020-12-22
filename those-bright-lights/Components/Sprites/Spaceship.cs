@@ -83,10 +83,10 @@ namespace SE_Praktikum.Components.Sprites
         }
         protected virtual void InvokeOnShoot(Bullet b)
         {
-            b.Layer = this.Layer;
-            var e = new LevelEvent.ShootBullet {Bullet = b};
-            if (e.Bullet is null)
+            if (b is null)
                 return;
+            var e = new LevelEvent.ShootBullet {Bullet = b};
+            b.Layer = Layer;
             OnShoot?.Invoke(this,e);
         }
 
