@@ -111,12 +111,13 @@ namespace SE_Praktikum.Models
         public List<Rectangle> Retrieve(Rectangle actor)
         {
             int index = GetIndex(actor);
+            List<Rectangle> thinker = objects;
 
             if (wasDivided == true)
             {
-                nodes[index].Retrieve(actor);
+                thinker = nodes[index].Retrieve(actor);
             }
-            return objects;
+            return thinker;
         }
     }
 }
