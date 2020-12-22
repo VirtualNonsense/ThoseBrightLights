@@ -54,12 +54,12 @@ namespace SE_Praktikum.Components.Sprites
 
         private void _shootTarget()
         {
-            float rotation = 0;
+            float rotation = Rotation;
             var vector = _target.Position - Position;
             if(Math.Abs(vector.X) > Math.Abs(vector.Y)) 
-                rotation = (float)Math.Asin(vector.Y / vector.Length());
+                rotation -= (float)Math.Asin(vector.Y / vector.Length());
             if(Math.Abs(vector.X) < Math.Abs(vector.Y)) 
-                rotation = (float)Math.Acos(vector.X / vector.Length());
+                rotation += (float)Math.Acos(vector.X / vector.Length());
             // _logger.Trace(rotation);
             var b =  Weapons[CurrentWeapon].GetBullet(Velocity, Position, rotation, this);
             InvokeOnShoot(b);
