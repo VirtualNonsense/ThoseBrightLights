@@ -8,6 +8,7 @@ namespace SE_Praktikum.Models
     public class QuadTree<T>
     {
         // NOTICE: All Tests for this class are in a separate project - "CheckTrees"
+        // TODO: Test specific case of Division
         List<Rectangle> objects; // changed from T to Rectangle
         int level;
         Rectangle boundary;
@@ -25,6 +26,7 @@ namespace SE_Praktikum.Models
             nodes = new QuadTree<T>[4];
         }
 
+        // TODO: If one branch is completely empty, should be cleared.
         public void Clearing()
         {
             objects.Clear();
