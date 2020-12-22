@@ -51,8 +51,14 @@ namespace SE_Praktikum.Components.Sprites
                     break;
             }
         }
-        
 
+        protected override bool InteractAble(Actor other)
+        {
+            // tile doesnt care about interactions
+            // a destroyable tile might be of use on some point
+            return false;
+        }
+        
         protected override void ExecuteInteraction(Actor other)
         {
         }

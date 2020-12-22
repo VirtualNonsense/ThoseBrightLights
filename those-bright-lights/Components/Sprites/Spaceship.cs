@@ -20,6 +20,7 @@ namespace SE_Praktikum.Components.Sprites
         private Logger _logger;
         protected KeyboardState CurrentKey;
         protected KeyboardState PreviousKey;
+        protected Polygon _impactPolygon;
         protected bool FlippedHorizontal => _animationHandler.SpriteEffects == SpriteEffects.FlipVertically;
         
 
@@ -95,6 +96,24 @@ namespace SE_Praktikum.Components.Sprites
             CurrentWeapon = Weapons.Count - 1;
             OnPickUpWeapon?.Invoke(this, EventArgs.Empty);
         }
+        
+        protected override bool Collide(Actor other)
+        {
+            if ( this == other || 
+                 Math.Abs(Layer - other.Layer) > float.Epsilon || 
+                 !(CollisionEnabled && IsCollideAble && other.CollisionEnabled && other.IsCollideAble)) 
+                return false;
+            foreach (var polygon in HitBox)
+            {
+                _impactPolygon = polygon;
+                foreach (var polygon1 in other.HitBox)
+                {
+                    if(polygon.Overlap(polygon1)) return true;
+                }
+            }
+            _impactPolygon = null;
+            return false;
+        }
 
         protected override void ExecuteInteraction(Actor other)
         {
@@ -106,7 +125,14 @@ namespace SE_Praktikum.Components.Sprites
                     Health -= b.Damage;
                     _impactSound?.Play();
                     break;
+                case Tile t :
+                    var v = _impactPolygon.Position - t.Position;
+                    v /= v.Length();
+                    Position += v;
+                    break;
             }
+
+            _impactPolygon = null;
         }
     }
 }

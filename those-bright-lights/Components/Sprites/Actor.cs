@@ -80,7 +80,7 @@ namespace SE_Praktikum.Components.Sprites
         /// <param name="other"></param>
         protected abstract void ExecuteInteraction(Actor other);
 
-        protected bool Collide(Actor other)
+        protected virtual bool Collide(Actor other)
         {
             if ( this == other || 
                  Math.Abs(Layer - other.Layer) > float.Epsilon || 
