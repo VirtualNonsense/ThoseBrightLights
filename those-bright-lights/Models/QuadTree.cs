@@ -13,7 +13,8 @@ namespace SE_Praktikum.Models
         QuadTree<T>[] nodes;
 
         // Deleted maxLevel, cuz the tile must be added no matter what (maybe other idea someday)
-        int maxObjects = 10;        
+        int maxObjects = 10;
+        bool wasDivided = false;
 
         public QuadTree(int level, Rectangle boundary)
         {
