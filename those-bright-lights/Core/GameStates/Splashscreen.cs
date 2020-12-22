@@ -1,9 +1,12 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using NLog;
+using SE_Praktikum.Components.Sprites;
+using SE_Praktikum.Extensions;
 using SE_Praktikum.Models;
 using SE_Praktikum.Services;
 using SE_Praktikum.Services.Factories;
@@ -19,15 +22,18 @@ namespace SE_Praktikum.Core.GameStates
         private int _splashscreenTime = 10;
         private Song _song;
         private ContentManager _contentManager;
-        private AnimationHandler _teamname;
+        private Sprite _teamName;
+        private readonly IGameEngine _engine;
         private AnimationHandlerFactory _factory;
-        private AnimationHandler _gameengine;
+        private Sprite _gameEngineLogo;
+        private Polygon _p;
 
-        public Splashscreen(IScreen parent, ContentManager contentManager, AnimationHandlerFactory factory)
+        public Splashscreen(IGameEngine engine, IScreen _screen, ContentManager contentManager, AnimationHandlerFactory factory)
         {
+            _engine = engine;
             _factory = factory;
             _logger = LogManager.GetCurrentClassLogger();
-            _screen = parent;
+            this._screen = _screen;
             _contentManager = contentManager;
         }
         
@@ -37,13 +43,23 @@ namespace SE_Praktikum.Core.GameStates
             var settings = new AnimationSettings(1, isPlaying: false, layer: 1);
 
             var tileset = new TileSet(_contentManager.Load<Texture2D>("NWWP"));
+            _p = new Polygon(Vector2.Zero, Vector2.Zero, 0, new List<Vector2>
+            {
+                new Vector2(-1 * 100, 1* 100),
+                new Vector2(1* 100, 1* 100),
+                new Vector2(1* 100, -1* 100),
+                new Vector2(-1* 100, -1* 100),
+            });
 
-            _teamname = _factory.GetAnimationHandler(tileset, settings,origin:new Vector2(tileset.TextureWidth/2, tileset.TextureHeight/2));
+            _p.Origin = _p.Vertices[0];
+
+            _teamName = new Sprite(_factory.GetAnimationHandler(tileset, settings,origin:new Vector2(tileset.TextureWidth/2f, tileset.TextureHeight/2f)));_factory.GetAnimationHandler(tileset, settings,origin:new Vector2(tileset.TextureWidth/2, tileset.TextureHeight/2));
 
             settings = new AnimationSettings(1, isPlaying: false, layer: 1,scale:0.2f);
             tileset = new TileSet(_contentManager.Load<Texture2D>("MonoGame"));
-            _gameengine = _factory.GetAnimationHandler(tileset, settings, origin: new Vector2(tileset.TextureWidth / 2, tileset.TextureHeight / 2));
+            _gameEngineLogo = new Sprite(_factory.GetAnimationHandler(tileset, settings, origin: new Vector2(tileset.TextureWidth / 2f, tileset.TextureHeight / 2f)));
             _song = _contentManager.Load<Song>("Audio/Music/Intro_mp3");
+            
             MediaPlayer.Play(_song);
             MediaPlayer.IsRepeating = true;
         }
@@ -57,37 +73,28 @@ namespace SE_Praktikum.Core.GameStates
         public override void Update(GameTime gameTime)
         {
             _elapsedTime += gameTime.ElapsedGameTime.Milliseconds/1000f;
-            _logger.Trace(_elapsedTime);
             if(Keyboard.GetState().IsKeyDown(Keys.Escape) || _splashscreenTime < _elapsedTime)
             {
                 _logger.Debug("exiting splashscreen");
                 _subject.OnNext(GameStateMachine.GameStateMachineTrigger.SkipSplashScreen);
             }
-            _screen.Camera.Update(gameTime); 
+            _screen.Camera.Update(gameTime);
+            _p.Rotation += MathExtensions.DegToRad(1);
         }
 
         public override void PostUpdate(GameTime gameTime)
         {
         }
 
-        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        public override void Draw()
         {
-            
-            spriteBatch.Begin(SpriteSortMode.FrontToBack,
-                              null,
-                              SamplerState.PointClamp, // Sharp Pixel rendering
-                              null,
-                              RasterizerState.CullCounterClockwise, // Render only the texture side that faces the camara to boost performance 
-                              _screen.Camera.GetCameraEffect());
-            
-            if(_elapsedTime>_splashscreenTime/2)
+            _engine.Render(_p);
+            if(_elapsedTime>_splashscreenTime/2f)
             {
-                _teamname.Draw(spriteBatch);
+                _engine.Render(_teamName);
             }
             else
-                _gameengine.Draw(spriteBatch);
-
-            spriteBatch.End();
+                _engine.Render(_gameEngineLogo);
         }
     }
 }

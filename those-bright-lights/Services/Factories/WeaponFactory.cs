@@ -1,4 +1,6 @@
-﻿using System.Linq.Expressions;
+﻿using System.Collections.Generic;
+using System.Linq.Expressions;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -12,19 +14,20 @@ namespace SE_Praktikum.Services.Factories
     {
         private AnimationHandlerFactory _animationHandlerFactory;
         private readonly ParticleFactory _particleFactory;
+        private readonly TileSetFactory _tileSetFactory;
 
-        public WeaponFactory(AnimationHandlerFactory animationHandlerFactory, ParticleFactory particleFactory)
+        public WeaponFactory(AnimationHandlerFactory animationHandlerFactory, ParticleFactory particleFactory, TileSetFactory tileSetFactory)
         {
             _animationHandlerFactory = animationHandlerFactory;
             _particleFactory = particleFactory;
+            _tileSetFactory = tileSetFactory;
         }
 
         public MissileLauncher GetMissileLauncher(ContentManager contentManager)
         {
-            Texture2D texture = contentManager.Load<Texture2D>("Artwork/projectiles/missile");
-            TileSet textureTileSet = new TileSet(texture);
+            var textureTileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\missile.json",0);
             Texture2D propulsion = contentManager.Load<Texture2D>("Artwork/projectiles/missile_propulsion_15_15");
-            TileSet propulsionTileSet = new TileSet(propulsion,15,15);
+            TileSet propulsionTileSet = new TileSet(propulsion,15,15, null);
             SoundEffect flightEffect = null; //contentManager.Load<SoundEffect>("Audio/Sound_Effects/Airborne/Flight_plane_c");
             SoundEffect impactSound = contentManager.Load<SoundEffect>("Audio/Sound_Effects/Collusion/Big_Explo");
             var m = new MissileLauncher(_animationHandlerFactory,textureTileSet, propulsionTileSet,
@@ -34,8 +37,7 @@ namespace SE_Praktikum.Services.Factories
 
         public Lasergun GetLasergun(ContentManager contentManager)
         {
-            Texture2D texture = contentManager.Load<Texture2D>("Artwork/projectiles/laser");
-            TileSet textureTileSet = new TileSet(texture);
+            var textureTileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\laser.json",0);
             SoundEffect soundEffect = contentManager.Load<SoundEffect>("Audio/Sound_Effects/Shot/Laser_Short");
             SoundEffect flightEffect = contentManager.Load<SoundEffect>("Audio/Sound_Effects/Airborne/Wobble_test");
             SoundEffect impactSound = contentManager.Load<SoundEffect>("Audio/Sound_Effects/Collusion/Clink");

@@ -19,6 +19,7 @@ namespace SE_Praktikum.Components.Sprites.Weapons
 
         public Lasergun(AnimationHandlerFactory animationHandlerFactory, TileSet textureTileSet, ParticleFactory particleFactory, SoundEffect shoot, SoundEffect midAirSound, SoundEffect impactSound) : base(shoot)
         {
+            CoolDown = 1000;
             _animationHandlerFactory = animationHandlerFactory;
             _textureTileSet = textureTileSet;
             _particleFactory = particleFactory;
@@ -29,6 +30,7 @@ namespace SE_Praktikum.Components.Sprites.Weapons
 
         public override Bullet GetBullet(Vector2 velocitySpaceship, Vector2 positionSpaceship,float rotation, Actor parent)
         {
+            if (!TryShoot()) return null;
             var particle = _particleFactory.BuildLaserExplosionParticle();
             particle.Layer = parent.Layer;
             var l = new Laser(_animationHandlerFactory.GetAnimationHandler(_textureTileSet,

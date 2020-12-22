@@ -18,6 +18,7 @@ namespace SE_Praktikum.Core.GameStates
 {
     public class InGame : GameState
     {
+        private readonly IGameEngine _engine;
         private IScreen _screen;
         private Logger _logger;
         private readonly Level _level;
@@ -28,9 +29,10 @@ namespace SE_Praktikum.Core.GameStates
         private ComponentGrid _components;
         private KeyboardState _lastKeyboardState;
 
-        public InGame(IScreen screen, Level level, ContentManager contentManager, ControlElementFactory factory)
+        public InGame(IGameEngine engine, IScreen screen, Level level, ContentManager contentManager, ControlElementFactory factory)
         {
             _logger = LogManager.GetCurrentClassLogger();
+            _engine = engine;
             _screen = screen;
             _level = level;
             _contentManager = contentManager;
@@ -94,29 +96,18 @@ namespace SE_Praktikum.Core.GameStates
 
         public override void PostUpdate(GameTime gameTime)
         {
+            _level.PostUpdate();
         }
 
-        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        public override void Draw()
         {
-
-            spriteBatch.Begin(SpriteSortMode.FrontToBack,
-                null,
-                SamplerState.PointClamp, // Sharp Pixel rendering
-                null,
-                RasterizerState
-                    .CullCounterClockwise, // Render only the texture side that faces the camara to boost performance 
-                _screen.Camera.GetCameraEffect());
             
             if(!_pause)
-                _level.Draw(gameTime, spriteBatch);
+                _level.Draw();
             else
             {
-                foreach (var component in _components)
-                {
-                    component.Draw(gameTime, spriteBatch);
-                }
+                _engine.Render(_components);
             }
-            spriteBatch.End();
         }
     }
 }

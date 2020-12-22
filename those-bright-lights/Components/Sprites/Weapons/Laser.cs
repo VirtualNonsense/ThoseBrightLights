@@ -20,31 +20,21 @@ namespace SE_Praktikum.Components.Sprites.Weapons
             _spaceShipVelocity = Vector2.Zero;
             MaxTime = 5;
             Damage = 5;
-            _midAirSoundCooldown = 1000;
-            _timeSinceUsedMidAir = _midAirSoundCooldown;
+            MidAirSoundCooldown = 1000;
+            TimeSinceUsedMidAir = MidAirSoundCooldown;
         }
         
         public override void Update(GameTime gameTime)
         {
             _elapsedTime += gameTime.ElapsedGameTime.Milliseconds / 1000f;
-            _timeSinceUsedMidAir += gameTime.ElapsedGameTime.Milliseconds;
+            TimeSinceUsedMidAir += gameTime.ElapsedGameTime.Milliseconds;
             Position = Movement(_spaceShipVelocity,_elapsedTime);
-            if (_midAirSoundCooldown < _timeSinceUsedMidAir)
+            if (MidAirSoundCooldown < TimeSinceUsedMidAir)
             {
-                _timeSinceUsedMidAir = 0;
-                _midAirSound?.Play();
+                TimeSinceUsedMidAir = 0;
+                //MidAirSound?.Play();
             }
             base.Update(gameTime);
-        }
-
-        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
-        {
-            base.Draw(gameTime, spriteBatch);
-        }
-
-        protected override void InvokeOnCollide()
-        {
-            base.InvokeOnCollide();
         }
     }
 }

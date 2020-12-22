@@ -50,12 +50,12 @@ namespace SE_Praktikum.Components.Controls
 
         public virtual float Layer
         {
-            get => _handler.First().Settings.Layer;
+            get => _handler.First().Layer;
             set
             {
                 foreach (var animationHandler in _handler)
                 {
-                    animationHandler.Settings.Layer = value;
+                    animationHandler.Layer = value;
                 }
             }
         }
@@ -83,7 +83,7 @@ namespace SE_Praktikum.Components.Controls
             return r;
         }
         
-        public  abstract void Draw(GameTime gameTime, SpriteBatch spriteBatch);
+        public  abstract void Draw(SpriteBatch spriteBatch);
         public abstract void Update(GameTime gameTime);
         public bool IsRemoveAble { get; set; }
     }

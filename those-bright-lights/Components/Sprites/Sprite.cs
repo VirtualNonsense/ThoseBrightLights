@@ -8,7 +8,7 @@ using SE_Praktikum.Services.Factories;
 
 namespace SE_Praktikum.Components.Sprites
 {
-  public abstract class Sprite : IComponent
+  public class Sprite : IComponent
   {
     // #################################################################################################################
     // Fields
@@ -22,17 +22,15 @@ namespace SE_Praktikum.Components.Sprites
     // Constructor
     // #################################################################################################################
 
-    protected Sprite(AnimationHandler animationHandler)
+    public Sprite(AnimationHandler animationHandler)
     {
       _animationHandler = animationHandler;
     }
     // #################################################################################################################
     // Properties
     // #################################################################################################################
-    
-    public AnimationSettings AnimationSettings => _animationHandler.Settings;
-    
-    
+
+
     public List<Sprite> Children { get; set; }
     
     public Vector2 Origin { 
@@ -63,27 +61,22 @@ namespace SE_Praktikum.Components.Sprites
     //TODO: does layer have to be float? maybe use int instead
     public float Layer
     {
-      get => _animationHandler.Settings.Layer;
-      set => _animationHandler.Settings.Layer = value;
+      get => _animationHandler.Layer;
+      set => _animationHandler.Layer = value;
     }
 
-    public float Rotation
+    public virtual float Rotation
     {
-      get => _animationHandler.Settings.Rotation;
-      set => _animationHandler.Settings.Rotation = value;
+      get => _animationHandler.Rotation;
+      set => _animationHandler.Rotation = value;
     }
 
     public float Scale
     {
-      get => _animationHandler.Settings.Scale;
-      set => _animationHandler.Settings.Scale = value;
+      get => _animationHandler.Scale;
+      set => _animationHandler.Scale = value;
     }
-
-    public float Opacity
-    {
-      get => _animationHandler.Settings.Opacity;
-      set => _animationHandler.Settings.Opacity = value;
-    }
+    
     public Matrix Transform =>
       Matrix.CreateTranslation(new Vector3(-Origin, 0)) *
       Matrix.CreateRotationZ(Rotation) *
@@ -155,7 +148,7 @@ namespace SE_Praktikum.Components.Sprites
       _animationHandler.Update(gameTime);
     }
 
-    public virtual void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+    public virtual void Draw(SpriteBatch spriteBatch)
     {
       _animationHandler.Draw(spriteBatch);
     }

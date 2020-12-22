@@ -33,7 +33,7 @@ namespace SE_Praktikum.Services.Factories
         private void loadAssetsIfNecessary()
         {
             _buttonsAndSwitches ??= new TileSet(_contentManager.Load<Texture2D>("Artwork/Tilemaps/ButtonsAndSwitches"), _tileWidth,
-                _tileHeight);
+                _tileHeight, null);
             _font ??= _contentManager.Load<SpriteFont>("Font/Font2");
         }
 
@@ -171,7 +171,7 @@ namespace SE_Praktikum.Services.Factories
                     switch (TableHelper.GetTablePos(x, y, tilesX - 1, tilesY - 1))
                     {
                         case TableHelper.TablePosition.TopLeft:
-                            _logger.Trace($"pos {x} {y} top left");
+                            //_logger.Trace($"pos {x} {y} top left");
                             animationSettings = new AnimationSettings(new List<(int, float)>
                             {
                                 (8, 1f),
@@ -179,7 +179,7 @@ namespace SE_Praktikum.Services.Factories
                             });
                             break;
                         case TableHelper.TablePosition.TopRight:
-                            _logger.Trace($"pos {x} {y} top right");
+                            //_logger.Trace($"pos {x} {y} top right");
                             animationSettings = new AnimationSettings(new List<(int, float)>
                             {
                                 (10, 1f),
@@ -187,7 +187,7 @@ namespace SE_Praktikum.Services.Factories
                             });
                             break;
                         case TableHelper.TablePosition.Top:
-                            _logger.Trace($"pos {x} {y} top");
+                            //_logger.Trace($"pos {x} {y} top");
                             animationSettings = new AnimationSettings(new List<(int, float)>
                             {
                                 (9, 1f),
@@ -195,14 +195,14 @@ namespace SE_Praktikum.Services.Factories
                             });
                             break;
                         case TableHelper.TablePosition.Right:
-                            _logger.Trace($"pos {x} {y} right");
+                            //_logger.Trace($"pos {x} {y} right");
                             animationSettings = new AnimationSettings(new List<(int, float)>
                             {
                                 (18, 1f),
                             });
                             break;
                         case TableHelper.TablePosition.BottomRight:
-                            _logger.Trace($"pos {x} {y} bottom right");
+                            //_logger.Trace($"pos {x} {y} bottom right");
                             animationSettings = new AnimationSettings(new List<(int, float)>
                             {
                                 (26, 1f),
@@ -210,7 +210,7 @@ namespace SE_Praktikum.Services.Factories
                             });
                             break;
                         case TableHelper.TablePosition.Bottom:
-                            _logger.Trace($"pos {x} {y} bottom");
+                            //_logger.Trace($"pos {x} {y} bottom");
                             animationSettings = new AnimationSettings(new List<(int, float)>
                             {
                                 (25, 1f),
@@ -218,7 +218,7 @@ namespace SE_Praktikum.Services.Factories
                             });
                             break;
                         case TableHelper.TablePosition.BottomLeft:
-                            _logger.Trace($"pos {x} {y} bottom left");
+                            //_logger.Trace($"pos {x} {y} bottom left");
                             animationSettings = new AnimationSettings(new List<(int, float)>
                             {
                                 (24, 1f),
@@ -226,21 +226,21 @@ namespace SE_Praktikum.Services.Factories
                             });
                             break;
                         case TableHelper.TablePosition.Left:
-                            _logger.Trace($"pos {x} {y} left");
+                            //_logger.Trace($"pos {x} {y} left");
                             animationSettings = new AnimationSettings(new List<(int, float)>
                             {
                                 (16, 1f),
                             });
                             break;
                         case TableHelper.TablePosition.Middle:
-                            _logger.Trace($"pos {x} {y}");
+                            //_logger.Trace($"pos {x} {y}");
                             animationSettings = new AnimationSettings(new List<(int, float)>
                             {
                                 (17, 1f)
                             });
                             break;
                         case TableHelper.TablePosition.SingleColumnTop:
-                            _logger.Trace($"row {y} top left, only one column");
+                            //_logger.Trace($"row {y} top left, only one column");
                             animationSettings = new AnimationSettings(new List<(int, float)>
                             {
                                 (14, 1f), // normal
@@ -248,14 +248,14 @@ namespace SE_Praktikum.Services.Factories
                             });
                             break;
                         case TableHelper.TablePosition.SingleColumnMiddle:
-                            _logger.Trace($"row {y} left, only one column");
+                            //_logger.Trace($"row {y} left, only one column");
                             animationSettings = new AnimationSettings(new List<(int, float)>
                             {
                                 (22, 1f), // normal
                             });
                             break;
                         case TableHelper.TablePosition.SingleColumnBottom:
-                            _logger.Trace($"row {y} bottom left, only one column");
+                            //_logger.Trace($"row {y} bottom left, only one column");
                             animationSettings = new AnimationSettings(new List<(int, float)>
                             {
                                 (30, 1f), // normal
@@ -263,7 +263,7 @@ namespace SE_Praktikum.Services.Factories
                             });
                             break;
                         case TableHelper.TablePosition.SingleRowLeft:
-                            _logger.Trace($"column {x} top left, only one line");
+                            //_logger.Trace($"column {x} top left, only one line");
                             animationSettings = new AnimationSettings(new List<(int, float)>
                             {
                                 (0, 1f), // normal
@@ -271,7 +271,7 @@ namespace SE_Praktikum.Services.Factories
                             });
                             break;
                         case TableHelper.TablePosition.SingleRowMiddle:
-                            _logger.Trace($"column {x} , only one line");
+                            //_logger.Trace($"column {x} , only one line");
                             animationSettings = new AnimationSettings(new List<(int, float)>
                             {
                                 (1, 1f),
@@ -279,7 +279,7 @@ namespace SE_Praktikum.Services.Factories
                             });
                             break;
                         case TableHelper.TablePosition.SingleRowRight:
-                            _logger.Trace($"column {x} top right, only one line");
+                            //_logger.Trace($"column {x} top right, only one line");
                             animationSettings = new AnimationSettings(new List<(int, float)>
                             {
                                 (2, 1f),
@@ -287,7 +287,7 @@ namespace SE_Praktikum.Services.Factories
                             });
                             break;
                         case TableHelper.TablePosition.SingleTile:
-                            _logger.Trace($"Single tile");
+                            //_logger.Trace($"Single tile");
                             animationSettings = new AnimationSettings(new List<(int, float)>
                             {
                                 (6, 1f), // normal

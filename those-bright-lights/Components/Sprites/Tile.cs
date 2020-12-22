@@ -26,32 +26,45 @@ namespace SE_Praktikum.Components.Sprites
             switch (tileModifier)
             {
                 case TileModifier.MirroredHorizontally:
-                    _animationHandler.Settings.SpriteEffects = SpriteEffects.FlipHorizontally;
+                    _animationHandler.SpriteEffects = SpriteEffects.FlipHorizontally;
                     break;
                 case TileModifier.MirroredVertically:
-                    _animationHandler.Settings.SpriteEffects = SpriteEffects.FlipVertically;
+                    _animationHandler.SpriteEffects = SpriteEffects.FlipVertically;
                     break;
                 case TileModifier.Turned180Deg:
-                    _animationHandler.Settings.Rotation = (float)(180 * Math.PI / 180);
+                    _animationHandler.Rotation = (float)(180 * Math.PI / 180);
                     
                     break;
                 case TileModifier.MirroredVerticallyTurnedRight:
-                    _animationHandler.Settings.SpriteEffects = SpriteEffects.FlipVertically;
-                    _animationHandler.Settings.Rotation = (float)(90 * Math.PI / 180); 
+                    _animationHandler.SpriteEffects = SpriteEffects.FlipVertically;
+                    _animationHandler.Rotation = (float)(90 * Math.PI / 180); 
                     break;
                 case TileModifier.TurnedRight:
-                    _animationHandler.Settings.Rotation = (float)(90 * Math.PI / 180); 
+                    _animationHandler.Rotation = (float)(90 * Math.PI / 180); 
                     break;
                 case TileModifier.TurnedLeft:
-                    _animationHandler.Settings.Rotation = (float)(-90 * Math.PI / 180); 
+                    _animationHandler.Rotation = (float)(-90 * Math.PI / 180); 
                     break;
                 case TileModifier.MirroredHorizontallyTurnedRight:
-                    _animationHandler.Settings.SpriteEffects = SpriteEffects.FlipHorizontally;
-                    _animationHandler.Settings.Rotation = (float)(90 * Math.PI / 180); 
+                    _animationHandler.SpriteEffects = SpriteEffects.FlipHorizontally;
+                    _animationHandler.Rotation = (float)(90 * Math.PI / 180); 
                     break;
             }
         }
+
+        protected override bool InteractAble(Actor other)
+        {
+            // tile doesnt care about interactions
+            // a destroyable tile might be of use on some point
+            return false;
+        }
+        
+        protected override void ExecuteInteraction(Actor other)
+        {
+        }
     }
+    
+    
 
     public enum TileModifier
     {

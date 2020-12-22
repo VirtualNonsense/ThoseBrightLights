@@ -14,26 +14,23 @@ namespace SE_Praktikum.Core.GameStates
 {
     public class LevelSelect : GameState
     {
+        private readonly IGameEngine _engine;
         private readonly IScreen _screen;
         private readonly ContentManager _contentManager;
         private List<MenuButton> _buttons;
         private Logger _logger;
 
-        public LevelSelect(IScreen screen, ContentManager contentManager)
+        public LevelSelect(IGameEngine engine, IScreen screen, ContentManager contentManager)
         {
             _logger = LogManager.GetCurrentClassLogger();
+            _engine = engine;
             _screen = screen;
             _contentManager = contentManager;
         }
 
-        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        public override void Draw()
         {
-            spriteBatch.Begin();
-            foreach (var button in _buttons)
-            {
-                button.Draw(gameTime, spriteBatch);
-            }
-            spriteBatch.End();
+            _engine.Render(_buttons);
         }
 
         public override void LoadContent()

@@ -1,10 +1,12 @@
-﻿using Microsoft.Xna.Framework;
+﻿﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using NLog;
 using System;
+using System.Collections.Generic;
+ using System.Linq;
 
-namespace SE_Praktikum.Models
+ namespace SE_Praktikum.Models
 {
     public class TileSet
     {
@@ -15,13 +17,15 @@ namespace SE_Praktikum.Models
         public Texture2D Texture;
         public int Tiles => Columns * Rows;
         public int StartEntry;
+        private readonly Dictionary<int, Polygon[]> _hitBoxDict;
         private ILogger _logger;
         public int FrameCount => Columns * Rows;
         public int TextureWidth => Texture.Width;
         public int TextureHeight => Texture.Height;
 
+        public bool HasHitBox => _hitBoxDict != null;
         
-        public TileSet(Texture2D texture, int tileDimX, int tileDimY, int startEntry=0)
+        public TileSet(Texture2D texture, int tileDimX, int tileDimY, Dictionary<int, Polygon[]> hitBoxDict, int startEntry=0)
         {
             _logger = LogManager.GetCurrentClassLogger();
             Texture = texture;
@@ -30,17 +34,23 @@ namespace SE_Praktikum.Models
             Columns = Texture.Width / TileDimX;
             Rows = Texture.Height / TileDimY;
             StartEntry = startEntry;
+            _hitBoxDict = hitBoxDict;
         }
 
-        public TileSet(Texture2D texture, int startEntry = 0)
+        public TileSet(Texture2D texture, Polygon[] hitBox = null, int startEntry = 0)
         {
             _logger = LogManager.GetCurrentClassLogger();
             Texture = texture;
             TileDimX = Texture.Width;
             TileDimY = Texture.Height;
-            Columns = Texture.Width / TileDimX;
-            Rows = Texture.Height / TileDimY;
+            Columns = 1;
+            Rows = 1;
             StartEntry = startEntry;
+            if (hitBox == null) return;
+            _hitBoxDict = new Dictionary<int, Polygon[]>
+            {
+                {0, hitBox}
+            };
         }
 
         internal Rectangle GetFrame(uint index)
@@ -64,6 +74,7 @@ namespace SE_Praktikum.Models
             return new Vector2(TileDimX/2f, TileDimY/2f);
         }
         
+        [Obsolete]
         public Byte[] GetDataOfFrame(int tile)
         {
             tile -= StartEntry;
@@ -101,8 +112,24 @@ namespace SE_Praktikum.Models
                 }
             }
             return pixelArray;
+        }
 
+        public Polygon[] GetHitBox(int index)
+        {
+            if (_hitBoxDict == null)
+            {
+                // logging is quite slow
+                // _logger.Warn("Hitbox does not exist");
+                return null;
+            }
 
+            if (_hitBoxDict.ContainsKey(index))
+            {
+                return _hitBoxDict[index].Select(polygon => (Polygon) polygon.Clone()).ToArray();
+            }
+
+            _logger.Warn($"hitbox of {index} ({index}) not found");
+            return null;
         }
     }
 }

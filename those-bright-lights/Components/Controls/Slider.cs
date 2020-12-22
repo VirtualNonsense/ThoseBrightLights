@@ -77,13 +77,13 @@ namespace SE_Praktikum.Components.Controls
         }
          
 
-        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        public override void Draw(SpriteBatch spriteBatch)
         {
             foreach (var animationHandler in _handler)
             {
                 animationHandler.Draw(spriteBatch);
             }
-            _sliderBlade.Draw(gameTime, spriteBatch);
+            _sliderBlade.Draw(spriteBatch);
         }
 
         public override void Update(GameTime gameTime)
@@ -150,7 +150,7 @@ namespace SE_Praktikum.Components.Controls
                 _logger = LogManager.GetCurrentClassLogger();
             }
 
-            public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+            public override void Draw(SpriteBatch spriteBatch)
             {
                 foreach (var animationHandler in _handler)
                 {

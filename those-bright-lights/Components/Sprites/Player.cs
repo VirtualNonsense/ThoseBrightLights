@@ -62,7 +62,8 @@ namespace SE_Praktikum.Components.Sprites
 
             if (CurrentKey.IsKeyDown(_input.Shoot) && !_shot)
             {
-                InvokeOnShoot(velocity);
+                var b = Weapons[CurrentWeapon].GetBullet(velocity, Position, Rotation, this);
+                InvokeOnShoot(b);
                 _shot = true;
             }
             else if (CurrentKey.IsKeyUp(_input.Shoot))
@@ -70,21 +71,6 @@ namespace SE_Praktikum.Components.Sprites
             #endregion
             
             base.Update(gameTime);
-        }
-
-        protected override void InvokeOnCollide()
-        {
-            Health -= 1;
-            if (Health <= 0)
-            {
-                _logger.Error("Dead!");
-                IsRemoveAble = true;
-            }
-            else
-            {
-                _logger.Info(Health);
-            }
-            base.InvokeOnCollide();
         }
 
         protected override void InvokeOnTakeDamage(float damage)

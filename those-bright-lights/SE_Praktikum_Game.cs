@@ -1,15 +1,19 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 using NLog;
+using SE_Praktikum.Components;
 using SE_Praktikum.Core;
 using SE_Praktikum.Core.GameStates;
 using SE_Praktikum.Models;
 
 namespace SE_Praktikum
 {
-    public class SE_Praktikum_Game : Game, IScreen, IObserver<GameState>
+    public class SE_Praktikum_Game : Game, IGameEngine, IScreen, IObserver<GameState>
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
@@ -35,6 +39,7 @@ namespace SE_Praktikum
         protected override void Initialize()
         {
             _logger.Debug("Start Initialisiation");
+            MediaPlayer.Volume = .3f;
             
             _graphics.PreferredBackBufferWidth = ScreenWidth;
             _graphics.PreferredBackBufferHeight = ScreenHeight;
@@ -81,7 +86,7 @@ namespace SE_Praktikum
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Black);
-            _currentState.Draw(gameTime, _spriteBatch);
+            _currentState.Draw();
 
             base.Draw(gameTime);
         }
@@ -107,5 +112,69 @@ namespace SE_Praktikum
         public int ScreenHeight { get; }
         public int ScreenWidth { get; }
         public Camera Camera { get; private set; }
+
+        public void Render(IComponent component)
+        {
+            _spriteBatch.Begin(SpriteSortMode.FrontToBack,
+                null,
+                SamplerState.PointClamp, // Sharp Pixel rendering
+                DepthStencilState.Default,
+                RasterizerState.CullCounterClockwise, // Render only the texture side that faces the camara to boost performance 
+                Camera.GetCameraEffect());
+            component.Draw(_spriteBatch);
+            _spriteBatch.End();
+        }
+
+        public void Render(IEnumerable<IComponent> components)
+        {
+            _spriteBatch.Begin(SpriteSortMode.FrontToBack,
+                null,
+                SamplerState.PointClamp, // Sharp Pixel rendering
+                DepthStencilState.Default,
+                RasterizerState.CullCounterClockwise, // Render only the texture side that faces the camara to boost performance 
+                Camera.GetCameraEffect());
+            foreach (var component in components)
+            {
+                component.Draw(_spriteBatch);
+            }
+            _spriteBatch.End();
+        }
+
+        public void Render(IEnumerable<Polygon> polygons)
+        {
+            GraphicsDevice.BlendState = BlendState.Opaque;
+            foreach (var polygon in polygons)
+            {
+                Render(polygon);
+            }
+        }
+
+        public void Render(Polygon polygon)
+        {
+            
+            if(!polygon.DrawAble) return;
+            var type = PrimitiveType.TriangleList;
+            var effect = Camera.GetCameraEffectForPrimitives();
+            foreach (var pass in effect.CurrentTechnique.Passes)
+            {
+                pass.Apply();
+                effect.GraphicsDevice.DrawUserIndexedPrimitives(
+                    type,
+                    polygon.DrawAbleVertices, 
+                    0,
+                    polygon.DrawAbleVertices.Length,
+                    polygon.VertexDrawingOrder, 
+                    0,
+                    polygon.TriangleCount);
+                effect.GraphicsDevice.DrawUserIndexedPrimitives(
+                    type,
+                    polygon.DrawAbleVertices, 
+                    0,
+                    polygon.DrawAbleVertices.Length,
+                    polygon.VertexDrawingOrder.Reverse().ToArray(), 
+                    0,
+                    polygon.TriangleCount);
+            }
+        }
     }
 }
