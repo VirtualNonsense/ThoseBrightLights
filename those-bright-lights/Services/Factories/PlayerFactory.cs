@@ -28,19 +28,12 @@ namespace SE_Praktikum.Services.Factories
         {
             var texture2D = contentManager.Load<Texture2D>("Artwork/Actors/spaceship");
             var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\spaceship.json",0);
-            //var tileSet = new TileSet(texture2D, new []
-            //{
-            //    new Polygon(Vector2.Zero, Vector2.Zero, 0, new List<Vector2>
-            //    {
-            //        new Vector2(-32.5f, 32.5f),
-            //        new Vector2(32.5f, 32.5f),
-            //        new Vector2(32.5f, -32.5f),
-            //        new Vector2(-32.5f, -32.5f),
-            //    }), 
-            //});
             var animationSettings = new AnimationSettings(1,isPlaying:false);
             var input = _inputFactory.GetInstance();
-            var p = new Player(_animationHandlerFactory.GetAnimationHandler(tileSet,animationSettings),input);
+            var propulsionTileSet =_tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\flyingEngineOnly.json",0);
+            var propulsionHandler = _animationHandlerFactory.GetAnimationHandler(propulsionTileSet,
+                new AnimationSettings(frames: 6, duration: 75, isLooping: true));
+            var p = new Player(_animationHandlerFactory.GetAnimationHandler(tileSet,animationSettings), propulsionHandler, input);
             p.Position = new Vector2(-50,50);
             p.AddWeapon(_weaponFactory.GetMissileLauncher(contentManager));
 
