@@ -3,8 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using SE_Praktikum.Extensions;
-using System.Runtime.InteropServices;
-using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 
 
@@ -240,6 +238,27 @@ namespace SE_Praktikum.Models
             }
 
             return true;
+        }
+
+        /// <summary>
+        /// Moves the vertices relative to origin.
+        /// E.g. Triangle:
+        /// Origin at 0, 0 Points (0, 0), (4, 4), (0, 4)
+        /// Changing reference by (-2, -2)
+        /// origin still at (0, 0) new Points (-2, -2), (2, 2), (-2, 2)
+        /// </summary>
+        /// <param name="distance"></param>
+        public void MoveVertices(Vector2 distance)
+        {
+            var t = _origin + distance;
+            for (int i = 0; i < _vertices.Count; i++)
+            {
+                _vertices[i] = _vertices[i] + t;
+            }
+            Vertices2D = GetVector2InWorldSpace();
+            Vertices3D = GetVector3InWorldSpace();
+            VertexDrawingOrder = GetIndexMeshInts();
+            DrawAbleVertices = GetDrawAbleVertices();
         }
 
         #endregion
