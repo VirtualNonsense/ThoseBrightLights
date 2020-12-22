@@ -29,10 +29,10 @@ namespace SE_Praktikum.Services.Factories
                 // Origin must be Vector2.Zero for some reason i have to investigate.....
                 new Polygon(Vector2.Zero, new Vector2(0, 0), 0, new List<Vector2>
                 {
-                    new Vector2(-12, 8),
-                    new Vector2(12, 8),
-                    new Vector2(12, -8),
-                    new Vector2(-12, -8),
+                    new Vector2(0, 18),
+                    new Vector2(24, 18),
+                    new Vector2(24, 0),
+                    new Vector2(0, 0),
                 }), 
             });
             Texture2D propulsion = contentManager.Load<Texture2D>("Artwork/projectiles/missile_propulsion_15_15");
@@ -52,10 +52,10 @@ namespace SE_Praktikum.Services.Factories
                 // Origin must be Vector2.Zero for some reason i have to investigate.....
                 new Polygon(Vector2.Zero, new Vector2(0, 0), 0, new List<Vector2>
                 {
-                    new Vector2(-8, 2),
-                    new Vector2(8, 2),
-                    new Vector2(8, -2),
-                    new Vector2(-8, -2),
+                    new Vector2(0, 4),
+                    new Vector2(16, 4),
+                    new Vector2(16, 0),
+                    new Vector2(0, 0),
                 }), 
             });
             SoundEffect soundEffect = contentManager.Load<SoundEffect>("Audio/Sound_Effects/Shot/Laser_Short");

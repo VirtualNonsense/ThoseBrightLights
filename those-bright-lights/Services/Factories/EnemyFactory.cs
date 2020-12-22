@@ -25,12 +25,12 @@ namespace SE_Praktikum.Services.Factories
             SoundEffect impactSound = contentManager.Load<SoundEffect>("Audio/Sound_Effects/Collusion/ClinkBell");
             var tileSet = new TileSet(texture2D, new []
             {
-                new Polygon(Vector2.Zero, Vector2.Zero, 0, new List<Vector2>
+                new Polygon(Vector2.Zero, new Vector2(0, 0), 0, new List<Vector2>
                 {
-                    new Vector2(-32.5f, 32.5f),
-                    new Vector2(32.5f, 32.5f),
-                    new Vector2(32.5f, -32.5f),
-                    new Vector2(-32.5f, -32.5f),
+                    new Vector2(0,2* 32.5f),
+                    new Vector2(2*32.5f, 2*32.5f),
+                    new Vector2(2*32.5f, 0),
+                    new Vector2(0, 0),
                 }), 
             });
             var animationSettings = new AnimationSettings(1,isPlaying:false);
