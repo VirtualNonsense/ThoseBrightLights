@@ -48,6 +48,7 @@ namespace SE_Praktikum.Models
             nodes[3] = new QuadTree<T>(level + 1, new Rectangle(x + newWidth, y - newHeight, newWidth, newHeight));
         }
 
+        // PROBLEM: The -1's even if they are close won't be in this List - Need ideas...
         public int GetIndex(Rectangle rect) // DO NOT FORGET!!! : For collision I suspect all kind of forms (not just a rectangle)
         {
             // If it is not completely in a node then index must be -1
