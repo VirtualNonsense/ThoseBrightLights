@@ -110,10 +110,13 @@ namespace SE_Praktikum.Models
         // then again: The actor could be something different than a Rectangle (Just for logic purposes)
         public List<Rectangle> Retrieve(Rectangle actor)
         {
-            // Check if node is null
             int index = GetIndex(actor);
 
-            return nodes[index].objects;
+            if (wasDivided == true)
+            {
+                nodes[index].Retrieve(actor);
+            }
+            return objects;
         }
     }
 }
