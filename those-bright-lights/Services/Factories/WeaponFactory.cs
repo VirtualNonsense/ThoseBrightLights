@@ -25,19 +25,6 @@ namespace SE_Praktikum.Services.Factories
 
         public MissileLauncher GetMissileLauncher(ContentManager contentManager)
         {
-            Texture2D texture = contentManager.Load<Texture2D>("Artwork/projectiles/missile");
-            // TileSet textureTileSet = new TileSet(texture, new []
-            // {
-            //     // Origin must be Vector2.Zero for some reason i have to investigate.....
-            //     new Polygon(Vector2.Zero, new Vector2(0, 0), 0, new List<Vector2>
-            //     {
-            //         new Vector2(0, 18),
-            //         new Vector2(24, 18),
-            //         new Vector2(24, 0),
-            //         new Vector2(0, 0),
-            //     }), 
-            // });
-            
             var textureTileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\missile.json",0);
             Texture2D propulsion = contentManager.Load<Texture2D>("Artwork/projectiles/missile_propulsion_15_15");
             TileSet propulsionTileSet = new TileSet(propulsion,15,15, null);
@@ -50,18 +37,7 @@ namespace SE_Praktikum.Services.Factories
 
         public Lasergun GetLasergun(ContentManager contentManager)
         {
-            Texture2D texture = contentManager.Load<Texture2D>("Artwork/projectiles/laser");
-            TileSet textureTileSet = new TileSet(texture, new []
-            {
-                // Origin must be Vector2.Zero for some reason i have to investigate.....
-                new Polygon(Vector2.Zero, new Vector2(0, 0), 0, new List<Vector2>
-                {
-                    new Vector2(0, 4),
-                    new Vector2(16, 4),
-                    new Vector2(16, 0),
-                    new Vector2(0, 0),
-                }), 
-            });
+            var textureTileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\laser.json",0);
             SoundEffect soundEffect = contentManager.Load<SoundEffect>("Audio/Sound_Effects/Shot/Laser_Short");
             SoundEffect flightEffect = contentManager.Load<SoundEffect>("Audio/Sound_Effects/Airborne/Wobble_test");
             SoundEffect impactSound = contentManager.Load<SoundEffect>("Audio/Sound_Effects/Collusion/Clink");
