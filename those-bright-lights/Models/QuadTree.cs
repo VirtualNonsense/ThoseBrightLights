@@ -100,6 +100,8 @@ namespace SE_Praktikum.Models
                     if (index != -1)
                     {
                         nodes[index].Insert(objects[i]);
+                        // objects won't be doubled
+                        objects.Remove(objects[i]);
                     }
                 }
             }
