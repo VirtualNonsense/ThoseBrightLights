@@ -90,9 +90,13 @@ namespace SE_Praktikum.Models
                 objects.Add(rect);
             }
 
-            if (objects.Count > maxObjects)
+            if (objects.Count > maxObjects || wasDivided == true)
             {
-                Divide();
+                if (wasDivided == false)
+                {
+                    Divide();
+                    wasDivided = true;
+                }
 
                 for (int i = 0; i < objects.Count; i++)
                 {
