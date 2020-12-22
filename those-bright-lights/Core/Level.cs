@@ -162,6 +162,7 @@ namespace SE_Praktikum.Core
             enemy.Layer = player.Layer;
             enemy.X = 200;
             enemy.Y = 0;
+            enemy.Rotation = (float) Math.PI;
             enemy.OnShoot += (sender, args) =>
             {
                 if (!(args is LevelEvent e)) return;
