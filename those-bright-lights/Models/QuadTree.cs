@@ -7,6 +7,7 @@ namespace SE_Praktikum.Models
 {
     public class QuadTree<T>
     {
+        // NOTICE: All Tests for this class are in a separate project - "CheckTrees"
         List<Rectangle> objects; // changed from T to Rectangle
         int level;
         Rectangle boundary;
