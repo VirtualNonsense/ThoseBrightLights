@@ -26,8 +26,9 @@ namespace SE_Praktikum.Services.Factories
         public MissileLauncher GetMissileLauncher(ContentManager contentManager)
         {
             var textureTileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\missile.json",0);
-            Texture2D propulsion = contentManager.Load<Texture2D>("Artwork/projectiles/missile_propulsion_15_15");
-            TileSet propulsionTileSet = new TileSet(propulsion,15,15, null);
+            //Texture2D propulsion = contentManager.Load<Texture2D>("Artwork/projectiles/missile_propulsion_15_15");
+            //TileSet propulsionTileSet = new TileSet(propulsion,15,15, null);
+            var propulsionTileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\missile_propulsion_15_15.json", 0);
             SoundEffect flightEffect = null; //contentManager.Load<SoundEffect>("Audio/Sound_Effects/Airborne/Flight_plane_c");
             SoundEffect impactSound = contentManager.Load<SoundEffect>("Audio/Sound_Effects/Collusion/Big_Explo");
             var m = new MissileLauncher(_animationHandlerFactory,textureTileSet, propulsionTileSet,
@@ -37,12 +38,22 @@ namespace SE_Praktikum.Services.Factories
 
         public Lasergun GetLasergun(ContentManager contentManager)
         {
-            var textureTileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\laser.json",0);
+            var laserTileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\laser.json",0);
             SoundEffect soundEffect = contentManager.Load<SoundEffect>("Audio/Sound_Effects/Shot/Laser_Short");
             SoundEffect flightEffect = contentManager.Load<SoundEffect>("Audio/Sound_Effects/Airborne/Wobble_test");
             SoundEffect impactSound = contentManager.Load<SoundEffect>("Audio/Sound_Effects/Collusion/Clink");
-            var l = new Lasergun(_animationHandlerFactory, textureTileSet, _particleFactory, soundEffect, flightEffect, impactSound);
+            var l = new Lasergun(_animationHandlerFactory, laserTileSet, _particleFactory, soundEffect, flightEffect, impactSound);
             return l;
+        }
+
+        public Lasergun EnemyGetLasergun(ContentManager contentManager)
+        {
+            var enemylaserTileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\enemylaser.json", 0);
+            SoundEffect soundEffect = contentManager.Load<SoundEffect>("Audio/Sound_Effects/Shot/Laser_Short");
+            SoundEffect flightEffect = contentManager.Load<SoundEffect>("Audio/Sound_Effects/Airborne/Wobble_test");
+            SoundEffect impactSound = contentManager.Load<SoundEffect>("Audio/Sound_Effects/Collusion/Clink");
+            var k = new Lasergun(_animationHandlerFactory, enemylaserTileSet, _particleFactory, soundEffect, flightEffect, impactSound);
+            return k;
         }
     }
 }
