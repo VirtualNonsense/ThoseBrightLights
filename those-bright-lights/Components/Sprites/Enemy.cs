@@ -15,12 +15,13 @@ namespace SE_Praktikum.Components.Sprites
     public class Enemy : Spaceship
     {
         private Logger _logger;
-        private bool _shot = false;
         public Polygon ViewBox;
-        private InterAction _i;
-        private Actor _target;
+        protected InterAction I;
+        protected Actor Target;
         protected CooldownAbility ForgetTarget;
         protected CooldownAbility Shoot;
+        public bool RotateAndShoot = false;
+        protected float RotateVelocity;
         
 
         private bool _hitBoxFlipped = false;
@@ -49,17 +50,20 @@ namespace SE_Praktikum.Components.Sprites
         {
             _logger = LogManager.GetCurrentClassLogger();
             Shoot = new CooldownAbility(2000, _shootTarget);
-            _i = InterAction.None;
+            I = InterAction.None;
         }
 
-        private void _shootTarget()
+        protected virtual void _shootTarget()
         {
             float rotation = Rotation;
-            var vector = _target.Position - Position;
-            if(Math.Abs(vector.X) > Math.Abs(vector.Y)) 
-                rotation -= (float)Math.Asin(vector.Y / vector.Length());
-            if(Math.Abs(vector.X) < Math.Abs(vector.Y)) 
-                rotation += (float)Math.Acos(vector.X / vector.Length());
+            if (!RotateAndShoot)
+            {
+                var vector = Target.Position - Position;
+                if (Math.Abs(vector.X) > Math.Abs(vector.Y))
+                    rotation -= (float) Math.Asin(vector.Y / vector.Length());
+                if (Math.Abs(vector.X) < Math.Abs(vector.Y))
+                    rotation += (float) Math.Acos(vector.X / vector.Length());
+            }
             // _logger.Trace(rotation);
             var b =  Weapons[CurrentWeapon].GetBullet(Velocity, Position, rotation, this);
             InvokeOnShoot(b);
@@ -93,7 +97,7 @@ namespace SE_Praktikum.Components.Sprites
                 case Player p:
                     if (p.HitBox.Any(polygon => ViewBox.Overlap(polygon)))
                     {
-                        _i = InterAction.InView;
+                        I = InterAction.InView;
                         return true;
                     }
 
@@ -101,7 +105,7 @@ namespace SE_Praktikum.Components.Sprites
             }
             var t = base.InteractAble(other);
             if (t)
-                _i = InterAction.BodyCollision;
+                I = InterAction.BodyCollision;
             return t;
         }
 
@@ -110,8 +114,8 @@ namespace SE_Praktikum.Components.Sprites
             switch (other)
             {
                 case Player p:
-                    _target = p;
-                    switch (_i)
+                    Target = p;
+                    switch (I)
                     {
                         case InterAction.BodyCollision:
                             Health -= p.Damage;
