@@ -68,17 +68,12 @@ namespace SE_Praktikum.Components.Sprites
         
         public override void Update(GameTime gameTime)
         {
-            Shoot.Update(gameTime);
-            if (_i == InterAction.InView && _target != null)
-                Shoot.Fire();
-            
             Vector2 velocity = Vector2.Zero;
 
             ViewBox.Position = Position;
             ViewBox.Rotation = Rotation;
             ViewBox.Layer = Layer;
             base.Update(gameTime);
-
         }
 
         
@@ -120,10 +115,6 @@ namespace SE_Praktikum.Components.Sprites
                     {
                         case InterAction.BodyCollision:
                             Health -= p.Damage;
-                            break;
-                        case InterAction.InView:
-                            Rotation = MathExtensions.RotationToPlayer(p.Position - Position, FlippedHorizontal);
-                            _logger.Info(Rotation);
                             break;
                     }
                     break;
