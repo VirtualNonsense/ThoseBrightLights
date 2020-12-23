@@ -116,8 +116,16 @@ namespace SE_Praktikum.Components.Sprites
             {
                 case Player p:
                     _target = p;
-                    if(_i != InterAction.BodyCollision) return;
-                    Health -= p.Damage;
+                    switch (_i)
+                    {
+                        case InterAction.BodyCollision:
+                            Health -= p.Damage;
+                            break;
+                        case InterAction.InView:
+                            Rotation = MathExtensions.RotationToPlayer(p.Position - Position, FlippedHorizontal);
+                            _logger.Info(Rotation);
+                            break;
+                    }
                     break;
                 default:
                     if (other.Parent == this) return;
