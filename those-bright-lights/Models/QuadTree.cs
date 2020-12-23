@@ -103,6 +103,7 @@ namespace SE_Praktikum.Models
                     wasDivided = true;
                 }
 
+                // TODO: Source of error - RESORTING function
                 for (int i = 0; i < objects.Count; i++)
                 {
                     int index = GetIndex(objects[i]);
