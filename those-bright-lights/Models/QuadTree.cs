@@ -51,20 +51,25 @@ namespace SE_Praktikum.Models
             nodes[3] = new QuadTree<T>(level + 1, new Rectangle(x + newWidth, y - newHeight, newWidth, newHeight));
         }
 
-        // PROBLEM(1): The -1's even if they are close won't be in this List - Need ideas...
-        public int GetIndex(Rectangle rect) // DO NOT FORGET!!! : For collision I suspect all kind of forms (not just a rectangle)
+        public int GetIndex(Rectangle actual)
         {
-            // If it is not completely in a node then index must be -1
+            //// If it is not completely in a node then index must be -1
+            //// Check if it is useless to che
             int index = -1;
-            double midPointForHorizontal = boundary.X + boundary.Width / 2;
-            double midPointForVertical = boundary.Y - boundary.Height / 2;
+
+            // Boundary
+            double boundMiddleX = boundary.X + boundary.Width / 2;
+            double boundMiddleY = boundary.Y - boundary.Height / 2;
+
+            // Actual rectangle
+            double actualMiddleX = actual.X + actual.Width / 2;
+            double actualMiddleY = actual.Y - actual.Height / 2;
 
             // Could be more beautiful with switch-case... and declare a variable for rect.Something (after checking utility) 
-            // IDEA for PROBLEM(1): Check the center of one rectangle or do "soft" bounds like: int silken = 10; rect.Height-silken e.g.
-            bool top = (rect.Y - rect.Height) > midPointForVertical;
-            bool bottom = rect.Y < midPointForHorizontal;
+            bool top = actualMiddleY >= boundMiddleY;
+            bool bottom = actualMiddleY < boundMiddleY;
 
-            if ((rect.X + rect.Width) < midPointForHorizontal)
+            if (actualMiddleX < boundMiddleX)
             {
                 if (top)
                 {
@@ -75,7 +80,7 @@ namespace SE_Praktikum.Models
                     index = 2;
                 }
             }
-            else if (rect.X > midPointForHorizontal)
+            else if (actualMiddleX > boundMiddleX)
             {
                 if (top)
                 {
