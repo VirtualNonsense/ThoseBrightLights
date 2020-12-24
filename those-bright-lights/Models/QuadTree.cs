@@ -9,13 +9,14 @@ namespace SE_Praktikum.Models
     public class QuadTree<T>
     {
         // NOTICE: All Tests for this class are in a separate project - "CheckTrees"
-        // TODO: Test specific case of Division
+        // TODO: Is -1 necessary
         List<(Rectangle, T)> objects; // changed from T to (Rectangle, T)
         int level;
         Rectangle boundary;
         QuadTree<T>[] nodes;
 
         // Deleted maxLevel, cuz the tile must be added no matter what (maybe other idea someday)
+        // TODO: maxObjects must scale with "stuff" from the whole screen
         int maxObjects = 10;
         bool wasDivided = false;
 
