@@ -95,14 +95,14 @@ namespace SE_Praktikum.Models
                 objects.Add((rect, payload));
             }
 
-            if (objects.Count > maxObjects || wasDivided == true)
+            if (wasDivided == true && objects.Count <= maxObjects)
             {
-                if (wasDivided == false)
-                {
-                    Divide();
-                    wasDivided = true;
-                }
+                int index = GetIndex(rect);
+                nodes[index].Insert(rect, payload);
+            }
 
+            if (objects.Count > maxObjects)
+            {
                 // TODO: Source of error - RESORTING function
                 //for (int i = 0; i < objects.Count; i++)
                 //{
