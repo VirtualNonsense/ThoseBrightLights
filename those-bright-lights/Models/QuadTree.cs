@@ -19,7 +19,7 @@ namespace SE_Praktikum.Models
         int maxObjects = 10;
         bool wasDivided = false;
 
-        public QuadTree(int level, Rectangle boundary)
+        public QuadTree(Rectangle boundary, int level = 0)
         {
             this.level = level;
             objects = new List<(Rectangle, T)>();
@@ -45,10 +45,10 @@ namespace SE_Praktikum.Models
             int newWidth = boundary.Width / 2;
             int newHeight = boundary.Height / 2;
 
-            nodes[0] = new QuadTree<T>(level + 1, new Rectangle(x + newWidth, y, newWidth, newHeight));
-            nodes[1] = new QuadTree<T>(level + 1, new Rectangle(x, y, newWidth, newHeight));
-            nodes[2] = new QuadTree<T>(level + 1, new Rectangle(x, y + newHeight, newWidth, newHeight));
-            nodes[3] = new QuadTree<T>(level + 1, new Rectangle(x + newWidth, y - newHeight, newWidth, newHeight));
+            nodes[0] = new QuadTree<T>(new Rectangle(x + newWidth, y, newWidth, newHeight), level + 1);
+            nodes[1] = new QuadTree<T>(new Rectangle(x, y, newWidth, newHeight), level + 1);
+            nodes[2] = new QuadTree<T>(new Rectangle(x, y - newHeight, newWidth, newHeight), level + 1);
+            nodes[3] = new QuadTree<T>(new Rectangle(x + newWidth, y - newHeight, newWidth, newHeight), level + 1);
         }
 
         public int GetIndex(Rectangle actual)
