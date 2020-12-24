@@ -138,18 +138,17 @@ namespace SE_Praktikum.Models
             }
         }
 
-        // then again: The actor could be something different than a Rectangle (Just for logic purposes)
-        // TODO Retrieve new
-        //public List<T> Retrieve(Rectangle actor)
-        //{
-        //    int index = GetIndex(actor);
-        //    List<Rectangle> thinker = objects;
+        // Gives only payload back. Ultimately the function for Collision-List
+        public List<T> Retrieve(Rectangle actor)
+        {
+            int index = GetIndex(actor);
+            List<T> thinker = objects.Select(o => o.Item2).ToList();
 
-        //    if (wasDivided == true)
-        //    {
-        //        thinker = nodes[index].Retrieve(actor);
-        //    }
-        //    return thinker;
-        //}
+            if (wasDivided == true)
+            {
+                thinker = nodes[index].Retrieve(actor);
+            }
+            return thinker;
+        }
     }
 }
