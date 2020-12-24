@@ -9,7 +9,7 @@ namespace SE_Praktikum.Models
     {
         // NOTICE: All Tests for this class are in a separate project - "CheckTrees"
         // TODO: Test specific case of Division
-        List<Rectangle> objects; // changed from T to Rectangle
+        List<(Rectangle, T)> objects; // changed from T to (Rectangle, T)
         int level;
         Rectangle boundary;
         QuadTree<T>[] nodes;
@@ -21,7 +21,7 @@ namespace SE_Praktikum.Models
         public QuadTree(int level, Rectangle boundary)
         {
             this.level = level;
-            objects = new List<Rectangle>();
+            objects = new List<(Rectangle, T)>();
             this.boundary = boundary;
             nodes = new QuadTree<T>[4];
         }
@@ -88,11 +88,11 @@ namespace SE_Praktikum.Models
             return index;
         }
 
-        public void Insert(Rectangle rect)
+        public void Insert(Rectangle rect, T payload)
         {
             if (wasDivided == false)
             {
-                objects.Add(rect);
+                objects.Add((rect, payload));
             }
 
             if (objects.Count > maxObjects || wasDivided == true)
@@ -104,30 +104,31 @@ namespace SE_Praktikum.Models
                 }
 
                 // TODO: Source of error - RESORTING function
-                for (int i = 0; i < objects.Count; i++)
-                {
-                    int index = GetIndex(objects[i]);
-                    if (index != -1)
-                    {
-                        nodes[index].Insert(objects[i]);
-                        // objects won't be doubled
-                        objects.Remove(objects[i]);
-                    }
-                }
+                //for (int i = 0; i < objects.Count; i++)
+                //{
+                //    //int index = GetIndex(objects[i]);
+                //    if (index != -1)
+                //    {
+                //        //nodes[index].Insert(objects[i]);
+                //        // objects won't be doubled
+                //        objects.Remove(objects[i]);
+                //    }
+                //}
             }
         }
 
         // then again: The actor could be something different than a Rectangle (Just for logic purposes)
-        public List<Rectangle> Retrieve(Rectangle actor)
-        {
-            int index = GetIndex(actor);
-            List<Rectangle> thinker = objects;
+        // TODO Retrieve new
+        //public List<T> Retrieve(Rectangle actor)
+        //{
+        //    int index = GetIndex(actor);
+        //    List<Rectangle> thinker = objects;
 
-            if (wasDivided == true)
-            {
-                thinker = nodes[index].Retrieve(actor);
-            }
-            return thinker;
-        }
+        //    if (wasDivided == true)
+        //    {
+        //        thinker = nodes[index].Retrieve(actor);
+        //    }
+        //    return thinker;
+        //}
     }
 }
