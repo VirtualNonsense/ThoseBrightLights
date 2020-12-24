@@ -99,7 +99,10 @@ namespace SE_Praktikum.Models
             if (wasDivided == true && objects.Count <= maxObjects)
             {
                 int index = GetIndex(rect);
-                nodes[index].Insert(rect, payload);
+                if (index != -1)
+                {
+                    nodes[index].Insert(rect, payload);
+                }
             }
 
             // else
