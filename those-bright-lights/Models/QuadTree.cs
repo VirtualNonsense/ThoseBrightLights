@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 
 namespace SE_Praktikum.Models
 {
@@ -101,19 +102,36 @@ namespace SE_Praktikum.Models
                 nodes[index].Insert(rect, payload);
             }
 
+            // else
             if (objects.Count > maxObjects)
             {
-                // TODO: Source of error - RESORTING function
-                //for (int i = 0; i < objects.Count; i++)
-                //{
-                //    //int index = GetIndex(objects[i]);
-                //    if (index != -1)
-                //    {
-                //        //nodes[index].Insert(objects[i]);
-                //        // objects won't be doubled
-                //        objects.Remove(objects[i]);
-                //    }
-                //}
+                Divide();
+                wasDivided = true;
+
+                int indipendentCounter = objects.Count;
+
+                // Reposition
+                List<(Rectangle, T)> dropouts = new List<(Rectangle, T)>();
+                for (int i = 0; i < indipendentCounter; i++)
+                {
+                    (Rectangle, T) currentObject = objects[i];
+                    int index = GetIndex(currentObject.Item1);
+
+                    if (index != -1)
+                    {
+                        nodes[index].Insert(currentObject.Item1, currentObject.Item2);
+                        dropouts.Add(currentObject);
+                    }
+                }
+
+                // List won't be doubled
+                int dropoutPos = 0;
+                while (objects.Any() && dropouts.Any())
+                {
+                    objects.Remove(dropouts[dropoutPos]);
+                    dropoutPos++;
+                }
+                dropouts.Clear();
             }
         }
 
