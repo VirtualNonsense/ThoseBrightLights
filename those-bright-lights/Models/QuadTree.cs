@@ -54,7 +54,7 @@ namespace SE_Praktikum.Models
         public int GetIndex(Rectangle actual)
         {
             //// If it is not completely in a node then index must be -1
-            //// Check if it is useless to che
+            //// Check if it is useless
             int index = -1;
 
             // Boundary
@@ -68,8 +68,10 @@ namespace SE_Praktikum.Models
             // Could be more beautiful with switch-case... and declare a variable for rect.Something (after checking utility) 
             bool top = actualMiddleY >= boundMiddleY;
             bool bottom = actualMiddleY < boundMiddleY;
+            bool left = actualMiddleX < boundMiddleX;
+            bool right = actualMiddleX >= boundMiddleX;
 
-            if (actualMiddleX < boundMiddleX)
+            if (left)
             {
                 if (top)
                 {
@@ -80,7 +82,7 @@ namespace SE_Praktikum.Models
                     index = 2;
                 }
             }
-            else if (actualMiddleX > boundMiddleX)
+            else if (right)
             {
                 if (top)
                 {
