@@ -58,12 +58,12 @@ namespace SE_Praktikum.Extensions
 
         public static Rectangle GetBoundingRectangle(this Polygon[] polygon)
         {
-            var rect = polygon[0].GetBoundingRectangle();
-            for (int i = 1; i < polygon.Length; i++)
-            {
-                Rectangle.Union(rect,polygon[i].GetBoundingRectangle());
-            }
-            return rect;
+            var t = polygon.Select(t => t.Vertices2D).ToArray();
+            var minX = t.Min(vector2 => vector2.Min(v => v.X));
+            var minY = t.Min(vector2 => vector2.Min(v => v.Y));
+            var maxX = t.Max(vector2 => vector2.Max(v => v.X));
+            var maxY = t.Max(vector2 => vector2.Max(v => v.Y));
+            return new Rectangle((int)minX, (int)minY, (int) (maxX-minX), (int) (maxY-minY));
         }
 
         public static Polygon[] MirrorHorizontal(this Polygon[] polygonArray, Vector2 mirrorPoint)
