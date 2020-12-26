@@ -14,6 +14,7 @@ using SE_Praktikum.Models;
 using SE_Praktikum.Models.Tiled;
 using SE_Praktikum.Services;
 using SE_Praktikum.Services.Factories;
+using SE_Praktikum.Extensions;
 
 namespace SE_Praktikum.Core
 {
@@ -73,6 +74,13 @@ namespace SE_Praktikum.Core
             var actor = _components.OfType<Actor>().ToList();
             for (int i = 0; i < actor.Count; i++)
             {
+                var mapObjects = _map.GetCollidable(actor[i].Layer, actor[i].HitBox.GetBoundingRectangle());
+
+                for (int j = 0; j < mapObjects.Count; j++)
+                {
+                    actor[i].InterAct(mapObjects[j]);
+                }
+                
                 for (int j = i+1; j < actor.Count; j++)
                 {
                     actor[i].InterAct(actor[j]); 
