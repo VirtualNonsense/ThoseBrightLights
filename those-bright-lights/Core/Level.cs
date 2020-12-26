@@ -28,6 +28,7 @@ namespace SE_Praktikum.Core
         private readonly List<IComponent> _components;
         private readonly Logger _logger;
         private float _collisionLayer;
+        private Map _map;
         
 
         private event EventHandler OnExplosion;
@@ -136,8 +137,8 @@ namespace SE_Praktikum.Core
             
             //TODO: try to load the json map via the contentmanager
             // var map = _mapFactory.LoadMap(JsonConvert.DeserializeObject<LevelBlueprint>(File.ReadAllText(@".\Content\MetaData\Level\AlphaMap.json")));
-            var map = _mapFactory.LoadMap(@".\Content\MetaData\Level\TestLevel.json");
-            _collisionLayer = map.TopLayer;
+            _map = _mapFactory.LoadMap(@".\Content\MetaData\Level\TestLevel.json");
+            _collisionLayer = _map.TopLayer;
             //TODO: Set player level to _map.TopLayer
             
             var player = _playerFactory.GetInstance(contentManager);
@@ -169,9 +170,7 @@ namespace SE_Praktikum.Core
                 OnLevelEvent(e);
             };
             _components.Add(enemy);
-            
-            _components.AddRange(map);
-            
+                
             enemy.OnExplosion += (sender, args) =>
             {
                 if (!(args is LevelEvent e)) return;
