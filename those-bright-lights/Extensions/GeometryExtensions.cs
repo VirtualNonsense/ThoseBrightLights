@@ -56,6 +56,16 @@ namespace SE_Praktikum.Extensions
             return new Rectangle((int)minX, (int)minY, (int) (maxX-minX), (int) (maxY-minY));
         }
 
+        public static Rectangle GetBoundingRectangle(this Polygon[] polygon)
+        {
+            var rect = polygon[0].GetBoundingRectangle();
+            for (int i = 1; i < polygon.Length; i++)
+            {
+                Rectangle.Union(rect,polygon[i].GetBoundingRectangle());
+            }
+            return rect;
+        }
+
         public static Polygon[] MirrorHorizontal(this Polygon[] polygonArray, Vector2 mirrorPoint)
         {
             var newPolygonArray = new Polygon[polygonArray.Length];
