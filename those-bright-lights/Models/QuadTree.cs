@@ -48,8 +48,8 @@ namespace SE_Praktikum.Models
 
             nodes[0] = new QuadTree<T>(new Rectangle(x + newWidth, y, newWidth, newHeight), level + 1);
             nodes[1] = new QuadTree<T>(new Rectangle(x, y, newWidth, newHeight), level + 1);
-            nodes[2] = new QuadTree<T>(new Rectangle(x, y - newHeight, newWidth, newHeight), level + 1);
-            nodes[3] = new QuadTree<T>(new Rectangle(x + newWidth, y - newHeight, newWidth, newHeight), level + 1);
+            nodes[2] = new QuadTree<T>(new Rectangle(x, y + newHeight, newWidth, newHeight), level + 1);
+            nodes[3] = new QuadTree<T>(new Rectangle(x + newWidth, y + newHeight, newWidth, newHeight), level + 1);
         }
 
         public int GetIndex(Rectangle actual)
@@ -60,15 +60,15 @@ namespace SE_Praktikum.Models
 
             // Boundary
             double boundMiddleX = boundary.X + boundary.Width / 2;
-            double boundMiddleY = boundary.Y - boundary.Height / 2;
+            double boundMiddleY = boundary.Y + boundary.Height / 2;
 
             // Actual rectangle
             double actualMiddleX = actual.X + actual.Width / 2;
-            double actualMiddleY = actual.Y - actual.Height / 2;
+            double actualMiddleY = actual.Y + actual.Height / 2;
 
             // Could be more beautiful with switch-case... and declare a variable for rect.Something (after checking utility) 
-            bool top = actualMiddleY >= boundMiddleY;
-            bool bottom = actualMiddleY < boundMiddleY;
+            bool top = actualMiddleY <= boundMiddleY;
+            bool bottom = actualMiddleY > boundMiddleY;
             bool left = actualMiddleX < boundMiddleX;
             bool right = actualMiddleX >= boundMiddleX;
 
