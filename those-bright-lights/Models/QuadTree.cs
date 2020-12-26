@@ -17,7 +17,7 @@ namespace SE_Praktikum.Models
 
         // Deleted maxLevel, cuz the tile must be added no matter what (maybe other idea someday)
         // TODO: maxObjects must scale with "stuff" from the whole screen
-        int maxObjects = 10;
+        int maxObjects = 150;
         bool wasDivided = false;
 
         public QuadTree(Rectangle boundary, int level = 0)
