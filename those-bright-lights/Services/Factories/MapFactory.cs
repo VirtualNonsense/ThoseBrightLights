@@ -11,6 +11,7 @@ using SE_Praktikum.Components;
 using SE_Praktikum.Components.Sprites;
 using SE_Praktikum.Models;
 using SE_Praktikum.Models.Tiled;
+using Microsoft.Xna.Framework;
 
 namespace SE_Praktikum.Services.Factories
 {
@@ -60,8 +61,9 @@ namespace SE_Praktikum.Services.Factories
                     throw;
                 }
             }
-            List<Tile> tiles = new List<Tile>();
+            Dictionary<float, QuadTree<Tile>> tiles = new Dictionary<float, QuadTree<Tile>>();
             var l = 0f;
+            var area = new Rectangle(0, 0, blueprint.Width * blueprint.TileWidth, blueprint.Height * blueprint.TileHeight);
             foreach(var layer in blueprint.Layers)
             {
                 var c = tileFactory.GenerateTiles(layer.Data, 
@@ -71,11 +73,12 @@ namespace SE_Praktikum.Services.Factories
                                                           blueprint.TileHeight,
                                                           blueprint.Height,
                                                           blueprint.Width,
-                                                          layer.Visible? 1 : 0);
-                tiles.AddRange(c);
+                                                          layer.Visible? 1 : 0,
+                                                          area);
+                tiles.Add(l,c);
                 l+=3;
             }
-            return new Map(tiles);
+            return new Map(tiles, area);
         }
     }
 }
