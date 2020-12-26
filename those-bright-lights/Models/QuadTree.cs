@@ -149,12 +149,19 @@ namespace SE_Praktikum.Models
         // Gives only payload back. Ultimately the function for Collision-List
         public List<T> Retrieve(Rectangle actor)
         {
-            int index = GetIndex(actor);
-            List<T> thinker = objects.Select(o => o.Item2).ToList();
+            // int index = GetIndex(actor);
+            if (!boundary.Intersects(actor)) return new List<T>();
 
-            if (wasDivided == true)
+            List<T> thinker = objects.Select(o => o.Item2).ToList();
+            if (wasDivided)
             {
-                thinker = nodes[index].Retrieve(actor);
+                foreach (var node in nodes)
+                {
+                    if (node == null) continue;
+                    var rect = Rectangle.Intersect(actor, node.boundary);
+                    if (rect.Height > 0 && rect.Width > 0)
+                        thinker.AddRange(node.Retrieve(rect));
+                }
             }
             return thinker;
         }
