@@ -17,13 +17,11 @@ namespace SE_Praktikum.Components
     {
         private Dictionary<float, QuadTree<Tile>> _tileContainer;
         
-        public float TopLayer { get; }
-
+        public float TopLayer => _tileContainer.Keys.Max();
 
         public Map (Dictionary<float, QuadTree<Tile>> tiles)
         {
             _tileContainer = tiles;
-            TopLayer = 0;
         }
       
         public List<Tile> GetCollidable(float layer, Rectangle rect)
