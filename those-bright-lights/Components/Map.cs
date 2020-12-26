@@ -13,47 +13,40 @@ using SE_Praktikum.Models.Tiled;
 
 namespace SE_Praktikum.Components
 {
-    public class Map: IComponent, IEnumerable<Tile>
+    public class Map
     {
-        private List<Tile> _tiles;
+        private Dictionary<float, QuadTree<Tile>> _tileContainer;
         
         public float TopLayer { get; }
 
 
-        public Map (List<Tile> tileses)
+        public Map (Dictionary<float, QuadTree<Tile>> tiles)
         {
-            _tiles = tileses;
+            _tileContainer = tiles;
             TopLayer = 0;
-            foreach (var tile in _tiles.Where(tile => TopLayer < tile.Layer))
+        }
+      
+        public List<Tile> GetCollidable(float layer, Rectangle rect)
+        {
+            if (_tileContainer.ContainsKey(layer))
             {
-                TopLayer = tile.Layer;
+                return _tileContainer[layer].Retrieve(rect);
             }
+
+            return new List<Tile>();
         }
 
-        public Vector2 Position { get=>throw new NotImplementedException(); set=>throw new NotImplementedException(); }
-
-        public void Draw(SpriteBatch spriteBatch)
+        public List<Tile> GetCollidable(Rectangle rect)
         {
-            foreach(var tile in _tiles)
+            var list = new List<Tile>();
+
+            foreach (var item in _tileContainer)
             {
-                tile.Draw(spriteBatch);
+                list.AddRange(item.Value.Retrieve(rect));
             }
+
+            return list;
         }
 
-        public void Update(GameTime gameTime)
-        {
-            //throw new NotImplementedException();
-        }
-
-        public bool IsRemoveAble { get; set; }
-        public IEnumerator<Tile> GetEnumerator()
-        {
-            return _tiles.GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
     }
 }
