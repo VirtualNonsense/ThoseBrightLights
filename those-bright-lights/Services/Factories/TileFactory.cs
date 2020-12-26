@@ -6,6 +6,7 @@ using SE_Praktikum.Models;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using SE_Praktikum.Extensions;
 
 namespace SE_Praktikum.Services.Factories
 {
@@ -40,7 +41,7 @@ namespace SE_Praktikum.Services.Factories
             throw new ArgumentOutOfRangeException();
         }
 
-        public List<Tile> GenerateTiles(List<uint> indices, float layer, List<TileSet> tilelist, int tilewidth, int tileheight, int rows, int columns, float layerOpacity)
+        public QuadTree<Tile> GenerateTiles(List<uint> indices, float layer, List<TileSet> tilelist, int tilewidth, int tileheight, int rows, int columns, float layerOpacity, Rectangle area)
         {
 
             if (indices.Count > rows * columns)
@@ -48,7 +49,7 @@ namespace SE_Praktikum.Services.Factories
                 _logger.Error("Indices out of range");
                 throw new IndexOutOfRangeException();
             }
-            List<Tile> list = new List<Tile>();
+            QuadTree<Tile> list = new QuadTree<Tile>(area);
             int row = 0;
             int column = 0;
 
@@ -57,7 +58,9 @@ namespace SE_Praktikum.Services.Factories
                 if (index != 0)
                 {
                     var p = new Vector2(column * tilewidth, row * tileheight);
-                    list.Add(GenerateTile(index, p, layer, tilelist, layerOpacity, tileheight, tilewidth));
+                    var tile = GenerateTile(index, p, layer, tilelist, layerOpacity, tileheight, tilewidth);
+                    var hitbox = tile.HitBox == null ? tile.Rectangle : tile.HitBox.GetBoundingRectangle();
+                    list.Insert(hitbox,tile);
                 }
                 column++;
                 if(column >= columns)
