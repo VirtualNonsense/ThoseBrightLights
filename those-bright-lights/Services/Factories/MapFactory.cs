@@ -78,7 +78,7 @@ namespace SE_Praktikum.Services.Factories
                 tiles.Add(l,c);
                 l+=3;
             }
-            return new Map(tiles);
+            return new Map(tiles, area);
         }
     }
 }
