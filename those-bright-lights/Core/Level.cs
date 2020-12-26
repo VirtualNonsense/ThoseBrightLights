@@ -58,6 +58,7 @@ namespace SE_Praktikum.Core
                 if(actor is Enemy e)
                     _gameEngine.Render(e.ViewBox);
             }
+            _gameEngine.Render(_map.GetCollidable(_map.Area));
             _gameEngine.Render(_components);
         }
 
