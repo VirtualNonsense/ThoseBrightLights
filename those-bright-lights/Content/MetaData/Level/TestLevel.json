@@ -27,15 +27,16 @@
          "name":"testObjectLayer",
          "objects":[
                 {
-                 "height":39.2074875410235,
-                 "id":2,
-                 "name":"Player_Spawn",
+                 "height":0,
+                 "id":6,
+                 "name":"",
+                 "point":true,
                  "rotation":0,
                  "type":"PlayerSpawnPoint",
                  "visible":true,
-                 "width":31.7393946760666,
-                 "x":80.515376200316,
-                 "y":56.2440743892063
+                 "width":0,
+                 "x":139.559985413881,
+                 "y":150.295368907257
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -56,7 +57,7 @@
          "y":0
         }],
  "nextlayerid":7,
- "nextobjectid":3,
+ "nextobjectid":7,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.4.2",
