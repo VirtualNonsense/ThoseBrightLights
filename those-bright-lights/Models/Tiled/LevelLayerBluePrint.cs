@@ -5,6 +5,7 @@ namespace SE_Praktikum.Models.Tiled
     public class LevelLayerBluePrint
     {
         public List<uint> Data;
+        public ObjectBluePrint[] objects;
         public int Height;
         public int Id;
         public string Name;
@@ -15,18 +16,6 @@ namespace SE_Praktikum.Models.Tiled
         public int X;
         public int Y;
 
-        public LevelLayerBluePrint(List<uint> data, int height, int id, string name, float opacity, string type, bool visible, int width, int x, int y)
-        {
-            Data = data;
-            Height = height;
-            Id = id;
-            Name = name;
-            Opacity = opacity;
-            Type = type;
-            Visible = visible;
-            Width = width;
-            X = x;
-            Y = y;
-        }
+        
     }
 }
