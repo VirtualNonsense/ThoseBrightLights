@@ -151,8 +151,7 @@ namespace SE_Praktikum.Core
             //TODO: Set player level to _map.TopLayer
             
             var player = _playerFactory.GetInstance(contentManager);
-            player.X = 0;
-            player.Y = 0;
+            player.Position = _map.PlayerSpawnPoint.Center;
             player.Layer = _collisionLayer;
             player.OnShoot += (sender, args) =>
             {
