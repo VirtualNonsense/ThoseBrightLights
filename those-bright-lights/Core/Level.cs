@@ -114,7 +114,6 @@ namespace SE_Praktikum.Core
 
         private void CheckForCollisions()
         {
-            
 
         }
 
@@ -180,7 +179,8 @@ namespace SE_Praktikum.Core
             };
             _components.Add(turret);
             
-            _components.AddRange(map);
+            //_components.AddRange(map);
+            
             
             turret.OnExplosion += (sender, args) =>
             _components.Add(turret);
