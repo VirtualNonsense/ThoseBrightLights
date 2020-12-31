@@ -65,7 +65,6 @@ using System.Collections.Generic;
                     c++;
                 }
             }
-            _logger.Warn($"index{index} not found");
             return Rectangle.Empty;
         }
 
