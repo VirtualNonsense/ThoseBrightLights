@@ -22,7 +22,6 @@ namespace SE_Praktikum.Components.Sprites
     protected int RotationSpeed = 1000; 
     protected float CurrentRotation;
     protected float FinalRotation;
-    private Logger _logger;
     
     
     // #################################################################################################################
