@@ -22,6 +22,11 @@ namespace SE_Praktikum.Components.Sprites
         protected CooldownAbility Shoot;
         public bool RotateAndShoot = false;
         protected float RotateVelocity;
+        protected float FinalRotation;
+        /// <summary>
+        /// Defines the angle in which the enemy doesn't rotate anymore -> it's close enough
+        /// </summary>
+        private float _rotationThreshold = MathExtensions.DegToRad(15);
         
 
         private bool _hitBoxFlipped = false;
@@ -72,6 +77,7 @@ namespace SE_Praktikum.Components.Sprites
         
         public override void Update(GameTime gameTime)
         {
+            Rotate(Target, gameTime);
             Vector2 velocity = Vector2.Zero;
 
             ViewBox.Position = Position;
@@ -128,6 +134,23 @@ namespace SE_Praktikum.Components.Sprites
                     _logger.Debug($"health {Health}");
                     _impactSound?.Play();
                     break;
+            }
+        }
+
+        protected void Rotate(Actor target, GameTime gameTime)
+        {
+            if (Math.Abs(FinalRotation - Rotation) > _rotationThreshold)
+            {
+                float rotation = (float)((gameTime.ElapsedGameTime.TotalMilliseconds / RotationSpeed) * (2 * Math.PI));
+                _logger.Info("Current Rotation: " + Rotation);
+                _logger.Info("Final Rotation: " + FinalRotation);
+                //turn clock or anticlockwise
+                var angleToRotate = MathExtensions.Modulo2PiPositive(FinalRotation - Rotation);
+                _logger.Info("AngleToRotate: " + angleToRotate);
+                if (angleToRotate > Math.PI)
+                    Rotation -= rotation;
+                else
+                    Rotation += rotation;
             }
         }
 

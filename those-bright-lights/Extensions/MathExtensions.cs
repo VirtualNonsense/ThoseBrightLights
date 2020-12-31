@@ -32,21 +32,35 @@ namespace SE_Praktikum.Extensions
             var (x, y) = vector;
             var rotation = (float)Math.Asin(y / vector.Length());
             if (x < 0)
-                rotation = MathExtensions.Modulo2Pi( (float) Math.PI -  rotation); 
+                rotation = MathExtensions.Modulo2PiPositive( (float) Math.PI -  rotation); 
             // else
             //     rotation *= -1;
             return rotation;
         }
 
-        public static float Modulo2Pi(float value)
+        public static float Modulo2PiPositive(float value)
         {
             var newValue = value;
-            while (Math.Abs(value) > 2 * Math.PI)
+            while (newValue >= 2 * Math.PI || newValue < 0)
             {
-                if (value > 0)
+                if (newValue > 0)
                     newValue -= 2 * (float) Math.PI;
                 else
                     newValue += 2 * (float) Math.PI;
+            }
+
+            return newValue;
+        }
+        
+        public static float Modulo2PiAlsoNegative(float value)
+        {
+            var newValue = value;
+            while (Math.Abs(newValue) > 2*Math.PI)
+            {
+                if (newValue > 0)
+                    newValue -= (float) (2*Math.PI);
+                else
+                    newValue += (float) (2*Math.PI);
             }
 
             return newValue;
