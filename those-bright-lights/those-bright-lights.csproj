@@ -82,6 +82,9 @@
         <None Update="Content\MetaData\TileSets\NeptunObject.json">
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
+        <None Update="Content\MetaData\TileSets\PowerUpTry1.json">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
         <None Update="Content\MetaData\TileSets\SaturnObject.json">
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>

@@ -373,6 +373,18 @@
 /processorParam:TextureFormat=Color
 /build:Artwork/Tilemaps/NeptunObject.png
 
+#begin Artwork/Tilemaps/PowerUpTry1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Artwork/Tilemaps/PowerUpTry1.png
+
 #begin Artwork/Tilemaps/SaturnObject.png
 /importer:TextureImporter
 /processor:TextureProcessor
