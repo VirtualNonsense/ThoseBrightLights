@@ -3,14 +3,22 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using SE_Praktikum.Core;
 
 namespace SE_Praktikum.Services
 {
     public class SaveHandler
     {
-        public void Save(SaveGame saveGame)
+        Dictionary<SaveSlot, string> _saveSlot = new Dictionary<SaveSlot, string>()
         {
-            using (StreamWriter sw = new StreamWriter("Savestate_1.txt"))
+            { SaveSlot.Slot1,"Save/Savestate_1.txt" },
+            { SaveSlot.Slot2,"Save/Savestate_2.txt" },
+            { SaveSlot.Slot3,"Save/Savestate_3.txt" },
+        };
+
+        public void Save(SaveGame saveGame, SaveSlot slot)
+        {
+            using (StreamWriter sw = new StreamWriter(_saveSlot[slot]))
             {
                 sw.WriteLine($"Level_Passed:{saveGame.clearedStage}");
                 sw.WriteLine($"Damage:{saveGame.damage}");
@@ -22,11 +30,11 @@ namespace SE_Praktikum.Services
             }
         }
 
-        public SaveGame Load()
+        public SaveGame Load(SaveSlot slot)
         {
             SaveGame saveGame = new SaveGame();
 
-            using (StreamReader sr = new StreamReader("CDriveDirs.txt"))
+            using (StreamReader sr = new StreamReader(_saveSlot[slot]))
             {
 
                 string s = sr.ReadToEnd().Trim();
