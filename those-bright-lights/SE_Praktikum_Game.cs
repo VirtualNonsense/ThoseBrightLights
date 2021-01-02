@@ -189,6 +189,7 @@ namespace SE_Praktikum
                 _logger.Warn("Tried saving without savefile!");
                 return;
             }
+            AdaptsSettings();
             _saveHandler.Save(SaveGame, SaveSlot);
         }
 
@@ -200,6 +201,7 @@ namespace SE_Praktikum
                 return;
             }
             SaveGame = _saveHandler.Load(SaveSlot);
+            AdaptsSettings();
         }
 
         public bool SaveExists(SaveSlot saveSlot)
@@ -218,6 +220,12 @@ namespace SE_Praktikum
             SaveGame.score = 0;
             SaveGame.musicVolume = 0.5f;
             SaveGame.sessions = 0;
+            AdaptsSettings();
+        }
+
+        private void AdaptsSettings()
+        {
+            MediaPlayer.Volume = SaveGame.musicVolume;
         }
     }
 }
