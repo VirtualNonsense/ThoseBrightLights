@@ -14,15 +14,17 @@ namespace SE_Praktikum.Core.GameStates
         private readonly IGameEngine _engine;
         private readonly IScreen _screen;
         private readonly ControlElementFactory _factory;
+        private readonly ISaveGameHandler _saveGameHandler;
         private ComponentGrid _components;
         private Logger _logger;
 
-        public SaveSelect(IGameEngine engine, IScreen screen, ControlElementFactory factory)
+        public SaveSelect(IGameEngine engine, IScreen screen, ControlElementFactory factory, ISaveGameHandler saveGameHandler)
         {
             _logger = LogManager.GetCurrentClassLogger();
             _engine = engine;
             _screen = screen;
             _factory = factory;
+            _saveGameHandler = saveGameHandler;
         }
         
         public override void LoadContent()
@@ -40,11 +42,28 @@ namespace SE_Praktikum.Core.GameStates
 
 
             var slots1 = _factory.GetButton(bWidth, bHeight, Vector2.Zero, "Slot 1", _screen.Camera);
-            slots1.Click += (sender, args) => { _logger.Trace("slot one selected"); _subject.OnNext(GameStateMachine.GameStateMachineTrigger.SaveSlotSelected); };
+            slots1.Click += (sender, args) => 
+            { 
+                _logger.Trace("slot one selected");
+                _saveGameHandler.SaveSlot = SaveSlot.Slot1;
+                _subject.OnNext(GameStateMachine.GameStateMachineTrigger.SaveSlotSelected);
+            };
+
             var slots2 = _factory.GetButton(bWidth, bHeight, Vector2.Zero, "Slot 2", _screen.Camera);
-            slots2.Click += (sender, args) => { _logger.Trace("slot one selected"); _subject.OnNext(GameStateMachine.GameStateMachineTrigger.SaveSlotSelected); };
+            slots2.Click += (sender, args) => 
+            { 
+                _logger.Trace("slot one selected");
+                _saveGameHandler.SaveSlot = SaveSlot.Slot2;
+                _subject.OnNext(GameStateMachine.GameStateMachineTrigger.SaveSlotSelected); 
+            };
+
             var slots3 = _factory.GetButton(bWidth, bHeight, Vector2.Zero, "Slot 3", _screen.Camera);
-            slots3.Click += (sender, args) => { _logger.Trace("slot one selected"); _subject.OnNext(GameStateMachine.GameStateMachineTrigger.SaveSlotSelected); };
+            slots3.Click += (sender, args) => 
+            { 
+                _logger.Trace("slot one selected");
+                _saveGameHandler.SaveSlot = SaveSlot.Slot3;
+                _subject.OnNext(GameStateMachine.GameStateMachineTrigger.SaveSlotSelected); 
+            };
 
             _components.Add(slots1);
             _components.Add(slots2);

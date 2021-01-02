@@ -11,7 +11,7 @@ namespace SE_Praktikum.Core
         Slot2,
         Slot3
     }
-    interface ISaveGameHandler
+    public interface ISaveGameHandler
     {
         void Save();
         void Load();
