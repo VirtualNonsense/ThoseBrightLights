@@ -73,7 +73,7 @@ namespace SE_Praktikum.Services
             return saveGame;
         }
 
-        public bool SaveExist(SaveSlot saveSlot)
+        public bool SaveExists(SaveSlot saveSlot)
         {
             return File.Exists(_saveSlot[saveSlot]);
         }

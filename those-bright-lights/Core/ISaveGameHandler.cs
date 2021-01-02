@@ -17,5 +17,7 @@ namespace SE_Praktikum.Core
         void Load();
 
         SaveSlot SaveSlot { get; set; }
+
+        bool SaveExists(SaveSlot saveSlot);
     }
 }

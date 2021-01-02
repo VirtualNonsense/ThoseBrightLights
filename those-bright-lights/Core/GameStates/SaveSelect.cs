@@ -40,31 +40,47 @@ namespace SE_Praktikum.Core.GameStates
             var bWidth = width / 3;
             var bHeight = height / 3;
 
+            var slotExists = _saveGameHandler.SaveExists(SaveSlot.Slot1);
 
-            var slots1 = _factory.GetButton(bWidth, bHeight, Vector2.Zero, "Slot 1", _screen.Camera);
+            var slots1 = _factory.GetButton(bWidth, bHeight, Vector2.Zero, slotExists ? "Slot 1" : "New Game", _screen.Camera);
             slots1.Click += (sender, args) => 
             { 
+
                 _logger.Trace("slot one selected");
                 _saveGameHandler.SaveSlot = SaveSlot.Slot1;
-                _saveGameHandler.Load();
+
+                if (slotExists)
+                {
+                    _saveGameHandler.Load();
+                }
                 _subject.OnNext(GameStateMachine.GameStateMachineTrigger.SaveSlotSelected);
             };
 
-            var slots2 = _factory.GetButton(bWidth, bHeight, Vector2.Zero, "Slot 2", _screen.Camera);
+            slotExists = _saveGameHandler.SaveExists(SaveSlot.Slot2);
+
+            var slots2 = _factory.GetButton(bWidth, bHeight, Vector2.Zero, slotExists ? "Slot 2" : "New Game", _screen.Camera);
             slots2.Click += (sender, args) => 
             { 
-                _logger.Trace("slot one selected");
+                _logger.Trace("slot two selected");
                 _saveGameHandler.SaveSlot = SaveSlot.Slot2;
-                _saveGameHandler.Load();
+                if (slotExists)
+                {
+                    _saveGameHandler.Load();
+                }
                 _subject.OnNext(GameStateMachine.GameStateMachineTrigger.SaveSlotSelected); 
             };
 
-            var slots3 = _factory.GetButton(bWidth, bHeight, Vector2.Zero, "Slot 3", _screen.Camera);
+            slotExists = _saveGameHandler.SaveExists(SaveSlot.Slot3);
+
+            var slots3 = _factory.GetButton(bWidth, bHeight, Vector2.Zero, slotExists ? "Slot 3" : "New Game", _screen.Camera);
             slots3.Click += (sender, args) => 
             { 
-                _logger.Trace("slot one selected");
+                _logger.Trace("slot three selected");
                 _saveGameHandler.SaveSlot = SaveSlot.Slot3;
-                _saveGameHandler.Load();
+                if (slotExists)
+                {
+                    _saveGameHandler.Load();
+                }
                 _subject.OnNext(GameStateMachine.GameStateMachineTrigger.SaveSlotSelected); 
             };
 

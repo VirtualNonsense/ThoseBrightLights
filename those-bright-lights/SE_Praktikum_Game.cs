@@ -194,12 +194,17 @@ namespace SE_Praktikum
 
         public void Load()
         {
-            if (!_saveHandler.SaveExist(SaveSlot))
+            if (!SaveExists(SaveSlot))
             {
                 _logger.Warn("Tried loading with no existent savefile!");
                 return;
             }
             SaveGame = _saveHandler.Load(SaveSlot);
+        }
+
+        public bool SaveExists(SaveSlot saveSlot)
+        {
+            return _saveHandler.SaveExists(saveSlot);
         }
     }
 }
