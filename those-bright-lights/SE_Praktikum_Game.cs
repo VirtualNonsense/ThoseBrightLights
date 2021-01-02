@@ -226,6 +226,7 @@ namespace SE_Praktikum
         private void AdaptsSettings()
         {
             MediaPlayer.Volume = SaveGame.musicVolume;
+            // TODO: If other Settings are saveable continue to add them HERE!
         }
     }
 }
