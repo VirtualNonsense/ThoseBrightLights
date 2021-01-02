@@ -46,6 +46,7 @@ namespace SE_Praktikum.Core.GameStates
             { 
                 _logger.Trace("slot one selected");
                 _saveGameHandler.SaveSlot = SaveSlot.Slot1;
+                _saveGameHandler.Load();
                 _subject.OnNext(GameStateMachine.GameStateMachineTrigger.SaveSlotSelected);
             };
 
@@ -54,6 +55,7 @@ namespace SE_Praktikum.Core.GameStates
             { 
                 _logger.Trace("slot one selected");
                 _saveGameHandler.SaveSlot = SaveSlot.Slot2;
+                _saveGameHandler.Load();
                 _subject.OnNext(GameStateMachine.GameStateMachineTrigger.SaveSlotSelected); 
             };
 
@@ -62,6 +64,7 @@ namespace SE_Praktikum.Core.GameStates
             { 
                 _logger.Trace("slot one selected");
                 _saveGameHandler.SaveSlot = SaveSlot.Slot3;
+                _saveGameHandler.Load();
                 _subject.OnNext(GameStateMachine.GameStateMachineTrigger.SaveSlotSelected); 
             };
 
