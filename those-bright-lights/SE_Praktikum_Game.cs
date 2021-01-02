@@ -13,7 +13,7 @@ using SE_Praktikum.Models;
 
 namespace SE_Praktikum
 {
-    public class SE_Praktikum_Game : Game, IGameEngine, IScreen, IObserver<GameState>
+    public class SE_Praktikum_Game : Game, IGameEngine, IScreen, IObserver<GameState>, ISaveContainer
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
@@ -112,6 +112,7 @@ namespace SE_Praktikum
         public int ScreenHeight { get; }
         public int ScreenWidth { get; }
         public Camera Camera { get; private set; }
+        public SaveGame SaveGame { get; set; }
 
         public void Render(IComponent component)
         {
