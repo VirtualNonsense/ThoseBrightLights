@@ -53,6 +53,11 @@ namespace SE_Praktikum.Core.GameStates
                 {
                     _saveGameHandler.Load();
                 }
+                else
+                {
+                    _saveGameHandler.CreateSave();
+                    _saveGameHandler.Save();
+                }
                 _subject.OnNext(GameStateMachine.GameStateMachineTrigger.SaveSlotSelected);
             };
 
@@ -67,6 +72,11 @@ namespace SE_Praktikum.Core.GameStates
                 {
                     _saveGameHandler.Load();
                 }
+                else
+                {
+                    _saveGameHandler.CreateSave();
+                    _saveGameHandler.Save();
+                }
                 _subject.OnNext(GameStateMachine.GameStateMachineTrigger.SaveSlotSelected); 
             };
 
@@ -80,6 +90,11 @@ namespace SE_Praktikum.Core.GameStates
                 if (slotExists)
                 {
                     _saveGameHandler.Load();
+                }
+                else
+                {
+                    _saveGameHandler.CreateSave();
+                    _saveGameHandler.Save();
                 }
                 _subject.OnNext(GameStateMachine.GameStateMachineTrigger.SaveSlotSelected); 
             };

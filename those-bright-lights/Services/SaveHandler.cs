@@ -18,6 +18,12 @@ namespace SE_Praktikum.Services
 
         public void Save(SaveGame saveGame, SaveSlot slot)
         {
+            var dir = _saveSlot[slot].Split("/")[0];
+            if (!Directory.Exists(dir))
+            {
+                Directory.CreateDirectory(dir);
+            }
+
             using (StreamWriter sw = new StreamWriter(_saveSlot[slot]))
             {
                 sw.WriteLine($"Level_Passed:{saveGame.clearedStage}");
