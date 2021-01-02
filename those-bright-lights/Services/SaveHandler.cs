@@ -48,7 +48,7 @@ namespace SE_Praktikum.Services
                             saveGame.clearedStage = int.Parse(keyValuePair[1]);
                             break;
                         case "Damage":
-                            saveGame.damage = int.Parse(keyValuePair[1]);
+                            saveGame.damage = float.Parse(keyValuePair[1]);
                             break;
                         case "Player_Position":
                             saveGame.playerPosition = int.Parse(keyValuePair[1]);
