@@ -16,11 +16,13 @@ namespace SE_Praktikum.NinjectModules
     {
         public override void Load()
         {
-            Bind<SE_Praktikum_Game, IScreen, IGameEngine>().To<SE_Praktikum_Game>().InSingletonScope();
+            Bind<SE_Praktikum_Game, IScreen, IGameEngine, ISaveGameHandler>().To<SE_Praktikum_Game>().InSingletonScope();
+            Bind<ISaveContainer>().To<SE_Praktikum_Game>().InSingletonScope();
             Bind<ContentManager>().ToMethod(c => c.Kernel.Get<SE_Praktikum_Game>().Content);
             Bind<IObservable<GameState>>().To<GameStateMachine>();
             Bind<ExplosionEmitter>().ToSelf();
             Bind<Level>().ToSelf();
+            Bind<SaveHandler>().ToSelf().InSingletonScope();
 
         }
     }

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace SE_Praktikum.Core
 {
-    enum SaveSlot
+    public enum SaveSlot
     {
         Slot1,
         Slot2,
@@ -16,6 +16,6 @@ namespace SE_Praktikum.Core
         void Save();
         void Load();
 
-        SaveSlot saveSlot { get; set; }
+        SaveSlot SaveSlot { get; set; }
     }
 }

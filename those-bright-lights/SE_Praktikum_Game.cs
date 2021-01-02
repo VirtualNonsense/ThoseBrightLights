@@ -13,7 +13,7 @@ using SE_Praktikum.Models;
 
 namespace SE_Praktikum
 {
-    public class SE_Praktikum_Game : Game, IGameEngine, IScreen, IObserver<GameState>, ISaveContainer
+    public class SE_Praktikum_Game : Game, IGameEngine, IScreen, IObserver<GameState>, ISaveContainer, ISaveGameHandler
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
@@ -113,6 +113,7 @@ namespace SE_Praktikum
         public int ScreenWidth { get; }
         public Camera Camera { get; private set; }
         public SaveGame SaveGame { get; set; }
+        public SaveSlot SaveSlot { get; set; }
 
         public void Render(IComponent component)
         {
@@ -176,6 +177,16 @@ namespace SE_Praktikum
                     0,
                     polygon.TriangleCount);
             }
+        }
+
+        public void Save()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Load()
+        {
+            throw new NotImplementedException();
         }
     }
 }
