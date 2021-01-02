@@ -27,6 +27,7 @@ namespace SE_Praktikum.Services
                 sw.WriteLine($"Weapon:{saveGame.weapon}");
                 sw.WriteLine($"Score:{saveGame.score}");
                 sw.WriteLine($"Music_Volume:{saveGame.musicVolume}");
+                sw.WriteLine($"Sessions_played:{saveGame.sessions}");
             }
         }
 
@@ -64,6 +65,9 @@ namespace SE_Praktikum.Services
                         case "Music_Volume":
                             saveGame.musicVolume = float.Parse(keyValuePair[1]);
                             break;
+                        case "Sessions_played":
+                            saveGame.sessions = uint.Parse(keyValuePair[1]);
+                            break;
                         default:
                             Console.WriteLine("What??");
                             break;
@@ -77,5 +81,7 @@ namespace SE_Praktikum.Services
         {
             return File.Exists(_saveSlot[saveSlot]);
         }
+
+
     }
 }

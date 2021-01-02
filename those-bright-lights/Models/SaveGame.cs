@@ -13,5 +13,6 @@ namespace SE_Praktikum.Models
         public int weapon;
         public int score;
         public float musicVolume;
+        public uint sessions;
     }
 }
