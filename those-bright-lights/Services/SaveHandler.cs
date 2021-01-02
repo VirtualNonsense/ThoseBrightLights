@@ -18,6 +18,7 @@ namespace SE_Praktikum.Services
                 sw.WriteLine($"Enemy_Position:{saveGame.enemyPosition}");
                 sw.WriteLine($"Weapon:{saveGame.weapon}");
                 sw.WriteLine($"Score:{saveGame.score}");
+                sw.WriteLine($"Music_Volume:{saveGame.musicVolume}");
             }
         }
 
@@ -51,6 +52,9 @@ namespace SE_Praktikum.Services
                             break;
                         case "Score":
                             saveGame.score = int.Parse(keyValuePair[1]);
+                            break;
+                        case "Music_Volume":
+                            saveGame.musicVolume = float.Parse(keyValuePair[1]);
                             break;
                         default:
                             Console.WriteLine("What??");
