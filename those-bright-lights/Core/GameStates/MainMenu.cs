@@ -67,6 +67,7 @@ namespace SE_Praktikum.Core.GameStates
             b.Click += (sender, args) => 
             {
                 _logger.Debug("Start new game");
+                _saveGameHandler.SaveGame.sessions++;
                 _subject.OnNext(GameStateMachine.GameStateMachineTrigger.StartGame); 
             };
 
