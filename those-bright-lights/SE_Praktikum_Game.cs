@@ -10,6 +10,7 @@ using SE_Praktikum.Components;
 using SE_Praktikum.Core;
 using SE_Praktikum.Core.GameStates;
 using SE_Praktikum.Models;
+using SE_Praktikum.Services;
 
 namespace SE_Praktikum
 {
@@ -20,8 +21,9 @@ namespace SE_Praktikum
         private readonly ILogger _logger;
         private GameState _currentState;
         private GameState _nextState;
+        private SaveHandler _saveHandler;
 
-        public SE_Praktikum_Game()
+        public SE_Praktikum_Game(SaveHandler saveHandler)
         {
             // init logger
             _logger = LogManager.GetCurrentClassLogger();
@@ -32,6 +34,7 @@ namespace SE_Praktikum
             ScreenWidth = 1280;
             
             _logger.Debug("Constructor finished");
+            _saveHandler = saveHandler;
         }
 
         public IDisposable StatePublisherTicket { get; set; }
