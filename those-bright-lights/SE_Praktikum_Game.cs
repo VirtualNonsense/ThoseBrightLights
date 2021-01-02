@@ -184,12 +184,22 @@ namespace SE_Praktikum
 
         public void Save()
         {
-            throw new NotImplementedException();
+            if (SaveGame == null)
+            {
+                _logger.Warn("Tried saving without savefile!");
+                return;
+            }
+            _saveHandler.Save(SaveGame, SaveSlot);
         }
 
         public void Load()
         {
-            throw new NotImplementedException();
+            if (!_saveHandler.SaveExist(SaveSlot))
+            {
+                _logger.Warn("Tried loading with no existent savefile!");
+                return;
+            }
+            SaveGame = _saveHandler.Load(SaveSlot);
         }
     }
 }
