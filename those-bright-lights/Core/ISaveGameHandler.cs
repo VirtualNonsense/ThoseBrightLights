@@ -21,5 +21,7 @@ namespace SE_Praktikum.Core
         bool SaveExists(SaveSlot saveSlot);
 
         void CreateSave();
+
+        SaveGame SaveGame { get; set; }
     }
 }

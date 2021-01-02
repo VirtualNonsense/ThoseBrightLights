@@ -14,7 +14,7 @@ using SE_Praktikum.Services;
 
 namespace SE_Praktikum
 {
-    public class SE_Praktikum_Game : Game, IGameEngine, IScreen, IObserver<GameState>, ISaveContainer, ISaveGameHandler
+    public class SE_Praktikum_Game : Game, IGameEngine, IScreen, IObserver<GameState>, ISaveGameHandler
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;

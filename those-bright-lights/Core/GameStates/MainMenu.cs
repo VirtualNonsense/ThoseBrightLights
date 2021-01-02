@@ -23,14 +23,16 @@ namespace SE_Praktikum.Core.GameStates
         private Logger _logger;
         private Song _song;
         private ContentManager _contentManager;
+        private ISaveGameHandler _saveGameHandler;
 
-        public MainMenu(IGameEngine engine, IScreen screen, ControlElementFactory factory, ContentManager contentManager)
+        public MainMenu(IGameEngine engine, IScreen screen, ControlElementFactory factory, ContentManager contentManager, ISaveGameHandler saveGameHandler)
         {
             _logger = LogManager.GetCurrentClassLogger();
             _engine = engine;
             _screen = screen;
             _factory = factory;
             _contentManager = contentManager;
+            _saveGameHandler = saveGameHandler;
         }
 
         public override void LoadContent()
@@ -59,9 +61,15 @@ namespace SE_Praktikum.Core.GameStates
                 width,
                 height,
                 new Vector2(0, 0),
-                "New Game",
+                _saveGameHandler.SaveGame.sessions == 0 ? "New Game" : "Continue",
                 _screen.Camera);
-            b.Click += (sender, args) => { _logger.Debug("Start new game"); _subject.OnNext(GameStateMachine.GameStateMachineTrigger.StartGame); };
+
+            b.Click += (sender, args) => 
+            {
+                _logger.Debug("Start new game");
+                _subject.OnNext(GameStateMachine.GameStateMachineTrigger.StartGame); 
+            };
+
             _buttons.Add(b);
             b = _factory.GetButton(
                 width,
