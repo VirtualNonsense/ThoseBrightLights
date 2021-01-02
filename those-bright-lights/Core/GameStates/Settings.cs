@@ -22,9 +22,18 @@ namespace SE_Praktikum.Core.GameStates
         private readonly IGameEngine _engine;
         private readonly IScreen _screen;
         private readonly ControlElementFactory _factory;
+        private readonly ISaveGameHandler _saveGameHandler;
         private ComponentGrid _components;
         private float _tmpSoundFxVolume = .5f;
 
+        public Settings(IGameEngine engine, IScreen screen, ControlElementFactory factory, ISaveGameHandler saveGameHandler)
+        {
+            _logger = LogManager.GetCurrentClassLogger();
+            _engine = engine;
+            _screen = screen;
+            _factory = factory;
+            _saveGameHandler = saveGameHandler;
+        }
 
         public override void LoadContent()
         {
@@ -45,9 +54,10 @@ namespace SE_Praktikum.Core.GameStates
             var musicVolumeLabel = _factory.GetTextBoxByTiles(6, 1, Vector2.Zero, Color.Black, "Music Volume", _screen.Camera);
             var soundEffectVolumeLabel = _factory.GetTextBoxByTiles(6, 1, Vector2.Zero, Color.Black, "FX Volume", _screen.Camera);
             
-            var musicVolumeSlider = _factory.GetSlider( MediaPlayer.Volume,0 , 1, Vector2.Zero, width, _screen.Camera);
+            var musicVolumeSlider = _factory.GetSlider(_saveGameHandler.SaveGame.musicVolume, 0 , 1, Vector2.Zero, width, _screen.Camera);
             // TODO: SaveRoutine!
             musicVolumeSlider.OnValueChanged += (sender, args) => {
+                _saveGameHandler.SaveGame.musicVolume = musicVolumeSlider.Value;
                 MediaPlayer.Volume = musicVolumeSlider.Value;
             };
             
@@ -64,22 +74,19 @@ namespace SE_Praktikum.Core.GameStates
                 new Vector2(0, 0),
                 "Back to main menu",
                 _screen.Camera);
-            backButton.Click += (sender, args) => { _logger.Debug("Back to main menu"); _subject.OnNext(GameStateMachine.GameStateMachineTrigger.Back); };
+            backButton.Click += (sender, args) => 
+            {
+                _logger.Debug("Back to main menu");
+                _saveGameHandler.Save();
+                _subject.OnNext(GameStateMachine.GameStateMachineTrigger.Back);
+            };
+
             _components.Add(musicVolumeLabel);
            // _components.Add(soundEffectVolumeLabel);
             _components.Add(backButton);
             _components.Add(musicVolumeSlider);
            // _components.Add(soundEffectVolumeSlider);
         }
-
-        public Settings(IGameEngine engine, IScreen screen, ControlElementFactory factory)
-        {
-            _logger = LogManager.GetCurrentClassLogger();
-            _engine = engine;
-            _screen = screen;
-            _factory = factory;
-        }
-
 
         public override void PostUpdate(GameTime gameTime)
         {
@@ -103,8 +110,7 @@ namespace SE_Praktikum.Core.GameStates
                 button.Update(gameTime);
             }
         }
-        
-        
+   
         public override void Draw()
         {
             if (_components == null)
