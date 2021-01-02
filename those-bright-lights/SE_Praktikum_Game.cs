@@ -206,5 +206,18 @@ namespace SE_Praktikum
         {
             return _saveHandler.SaveExists(saveSlot);
         }
+
+        public void CreateSave()
+        {
+            SaveGame = new SaveGame();
+            SaveGame.clearedStage = 0;
+            SaveGame.damage = 0;
+            SaveGame.playerPosition = 0;
+            SaveGame.enemyPosition = 0;
+            SaveGame.weapon = 0;
+            SaveGame.score = 0;
+            SaveGame.musicVolume = 0.5f;
+            SaveGame.sessions = 0;
+        }
     }
 }

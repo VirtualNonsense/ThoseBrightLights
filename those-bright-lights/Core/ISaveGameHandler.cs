@@ -19,5 +19,7 @@ namespace SE_Praktikum.Core
         SaveSlot SaveSlot { get; set; }
 
         bool SaveExists(SaveSlot saveSlot);
+
+        void CreateSave();
     }
 }
