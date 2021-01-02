@@ -26,7 +26,7 @@ namespace SE_Praktikum.Components.Sprites
         /// <summary>
         /// Defines the angle in which the enemy doesn't rotate anymore -> it's close enough
         /// </summary>
-        private float _rotationThreshold = MathExtensions.DegToRad(15);
+        private float _rotationThreshold = MathExtensions.DegToRad(5);
         
 
         private bool _hitBoxFlipped = false;

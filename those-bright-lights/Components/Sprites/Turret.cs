@@ -12,7 +12,7 @@ namespace SE_Praktikum.Components.Sprites
         public Turret(AnimationHandler animationHandler, float speed = 3, float health = 50, SoundEffect impactSound = null) : base(animationHandler, speed, health, impactSound)
         {
             _logger = LogManager.GetCurrentClassLogger();
-            RotateAndShoot = false;
+            RotateAndShoot = true;
             RotationSpeed = 5000;
         }
 
