@@ -49,7 +49,7 @@ namespace SE_Praktikum.Core.GameStates
                 _logger.Trace("slot one selected");
                 _saveGameHandler.SaveSlot = SaveSlot.Slot1;
 
-                if (slotExists)
+                if (_saveGameHandler.SaveExists(SaveSlot.Slot1))
                 {
                     _saveGameHandler.Load();
                 }
@@ -68,7 +68,7 @@ namespace SE_Praktikum.Core.GameStates
             { 
                 _logger.Trace("slot two selected");
                 _saveGameHandler.SaveSlot = SaveSlot.Slot2;
-                if (slotExists)
+                if (_saveGameHandler.SaveExists(SaveSlot.Slot2))
                 {
                     _saveGameHandler.Load();
                 }
@@ -87,7 +87,7 @@ namespace SE_Praktikum.Core.GameStates
             { 
                 _logger.Trace("slot three selected");
                 _saveGameHandler.SaveSlot = SaveSlot.Slot3;
-                if (slotExists)
+                if (_saveGameHandler.SaveExists(SaveSlot.Slot3))
                 {
                     _saveGameHandler.Load();
                 }
