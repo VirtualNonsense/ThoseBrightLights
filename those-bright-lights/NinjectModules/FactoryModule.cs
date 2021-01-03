@@ -17,6 +17,7 @@ namespace SE_Praktikum.NinjectModules
             Bind<EnemyFactory>().ToSelf().InSingletonScope();
             Bind<ControlElementFactory>().ToSelf().InSingletonScope();
             Bind<TileSetFactory>().ToSelf().InSingletonScope();
+            Bind<PowerUpFactory>().ToSelf().InSingletonScope();
         }
     }
 }
