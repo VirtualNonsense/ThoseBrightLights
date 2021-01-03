@@ -24,6 +24,7 @@ namespace SE_Praktikum.Core
         private readonly PlayerFactory _playerFactory;
         private readonly ParticleFactory _particleFactory;
         private readonly EnemyFactory _enemyFactory;
+        private readonly PowerUpFactory powerUpFactory;
         private readonly IScreen _screen;
         private readonly IGameEngine _gameEngine;
         private readonly List<IComponent> _components;
@@ -35,13 +36,14 @@ namespace SE_Praktikum.Core
         private event EventHandler OnExplosion;
 
         //Constructor
-        public Level(MapFactory mapFactory, PlayerFactory playerFactory, ParticleFactory particleFactory, EnemyFactory enemyFactory, IScreen screen, IGameEngine gameEngine)
+        public Level(MapFactory mapFactory, PlayerFactory playerFactory, ParticleFactory particleFactory, EnemyFactory enemyFactory,PowerUpFactory powerUpFactory, IScreen screen, IGameEngine gameEngine)
         {
             
             _mapFactory = mapFactory;
             _playerFactory = playerFactory;
             _particleFactory = particleFactory;
             _enemyFactory = enemyFactory;
+            this.powerUpFactory = powerUpFactory;
             _screen = screen;
             _gameEngine = gameEngine;
             _components = new List<IComponent>();
@@ -147,6 +149,9 @@ namespace SE_Praktikum.Core
             //TODO: try to load the json map via the contentmanager
             // var map = _mapFactory.LoadMap(JsonConvert.DeserializeObject<LevelBlueprint>(File.ReadAllText(@".\Content\MetaData\Level\AlphaMap.json")));
             _map = _mapFactory.LoadMap(@".\Content\MetaData\Level\TestLevel.json");
+            var powerup = powerUpFactory.GetInstance(25);
+            powerup.Position = new Vector2(100, 20);
+            powerup.Layer = _map.TopLayer;
             _collisionLayer = _map.TopLayer;
             //TODO: Set player level to _map.TopLayer
             
