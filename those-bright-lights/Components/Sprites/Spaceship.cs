@@ -130,9 +130,22 @@ namespace SE_Praktikum.Components.Sprites
                     v /= v.Length();
                     Position += v;
                     break;
+                case PowerUp p:
+                    ProcessPowerUp(p);
+                    break;
+
             }
 
             _impactPolygon = null;
+        }
+        private void ProcessPowerUp(PowerUp powerup)
+        {
+            switch(powerup)
+            {
+                case HealthPowerUp h:
+                    Health += h.HealthBonus;
+                    break;
+            }
         }
     }
 }
