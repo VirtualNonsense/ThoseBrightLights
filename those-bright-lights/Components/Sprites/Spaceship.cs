@@ -170,7 +170,7 @@ namespace SE_Praktikum.Components.Sprites
                     break;
                 
                 case AmmoPowerUp ra:
-
+                    //Weapons[CurrentWeapon].Ammo += ra.AmmoBonus;
                     break;
                 
                 case WeaponPowerUp r:
