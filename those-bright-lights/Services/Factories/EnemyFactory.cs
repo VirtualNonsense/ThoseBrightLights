@@ -46,14 +46,14 @@ namespace SE_Praktikum.Services.Factories
             SoundEffect impactSound = contentManager.Load<SoundEffect>("Audio/Sound_Effects/Collusion/ClinkBell");
             var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\turret_16_21.json",0);
             var animationSettings = new AnimationSettings(1,isPlaying:false);
-            var e = new Turret(_animationHandlerFactory.GetAnimationHandler(tileSet,animationSettings), impactSound:impactSound);
-            e.Position = new Vector2(100,50);
-            e.ViewBox = new Polygon(Vector2.Zero, Vector2.Zero, 0, new List<Vector2>
+            var e = new Turret(_animationHandlerFactory.GetAnimationHandler(tileSet, animationSettings),
+                impactSound: impactSound)
             {
-                new Vector2(0,0),
-                new Vector2(300,-100),
-                new Vector2(300,100),
-            });
+                Position = new Vector2(100, 50),
+                Scale = 2,
+                ViewBox = new Polygon(Vector2.Zero, Vector2.Zero, 0,
+                    new List<Vector2> {new Vector2(0, 0), new Vector2(300, -100), new Vector2(300, 100),})
+            };
             e.AddWeapon(_weaponFactory.GetLasergun(contentManager));
 
             return e;
