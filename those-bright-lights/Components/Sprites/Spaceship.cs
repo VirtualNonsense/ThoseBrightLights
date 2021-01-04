@@ -22,6 +22,7 @@ namespace SE_Praktikum.Components.Sprites
         protected KeyboardState CurrentKey;
         protected KeyboardState PreviousKey;
         protected Polygon _impactPolygon;
+        protected AnimationHandler Propulsion;
         protected bool FlippedHorizontal => _animationHandler.SpriteEffects == SpriteEffects.FlipVertically;
         
 
@@ -44,10 +45,14 @@ namespace SE_Praktikum.Components.Sprites
                 {
                     if (FlippedHorizontal) return;
                     _animationHandler.SpriteEffects = SpriteEffects.FlipVertically;
+                    if (Propulsion == null) return;
+                    Propulsion.SpriteEffects = SpriteEffects.FlipVertically;
                 }
                 else if (FlippedHorizontal)
                 {
                     _animationHandler.SpriteEffects = SpriteEffects.None;
+                    if (Propulsion == null) return;
+                    Propulsion.SpriteEffects = SpriteEffects.None;
                 }
 
             }
@@ -69,7 +74,21 @@ namespace SE_Praktikum.Components.Sprites
             {
                 weapon.Update(gameTime);
             }
+
+            if (Propulsion != null)
+            {
+                Propulsion.Position = Position;
+                Propulsion.Rotation = Rotation;
+                Propulsion.Update(gameTime);
+            }
+
             base.Update(gameTime);
+        }
+
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            Propulsion?.Draw(spriteBatch);
+            base.Draw(spriteBatch);
         }
 
 

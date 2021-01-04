@@ -116,7 +116,6 @@ namespace SE_Praktikum.Core
 
         private void CheckForCollisions()
         {
-            
 
         }
 
@@ -180,19 +179,25 @@ namespace SE_Praktikum.Core
             _screen.Camera.Position += new Vector3(0, 0, player.Layer);
             _components.Add(player);
 
-            var enemy = _enemyFactory.GetInstance(contentManager);
-            enemy.Layer = player.Layer;
-            enemy.X = 200;
-            enemy.Y = 0;
-            enemy.Rotation = (float) Math.PI;
-            enemy.OnShoot += (sender, args) =>
+            var turret = _enemyFactory.GetTurret(contentManager);
+            turret.Layer = player.Layer;
+            turret.X = 200;
+            turret.Y = 0;
+            turret.Rotation = (float) Math.PI;
+            turret.OnShoot += (sender, args) =>
             {
                 if (!(args is LevelEvent e)) return;
                 OnLevelEvent(e);
             };
-            _components.Add(enemy);
+            _components.Add(turret);
+            
+            //_components.AddRange(map);
+            
+            
+            turret.OnExplosion += (sender, args) =>
+            _components.Add(turret);
                 
-            enemy.OnExplosion += (sender, args) =>
+            turret.OnExplosion += (sender, args) =>
             {
                 if (!(args is LevelEvent e)) return;
                 OnLevelEvent(e);
