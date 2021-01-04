@@ -178,7 +178,7 @@ namespace SE_Praktikum.Components.Sprites
                     break;
                 
                 case ScoreBonusPowerUp sb:
-
+                    //score+= sb.bonusScore;
                     break;
                 
                     
