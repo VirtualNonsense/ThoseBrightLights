@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Input;
@@ -9,18 +10,24 @@ using SE_Praktikum.Components.Sprites.Weapons;
 using SE_Praktikum.Extensions;
 using SE_Praktikum.Models;
 using SE_Praktikum.Services;
+using Vector2 = Microsoft.Xna.Framework.Vector2;
 
 namespace SE_Praktikum.Components.Sprites
 {
     public class Enemy : Spaceship
     {
         private Logger _logger;
-        private bool _shot = false;
         public Polygon ViewBox;
-        private InterAction _i;
-        private Actor _target;
+        protected InterAction I;
+        protected Actor Target;
         protected CooldownAbility ForgetTarget;
         protected CooldownAbility Shoot;
+        public bool RotateAndShoot = false;
+        protected float RotateVelocity;
+        /// <summary>
+        /// Defines the angle in which the enemy doesn't rotate anymore -> it's close enough
+        /// </summary>
+        private float _rotationThreshold = MathExtensions.DegToRad(5);
         
 
         private bool _hitBoxFlipped = false;
@@ -49,36 +56,41 @@ namespace SE_Praktikum.Components.Sprites
         {
             _logger = LogManager.GetCurrentClassLogger();
             Shoot = new CooldownAbility(2000, _shootTarget);
-            _i = InterAction.None;
+            I = InterAction.None;
         }
 
-        private void _shootTarget()
+        protected virtual void _shootTarget()
         {
-            float rotation = Rotation;
-            var vector = _target.Position - Position;
-            if(Math.Abs(vector.X) > Math.Abs(vector.Y)) 
-                rotation -= (float)Math.Asin(vector.Y / vector.Length());
-            if(Math.Abs(vector.X) < Math.Abs(vector.Y)) 
-                rotation += (float)Math.Acos(vector.X / vector.Length());
-            // _logger.Trace(rotation);
-            var b =  Weapons[CurrentWeapon].GetBullet(Velocity, Position, rotation, this);
-            InvokeOnShoot(b);
+            if (I == InterAction.InView && Target != null)
+            {
+                float rotation = Rotation;
+
+                var directVector = Target.Position - Position;
+                var directAngle = MathExtensions.GetVectorRotation(directVector);
+                var viewVector = new Vector2((float)Math.Cos(rotation), (float)Math.Sin(rotation)) * directVector.Length();
+                var viewAngle = MathExtensions.GetVectorRotation(viewVector);
+                var offSetRotation = MathExtensions.Modulo2PiAlsoNegative(directAngle - viewAngle);
+                if (directAngle < 0)
+                    rotation -= offSetRotation;
+                else if(directAngle > 0)
+                    rotation += offSetRotation;
+        
+                var b =  Weapons[CurrentWeapon].GetBullet(Velocity, Position, rotation, this);
+                InvokeOnShoot(b);
+            }
         }
         
         
         public override void Update(GameTime gameTime)
         {
-            Shoot.Update(gameTime);
-            if (_i == InterAction.InView && _target != null)
-                Shoot.Fire();
-            
+            if(RotateAndShoot)
+                Rotate(Target, gameTime);
             Vector2 velocity = Vector2.Zero;
 
             ViewBox.Position = Position;
             ViewBox.Rotation = Rotation;
             ViewBox.Layer = Layer;
             base.Update(gameTime);
-
         }
 
         
@@ -98,7 +110,7 @@ namespace SE_Praktikum.Components.Sprites
                 case Player p:
                     if (p.HitBox.Any(polygon => ViewBox.Overlap(polygon)))
                     {
-                        _i = InterAction.InView;
+                        I = InterAction.InView;
                         return true;
                     }
 
@@ -106,7 +118,7 @@ namespace SE_Praktikum.Components.Sprites
             }
             var t = base.InteractAble(other);
             if (t)
-                _i = InterAction.BodyCollision;
+                I = InterAction.BodyCollision;
             return t;
         }
 
@@ -115,9 +127,13 @@ namespace SE_Praktikum.Components.Sprites
             switch (other)
             {
                 case Player p:
-                    _target = p;
-                    if(_i != InterAction.BodyCollision) return;
-                    Health -= p.Damage;
+                    Target = p;
+                    switch (I)
+                    {
+                        case InterAction.BodyCollision:
+                            Health -= p.Damage;
+                            break;
+                    }
                     break;
                 default:
                     if (other.Parent == this) return;
@@ -125,6 +141,46 @@ namespace SE_Praktikum.Components.Sprites
                     _logger.Debug($"health {Health}");
                     _impactSound?.Play();
                     break;
+            }
+        }
+
+        protected void Rotate(Actor target, GameTime gameTime)
+        {
+            if (Target != null && I == InterAction.InView)
+            {
+                var desiredRotation = MathExtensions.RotationToTarget(target, this);
+                if (Math.Abs(desiredRotation - Rotation) > _rotationThreshold)
+                {
+                    float rotationPortion =
+                        (float) ((gameTime.ElapsedGameTime.TotalMilliseconds / RotationSpeed) * (2 * Math.PI));
+                    _logger.Info("Current Rotation: " + Rotation);
+                    _logger.Info("Final Rotation: " + desiredRotation);
+                    //turn clock or anticlockwise
+                    var angleToRotate = MathExtensions.Modulo2PiAlsoNegative(desiredRotation - Rotation);
+                    _logger.Info("AngleToRotate: " + angleToRotate);
+                    if (Math.Abs(angleToRotate) > Math.PI)
+                    {
+                        if (angleToRotate < 0)
+                        {
+                            Rotation += rotationPortion;
+                        }
+                        else
+                        {
+                            Rotation -= rotationPortion;
+                        }
+                    }
+                    else
+                    {
+                        if (angleToRotate < 0)
+                        {
+                            Rotation -= rotationPortion;
+                        }
+                        else
+                        {
+                            Rotation += rotationPortion;
+                        }
+                    }
+                }
             }
         }
 

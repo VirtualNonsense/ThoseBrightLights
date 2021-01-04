@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using NLog;
 using SE_Praktikum.Models;
@@ -14,13 +15,15 @@ namespace SE_Praktikum.Components.Sprites
         private Input _input;
         private Logger _logger;
         private bool _shot = false;
-        public Player(AnimationHandler animationHandler, Input input=null, int health=100, float speed = 5, SoundEffect impactSound = null) 
+        public Player(AnimationHandler animationHandler, AnimationHandler propulsion, Input input=null, int health=100, float speed = 5, SoundEffect impactSound = null) 
             : base(animationHandler, health, speed, impactSound)
         {
             _input = input;
             Health = health;
             Speed = speed;
             _logger = LogManager.GetCurrentClassLogger();
+            Propulsion = propulsion;
+            Propulsion.Origin += new Vector2(animationHandler.FrameWidth / 2 + Propulsion.FrameWidth/2 +2, 0);
         }
 
         public override void Update(GameTime gameTime)
