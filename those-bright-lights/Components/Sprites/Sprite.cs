@@ -20,8 +20,6 @@ namespace SE_Praktikum.Components.Sprites
     /// The time it takes the object to rotate 360 degrees in milliseconds
     /// </summary>
     protected int RotationSpeed = 1000; 
-    protected float CurrentRotation;
-    protected float FinalRotation;
     
     
     // #################################################################################################################

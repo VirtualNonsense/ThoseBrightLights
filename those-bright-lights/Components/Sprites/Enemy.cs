@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Input;
@@ -9,6 +10,7 @@ using SE_Praktikum.Components.Sprites.Weapons;
 using SE_Praktikum.Extensions;
 using SE_Praktikum.Models;
 using SE_Praktikum.Services;
+using Vector2 = Microsoft.Xna.Framework.Vector2;
 
 namespace SE_Praktikum.Components.Sprites
 {
@@ -22,7 +24,6 @@ namespace SE_Praktikum.Components.Sprites
         protected CooldownAbility Shoot;
         public bool RotateAndShoot = false;
         protected float RotateVelocity;
-        protected float FinalRotation;
         /// <summary>
         /// Defines the angle in which the enemy doesn't rotate anymore -> it's close enough
         /// </summary>
@@ -60,24 +61,30 @@ namespace SE_Praktikum.Components.Sprites
 
         protected virtual void _shootTarget()
         {
-            float rotation = Rotation;
-            if (!RotateAndShoot)
+            if (I == InterAction.InView && Target != null)
             {
-                var vector = Target.Position - Position;
-                if (Math.Abs(vector.X) > Math.Abs(vector.Y))
-                    rotation -= (float) Math.Asin(vector.Y / vector.Length());
-                if (Math.Abs(vector.X) < Math.Abs(vector.Y))
-                    rotation += (float) Math.Acos(vector.X / vector.Length());
+                float rotation = Rotation;
+
+                var directVector = Target.Position - Position;
+                var directAngle = MathExtensions.GetVectorRotation(directVector);
+                var viewVector = new Vector2((float)Math.Cos(rotation), (float)Math.Sin(rotation)) * directVector.Length();
+                var viewAngle = MathExtensions.GetVectorRotation(viewVector);
+                var offSetRotation = MathExtensions.Modulo2PiAlsoNegative(directAngle - viewAngle);
+                if (directAngle < 0)
+                    rotation -= offSetRotation;
+                else if(directAngle > 0)
+                    rotation += offSetRotation;
+        
+                var b =  Weapons[CurrentWeapon].GetBullet(Velocity, Position, rotation, this);
+                InvokeOnShoot(b);
             }
-            // _logger.Trace(rotation);
-            var b =  Weapons[CurrentWeapon].GetBullet(Velocity, Position, rotation, this);
-            InvokeOnShoot(b);
         }
         
         
         public override void Update(GameTime gameTime)
         {
-            Rotate(Target, gameTime);
+            if(RotateAndShoot)
+                Rotate(Target, gameTime);
             Vector2 velocity = Vector2.Zero;
 
             ViewBox.Position = Position;
@@ -139,18 +146,41 @@ namespace SE_Praktikum.Components.Sprites
 
         protected void Rotate(Actor target, GameTime gameTime)
         {
-            if (Math.Abs(FinalRotation - Rotation) > _rotationThreshold)
+            if (Target != null && I == InterAction.InView)
             {
-                float rotation = (float)((gameTime.ElapsedGameTime.TotalMilliseconds / RotationSpeed) * (2 * Math.PI));
-                _logger.Info("Current Rotation: " + Rotation);
-                _logger.Info("Final Rotation: " + FinalRotation);
-                //turn clock or anticlockwise
-                var angleToRotate = MathExtensions.Modulo2PiPositive(FinalRotation - Rotation);
-                _logger.Info("AngleToRotate: " + angleToRotate);
-                if (angleToRotate > Math.PI)
-                    Rotation -= rotation;
-                else
-                    Rotation += rotation;
+                var desiredRotation = MathExtensions.RotationToTarget(target, this);
+                if (Math.Abs(desiredRotation - Rotation) > _rotationThreshold)
+                {
+                    float rotationPortion =
+                        (float) ((gameTime.ElapsedGameTime.TotalMilliseconds / RotationSpeed) * (2 * Math.PI));
+                    _logger.Info("Current Rotation: " + Rotation);
+                    _logger.Info("Final Rotation: " + desiredRotation);
+                    //turn clock or anticlockwise
+                    var angleToRotate = MathExtensions.Modulo2PiAlsoNegative(desiredRotation - Rotation);
+                    _logger.Info("AngleToRotate: " + angleToRotate);
+                    if (Math.Abs(angleToRotate) > Math.PI)
+                    {
+                        if (angleToRotate < 0)
+                        {
+                            Rotation += rotationPortion;
+                        }
+                        else
+                        {
+                            Rotation -= rotationPortion;
+                        }
+                    }
+                    else
+                    {
+                        if (angleToRotate < 0)
+                        {
+                            Rotation -= rotationPortion;
+                        }
+                        else
+                        {
+                            Rotation += rotationPortion;
+                        }
+                    }
+                }
             }
         }
 

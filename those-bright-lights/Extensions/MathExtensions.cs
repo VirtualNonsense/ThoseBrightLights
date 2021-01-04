@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Reactive.Concurrency;
 using Microsoft.Xna.Framework;
+using NLog;
+using SE_Praktikum.Components.Sprites;
 
 namespace SE_Praktikum.Extensions
 {
@@ -27,14 +29,25 @@ namespace SE_Praktikum.Extensions
             return (float) (rad * 180 / Math.PI);
         }
 
-        public static float RotationToPlayer(Vector2 vector, bool flipped)
+        public static float RotationToTarget(Actor target, Actor self)
         {
-            var (x, y) = vector;
-            var rotation = (float)Math.Asin(y / vector.Length());
-            if (x < 0)
-                rotation = MathExtensions.Modulo2PiPositive( (float) Math.PI -  rotation); 
-            // else
-            //     rotation *= -1;
+            var vector = target.Position - self.Position;
+            return GetVectorRotation(vector);
+        }
+
+        public static float RotationToVector(Vector2 other, Vector2 self)
+        {
+            return GetVectorRotation(other - self);
+        }
+
+        public static float GetVectorRotation(Vector2 vector2)
+        {
+            var oneZeroVector = Vector2.UnitX;
+            var enominator = Vector2.Dot(vector2, oneZeroVector);
+            var denumerator = vector2.Length() * oneZeroVector.Length();
+            var rotation = (float) Math.Acos(enominator / denumerator);
+            if (vector2.Y < 0)
+                rotation = Modulo2PiPositive(2 * (float) Math.PI - rotation);
             return rotation;
         }
 
