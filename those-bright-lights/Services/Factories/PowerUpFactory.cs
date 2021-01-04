@@ -71,6 +71,28 @@ namespace SE_Praktikum.Services.Factories
             return lp;
         }
 
+        public AmmoPowerUp LaserAmmoGetInstance(int ammo, Vector2? position = null, float layer = 0)
+        {
+            var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\PowerUpTry1.json", 0);
+            var animationSettings = new AnimationSettings(new List<(int, float)> { (22, 1) }, isPlaying: false);
+            var la = new AmmoPowerUp(_animationHandlerFactory.GetAnimationHandler(tileSet, animationSettings),ammo);
+            la.Layer = layer;
+            la.Position = position ?? new Vector2(0, 0);
+            return la;
+        }
+
+        public AmmoPowerUp RocketAmmoGetInstance(int ammo, Vector2? position = null, float layer = 0)
+        {
+            var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\PowerUpTry1.json", 0);
+            var animationSettings = new AnimationSettings(new List<(int, float)> { (22, 1) }, isPlaying: false);
+            var ra = new AmmoPowerUp(_animationHandlerFactory.GetAnimationHandler(tileSet, animationSettings),ammo);
+            ra.Layer = layer;
+            ra.Position = position ?? new Vector2(0, 0);
+            return ra;
+        }
+
+
+
 
 
 
