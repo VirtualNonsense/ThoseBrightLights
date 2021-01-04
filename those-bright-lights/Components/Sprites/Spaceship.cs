@@ -168,21 +168,15 @@ namespace SE_Praktikum.Components.Sprites
                 case InstaDeathPowerUp i:
                     Health -= Health;
                     break;
-                case LaserAmmoPowerUp la:
+                
+                case AmmoPowerUp ra:
 
                     break;
-                case RocketAmmoPowerUp ra:
-
+                
+                case WeaponPowerUp r:
+                    AddWeapon(r.Weapon);
                     break;
-                case ShotgunAmmoPowerUp sa:
-
-                    break;
-                case RocketPowerUp r:
-
-                    break;
-                case ShotgunPowerUp s:
-
-                    break;
+                
                 case ScoreBonusPowerUp sb:
 
                     break;
