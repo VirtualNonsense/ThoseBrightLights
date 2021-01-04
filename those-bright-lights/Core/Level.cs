@@ -148,17 +148,10 @@ namespace SE_Praktikum.Core
             //TODO: try to load the json map via the contentmanager
             // var map = _mapFactory.LoadMap(JsonConvert.DeserializeObject<LevelBlueprint>(File.ReadAllText(@".\Content\MetaData\Level\AlphaMap.json")));
             _map = _mapFactory.LoadMap(@".\Content\MetaData\Level\TestLevel.json");
-            var healthPowerup = powerUpFactory.HealthGetInstance(25);
-            _components.Add(healthPowerup);
-            //var instaDeathPowerUp = powerUpFactory.DeathGetInstance();
-            //var laserAmmoPowerUp = powerUpFactory.LAmmoGetInstance();
-            //var rocketAmmoPowerUp = powerUpFactory.RAmmoGetInstance();
-            //var shotgunAmmoPowerUp = powerUpFactory.SAmmoGetInstance();
-            //var rocketPowerUp = powerUpFactory.RocketGetInstance();
-            //var shotgunPowerUp = powerUpFactory.ShotgunGetInstance();
-            //var scoreBonusPowerUp = powerUpFactory.ScoreGetInstance();
-            healthPowerup.Position = new Vector2(100, 20);
-            healthPowerup.Layer = _map.TopLayer;
+            //var healthPowerup = powerUpFactory.HealthGetInstance(25);
+            //_components.Add(healthPowerup);
+            
+            _components.Add(powerUpFactory.RocketGetInstance(new Vector2(100,20),_map.TopLayer));
             _collisionLayer = _map.TopLayer;
             //TODO: Set player level to _map.TopLayer
             
