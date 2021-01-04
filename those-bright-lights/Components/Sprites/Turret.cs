@@ -13,19 +13,13 @@ namespace SE_Praktikum.Components.Sprites
         {
             _logger = LogManager.GetCurrentClassLogger();
             RotateAndShoot = true;
-            RotationSpeed = 5000;
         }
 
         public override void Update(GameTime gameTime)
         {
             Shoot.Update(gameTime);
             if (I == InterAction.InView && Target != null)
-            {
-                FinalRotation = MathExtensions.RotationToPlayer(new Vector2(Target.X - Position.X, Target.Y - Position.Y), FlippedHorizontal);
-                FinalRotation = MathExtensions.Modulo2PiPositive(FinalRotation);
-                // _logger.Info(Rotation);
                 Shoot.Fire();
-            }
             base.Update(gameTime);
         }
     }
