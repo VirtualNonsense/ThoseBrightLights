@@ -8,9 +8,10 @@ namespace SE_Praktikum.Components.Sprites.PowerUps
 {
     public class ScoreBonusPowerUp : PowerUp
     {
-        public ScoreBonusPowerUp(AnimationHandler animationHandler, float health = 0.01f, SoundEffect soundEffect = null) : base(animationHandler, health, soundEffect)
+        public readonly int BonusScore;
+        public ScoreBonusPowerUp(AnimationHandler animationHandler, int bonusScore, float health = 0.01f, SoundEffect soundEffect = null) : base(animationHandler, health, soundEffect)
         {
-
+            BonusScore = bonusScore;
         }
     }
 }
