@@ -47,6 +47,10 @@ namespace SE_Praktikum.Components.Sprites.Weapons
                     IsRemoveAble = true;
                     InvokeExplosion();
                     break;
+                case Tile t:
+                    IsRemoveAble = true;
+                    InvokeExplosion();
+                    break;
                 
             }
         }
