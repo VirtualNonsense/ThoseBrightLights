@@ -136,6 +136,9 @@
         <None Update="Content\MetaData\TileSets\flyingEngineOnly.json">
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
+        <None Update="Content\MetaData\TileSets\turret_16_21.json">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
     </ItemGroup>
     <ItemGroup>
         <EmbeddedResource Include="Icon.ico" />

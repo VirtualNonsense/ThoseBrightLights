@@ -42,7 +42,7 @@ namespace SE_Praktikum.Services.Factories
         public Turret GetTurret(ContentManager contentManager)
         {
             SoundEffect impactSound = contentManager.Load<SoundEffect>("Audio/Sound_Effects/Collusion/ClinkBell");
-            var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\alien_ship.json",0);
+            var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\turret_16_21.json",0);
             var animationSettings = new AnimationSettings(1,isPlaying:false);
             var e = new Turret(_animationHandlerFactory.GetAnimationHandler(tileSet,animationSettings), impactSound:impactSound);
             e.Position = new Vector2(100,50);
