@@ -19,7 +19,7 @@ namespace SE_Praktikum.Components.Sprites.Weapons
 
         public Lasergun(AnimationHandlerFactory animationHandlerFactory, TileSet textureTileSet, ParticleFactory particleFactory, SoundEffect shoot, SoundEffect midAirSound, SoundEffect impactSound) : base(shoot)
         {
-            CoolDown = 1000;
+            CoolDown = 100;
             _animationHandlerFactory = animationHandlerFactory;
             _textureTileSet = textureTileSet;
             _particleFactory = particleFactory;

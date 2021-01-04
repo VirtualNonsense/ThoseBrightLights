@@ -36,5 +36,19 @@ namespace SE_Praktikum.Components.Sprites.Weapons
             }
             base.Update(gameTime);
         }
+
+        protected override void ExecuteInteraction(Actor other)
+        {
+            switch (other)
+            {
+                case Spaceship s:
+                    if(s == Parent)
+                        return;
+                    IsRemoveAble = true;
+                    InvokeExplosion();
+                    break;
+                
+            }
+        }
     }
 }

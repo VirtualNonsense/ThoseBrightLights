@@ -21,6 +21,8 @@ namespace SE_Praktikum.Components
         
         public float TopLayer => _tileContainer.Keys.Max();
 
+        public Polygon PlayerSpawnPoint;
+
         public Map (Dictionary<float, QuadTree<Tile>> tiles, Rectangle area)
         {
             _tileContainer = tiles;
@@ -49,5 +51,14 @@ namespace SE_Praktikum.Components
             return list;
         }
 
+
     }
+    //enum ObjectLayerType
+    //{
+    //    PlayerSpawn,
+    //    EnemySpawn,
+    //    VictoryZone,
+
+    //}
+    
 }

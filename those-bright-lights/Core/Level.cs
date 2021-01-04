@@ -24,6 +24,7 @@ namespace SE_Praktikum.Core
         private readonly PlayerFactory _playerFactory;
         private readonly ParticleFactory _particleFactory;
         private readonly EnemyFactory _enemyFactory;
+        private readonly PowerUpFactory powerUpFactory;
         private readonly IScreen _screen;
         private readonly IGameEngine _gameEngine;
         private readonly List<IComponent> _components;
@@ -35,13 +36,14 @@ namespace SE_Praktikum.Core
         private event EventHandler OnExplosion;
 
         //Constructor
-        public Level(MapFactory mapFactory, PlayerFactory playerFactory, ParticleFactory particleFactory, EnemyFactory enemyFactory, IScreen screen, IGameEngine gameEngine)
+        public Level(MapFactory mapFactory, PlayerFactory playerFactory, ParticleFactory particleFactory, EnemyFactory enemyFactory,PowerUpFactory powerUpFactory, IScreen screen, IGameEngine gameEngine)
         {
             
             _mapFactory = mapFactory;
             _playerFactory = playerFactory;
             _particleFactory = particleFactory;
             _enemyFactory = enemyFactory;
+            this.powerUpFactory = powerUpFactory;
             _screen = screen;
             _gameEngine = gameEngine;
             _components = new List<IComponent>();
@@ -114,7 +116,6 @@ namespace SE_Praktikum.Core
 
         private void CheckForCollisions()
         {
-            
 
         }
 
@@ -147,12 +148,14 @@ namespace SE_Praktikum.Core
             //TODO: try to load the json map via the contentmanager
             // var map = _mapFactory.LoadMap(JsonConvert.DeserializeObject<LevelBlueprint>(File.ReadAllText(@".\Content\MetaData\Level\AlphaMap.json")));
             _map = _mapFactory.LoadMap(@".\Content\MetaData\Level\TestLevel.json");
+            var powerup = powerUpFactory.GetInstance(25);
+            powerup.Position = new Vector2(100, 20);
+            powerup.Layer = _map.TopLayer;
             _collisionLayer = _map.TopLayer;
             //TODO: Set player level to _map.TopLayer
             
             var player = _playerFactory.GetInstance(contentManager);
-            player.X = 0;
-            player.Y = 0;
+            player.Position = _map.PlayerSpawnPoint?.Center ?? new Vector2(0, 0);
             player.Layer = _collisionLayer;
             player.OnShoot += (sender, args) =>
             {
@@ -168,19 +171,25 @@ namespace SE_Praktikum.Core
             _screen.Camera.Position += new Vector3(0, 0, player.Layer);
             _components.Add(player);
 
-            var enemy = _enemyFactory.GetInstance(contentManager);
-            enemy.Layer = player.Layer;
-            enemy.X = 200;
-            enemy.Y = 0;
-            enemy.Rotation = (float) Math.PI;
-            enemy.OnShoot += (sender, args) =>
+            var turret = _enemyFactory.GetTurret(contentManager);
+            turret.Layer = player.Layer;
+            turret.X = 200;
+            turret.Y = 0;
+            turret.Rotation = (float) Math.PI;
+            turret.OnShoot += (sender, args) =>
             {
                 if (!(args is LevelEvent e)) return;
                 OnLevelEvent(e);
             };
-            _components.Add(enemy);
+            _components.Add(turret);
+            
+            //_components.AddRange(map);
+            
+            
+            turret.OnExplosion += (sender, args) =>
+            _components.Add(turret);
                 
-            enemy.OnExplosion += (sender, args) =>
+            turret.OnExplosion += (sender, args) =>
             {
                 if (!(args is LevelEvent e)) return;
                 OnLevelEvent(e);

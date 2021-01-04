@@ -42,6 +42,7 @@ namespace SE_Praktikum.Services.Factories
             {
                 var array = tileSet.Source.Split(".json")[0].Split("/");
                 var title = array[array.Count() - 1];
+
                 try
                 {
                     var tileSetPath = Path.GetFullPath(
@@ -61,24 +62,79 @@ namespace SE_Praktikum.Services.Factories
                     throw;
                 }
             }
+            Polygon SpawnPoint = null;
             Dictionary<float, QuadTree<Tile>> tiles = new Dictionary<float, QuadTree<Tile>>();
             var l = 0f;
             var area = new Rectangle(0, 0, blueprint.Width * blueprint.TileWidth, blueprint.Height * blueprint.TileHeight);
             foreach(var layer in blueprint.Layers)
             {
-                var c = tileFactory.GenerateTiles(layer.Data, 
-                                                          l, 
-                                                          tileSets,
-                                                          blueprint.TileWidth,
-                                                          blueprint.TileHeight,
-                                                          blueprint.Height,
-                                                          blueprint.Width,
-                                                          layer.Visible? 1 : 0,
-                                                          area);
-                tiles.Add(l,c);
-                l+=3;
+                if (layer.Data != null)
+                {
+                    var c = tileFactory.GenerateTiles(layer.Data,
+                                                              l,
+                                                              tileSets,
+                                                              blueprint.TileWidth,
+                                                              blueprint.TileHeight,
+                                                              blueprint.Height,
+                                                              blueprint.Width,
+                                                              layer.Visible ? 1 : 0,
+                                                              area);
+
+                    tiles.Add(l, c);
+                    l += 3;
+                    continue;
+                }
+                if(layer.objects != null)
+                {
+                    foreach(var obj in layer.objects)
+                    {
+
+                        switch(obj.type)
+                        {
+                            case "PlayerSpawnPoint":
+                                SpawnPoint = ConvertObjectToPolygon(obj);
+                                break;
+
+                            default:
+                                _logger.Warn($"{obj.type} not found");
+                                break;
+
+                        }
+                    }
+                }
+
+                
             }
-            return new Map(tiles, area);
+            return new Map(tiles, area) { PlayerSpawnPoint = SpawnPoint};
+        }
+        private Polygon ConvertObjectToPolygon(ObjectBluePrint objectt)
+        {
+            Polygon polygon;
+            if (objectt.polygon != null)
+            {
+                List<Vector2> Vector2List = new List<Vector2>();
+                foreach (var p in objectt.polygon)
+                {
+                    Vector2List.Add(new Vector2(p.x, p.y));
+                }
+                polygon = new Polygon(new Vector2(objectt.x,objectt.y), Vector2.Zero, 0, Vector2List);
+            }
+            else
+            {
+                polygon = new Polygon(
+                new Vector2(objectt.x, objectt.y),
+                new Vector2(objectt.width / 2, objectt.height / 2),
+                0,
+                new List<Vector2>
+                {
+                            new Vector2(0,0),
+                            new Vector2(objectt.width,0),
+                            new Vector2(objectt.width,objectt.height),
+                            new Vector2(0,objectt.height)
+                }
+                );
+            }
+            return polygon;
         }
     }
 }
