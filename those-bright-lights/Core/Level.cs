@@ -148,9 +148,10 @@ namespace SE_Praktikum.Core
             //TODO: try to load the json map via the contentmanager
             // var map = _mapFactory.LoadMap(JsonConvert.DeserializeObject<LevelBlueprint>(File.ReadAllText(@".\Content\MetaData\Level\AlphaMap.json")));
             _map = _mapFactory.LoadMap(@".\Content\MetaData\Level\TestLevel.json");
-            var powerup = powerUpFactory.GetInstance(25);
-            powerup.Position = new Vector2(100, 20);
-            powerup.Layer = _map.TopLayer;
+            //var healthPowerup = powerUpFactory.HealthGetInstance(25);
+            //_components.Add(healthPowerup);
+            
+            _components.Add(powerUpFactory.RocketGetInstance(new Vector2(100,20),_map.TopLayer));
             _collisionLayer = _map.TopLayer;
             //TODO: Set player level to _map.TopLayer
             

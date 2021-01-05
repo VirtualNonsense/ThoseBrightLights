@@ -9,6 +9,7 @@ using SE_Praktikum.Models;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using SE_Praktikum.Extensions;
+using SE_Praktikum.Components.Sprites.PowerUps;
 
 namespace SE_Praktikum.Components.Sprites
 {
@@ -164,6 +165,23 @@ namespace SE_Praktikum.Components.Sprites
                 case HealthPowerUp h:
                     Health += h.HealthBonus;
                     break;
+                case InstaDeathPowerUp i:
+                    Health -= Health;
+                    break;
+                
+                case AmmoPowerUp ra:
+                    //Weapons[CurrentWeapon].Ammo += ra.AmmoBonus;
+                    break;
+                
+                case WeaponPowerUp r:
+                    AddWeapon(r.Weapon);
+                    break;
+                
+                case ScoreBonusPowerUp sb:
+                    //score+= sb.bonusScore;
+                    break;
+                
+                    
             }
         }
     }
