@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using SE_Praktikum.Components.Sprites;
+using SE_Praktikum.Components.Sprites.Bullets;
 using SE_Praktikum.Core;
 
 namespace SE_Praktikum.Models

@@ -1,14 +1,10 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using SE_Praktikum.Services;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using NLog;
-using SE_Praktikum.Models;
+﻿using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
+using NLog;
+using SE_Praktikum.Services;
 
-namespace SE_Praktikum.Components.Sprites.Weapons
+namespace SE_Praktikum.Components.Sprites.Bullets
 {
     public class Bullet : Actor
     {

@@ -1,6 +1,7 @@
 ﻿using System.Runtime.CompilerServices;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
+using SE_Praktikum.Components.Sprites.Bullets;
 
 namespace SE_Praktikum.Components.Sprites.Weapons
 {

@@ -1,9 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Graphics;
 using SE_Praktikum.Services;
 
-namespace SE_Praktikum.Components.Sprites.Weapons
+namespace SE_Praktikum.Components.Sprites.Bullets
 {
     public class Laser : Bullet
     {

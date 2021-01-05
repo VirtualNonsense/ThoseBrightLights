@@ -8,6 +8,7 @@ using NLog;
 using SE_Praktikum.Models;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
+using SE_Praktikum.Components.Sprites.Bullets;
 using SE_Praktikum.Extensions;
 using SE_Praktikum.Components.Sprites.PowerUps;
 
