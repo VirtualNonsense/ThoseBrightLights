@@ -58,23 +58,21 @@ namespace SE_Praktikum.Components.Sprites
 
         protected virtual void _shootTarget()
         {
-            if (I == InterAction.InView && Target != null)
-            {
-                float rotation = Rotation;
+            if (I != InterAction.InView || Target == null) return;
+            var rotation = Rotation;
 
-                var directVector = Target.Position - Position;
-                var directAngle = MathExtensions.GetVectorRotation(directVector);
-                var viewVector = new Vector2((float)Math.Cos(rotation), (float)Math.Sin(rotation)) * directVector.Length();
-                var viewAngle = MathExtensions.GetVectorRotation(viewVector);
-                var offSetRotation = MathExtensions.Modulo2PiAlsoNegative(directAngle - viewAngle);
-                if (directAngle < 0)
-                    rotation -= offSetRotation;
-                else if(directAngle > 0)
-                    rotation += offSetRotation;
+            var directVector = Target.Position - Position;
+            var directAngle = MathExtensions.GetVectorRotation(directVector);
+            var viewVector = new Vector2((float)Math.Cos(rotation), (float)Math.Sin(rotation)) * directVector.Length();
+            var viewAngle = MathExtensions.GetVectorRotation(viewVector);
+            var offSetRotation = MathExtensions.Modulo2PiAlsoNegative(directAngle - viewAngle);
+            if (directAngle < 0)
+                rotation -= offSetRotation;
+            else if(directAngle > 0)
+                rotation += offSetRotation;
         
-                var b =  Weapons[CurrentWeapon].GetBullet(Velocity, Position, rotation, this);
-                InvokeOnShoot(b);
-            }
+            var b =  Weapons[CurrentWeapon].GetBullet(Velocity, Position, rotation, this);
+            InvokeOnShoot(b);
         }
         
         
@@ -120,6 +118,12 @@ namespace SE_Praktikum.Components.Sprites
                         case InterAction.BodyCollision:
                             Health -= p.Damage;
                             break;
+                        case InterAction.None:
+                            break;
+                        case InterAction.InView:
+                            break;
+                        default:
+                            throw new ArgumentOutOfRangeException();
                     }
                     break;
                 default:
