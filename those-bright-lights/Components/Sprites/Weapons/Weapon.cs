@@ -2,6 +2,7 @@
 using System.Runtime.CompilerServices;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
+using NLog;
 using SE_Praktikum.Components.Sprites.Bullets;
 using SE_Praktikum.Services;
 using SE_Praktikum.Extensions;
@@ -15,6 +16,7 @@ namespace SE_Praktikum.Components.Sprites.Weapons
 
         private readonly CooldownAbility _shotAbility;
         private float _rotation;
+        private Logger _logger;
 
         // #############################################################################################################
         // Constructor
@@ -29,6 +31,7 @@ namespace SE_Praktikum.Components.Sprites.Weapons
         /// <param name="shotCoolDown">in milliseconds</param>
         public Weapon(Actor Parent, SoundEffect shotSoundEffect, string nameTag, int shotCoolDown = 10)
         {
+            _logger = LogManager.GetCurrentClassLogger();
             _shotAbility = new CooldownAbility(shotCoolDown, FireAbility);
             _parent = Parent;
             _shotSoundEffect = shotSoundEffect;
@@ -136,6 +139,7 @@ namespace SE_Praktikum.Components.Sprites.Weapons
         // #############################################################################################################
         protected virtual void InvokeOnEmitBullet(EmitBulletEventArgs e)
         {
+            if(OnEmitBullet == null) _logger.Warn($"{NameTag} of {_parent} tries to fire but has no subscriber to OnEmitBullet");
             OnEmitBullet?.Invoke(this, e);
         }
 
