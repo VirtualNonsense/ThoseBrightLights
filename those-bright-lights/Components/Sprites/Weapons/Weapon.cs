@@ -10,9 +10,10 @@ namespace SE_Praktikum.Components.Sprites.Weapons
 {
     public abstract class Weapon
     {
-        protected readonly SoundEffect _shotSoundEffect;
+        protected readonly Actor _parent;
+        private readonly SoundEffect _shotSoundEffect;
 
-        protected readonly CooldownAbility _shotAbility;
+        private readonly CooldownAbility _shotAbility;
         private float _rotation;
 
         // #############################################################################################################
@@ -29,6 +30,7 @@ namespace SE_Praktikum.Components.Sprites.Weapons
         public Weapon(Actor Parent, SoundEffect shotSoundEffect, string nameTag, int shotCoolDown = 10)
         {
             _shotAbility = new CooldownAbility(shotCoolDown, FireAbility);
+            _parent = Parent;
             _shotSoundEffect = shotSoundEffect;
             NameTag = nameTag;
         }
