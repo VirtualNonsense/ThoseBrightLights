@@ -6,7 +6,7 @@ namespace SE_Praktikum.Services
     public class CooldownAbility
     {
         private int _currentTimer;
-        private readonly int _cooldown;
+        private int _cooldown;
 
         public CooldownAbility(int cooldown, Action ability)
         {
@@ -17,6 +17,16 @@ namespace SE_Praktikum.Services
 
         private readonly Action _ability;
 
+        public int Cooldown
+        {
+            get => _cooldown;
+            set
+            {
+                if (value < 0) return;
+                _cooldown = value;
+            }
+        }
+
         public void Update(GameTime gameTime)
         {
             _currentTimer += (int)gameTime.ElapsedGameTime.TotalMilliseconds;
@@ -24,7 +34,7 @@ namespace SE_Praktikum.Services
 
         public void Fire()
         {
-            if (_currentTimer < _cooldown) return;
+            if (_currentTimer < Cooldown) return;
             _currentTimer = 0;
             _ability();
         }
