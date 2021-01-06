@@ -25,7 +25,7 @@ namespace SE_Praktikum.Components.Sprites.Weapons
         {
             _shoot = shoot;
         }
-        public abstract Bullet GetBullet(Vector2 velocitySpaceship, Vector2 positionSpacehsip,float Rotation, Actor parent);
+        public abstract Bullet GetBullet(Vector2 velocitySpaceship, Vector2 positionSpaceship,float Rotation, Actor parent);
 
         public void Update(GameTime gameTime)
         {
