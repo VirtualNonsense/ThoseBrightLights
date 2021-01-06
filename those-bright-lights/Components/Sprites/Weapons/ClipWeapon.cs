@@ -13,6 +13,7 @@ namespace SE_Praktikum.Components.Sprites.Weapons
         private readonly CooldownAbility _reloadAbility;
         private readonly SoundEffect _clipEmptySound;
         private readonly SoundEffect _weaponEmptySound;
+        private readonly SoundEffect _reloadSoundEffect;
 
 
         // #############################################################################################################
@@ -23,6 +24,7 @@ namespace SE_Praktikum.Components.Sprites.Weapons
         /// </summary>
         /// <param name="Parent">Wielder of gun</param>
         /// <param name="shotSoundEffect"></param>
+        /// <param name="reloadSoundEffect"></param>
         /// <param name="nameTag">Name of the Weapon</param>
         /// <param name="clipSize">Amount of bullets in magazine</param>
         /// <param name="clips">Amount of magazine</param>
@@ -34,6 +36,7 @@ namespace SE_Praktikum.Components.Sprites.Weapons
                              SoundEffect shotSoundEffect,
                              SoundEffect clipEmptySound,
                              SoundEffect weaponEmptySound,
+                             SoundEffect reloadSoundEffect,
                              string nameTag,
                              int clipSize,
                              int clips,
@@ -46,6 +49,7 @@ namespace SE_Praktikum.Components.Sprites.Weapons
             _reloadAbility = new CooldownAbility(reloadTime, ExecuteReload);
             _clipEmptySound = clipEmptySound;
             _weaponEmptySound = weaponEmptySound;
+            _reloadSoundEffect = reloadSoundEffect;
         }
         // #############################################################################################################
         // Events
@@ -121,6 +125,7 @@ namespace SE_Praktikum.Components.Sprites.Weapons
         /// </summary>
         public virtual void Reload()
         {
+            _reloadSoundEffect?.Play();
             _reloadAbility.Fire();
         }
 
