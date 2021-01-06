@@ -1,0 +1,51 @@
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Content;
+using SE_Praktikum.Components.Sprites;
+using SE_Praktikum.Components.Sprites.Bullets;
+using SE_Praktikum.Models;
+
+namespace SE_Praktikum.Services.Factories
+{
+    public class BulletFactory
+    {
+        private readonly ContentManager _manager;
+        private readonly AnimationHandlerFactory _animationHandlerFactory;
+        private readonly TileSetFactory _tileSetFactory;
+        private readonly ParticleFactory _particleFactory;
+
+        public BulletFactory(ContentManager manager,
+                             AnimationHandlerFactory animationHandlerFactory,
+                             TileSetFactory tileSetFactory,
+                             ParticleFactory particleFactory)
+        {
+            _manager = manager;
+            _animationHandlerFactory = animationHandlerFactory;
+            _tileSetFactory = tileSetFactory;
+            _particleFactory = particleFactory;
+        }
+        
+        public Bullet GetMissile(Sprite owner)
+        {
+            var missileTiles =  _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\missile.json",0);
+            var propulsionTiles =  _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\missile_propulsion_15_15.json", 0);
+            var particle = _particleFactory.BuildExplosionParticle();
+
+            var missileAnimationHandler = _animationHandlerFactory.GetAnimationHandler(missileTiles, new AnimationSettings(1, isPlaying:false));
+            var propulsionAnimationHandler = _animationHandlerFactory.GetAnimationHandler(propulsionTiles, new AnimationSettings(6, isPlaying:true, isLooping:true));
+            
+            // var flightEffect = contentManager.Load<SoundEffect>("Audio/Sound_Effects/Airborne/Flight_plane_c");
+            // var impactSound = contentManager.Load<SoundEffect>("Audio/Sound_Effects/Collusion/Big_Explo");
+
+            return new Missile(missileAnimationHandler,
+                Vector2.Zero, 
+                Vector2.Zero, 
+                0, propulsionAnimationHandler,
+                _particleFactory.BuildExplosionParticle(),
+                owner,
+                null,
+                null);
+        }
+
+    }
+}
