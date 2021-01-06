@@ -2,14 +2,15 @@
 using Microsoft.Xna.Framework.Audio;
 using NLog;
 using SE_Praktikum.Extensions;
+using SE_Praktikum.Models;
 using SE_Praktikum.Services;
 
 namespace SE_Praktikum.Components.Sprites
 {
-    public class Turret : Enemy
+    public class Turret : EnemyWithViewbox
     {
         private Logger _logger;
-        public Turret(AnimationHandler animationHandler, float speed = 3, float health = 50, SoundEffect impactSound = null) : base(animationHandler, speed, health, impactSound)
+        public Turret(AnimationHandler animationHandler, Polygon viewbox, float speed = 3, float health = 50, SoundEffect impactSound = null) : base(animationHandler, viewbox, speed, health, impactSound)
         {
             _logger = LogManager.GetCurrentClassLogger();
             RotateAndShoot = true;
