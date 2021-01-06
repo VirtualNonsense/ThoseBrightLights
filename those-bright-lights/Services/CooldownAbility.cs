@@ -30,20 +30,29 @@ namespace SE_Praktikum.Services
             }
         }
 
+        public bool AbilityAvailable => _cooldown <= _elapsedTime;
+
+        public float CoolDownProgress
+        {
+            get
+            {
+                var progress = _cooldown / (float) _elapsedTime;
+                return progress > 1 ? 1 : progress;
+            }
+        }
+
         public void Update(GameTime gameTime)
         {
-            if (_elapsedTime >= Cooldown) return;
+            if (AbilityAvailable) return;
             _elapsedTime += (int)gameTime.ElapsedGameTime.TotalMilliseconds;
-            var progress = _cooldown / (float) _elapsedTime;
-            progress = progress > 1 ? 1 : progress;
-            InvokeCoolDownUpdate(progress);
-            if(progress >= 1)
+            InvokeCoolDownUpdate();
+            if(AbilityAvailable)
                 InvokeOnCoolAbilityAvailable();
         }
 
         public void Fire()
         {
-            if (_elapsedTime < Cooldown) return;
+            if (!AbilityAvailable) return;
             _elapsedTime = 0;
             _ability();
         }
@@ -52,11 +61,9 @@ namespace SE_Praktikum.Services
         /// Update the subscriber about the cooldown progress
         /// Use values between 0 and 1
         /// </summary>
-        /// <param name="progress"></param>
-        protected virtual void InvokeCoolDownUpdate(float progress)
+        protected virtual void InvokeCoolDownUpdate()
         {
-            progress = progress > 1 ? 1 : progress;
-            var e = new CooldownProgressArgs(progress);
+            var e = new CooldownProgressArgs(CoolDownProgress);
             OnCoolDownUpdate?.Invoke(this, e);
         }
         protected virtual void InvokeOnCoolAbilityAvailable()
