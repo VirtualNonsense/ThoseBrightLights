@@ -1,14 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Content;
 using SE_Praktikum.Components.Sprites;
-using SE_Praktikum.Components.Sprites.Bullets;
 using SE_Praktikum.Components.Sprites.Weapons;
-using SE_Praktikum.Models;
 
 namespace SE_Praktikum.Services.Factories
 {
@@ -66,6 +58,7 @@ namespace SE_Praktikum.Services.Factories
                 reloadTime: reloadTime);
             return m;
         }
+
         /// <summary>
         /// A vanilla laser gun
         /// </summary>
@@ -75,6 +68,7 @@ namespace SE_Praktikum.Services.Factories
         /// <param name="shotCooldown"></param>
         /// <param name="reloadTime"></param>
         /// <param name="damage"></param>
+        /// <param name="nameTag"></param>
         /// <returns></returns>
         public SingleShotWeapon GetLaserGun(Actor owner, 
                                             int clipSize = 20,
@@ -98,7 +92,7 @@ namespace SE_Praktikum.Services.Factories
                 reloadTime: reloadTime);
             return m;
         }
-        
+
         /// <summary>
         /// Returns a gun that is meant for the current std. enemy.
         /// But i'm just a dev you don't have to listen to me.
@@ -109,6 +103,7 @@ namespace SE_Praktikum.Services.Factories
         /// <param name="shotCooldown"></param>
         /// <param name="reloadTime"></param>
         /// <param name="damage"></param>
+        /// <param name="nameTag"></param>
         /// <returns></returns>
         public SingleShotWeapon GetEnemyLaserGun(Actor owner,
                                                  int clipSize = 20,
