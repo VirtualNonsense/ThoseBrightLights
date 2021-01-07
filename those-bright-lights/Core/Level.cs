@@ -150,7 +150,7 @@ namespace SE_Praktikum.Core
             _map = _mapFactory.LoadMap(@".\Content\MetaData\Level\TestLevel.json");
             //var healthPowerup = powerUpFactory.HealthGetInstance(25);
             //_components.Add(healthPowerup);
-            
+            _components.Add(powerUpFactory.LaserGetInstance(new Vector2(10, 10), _map.TopLayer));
             _components.Add(powerUpFactory.RocketGetInstance(new Vector2(100,20),_map.TopLayer));
             _collisionLayer = _map.TopLayer;
             //TODO: Set player level to _map.TopLayer
