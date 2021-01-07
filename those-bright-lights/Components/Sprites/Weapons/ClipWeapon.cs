@@ -32,6 +32,7 @@ namespace SE_Praktikum.Components.Sprites.Weapons
         /// <param name="reloadTime">in Milliseconds</param>
         /// <param name="clipEmptySound"></param>
         /// <param name="weaponEmptySound"></param>
+        /// <param name="initialBulletsInClip"></param>
         protected ClipWeapon(Actor Parent,
                              SoundEffect shotSoundEffect,
                              SoundEffect clipEmptySound,
@@ -41,11 +42,13 @@ namespace SE_Praktikum.Components.Sprites.Weapons
                              int clipSize,
                              int clips,
                              int shotCoolDown = 10,
-                             int reloadTime = 1000)
+                             int reloadTime = 1000,
+                             int? initialBulletsInClip = null)
             : base(Parent, shotSoundEffect, nameTag, shotCoolDown)
         {
             Clips = clips;
             _clipSize = clipSize;
+            AmmunitionInClip = initialBulletsInClip ?? clipSize;
             _reloadAbility = new CooldownAbility(reloadTime, ExecuteReload);
             _clipEmptySound = clipEmptySound;
             _weaponEmptySound = weaponEmptySound;
