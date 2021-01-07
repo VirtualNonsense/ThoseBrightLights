@@ -65,8 +65,7 @@ namespace SE_Praktikum.Components.Sprites
 
             if (CurrentKey.IsKeyDown(_input.Shoot) && !_shot)
             {
-                var b = Weapons[CurrentWeapon].GetBullet(velocity, Position, Rotation, this);
-                InvokeOnShoot(b);
+                Weapons[CurrentWeapon].Fire();
                 _shot = true;
             }
             else if (CurrentKey.IsKeyUp(_input.Shoot))

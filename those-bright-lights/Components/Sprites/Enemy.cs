@@ -75,8 +75,8 @@ namespace SE_Praktikum.Components.Sprites
                 else if(directAngle > 0)
                     rotation += offSetRotation;
         
-                var b =  Weapons[CurrentWeapon].GetBullet(Velocity, Position, rotation, this);
-                InvokeOnShoot(b);
+                Weapons[CurrentWeapon].Fire();
+                // InvokeOnShoot(b);
             }
         }
         
