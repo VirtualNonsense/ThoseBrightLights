@@ -36,7 +36,7 @@ namespace SE_Praktikum.Services
         {
             get
             {
-                var progress = _cooldown / (float) _elapsedTime;
+                var progress = _elapsedTime / (float) _cooldown;
                 return progress > 1 ? 1 : progress;
             }
         }
