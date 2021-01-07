@@ -15,7 +15,6 @@ namespace SE_Praktikum.Components.Sprites
     // #################################################################################################################
     protected AnimationHandler _animationHandler;
 
-    public Sprite Parent;
     /// <summary>
     /// The time it takes the object to rotate 360 degrees in milliseconds
     /// </summary>

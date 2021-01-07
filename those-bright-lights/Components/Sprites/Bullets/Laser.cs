@@ -13,14 +13,13 @@ namespace SE_Praktikum.Components.Sprites.Bullets
                      Vector2 positionSpaceship,
                      float rotation,
                      Particle explosion,
-                     Sprite parent,
+                     Actor parent,
                      SoundEffect midAirSound,
                      SoundEffect impactSound,
                      float damage = 5) 
-            : base(animationHandler, explosion, midAirSound, impactSound, damage)
+            : base(animationHandler,parent, explosion, midAirSound, impactSound, damage)
         {
             Rotation = rotation;
-            Parent = parent;
             Position = positionSpaceship;
             Velocity = 5;
             Acceleration = 0;

@@ -52,14 +52,13 @@ namespace SE_Praktikum.Components.Sprites.Bullets
                        float rotation,
                        AnimationHandler propulsion,
                        Particle explosion,
-                       Sprite parent,
+                       Actor parent,
                        SoundEffect midAirSound,
                        SoundEffect impactSound,
                        float damage = 20) 
-            : base(animationHandler, explosion, midAirSound, impactSound, damage)
+            : base(animationHandler, parent, explosion, midAirSound, impactSound, damage)
         {
             Rotation = rotation;
-            Parent = parent;
             _spaceShipVelocity = spaceShipVelocity;
             var positionOffset = new Vector2(0,10);
             Position = spaceShipPosition + positionOffset;

@@ -21,6 +21,7 @@ namespace SE_Praktikum.Components.Sprites
         public bool CollisionEnabled = true;
         private Logger _logger;
         protected SoundEffect _impactSound;
+        public Actor Parent;
         
 
         public Actor(AnimationHandler animationHandler, SoundEffect impactSound) : base(animationHandler)

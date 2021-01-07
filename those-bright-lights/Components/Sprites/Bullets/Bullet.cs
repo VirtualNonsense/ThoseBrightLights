@@ -52,8 +52,15 @@ namespace SE_Praktikum.Components.Sprites.Bullets
             }
         }
 
-        protected Bullet(AnimationHandler animationHandler, Particle explosion, SoundEffect midAirSound, SoundEffect impactSound, float damage) : base(animationHandler, impactSound)
+        protected Bullet(AnimationHandler animationHandler,
+                         Actor parent,
+                         Particle explosion,
+                         SoundEffect midAirSound,
+                         SoundEffect impactSound,
+                         float damage) 
+            : base(animationHandler, impactSound)
         {
+            Parent = parent;
             Explosion = explosion;
             Velocity = 0;
             Acceleration = 0;
