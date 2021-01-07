@@ -1,6 +1,6 @@
 ﻿using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
-using SE_Praktikum.Components.Sprites.Bullets;
 using SE_Praktikum.Services;
 
 namespace SE_Praktikum.Components.Sprites.Weapons
@@ -104,6 +104,12 @@ namespace SE_Praktikum.Components.Sprites.Weapons
         {
             get => _clips;
             set => _clips = value < 0? 0 : value;
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            _reloadAbility.Update(gameTime);
+            base.Update(gameTime);
         }
 
         // #############################################################################################################
