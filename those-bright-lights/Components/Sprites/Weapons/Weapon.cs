@@ -107,7 +107,7 @@ namespace SE_Praktikum.Components.Sprites.Weapons
         // #############################################################################################################
         // public methods
         // #############################################################################################################
-        public void Update(GameTime gameTime)
+        public virtual void Update(GameTime gameTime)
         {
             _shotAbility.Update(gameTime);
         }
