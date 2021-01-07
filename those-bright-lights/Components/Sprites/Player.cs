@@ -80,5 +80,18 @@ namespace SE_Praktikum.Components.Sprites
             Health -= damage;
             base.InvokeOnTakeDamage(damage);
         }
+
+        protected override void ExecuteInteraction(Actor other)
+        {
+            switch (other)
+            {
+                case Enemy e:
+                    var v = _impactPolygon.Position - e.Position;
+                    v /= v.Length();
+                    Position += v;
+                    break;
+            }
+            base.ExecuteInteraction(other);
+        }
     }
 }

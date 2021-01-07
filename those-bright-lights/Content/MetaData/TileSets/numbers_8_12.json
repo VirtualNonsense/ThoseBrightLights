@@ -1,0 +1,14 @@
+{ "columns":10,
+ "image":"..\/..\/..\/..\/..\/Artwork\/misc\/numbers.png",
+ "imageheight":12,
+ "imagewidth":80,
+ "margin":0,
+ "name":"numbers_8_12",
+ "spacing":0,
+ "tilecount":10,
+ "tiledversion":"1.4.3",
+ "tileheight":12,
+ "tilewidth":8,
+ "type":"tileset",
+ "version":1.4
+}

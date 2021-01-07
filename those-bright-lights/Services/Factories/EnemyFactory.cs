@@ -30,12 +30,6 @@ namespace SE_Praktikum.Services.Factories
             var animationSettings = new AnimationSettings(1,isPlaying:false);
             var e = new Enemy(_animationHandlerFactory.GetAnimationHandler(tileSet,animationSettings), impactSound:impactSound);
             e.Position = new Vector2(100,50);
-            e.ViewBox = new Polygon(Vector2.Zero, Vector2.Zero, 0, new List<Vector2>
-            {
-                new Vector2(0,0),
-                new Vector2(300,-100),
-                new Vector2(300,100),
-            });
             e.AddWeapon(_weaponFactory.GetEnemyLaserGun(e));
 
             return e;
@@ -47,12 +41,12 @@ namespace SE_Praktikum.Services.Factories
             var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\turret_16_21.json",0);
             var animationSettings = new AnimationSettings(1,isPlaying:false);
             var e = new Turret(_animationHandlerFactory.GetAnimationHandler(tileSet, animationSettings),
-                impactSound: impactSound)
+                impactSound: impactSound, 
+                viewbox:new Polygon(Vector2.Zero, Vector2.Zero, 0,
+                    new List<Vector2> {new Vector2(0, 0), new Vector2(300, -100), new Vector2(300, 100),}))
             {
                 Position = new Vector2(100, 50),
-                Scale = 2,
-                ViewBox = new Polygon(Vector2.Zero, Vector2.Zero, 0,
-                    new List<Vector2> {new Vector2(0, 0), new Vector2(300, -100), new Vector2(300, 100),})
+                Scale = 2
             };
             e.AddWeapon(_weaponFactory.GetEnemyLaserGun(e));
 

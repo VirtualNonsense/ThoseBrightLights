@@ -57,7 +57,7 @@ namespace SE_Praktikum.Core
             {
                 if(actor.IsCollideAble)
                     _gameEngine.Render(actor.HitBox);
-                if(actor is Enemy e)
+                if(actor is EnemyWithViewbox e)
                     _gameEngine.Render(e.ViewBox);
             }
             _gameEngine.Render(_map.GetCollidable(_map.Area));
@@ -147,7 +147,7 @@ namespace SE_Praktikum.Core
             
             //TODO: try to load the json map via the contentmanager
             // var map = _mapFactory.LoadMap(JsonConvert.DeserializeObject<LevelBlueprint>(File.ReadAllText(@".\Content\MetaData\Level\AlphaMap.json")));
-            _map = _mapFactory.LoadMap(@".\Content\MetaData\Level\TestLevel.json");
+            _map = _mapFactory.LoadMap(@".\Content\MetaData\Level\AlphaMap.json");
             //var healthPowerup = powerUpFactory.HealthGetInstance(25);
             //_components.Add(healthPowerup);
             
@@ -174,7 +174,7 @@ namespace SE_Praktikum.Core
 
             var turret = _enemyFactory.GetTurret(contentManager);
             turret.Layer = player.Layer;
-            turret.X = 200;
+            turret.X = 400;
             turret.Y = 0;
             turret.Rotation = (float) Math.PI;
             turret.OnShoot += (sender, args) =>

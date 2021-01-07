@@ -17,7 +17,6 @@ namespace SE_Praktikum.Components.Sprites
     public class Enemy : Spaceship
     {
         private Logger _logger;
-        public Polygon ViewBox;
         protected InterAction I;
         protected Actor Target;
         protected CooldownAbility ForgetTarget;
@@ -27,10 +26,12 @@ namespace SE_Praktikum.Components.Sprites
         /// <summary>
         /// Defines the angle in which the enemy doesn't rotate anymore -> it's close enough
         /// </summary>
-        private float _rotationThreshold = MathExtensions.DegToRad(5);
-        
+        protected float RotationThreshold = MathExtensions.DegToRad(5);
 
-        private bool _hitBoxFlipped = false;
+        // TODO: consider enforcing the HitboxFlipped in the setter
+        // this way you don't have to check/set it every couple of lines
+        // and you can be sure the bool does not lie
+        protected bool HitBoxFlipped = false;
         public override float Rotation
         {
             get => base.Rotation;
@@ -39,14 +40,12 @@ namespace SE_Praktikum.Components.Sprites
                 base.Rotation = value;
                 if (Rotation < 3 * Math.PI/2 && Rotation > Math.PI/2)
                 {
-                    if (_hitBoxFlipped) return;
-                    ViewBox = ViewBox.MirrorSingleVertical(Position);
-                    _hitBoxFlipped = true;
+                    if (HitBoxFlipped) return;
+                    HitBoxFlipped = true;
                 }
-                else if (_hitBoxFlipped)
+                else if (HitBoxFlipped)
                 {
-                    ViewBox = ViewBox.MirrorSingleVertical(Position);
-                    _hitBoxFlipped = false;
+                    HitBoxFlipped = false;
                 }
             }
         }
@@ -61,23 +60,23 @@ namespace SE_Praktikum.Components.Sprites
 
         protected virtual void _shootTarget()
         {
-            if (I == InterAction.InView && Target != null)
-            {
-                float rotation = Rotation;
+            if (I != InterAction.InView || Target == null) return;
+            var rotation = Rotation;
 
-                var directVector = Target.Position - Position;
-                var directAngle = MathExtensions.GetVectorRotation(directVector);
-                var viewVector = new Vector2((float)Math.Cos(rotation), (float)Math.Sin(rotation)) * directVector.Length();
-                var viewAngle = MathExtensions.GetVectorRotation(viewVector);
-                var offSetRotation = MathExtensions.Modulo2PiAlsoNegative(directAngle - viewAngle);
-                if (directAngle < 0)
-                    rotation -= offSetRotation;
-                else if(directAngle > 0)
-                    rotation += offSetRotation;
+            var directVector = Target.Position - Position;
+            var directAngle = MathExtensions.GetVectorRotation(directVector);
+            var viewVector = new Vector2((float)Math.Cos(rotation), (float)Math.Sin(rotation)) * directVector.Length();
+            var viewAngle = MathExtensions.GetVectorRotation(viewVector);
+            var offSetRotation = MathExtensions.Modulo2PiAlsoNegative(directAngle - viewAngle);
+            if (directAngle < 0)
+                rotation -= offSetRotation;
+            else if(directAngle > 0)
+                rotation += offSetRotation;
         
-                Weapons[CurrentWeapon].Fire();
-                // InvokeOnShoot(b);
-            }
+            // Weapon currently grabs parents position and rotation
+            // this will change most likely give me a bit time to figure out how to implement it properly
+            Weapons[CurrentWeapon].Fire();
+            
         }
         
         
@@ -85,11 +84,7 @@ namespace SE_Praktikum.Components.Sprites
         {
             if(RotateAndShoot)
                 Rotate(Target, gameTime);
-            Vector2 velocity = Vector2.Zero;
 
-            ViewBox.Position = Position;
-            ViewBox.Rotation = Rotation;
-            ViewBox.Layer = Layer;
             base.Update(gameTime);
         }
 
@@ -108,12 +103,6 @@ namespace SE_Praktikum.Components.Sprites
             switch (other)
             {
                 case Player p:
-                    if (p.HitBox.Any(polygon => ViewBox.Overlap(polygon)))
-                    {
-                        I = InterAction.InView;
-                        return true;
-                    }
-
                     break;
             }
             var t = base.InteractAble(other);
@@ -133,6 +122,12 @@ namespace SE_Praktikum.Components.Sprites
                         case InterAction.BodyCollision:
                             Health -= p.Damage;
                             break;
+                        case InterAction.None:
+                            break;
+                        case InterAction.InView:
+                            break;
+                        default:
+                            throw new ArgumentOutOfRangeException();
                     }
                     break;
                 default:
@@ -149,7 +144,7 @@ namespace SE_Praktikum.Components.Sprites
             if (Target != null && I == InterAction.InView)
             {
                 var desiredRotation = MathExtensions.RotationToTarget(target, this);
-                if (Math.Abs(desiredRotation - Rotation) > _rotationThreshold)
+                if (Math.Abs(desiredRotation - Rotation) > RotationThreshold)
                 {
                     float rotationPortion =
                         (float) ((gameTime.ElapsedGameTime.TotalMilliseconds / RotationSpeed) * (2 * Math.PI));
@@ -183,7 +178,6 @@ namespace SE_Praktikum.Components.Sprites
                 }
             }
         }
-
 
     }
 
