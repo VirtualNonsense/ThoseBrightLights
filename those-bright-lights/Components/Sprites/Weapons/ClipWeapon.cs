@@ -87,6 +87,7 @@ namespace SE_Praktikum.Components.Sprites.Weapons
         // #############################################################################################################
         public bool IsAmmunitionInClip => AmmunitionInClip > 0;
         public bool AreClipsLeft => Clips > 0;
+        public int TotalAmmunition => _clips * _clipSize + AmmunitionInClip;
 
         public int AmmunitionInClip
         {
@@ -127,6 +128,13 @@ namespace SE_Praktikum.Components.Sprites.Weapons
         {
             _reloadSoundEffect?.Play();
             _reloadAbility.Fire();
+        }
+
+        public override string ToString()
+        {
+            if (!_reloadAbility.AbilityAvailable)
+                return $"{NameTag} reloading: {_reloadAbility.CoolDownProgress * 100}%";
+            return $"{NameTag} Clip: {_ammunitionInClip}/{_clipSize}, total: {TotalAmmunition}";
         }
 
 
