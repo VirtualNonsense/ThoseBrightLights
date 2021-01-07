@@ -10,25 +10,26 @@ namespace SE_Praktikum.Models
 {
     public class EventZone
     {
-        public Polygon[] Polygons { get; }
+        public List<Polygon> Polygons;
         public List<Player> InZoneList;
 
         
 
-        public event EventHandler OnZoneEntered;
-        public event EventHandler OnZoneLeft;
-        private void InvokeOnZoneEntered()
+        public event EventHandler<ZoneEventArgs> OnZoneEntered;
+        public event EventHandler<ZoneEventArgs> OnZoneLeft;
+        private void InvokeOnZoneEntered(Player player)
         {
-            OnZoneEntered?.Invoke(this, EventArgs.Empty);
+            OnZoneEntered?.Invoke(this, new ZoneEventArgs(player));
         }
 
-        private void InvokeOnZoneLeft()
+
+        private void InvokeOnZoneLeft(Player player)
         {
-            OnZoneLeft?.Invoke(this, EventArgs.Empty);
+            OnZoneLeft?.Invoke(this, new ZoneEventArgs(player));
         }
-        public EventZone(Polygon[] polygons)
+        public EventZone()
         {
-            Polygons = polygons;
+            Polygons = new List<Polygon>();
             InZoneList = new List<Player>();
         }
 
@@ -39,12 +40,12 @@ namespace SE_Praktikum.Models
             if (!o && i)
             { 
                 InZoneList.Add(player);
-                InvokeOnZoneEntered();
+                InvokeOnZoneEntered(player);
             }
             if(!i && o)
             {
                 InZoneList.Remove(player);
-                InvokeOnZoneLeft();
+                InvokeOnZoneLeft(player);
             }
         }
 
@@ -62,6 +63,16 @@ namespace SE_Praktikum.Models
 
             }
             return false;
+        }
+    }
+
+    public class ZoneEventArgs : EventArgs
+    {
+        public Player Player;
+
+        public ZoneEventArgs(Player player)
+        {
+            Player = player;
         }
     }
 }
