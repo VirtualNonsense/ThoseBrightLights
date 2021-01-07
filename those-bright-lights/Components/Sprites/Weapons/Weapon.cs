@@ -148,7 +148,7 @@ namespace SE_Praktikum.Components.Sprites.Weapons
         // #############################################################################################################
         protected virtual void InvokeOnEmitBullet(EmitBulletEventArgs e)
         {
-            if(OnEmitBullet == null) _logger.Warn($"{NameTag} of {_parent} tries to fire but has no subscriber to OnEmitBullet");
+            if(OnEmitBullet == null) _logger.Warn($"{NameTag} of {Parent} tries to fire but has no subscriber to OnEmitBullet");
             OnEmitBullet?.Invoke(this, e);
         }
 
