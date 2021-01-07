@@ -11,7 +11,7 @@ namespace SE_Praktikum.Components.Sprites.Weapons
         private int _clips;
         private int _ammunitionInClip;
         private readonly int _clipSize;
-        private readonly CooldownAbility _reloadAbility;
+        private readonly CooldownAbility _reloadDownTime;
         private readonly SoundEffect _clipEmptySound;
         private readonly SoundEffect _weaponEmptySound;
         private readonly SoundEffect _reloadSoundEffect;
@@ -52,7 +52,7 @@ namespace SE_Praktikum.Components.Sprites.Weapons
             Clips = clips;
             _clipSize = clipSize;
             AmmunitionInClip = initialBulletsInClip ?? clipSize;
-            _reloadAbility = new CooldownAbility(reloadTime, ExecuteReload);
+            _reloadDownTime = new CooldownAbility(reloadTime, ExecuteReload);
             _clipEmptySound = clipEmptySound;
             _weaponEmptySound = weaponEmptySound;
             _reloadSoundEffect = reloadSoundEffect;
@@ -75,8 +75,8 @@ namespace SE_Praktikum.Components.Sprites.Weapons
         /// </summary>
         public event EventHandler<CooldownAbility.CooldownProgressArgs> OnReloadProgressUpdate
         {
-            add => _reloadAbility.OnCoolDownUpdate += value;
-            remove => _reloadAbility.OnCoolDownUpdate -= value;
+            add => _reloadDownTime.OnCoolDownUpdate += value;
+            remove => _reloadDownTime.OnCoolDownUpdate -= value;
         }
 
         /// <summary>
@@ -84,8 +84,8 @@ namespace SE_Praktikum.Components.Sprites.Weapons
         /// </summary>
         public event EventHandler OnReloadFinished
         {
-            add => _reloadAbility.OnCoolAbilityAvailable += value;
-            remove => _reloadAbility.OnCoolAbilityAvailable -= value;
+            add => _reloadDownTime.OnCoolAbilityAvailable += value;
+            remove => _reloadDownTime.OnCoolAbilityAvailable -= value;
         }
         
         // #############################################################################################################
@@ -114,7 +114,7 @@ namespace SE_Praktikum.Components.Sprites.Weapons
 
         public override void Update(GameTime gameTime)
         {
-            _reloadAbility.Update(gameTime);
+            _reloadDownTime.Update(gameTime);
             base.Update(gameTime);
         }
 
@@ -138,13 +138,13 @@ namespace SE_Praktikum.Components.Sprites.Weapons
         /// </summary>
         public virtual void Reload()
         {
-            _reloadAbility.Fire();
+            _reloadDownTime.Fire();
         }
 
         public override string ToString()
         {
-            if (!_reloadAbility.AbilityAvailable)
-                return $"{NameTag} reloading: {_reloadAbility.CoolDownProgress * 100}%";
+            if (!_reloadDownTime.AbilityAvailable)
+                return $"{NameTag} reloading: {_reloadDownTime.CoolDownProgress * 100}%";
             return $"{NameTag} Clip: {_ammunitionInClip}/{_clipSize}, total: {TotalAmmunition}";
         }
 
