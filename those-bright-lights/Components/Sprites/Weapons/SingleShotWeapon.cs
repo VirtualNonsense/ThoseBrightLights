@@ -17,17 +17,17 @@ namespace SE_Praktikum.Components.Sprites.Weapons
         /// <summary>
         /// A precise gun that fires one shot at a time.
         /// </summary>
-        /// <param name="Parent"></param>
+        /// <param name="Parent">the owner of the gun. it will be assigned to each bullet as well</param>
         /// <param name="shotSoundEffect"></param>
         /// <param name="clipEmptySound"></param>
         /// <param name="weaponEmptySound"></param>
         /// <param name="reloadSound"></param>
-        /// <param name="nameTag"></param>
-        /// <param name="clipSize"></param>
-        /// <param name="clips"></param>
-        /// <param name="constructPreconfiguredBullet"></param>
-        /// <param name="shotCoolDown"></param>
-        /// <param name="reloadTime"></param>
+        /// <param name="nameTag">Guns can have names i guess. Don't use this for weapon differentiation</param>
+        /// <param name="clipSize">amount of bullets in one magazine</param>
+        /// <param name="clips">amount of full magazine</param>
+        /// <param name="constructPreconfiguredBullet">method that will create a bullet</param>
+        /// <param name="shotCoolDown">in milliseconds</param>
+        /// <param name="reloadTime">in milliseconds</param>
         public SingleShotWeapon(Actor Parent,
                                 SoundEffect shotSoundEffect, 
                                 SoundEffect clipEmptySound,
