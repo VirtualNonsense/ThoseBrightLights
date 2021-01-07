@@ -9,17 +9,17 @@ namespace SE_Praktikum.Services.Factories
 {
     public class BulletFactory
     {
-        private readonly ContentManager _manager;
+        private readonly ContentManager _contentManager;
         private readonly AnimationHandlerFactory _animationHandlerFactory;
         private readonly TileSetFactory _tileSetFactory;
         private readonly ParticleFactory _particleFactory;
 
-        public BulletFactory(ContentManager manager,
+        public BulletFactory(ContentManager contentManager,
                              AnimationHandlerFactory animationHandlerFactory,
                              TileSetFactory tileSetFactory,
                              ParticleFactory particleFactory)
         {
-            _manager = manager;
+            _contentManager = contentManager;
             _animationHandlerFactory = animationHandlerFactory;
             _tileSetFactory = tileSetFactory;
             _particleFactory = particleFactory;
@@ -45,6 +45,40 @@ namespace SE_Praktikum.Services.Factories
                 owner,
                 null,
                 null);
+        }
+
+        public Bullet GetLaser(Sprite owner)
+        {
+            var laserTileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\laser.json", 0);
+            var laserTileAnimation =
+                _animationHandlerFactory.GetAnimationHandler(laserTileSet, new AnimationSettings(1, isPlaying: false));
+            SoundEffect flightEffect = _contentManager.Load<SoundEffect>("Audio/Sound_Effects/Airborne/Wobble_test");
+            SoundEffect impactSound = _contentManager.Load<SoundEffect>("Audio/Sound_Effects/Collusion/Clink");
+            return new Laser(laserTileAnimation, 
+                Vector2.Zero,
+                0,
+                _particleFactory.BuildLaserExplosionParticle(),
+                owner, 
+                flightEffect,
+                impactSound);
+
+        }
+        // Todo: only the laser color is different. make laser color a enum and use method above
+        public Bullet GetEnemyLaser(Sprite owner)
+        {
+            var laserTileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\enemylaser.json", 0);
+            var laserTileAnimation =
+                _animationHandlerFactory.GetAnimationHandler(laserTileSet, new AnimationSettings(1, isPlaying: false));
+            SoundEffect flightEffect = _contentManager.Load<SoundEffect>("Audio/Sound_Effects/Airborne/Wobble_test");
+            SoundEffect impactSound = _contentManager.Load<SoundEffect>("Audio/Sound_Effects/Collusion/Clink");
+            return new Laser(laserTileAnimation, 
+                Vector2.Zero,
+                0,
+                _particleFactory.BuildLaserExplosionParticle(),
+                owner, 
+                flightEffect,
+                impactSound);
+
         }
 
     }
