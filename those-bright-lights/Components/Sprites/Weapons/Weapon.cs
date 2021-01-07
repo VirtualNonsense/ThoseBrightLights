@@ -116,7 +116,12 @@ namespace SE_Praktikum.Components.Sprites.Weapons
         {
             _shotAbility.Fire();
         }
-        
+
+        public override string ToString()
+        {
+            return $"{NameTag} FireCooldown: {_shotAbility.CoolDownProgress * 100}%";
+        }
+
         // #############################################################################################################
         // private / protected methods
         // #############################################################################################################
