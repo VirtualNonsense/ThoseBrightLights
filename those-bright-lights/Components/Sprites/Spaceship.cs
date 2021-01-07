@@ -113,11 +113,43 @@ namespace SE_Praktikum.Components.Sprites
 
         public virtual void AddWeapon(Weapon weapon)
         {
+            weapon.Parent = this;
             Weapons.Add(weapon);
             CurrentWeapon = Weapons.Count - 1;
+            weapon.OnEmitBullet += EmitBulletToOnShot;
+            switch (weapon)
+            {
+                case SingleShotWeapon ssw:
+                    ssw.OnClipEmpty += (sender, args) => ReloadWeapon((ClipWeapon)sender);
+                    ssw.OnWeaponEmpty += (sender, args) => RemoveWeapon((Weapon)sender);
+                    ssw.OnReloadProgressUpdate += (sender, args) => _logger.Debug(args.Progress * 100);
+                    ssw.OnWeaponEmpty += (sender, args) => _logger.Debug("weapon empty!");
+                    break;
+            }
+            
             OnPickUpWeapon?.Invoke(this, EventArgs.Empty);
         }
-        
+
+        public virtual void RemoveWeapon(Weapon weapon)
+        {
+            if (!Weapons.Contains(weapon)) return;
+            weapon.OnEmitBullet -= EmitBulletToOnShot;
+            Weapons.Remove(weapon);
+            if (CurrentWeapon >= Weapons.Count)
+                CurrentWeapon = Weapons.Count - 1;
+        }
+
+        private void EmitBulletToOnShot(object sender, Weapon.EmitBulletEventArgs args)
+        {
+            InvokeOnShoot(args.Bullet);
+        }
+
+        private void ReloadWeapon(ClipWeapon w)
+        {
+            _logger.Debug(w);
+            w.Reload();
+        }
+
         protected override bool Collide(Actor other)
         {
             if ( this == other || 
