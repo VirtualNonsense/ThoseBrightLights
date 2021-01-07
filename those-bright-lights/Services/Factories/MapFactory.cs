@@ -63,6 +63,7 @@ namespace SE_Praktikum.Services.Factories
                 }
             }
             Polygon SpawnPoint = null;
+            EventZone WinningZone = null;
             Dictionary<float, QuadTree<Tile>> tiles = new Dictionary<float, QuadTree<Tile>>();
             var l = 0f;
             var area = new Rectangle(0, 0, blueprint.Width * blueprint.TileWidth, blueprint.Height * blueprint.TileHeight);
@@ -94,10 +95,16 @@ namespace SE_Praktikum.Services.Factories
                             case "PlayerSpawnPoint":
                                 SpawnPoint = ConvertObjectToPolygon(obj);
                                 break;
+                            case "WinningZone":
+                                if (WinningZone == null)
+                                    WinningZone = new EventZone();
+                                WinningZone.Polygons.Add(ConvertObjectToPolygon(obj));
+                                break;
 
                             default:
                                 _logger.Warn($"{obj.type} not found");
                                 break;
+                                
 
                         }
                     }
@@ -105,7 +112,7 @@ namespace SE_Praktikum.Services.Factories
 
                 
             }
-            return new Map(tiles, area) { PlayerSpawnPoint = SpawnPoint};
+            return new Map(tiles, area, winningZone: WinningZone) { PlayerSpawnPoint = SpawnPoint};
         }
         private Polygon ConvertObjectToPolygon(ObjectBluePrint objectt)
         {
