@@ -133,6 +133,18 @@
 /processorParam:TextureFormat=Color
 /build:Artwork/Effects/laesr_explosion_6_6_6.png
 
+#begin Artwork/Effects/minigunexplosions_8_10_5.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Artwork/Effects/minigunexplosions_8_10_5.png
+
 #begin Artwork/misc/100x50PixelTest.png
 /importer:TextureImporter
 /processor:TextureProcessor
