@@ -133,7 +133,18 @@ namespace SE_Praktikum.Components.Sprites.Weapons
         // #############################################################################################################
         // private / protected methods
         // #############################################################################################################
-        
+
+        protected override void FireAbility()
+        {
+            if (!IsAmmunitionInClip)
+            {
+                InvokeOnClipEmpty();
+                return;
+            }
+            base.FireAbility();
+            AmmunitionInClip--;
+        }
+
         private void ExecuteReload()
         {
             if (!AreClipsLeft)
