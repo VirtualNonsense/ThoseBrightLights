@@ -36,7 +36,7 @@ namespace SE_Praktikum.Services.Factories
                 new Vector2(300,-100),
                 new Vector2(300,100),
             });
-            e.AddWeapon(_weaponFactory.EnemyGetLasergun(contentManager));
+            e.AddWeapon(_weaponFactory.GetEnemyLaserGun(e));
 
             return e;
         }
@@ -54,7 +54,7 @@ namespace SE_Praktikum.Services.Factories
                 ViewBox = new Polygon(Vector2.Zero, Vector2.Zero, 0,
                     new List<Vector2> {new Vector2(0, 0), new Vector2(300, -100), new Vector2(300, 100),})
             };
-            e.AddWeapon(_weaponFactory.EnemyGetLasergun(contentManager));
+            e.AddWeapon(_weaponFactory.GetEnemyLaserGun(e));
 
             return e;
         }
