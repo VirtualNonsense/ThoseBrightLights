@@ -25,6 +25,18 @@
 /processorParam:TextureFormat=Color
 /build:Artwork/Actors/alien_ship_56_59.png
 
+#begin Artwork/Actors/boss.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Artwork/Actors/boss.png
+
 #begin Artwork/Actors/flyingEngineOnly.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -108,6 +120,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Artwork/Controls/ButtonsAndSwitches.png
+
+#begin Artwork/Effects/bosspropulsion_11_9_6.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Artwork/Effects/bosspropulsion_11_9_6.png
 
 #begin Artwork/Effects/explosion_45_45.png
 /importer:TextureImporter
@@ -624,6 +648,30 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Artwork/Tilemaps/Venus.png
+
+#begin Artwork/Weapons/bossweapon_20_16.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Artwork/Weapons/bossweapon_20_16.png
+
+#begin Artwork/Weapons/bossweaponFire_20_16_4.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Artwork/Weapons/bossweaponFire_20_16_4.png
 
 #begin Artwork/Weapons/lasergun.png
 /importer:TextureImporter
