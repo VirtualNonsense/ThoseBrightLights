@@ -65,6 +65,7 @@ namespace SE_Praktikum.Services.Factories
             Polygon SpawnPoint = null;
             EventZone WinningZone = null;
             Dictionary<float, QuadTree<Tile>> tiles = new Dictionary<float, QuadTree<Tile>>();
+            List<(EnemyType, Vector2)> EnemySpawnpoints = new List<(EnemyType, Vector2)>();
             var l = 0f;
             var area = new Rectangle(0, 0, blueprint.Width * blueprint.TileWidth, blueprint.Height * blueprint.TileHeight);
             foreach(var layer in blueprint.Layers)
@@ -100,6 +101,9 @@ namespace SE_Praktikum.Services.Factories
                                     WinningZone = new EventZone();
                                 WinningZone.Polygons.Add(ConvertObjectToPolygon(obj));
                                 break;
+                            case "TurretSpawn":
+                                EnemySpawnpoints.Add((EnemyType.Turret, ConvertObjectToPolygon(obj).Center));
+                                break;
 
                             default:
                                 _logger.Warn($"{obj.type} not found");
@@ -112,7 +116,7 @@ namespace SE_Praktikum.Services.Factories
 
                 
             }
-            return new Map(tiles, area, winningZone: WinningZone) { PlayerSpawnPoint = SpawnPoint};
+            return new Map(tiles, area, winningZone: WinningZone, EnemySpawnpoints) { PlayerSpawnPoint = SpawnPoint};
         }
         private Polygon ConvertObjectToPolygon(ObjectBluePrint objectt)
         {
@@ -143,5 +147,7 @@ namespace SE_Praktikum.Services.Factories
             }
             return polygon;
         }
+
+        
     }
 }
