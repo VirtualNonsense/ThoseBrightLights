@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using SE_Praktikum.Services;
+using NLog;
 
 namespace SE_Praktikum.Components.Sprites.Weapons
 {
@@ -14,6 +15,7 @@ namespace SE_Praktikum.Components.Sprites.Weapons
         private readonly SoundEffect _clipEmptySound;
         private readonly SoundEffect _weaponEmptySound;
         private readonly SoundEffect _reloadSoundEffect;
+        private readonly Logger _logger;
 
 
         // #############################################################################################################
@@ -46,6 +48,7 @@ namespace SE_Praktikum.Components.Sprites.Weapons
                              int? initialBulletsInClip = null)
             : base(Parent, shotSoundEffect, nameTag, shotCoolDown)
         {
+            _logger = LogManager.GetCurrentClassLogger();
             Clips = clips;
             _clipSize = clipSize;
             AmmunitionInClip = initialBulletsInClip ?? clipSize;
@@ -135,7 +138,6 @@ namespace SE_Praktikum.Components.Sprites.Weapons
         /// </summary>
         public virtual void Reload()
         {
-            _reloadSoundEffect?.Play();
             _reloadAbility.Fire();
         }
 
@@ -169,6 +171,8 @@ namespace SE_Praktikum.Components.Sprites.Weapons
                 InvokeOnWeaponEmpty();
                 return;
             }
+            _logger.Trace($"Reloading {NameTag}");
+            _reloadSoundEffect?.Play();
             AmmunitionInClip = _clipSize;
             Clips--;
         }
