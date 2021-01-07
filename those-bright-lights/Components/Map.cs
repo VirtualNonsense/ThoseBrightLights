@@ -23,13 +23,16 @@ namespace SE_Praktikum.Components
 
         public Polygon PlayerSpawnPoint;
 
+        public List<(EnemyType,Vector2)> EnemySpawnpoints;
+
         public EventZone WinningZone { get; set; }
 
-        public Map (Dictionary<float, QuadTree<Tile>> tiles, Rectangle area, EventZone winningZone)
+        public Map (Dictionary<float, QuadTree<Tile>> tiles, Rectangle area, EventZone winningZone, List<(EnemyType, Vector2)> enemySpawnPoints)
         {
             _tileContainer = tiles;
             Area = area;
             WinningZone = winningZone;
+            EnemySpawnpoints = enemySpawnPoints;
         }
       
         public List<Tile> GetCollidable(float layer, Rectangle rect)
@@ -61,12 +64,12 @@ namespace SE_Praktikum.Components
 
 
     }
-    //enum ObjectLayerType
-    //{
-    //    PlayerSpawn,
-    //    EnemySpawn,
-    //    VictoryZone,
-
-    //}
+    public enum EnemyType
+    {
+        Turret, 
+        Alienship,
+        Boss,
+        Minen
+    }
     
 }
