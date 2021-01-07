@@ -37,14 +37,14 @@ namespace SE_Praktikum.Components.Sprites
 
     public List<Sprite> Children { get; set; }
     
-    public Vector2 Origin { 
+    public virtual Vector2 Origin { 
       get => _animationHandler.Origin;
     }
 
     public readonly Color[] TextureData;
 
 
-    public Vector2 Position
+    public virtual Vector2 Position
     {
       get => _animationHandler.Position;
       set => _animationHandler.Position = value;
@@ -63,7 +63,7 @@ namespace SE_Praktikum.Components.Sprites
     }
 
     //TODO: does layer have to be float? maybe use int instead
-    public float Layer
+    public virtual float Layer
     {
       get => _animationHandler.Layer;
       set => _animationHandler.Layer = value;
