@@ -12,6 +12,40 @@ namespace SE_Praktikum.Components.Sprites.Bullets
         private readonly Vector2 _offSet;
         private float _elapsedTime = 0;
 
+        public override Vector2 Position
+        {
+            get => base.Position;
+            set
+            {
+                base.Position = value;
+                if (_propulsionAnimationHandler == null) return;
+                _propulsionAnimationHandler.Position = base.Position;
+            }    
+        }
+        public override float Rotation
+        {
+            get => base.Rotation;
+            set
+            {
+                base.Rotation = value;
+                if (_propulsionAnimationHandler == null) return;
+                _propulsionAnimationHandler.Rotation = base.Rotation;
+            }    
+        }
+
+        public override float Layer
+        {
+            
+            get => base.Layer;
+            set
+            {
+                base.Layer = value;
+                if (_propulsionAnimationHandler == null) return;
+                _propulsionAnimationHandler.Layer = base.Layer;
+            }
+            
+        }
+
         public Missile(AnimationHandler animationHandler, 
                        Vector2 spaceShipVelocity,
                        Vector2 spaceShipPosition,
@@ -42,9 +76,8 @@ namespace SE_Praktikum.Components.Sprites.Bullets
             _elapsedTime += gameTime.ElapsedGameTime.Milliseconds / 1000f;
             TimeSinceUsedMidAir += gameTime.ElapsedGameTime.Milliseconds;
             Position = Movement(_spaceShipVelocity,_elapsedTime);
-            _propulsionAnimationHandler.Position =  Position; 
-            _propulsionAnimationHandler.Rotation = Rotation;
             _propulsionAnimationHandler.Update(gameTime);
+            // TODO: cooldownAbility
             if (MidAirSoundCooldown < TimeSinceUsedMidAir)
             {
                 TimeSinceUsedMidAir = 0;
