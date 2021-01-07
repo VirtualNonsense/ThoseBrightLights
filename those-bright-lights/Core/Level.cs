@@ -61,6 +61,7 @@ namespace SE_Praktikum.Core
                     _gameEngine.Render(e.ViewBox);
             }
             _gameEngine.Render(_map.GetCollidable(_map.Area));
+            _gameEngine.Render(_map.WinningZone.Polygons);
             _gameEngine.Render(_components);
         }
 
@@ -82,13 +83,21 @@ namespace SE_Praktikum.Core
                 for (int j = 0; j < mapObjects.Count; j++)
                 {
                     actor[i].InterAct(mapObjects[j]);
+
                 }
                 
                 for (int j = i+1; j < actor.Count; j++)
                 {
                     actor[i].InterAct(actor[j]); 
                 }
+                switch(actor[i])
+                {
+                    case Player p:
+                        _map.ZoneUpdate(p);
+                        break;
+                }
             }
+            
             _screen.Camera.Update(gameTime);
         }
         
@@ -148,6 +157,8 @@ namespace SE_Praktikum.Core
             //TODO: try to load the json map via the contentmanager
             // var map = _mapFactory.LoadMap(JsonConvert.DeserializeObject<LevelBlueprint>(File.ReadAllText(@".\Content\MetaData\Level\AlphaMap.json")));
             _map = _mapFactory.LoadMap(@".\Content\MetaData\Level\TestLevel.json");
+            _map.WinningZone.OnZoneEntered += (sender, args) => _logger.Debug($"Player{args.Player} entered WinningZone");
+            _map.WinningZone.OnZoneLeft += (sender, args) => _logger.Debug($"Player:{args.Player} left WinningZone");
             //var healthPowerup = powerUpFactory.HealthGetInstance(25);
             //_components.Add(healthPowerup);
             _components.Add(powerUpFactory.LaserGetInstance(new Vector2(10, 10), _map.TopLayer));
