@@ -25,7 +25,7 @@ namespace SE_Praktikum.Services.Factories
             _particleFactory = particleFactory;
         }
         
-        public Bullet GetMissile(Sprite owner)
+        public Bullet GetMissile(Sprite owner, float damage)
         {
             var missileTiles =  _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\missile.json",0);
             var propulsionTiles =  _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\missile_propulsion_15_15.json", 0);
@@ -44,10 +44,11 @@ namespace SE_Praktikum.Services.Factories
                 _particleFactory.BuildExplosionParticle(),
                 owner,
                 null,
-                null);
+                null,
+                damage: damage);
         }
 
-        public Bullet GetLaser(Sprite owner)
+        public Bullet GetLaser(Sprite owner, float damage)
         {
             var laserTileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\laser.json", 0);
             var laserTileAnimation =
@@ -60,11 +61,12 @@ namespace SE_Praktikum.Services.Factories
                 _particleFactory.BuildLaserExplosionParticle(),
                 owner, 
                 flightEffect,
-                impactSound);
+                impactSound,
+                damage: damage);
 
         }
         // Todo: only the laser color is different. make laser color a enum and use method above
-        public Bullet GetEnemyLaser(Sprite owner)
+        public Bullet GetEnemyLaser(Sprite owner, float damage)
         {
             var laserTileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\enemylaser.json", 0);
             var laserTileAnimation =
@@ -77,7 +79,8 @@ namespace SE_Praktikum.Services.Factories
                 _particleFactory.BuildLaserExplosionParticle(),
                 owner, 
                 flightEffect,
-                impactSound);
+                impactSound, 
+                damage: damage);
 
         }
 
