@@ -56,11 +56,11 @@ namespace SE_Praktikum.Components.Sprites.Weapons
         protected override Bullet GetBullet()
         {
             var b = _constructPreconfiguredBullet();
-            b.Parent = _parent;
-            b.Position = _parent.Position;
-            b.Rotation = _parent.Rotation;
-            b.Velocity = _parent.Velocity;
-            b.Layer = _parent.Layer;
+            b.Parent = Parent;
+            b.Position = Parent.Position;
+            b.Rotation = Parent.Rotation;
+            b.Velocity = Parent.Velocity;
+            b.Layer = Parent.Layer;
             return b;
         }
     }
