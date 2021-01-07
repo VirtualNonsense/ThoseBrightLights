@@ -183,34 +183,39 @@ namespace SE_Praktikum.Core
             _screen.Camera.Position += new Vector3(0, 0, player.Layer);
             _components.Add(player);
 
-            var turret = _enemyFactory.GetTurret(contentManager);
-            turret.Layer = player.Layer;
-            turret.X = 200;
-            turret.Y = 0;
-            turret.Rotation = (float) Math.PI;
-            turret.OnShoot += (sender, args) =>
+            foreach(var e in _map.EnemySpawnpoints)
             {
-                if (!(args is LevelEvent e)) return;
-                OnLevelEvent(e);
-            };
-            _components.Add(turret);
-            
-            //_components.AddRange(map);
-            
-            
-            turret.OnExplosion += (sender, args) =>
-            _components.Add(turret);
-                
-            turret.OnExplosion += (sender, args) =>
-            {
-                if (!(args is LevelEvent e)) return;
-                OnLevelEvent(e);
-            };
+                switch(e.Item1)
+                {
+                    case EnemyType.Turret:
+                        var turret = _enemyFactory.GetTurret(contentManager);
+                        turret.Layer = player.Layer;
+                        turret.Position = e.Item2;
+                        turret.Rotation = (float)Math.PI;
+                        turret.OnShoot += (sender, args) =>
+                        {
+                            if (!(args is LevelEvent e)) return;
+                            OnLevelEvent(e);
+                        };
+                         
+                        turret.OnExplosion += (sender, args) =>
+                        {
+                            if (!(args is LevelEvent e)) return;
+                            OnLevelEvent(e);
+                        };
+                        _components.Add(turret);
+                        break;
+                    case EnemyType.Alienship:
 
-            // //TODO: try to load the json map via the contentmanager
-            // _components.Add(_mapFactory.LoadMap(contentManager,
-            //     JsonConvert.DeserializeObject<LevelBlueprint>(File.ReadAllText(@".\Content\Level\TestLevel\TestLevel.json"))));
-            //
+                        break;
+                    case EnemyType.Boss:
+
+                        break;
+                    case EnemyType.Minen:
+
+                        break;
+                }
+            }
         }
 
     }
