@@ -12,7 +12,7 @@ namespace SE_Praktikum.Components.Sprites.Weapons
         private int _clips;
         private int _ammunitionInClip;
         private readonly int _clipSize;
-        private readonly CooldownAbility _reloadDownTime;
+        private readonly CastTimeAbility _reloadDownTime;
         private readonly SoundEffect _clipEmptySound;
         private readonly SoundEffect _weaponEmptySound;
         private readonly SoundEffect _reloadSoundEffect;
@@ -53,7 +53,7 @@ namespace SE_Praktikum.Components.Sprites.Weapons
             Clips = clips;
             _clipSize = clipSize;
             AmmunitionInClip = initialBulletsInClip ?? clipSize;
-            _reloadDownTime = new CooldownAbility(reloadTime, ExecuteReload);
+            _reloadDownTime = new CastTimeAbility(reloadTime, ExecuteReload);
             _clipEmptySound = clipEmptySound;
             _weaponEmptySound = weaponEmptySound;
             _reloadSoundEffect = reloadSoundEffect;
@@ -74,7 +74,7 @@ namespace SE_Praktikum.Components.Sprites.Weapons
         /// <summary>
         /// Updates subscriber about the reload progress
         /// </summary>
-        public event EventHandler<CooldownAbility.CooldownProgressArgs> OnReloadProgressUpdate
+        public event EventHandler<TimeControlledAbility.CooldownProgressArgs> OnReloadProgressUpdate
         {
             add => _reloadDownTime.OnCoolDownUpdate += value;
             remove => _reloadDownTime.OnCoolDownUpdate -= value;
@@ -144,7 +144,7 @@ namespace SE_Praktikum.Components.Sprites.Weapons
 
         public override string ToString()
         {
-            if (!_reloadDownTime.AbilityAvailable)
+            if (!_reloadDownTime.TargetTimeReached)
                 return $"{NameTag} reloading: {_reloadDownTime.CoolDownProgress * 100}%";
             return $"{NameTag} Clip: {_ammunitionInClip}/{_clipSize}, total: {TotalAmmunition}";
         }
