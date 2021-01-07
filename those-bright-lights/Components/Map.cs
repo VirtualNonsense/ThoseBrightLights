@@ -23,10 +23,13 @@ namespace SE_Praktikum.Components
 
         public Polygon PlayerSpawnPoint;
 
-        public Map (Dictionary<float, QuadTree<Tile>> tiles, Rectangle area)
+        public EventZone WinningZone { get; set; }
+
+        public Map (Dictionary<float, QuadTree<Tile>> tiles, Rectangle area, EventZone winningZone)
         {
             _tileContainer = tiles;
             Area = area;
+            WinningZone = winningZone;
         }
       
         public List<Tile> GetCollidable(float layer, Rectangle rect)
@@ -49,6 +52,11 @@ namespace SE_Praktikum.Components
             }
 
             return list;
+        }
+
+        public void ZoneUpdate(Player player)
+        {
+            WinningZone.Update(player);
         }
 
 
