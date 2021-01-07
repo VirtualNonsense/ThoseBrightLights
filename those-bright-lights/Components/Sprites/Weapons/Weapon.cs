@@ -11,7 +11,6 @@ namespace SE_Praktikum.Components.Sprites.Weapons
 {
     public abstract class Weapon
     {
-        protected readonly Actor _parent;
         private readonly SoundEffect _shotSoundEffect;
 
         private readonly CooldownAbility _shotAbility;
@@ -25,15 +24,15 @@ namespace SE_Praktikum.Components.Sprites.Weapons
         /// Base class for all weapons.
         /// It implements the base mechanism for bullet creation, bullet firing and shot cooldown
         /// </summary>
-        /// <param name="Parent"></param>
+        /// <param name="parent"></param>
         /// <param name="shotSoundEffect"></param>
         /// <param name="nameTag">Name of the gun</param>
         /// <param name="shotCoolDown">in milliseconds</param>
-        public Weapon(Actor Parent, SoundEffect shotSoundEffect, string nameTag, int shotCoolDown = 10)
+        public Weapon(Actor parent, SoundEffect shotSoundEffect, string nameTag, int shotCoolDown = 10)
         {
             _logger = LogManager.GetCurrentClassLogger();
             _shotAbility = new CooldownAbility(shotCoolDown, FireAbility);
-            _parent = Parent;
+            Parent = parent;
             _shotSoundEffect = shotSoundEffect;
             NameTag = nameTag;
         }
@@ -65,6 +64,11 @@ namespace SE_Praktikum.Components.Sprites.Weapons
         // #############################################################################################################
         // Properties
         // #############################################################################################################
+        
+        /// <summary>
+        /// the owner of the gun.
+        /// </summary>
+        public Actor Parent { get; set; }
         public bool CanShoot => _shotAbility.AbilityAvailable;
 
         /// <summary>
