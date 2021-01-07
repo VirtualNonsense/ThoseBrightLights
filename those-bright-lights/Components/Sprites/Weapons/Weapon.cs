@@ -6,6 +6,7 @@ using NLog;
 using SE_Praktikum.Components.Sprites.Bullets;
 using SE_Praktikum.Services;
 using SE_Praktikum.Extensions;
+using SE_Praktikum.Services.Abilities;
 
 namespace SE_Praktikum.Components.Sprites.Weapons
 {

@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 
-namespace SE_Praktikum.Services
+namespace SE_Praktikum.Services.Abilities
 {
     public class CooldownAbility
     {

@@ -10,6 +10,7 @@ using SE_Praktikum.Components.Sprites.Weapons;
 using SE_Praktikum.Extensions;
 using SE_Praktikum.Models;
 using SE_Praktikum.Services;
+using SE_Praktikum.Services.Abilities;
 using Vector2 = Microsoft.Xna.Framework.Vector2;
 
 namespace SE_Praktikum.Components.Sprites
