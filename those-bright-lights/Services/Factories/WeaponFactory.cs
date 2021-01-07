@@ -93,7 +93,7 @@ namespace SE_Praktikum.Services.Factories
                 nameTag,
                 clipSize,
                 clips,
-                () => _bulletFactory.GetMissile(owner, damage),
+                () => _bulletFactory.GetLaser(owner, damage),
                 shotCoolDown: shotCooldown,
                 reloadTime: reloadTime);
             return m;
@@ -127,7 +127,7 @@ namespace SE_Praktikum.Services.Factories
                 nameTag,
                 clipSize,
                 clips,
-                () => _bulletFactory.GetMissile(owner, damage),
+                () => _bulletFactory.GetEnemyLaser(owner, damage),
                 shotCoolDown: shotCooldown,
                 reloadTime: reloadTime);
             return m;
