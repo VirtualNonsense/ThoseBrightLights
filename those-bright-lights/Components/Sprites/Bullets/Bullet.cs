@@ -18,13 +18,14 @@ namespace SE_Praktikum.Components.Sprites.Bullets
         protected float MidAirSoundCooldown;
         protected float TimeSinceUsedMidAir;
 
-        protected Bullet(AnimationHandler animationHandler, Particle explosion, SoundEffect midAirSound, SoundEffect impactSound) : base(animationHandler, impactSound)
+        protected Bullet(AnimationHandler animationHandler, Particle explosion, SoundEffect midAirSound, SoundEffect impactSound, float damage) : base(animationHandler, impactSound)
         {
             Explosion = explosion;
             Velocity = 0;
             Acceleration = 0;
             MidAirSound = midAirSound;
             _logger = LogManager.GetCurrentClassLogger();
+            Damage = damage;
         }
 
         protected Vector2 Movement(Vector2 spaceshipVelocity, float elapsedTime)

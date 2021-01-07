@@ -9,7 +9,15 @@ namespace SE_Praktikum.Components.Sprites.Bullets
         private readonly Vector2 _spaceShipVelocity;
         private float _elapsedTime = 0;
 
-        public Laser(AnimationHandler animationHandler,Vector2 positionSpaceship,float rotation, Particle explosion, Sprite parent, SoundEffect midAirSound, SoundEffect impactSound) : base(animationHandler, explosion, midAirSound, impactSound)
+        public Laser(AnimationHandler animationHandler,
+                     Vector2 positionSpaceship,
+                     float rotation,
+                     Particle explosion,
+                     Sprite parent,
+                     SoundEffect midAirSound,
+                     SoundEffect impactSound,
+                     float damage = 5) 
+            : base(animationHandler, explosion, midAirSound, impactSound, damage)
         {
             Rotation = rotation;
             Parent = parent;

@@ -12,7 +12,17 @@ namespace SE_Praktikum.Components.Sprites.Bullets
         private readonly Vector2 _offSet;
         private float _elapsedTime = 0;
 
-        public Missile(AnimationHandler animationHandler, Vector2 spaceShipVelocity,Vector2 spaceShipPosition,float rotation, AnimationHandler propulsion, Particle explosion, Sprite parent, SoundEffect midAirSound, SoundEffect impactSound) : base(animationHandler, explosion, midAirSound, impactSound)
+        public Missile(AnimationHandler animationHandler, 
+                       Vector2 spaceShipVelocity,
+                       Vector2 spaceShipPosition,
+                       float rotation,
+                       AnimationHandler propulsion,
+                       Particle explosion,
+                       Sprite parent,
+                       SoundEffect midAirSound,
+                       SoundEffect impactSound,
+                       float damage = 20) 
+            : base(animationHandler, explosion, midAirSound, impactSound, damage)
         {
             Rotation = rotation;
             Parent = parent;
@@ -24,7 +34,6 @@ namespace SE_Praktikum.Components.Sprites.Bullets
             _offSet = new Vector2(-animationHandler.FrameWidth/2-_propulsionAnimationHandler.FrameWidth/2,0);
             Acceleration = 5;
             MaxTime = 5;
-            Damage = 20;
         }
 
 
