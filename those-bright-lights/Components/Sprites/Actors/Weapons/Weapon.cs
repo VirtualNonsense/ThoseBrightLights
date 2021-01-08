@@ -64,6 +64,8 @@ namespace SE_Praktikum.Components.Sprites.Actors.Weapons
         // Properties
         // #############################################################################################################
         public bool IsRemoveAble { get; set; }
+
+        public Type BulletType { get; private set; }
         
         /// <summary>
         /// the owner of the gun.
