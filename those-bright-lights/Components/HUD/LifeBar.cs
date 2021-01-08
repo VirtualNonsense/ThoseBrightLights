@@ -96,7 +96,7 @@ namespace SE_Praktikum.Components.HUD
 
         private AnimationHandler ConstructHeart(Vector2 position, AnimationSettings animationSettings)
         {
-            return animationHandlerFactory.GetAnimationHandler(tileSet,animationSettings,position);
+            return animationHandlerFactory.GetAnimationHandler(tileSet,animationSettings,position,Vector2.Zero);
         }
     }
 }

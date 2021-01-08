@@ -18,7 +18,7 @@ namespace SE_Praktikum.Components.HUD
         public Vector2 Position { get; set; }
         public bool IsRemoveAble { get; set; }
         public Vector2 Offset => Position-Origin;
-        public Vector2 Origin => new Vector2(ElementWidth/2f, ElementHeight/2f);
+        public Vector2 Origin => new Vector2(0,0);
 
         public float ElementWidth => _handler.Count * tileSet.TileDimX;
 
