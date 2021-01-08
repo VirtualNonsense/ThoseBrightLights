@@ -20,8 +20,6 @@ namespace SE_Praktikum.Components.Sprites
         protected int CurrentWeapon;
         protected float Speed;
         private Logger _logger;
-        protected KeyboardState CurrentKey;
-        protected KeyboardState PreviousKey;
         protected Polygon _impactPolygon;
         protected AnimationHandler Propulsion;
         // #############################################################################################################
