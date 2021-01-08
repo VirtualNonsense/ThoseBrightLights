@@ -49,6 +49,30 @@
 /processorParam:TextureFormat=Color
 /build:Artwork/Actors/flyingEngineOnly.png
 
+#begin Artwork/Actors/mine_29_29.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Artwork/Actors/mine_29_29.png
+
+#begin Artwork/Actors/mine_29_29_8.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Artwork/Actors/mine_29_29_8.png
+
 #begin Artwork/Actors/ship_135_86.png
 /importer:TextureImporter
 /processor:TextureProcessor
