@@ -793,6 +793,30 @@
 /processorParam:TextureFormat=Color
 /build:Artwork/Weapons/minigunFire_50_20_10.png
 
+#begin Artwork/Weapons/shotgun_28_13.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Artwork/Weapons/shotgun_28_13.png
+
+#begin Artwork/Weapons/shotgunFire_28_13_9.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Artwork/Weapons/shotgunFire_28_13_9.png
+
 #begin Audio/Music/Death.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
