@@ -12,8 +12,8 @@ namespace SE_Praktikum.Components.HUD
         private readonly Player _player;
         private readonly List<HUDItem> _hUDItems;
 
-        public Vector2 Position { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public bool IsRemoveAble { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public Vector2 Position { get; set; }
+        public bool IsRemoveAble { get; set; }
 
        
 
