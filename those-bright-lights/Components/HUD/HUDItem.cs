@@ -10,11 +10,13 @@ namespace SE_Praktikum.Components.HUD
 {
     public abstract class HUDItem : IComponent
     {
-        public Vector2 Position { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public bool IsRemoveAble { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public Vector2 Position { get; set; }
+        public bool IsRemoveAble { get; set; }
+        public Vector2 Offset => Position-Origin;
+        public Vector2 Origin;
 
-        public List<AnimationHandler> _handler;
-        public HUD _parent;
+        private List<AnimationHandler> _handler;
+        private HUD _parent;
 
         public HUDItem(HUD parent, List<AnimationHandler> handler)
         {
@@ -22,7 +24,7 @@ namespace SE_Praktikum.Components.HUD
             _handler = handler;
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        public virtual void Draw(SpriteBatch spriteBatch)
         {
             foreach (var item in _handler)
             {
@@ -30,11 +32,17 @@ namespace SE_Praktikum.Components.HUD
             }
         }
 
-        public void Update(GameTime gameTime)
+        public virtual void Update(GameTime gameTime)
         {
             throw new NotImplementedException();
         }
 
-      
+        private void UpdateAnimationHandler(Vector2 position)
+        {
+            foreach (var item in _handler)
+            {
+                item.Offset = Offset;
+            }
+        }
     }
 }
