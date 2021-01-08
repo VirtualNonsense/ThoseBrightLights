@@ -11,15 +11,17 @@ namespace SE_Praktikum.Components.HUD
 {
     public class LifeBar : HUDItem
     {
-        private readonly AnimationSettings animationSettings;
+        private readonly AnimationSettings animationSettingsLeftHeart;
+        private readonly AnimationSettings animationSettingsRightHeart;
 
         public int HealthPerHeart { get; set; }
 
-        public LifeBar(HUD parent, AnimationHandlerFactory animationHandlerFactory, TileSet tileSet, AnimationSettings animationSettings) : base(parent, animationHandlerFactory, tileSet)
+        public LifeBar(HUD parent, AnimationHandlerFactory animationHandlerFactory, TileSet tileSet, AnimationSettings animationSettingsLeftHeart, AnimationSettings animationSettingsRightHeart) : base(parent, animationHandlerFactory, tileSet)
         {
             HealthPerHeart = 5;
             parent.Player.OnHealthChanged += Player_OnHealthChanged;
-            this.animationSettings = animationSettings;
+            this.animationSettingsLeftHeart = animationSettingsLeftHeart;
+            this.animationSettingsRightHeart = animationSettingsRightHeart;
         }
 
         private void Player_OnHealthChanged(object sender, EventArgs e)
@@ -37,12 +39,34 @@ namespace SE_Praktikum.Components.HUD
             base.Update(gameTime);
         }
 
-        private void UpdateHealthBar()
+        private void UpdateAmountHearts(float newHealth)
         {
+            var hearts = (int)(HealthPerHeart / newHealth);
 
+            if (hearts < _handler.Count)
+            {
+                for (int i = _handler.Count-1; i >= 0; i--)
+                {
+                    _handler.RemoveAt(i);
+                }
+            }
+            else
+            {
+                for (int i = _handler.Count; i <= hearts; i++)
+                {
+                    if(i % 2 == 0)
+                    {
+                        _handler.Add(ConstructHeart(new Vector2(i * tileSet.TileDimX, 0),animationSettingsLeftHeart));
+                    }
+                    else
+                    {
+                        _handler.Add(ConstructHeart(new Vector2(i * tileSet.TileDimX, 0), animationSettingsRightHeart));
+                    }
+                }
+            }
         }
 
-        private AnimationHandler ConstructHeart(Vector2 position)
+        private AnimationHandler ConstructHeart(Vector2 position, AnimationSettings animationSettings)
         {
             return animationHandlerFactory.GetAnimationHandler(tileSet,animationSettings,position);
         }
