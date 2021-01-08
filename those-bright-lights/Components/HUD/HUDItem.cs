@@ -21,8 +21,8 @@ namespace SE_Praktikum.Components.HUD
 
         protected List<AnimationHandler> _handler;
         protected HUD _parent;
-        private readonly AnimationHandlerFactory animationHandlerFactory;
-        private readonly TileSet tileSet;
+        protected readonly AnimationHandlerFactory animationHandlerFactory;
+        protected readonly TileSet tileSet;
 
         public HUDItem(HUD parent, AnimationHandlerFactory animationHandlerFactory, TileSet tileSet)
         {
