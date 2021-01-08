@@ -36,6 +36,8 @@ namespace SE_Praktikum.Components.HUD
         {
             foreach (var item in _handler)
             {
+                item.Offset = Offset + _parent.Position;
+                item.Layer = _parent.Layer;
                 item.Draw(spriteBatch);
             }
         }
