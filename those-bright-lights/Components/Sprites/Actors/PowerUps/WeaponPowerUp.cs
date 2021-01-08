@@ -1,11 +1,8 @@
 ﻿using Microsoft.Xna.Framework.Audio;
-using SE_Praktikum.Components.Sprites.Weapons;
+using SE_Praktikum.Components.Sprites.Actors.Weapons;
 using SE_Praktikum.Services;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace SE_Praktikum.Components.Sprites.PowerUps
+namespace SE_Praktikum.Components.Sprites.Actors.PowerUps
 {
     public class WeaponPowerUp : PowerUp
     {

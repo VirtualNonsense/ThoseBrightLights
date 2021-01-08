@@ -1,14 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using NLog;
 using SE_Praktikum.Models;
 using SE_Praktikum.Services;
-using Stateless;
-using Stateless.Graph;
 
-namespace SE_Praktikum.Components.Sprites
+namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
 {
     public class Player : Spaceship
     {

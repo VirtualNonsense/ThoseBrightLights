@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Content;
-using SE_Praktikum.Components.Sprites;
-using SE_Praktikum.Components.Sprites.Weapons;
+using SE_Praktikum.Components.Actors;
+using SE_Praktikum.Components.Sprites.Actors;
+using SE_Praktikum.Components.Sprites.Actors.Weapons;
 
 namespace SE_Praktikum.Services.Factories
 {

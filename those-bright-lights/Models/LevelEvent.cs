@@ -1,9 +1,8 @@
-﻿using SE_Praktikum.Components.Sprites.Weapons;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using SE_Praktikum.Components.Sprites;
-using SE_Praktikum.Components.Sprites.Bullets;
+using SE_Praktikum.Components;
+using SE_Praktikum.Components.Sprites.Actors.Bullets;
 using SE_Praktikum.Core;
 
 namespace SE_Praktikum.Models

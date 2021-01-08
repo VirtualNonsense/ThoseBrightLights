@@ -1,8 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
-using SE_Praktikum.Components.Sprites;
-using SE_Praktikum.Components.Sprites.Bullets;
+using SE_Praktikum.Components.Actors;
+using SE_Praktikum.Components.Sprites.Actors;
+using SE_Praktikum.Components.Sprites.Actors.Bullets;
 using SE_Praktikum.Models;
 
 namespace SE_Praktikum.Services.Factories

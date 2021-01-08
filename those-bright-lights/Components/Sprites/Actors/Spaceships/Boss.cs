@@ -4,7 +4,7 @@ using SE_Praktikum.Models;
 using SE_Praktikum.Services;
 using SE_Praktikum.Services.Abilities;
 
-namespace SE_Praktikum.Components.Sprites
+namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
 {
     public class Boss : EnemyWithViewbox
     {

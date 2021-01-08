@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using SE_Praktikum.Services;
 
-namespace SE_Praktikum.Components.Sprites.Bullets
+namespace SE_Praktikum.Components.Sprites.Actors.Bullets
 {
     public class Missile : Bullet
     {

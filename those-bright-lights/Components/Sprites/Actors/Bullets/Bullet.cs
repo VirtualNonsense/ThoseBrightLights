@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Audio;
 using NLog;
 using SE_Praktikum.Services;
 
-namespace SE_Praktikum.Components.Sprites.Bullets
+namespace SE_Praktikum.Components.Sprites.Actors.Bullets
 {
     public class Bullet : Actor
     {

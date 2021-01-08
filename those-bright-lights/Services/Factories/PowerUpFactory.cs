@@ -4,11 +4,9 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using SE_Praktikum.Components.Sprites;
-using SE_Praktikum.Components.Sprites.Weapons;
 using SE_Praktikum.Models;
 using NLog;
-using SE_Praktikum.Components.Sprites.PowerUps;
+using SE_Praktikum.Components.Sprites.Actors.PowerUps;
 
 namespace SE_Praktikum.Services.Factories
 {

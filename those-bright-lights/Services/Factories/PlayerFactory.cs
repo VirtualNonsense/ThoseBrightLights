@@ -3,8 +3,9 @@ using System.Reflection.Metadata;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using SE_Praktikum.Components.Sprites;
-using SE_Praktikum.Components.Sprites.Weapons;
+using SE_Praktikum.Components.Actors;
+using SE_Praktikum.Components.Sprites.Actors;
+using SE_Praktikum.Components.Sprites.Actors.Spaceships;
 using SE_Praktikum.Models;
 
 namespace SE_Praktikum.Services.Factories
