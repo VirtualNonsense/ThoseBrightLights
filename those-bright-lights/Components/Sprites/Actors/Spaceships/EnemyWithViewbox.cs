@@ -2,12 +2,11 @@
 using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
-using NLog;
 using SE_Praktikum.Extensions;
 using SE_Praktikum.Models;
 using SE_Praktikum.Services;
 
-namespace SE_Praktikum.Components.Sprites
+namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
 {
     public class EnemyWithViewbox : Enemy
     {

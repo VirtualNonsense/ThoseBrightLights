@@ -1,10 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Audio;
 using SE_Praktikum.Services;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace SE_Praktikum.Components.Sprites
+namespace SE_Praktikum.Components.Sprites.Actors.PowerUps
 {
     public class HealthPowerUp : PowerUp 
     {

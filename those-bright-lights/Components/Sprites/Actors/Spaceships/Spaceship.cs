@@ -1,18 +1,16 @@
+using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using SE_Praktikum.Services;
-using SE_Praktikum.Components.Sprites.Weapons;
-using System;
-using Microsoft.Xna.Framework.Input;
-using NLog;
-using SE_Praktikum.Models;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
-using SE_Praktikum.Components.Sprites.Bullets;
-using SE_Praktikum.Extensions;
-using SE_Praktikum.Components.Sprites.PowerUps;
+using NLog;
+using SE_Praktikum.Components.Sprites.Actors.Bullets;
+using SE_Praktikum.Components.Sprites.Actors.PowerUps;
+using SE_Praktikum.Components.Sprites.Actors.Weapons;
+using SE_Praktikum.Models;
+using SE_Praktikum.Services;
 
-namespace SE_Praktikum.Components.Sprites
+namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
 {
     public abstract class Spaceship : Actor
     {

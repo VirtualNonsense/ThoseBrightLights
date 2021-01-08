@@ -1,11 +1,11 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
-using SE_Praktikum.Services;
 using NLog;
+using SE_Praktikum.Services;
 using SE_Praktikum.Services.Abilities;
 
-namespace SE_Praktikum.Components.Sprites.Weapons
+namespace SE_Praktikum.Components.Sprites.Actors.Weapons
 {
     public abstract class ClipWeapon : Weapon
     {

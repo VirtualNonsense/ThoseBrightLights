@@ -1,14 +1,8 @@
 ﻿using System;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
-using NLog;
-using SE_Praktikum.Components.Sprites;
-using SE_Praktikum.Components.Sprites.Bullets;
-using SE_Praktikum.Models;
-using SE_Praktikum.Services;
-using SE_Praktikum.Services.Factories;
+using SE_Praktikum.Components.Sprites.Actors.Bullets;
 
-namespace SE_Praktikum.Components.Sprites.Weapons
+namespace SE_Praktikum.Components.Sprites.Actors.Weapons
 {
     public class SingleShotWeapon : ClipWeapon
     {

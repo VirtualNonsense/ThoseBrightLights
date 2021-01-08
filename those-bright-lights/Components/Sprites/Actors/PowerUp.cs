@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.Xna.Framework;
+﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Input;
 using NLog;
-using SE_Praktikum.Components.Sprites.Weapons;
-using SE_Praktikum.Extensions;
-using SE_Praktikum.Models;
+using SE_Praktikum.Components.Sprites.Actors.Spaceships;
 using SE_Praktikum.Services;
 
-namespace SE_Praktikum.Components.Sprites
+namespace SE_Praktikum.Components.Sprites.Actors
 {
     public abstract class PowerUp : Actor 
     {

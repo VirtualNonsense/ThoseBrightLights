@@ -1,18 +1,11 @@
 ﻿using System;
-using System.ComponentModel.Design.Serialization;
-using System.Data.SqlTypes;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using NLog;
-using SE_Praktikum.Services;
-using SE_Praktikum.Components;
-using SE_Praktikum.Components.Sprites;
-using SE_Praktikum.Components.Sprites.Weapons;
-using SE_Praktikum.Models;
 using Microsoft.Xna.Framework.Audio;
-using SE_Praktikum.Extensions;
+using NLog;
+using SE_Praktikum.Models;
+using SE_Praktikum.Services;
 
-namespace SE_Praktikum.Components.Sprites
+namespace SE_Praktikum.Components.Sprites.Actors
 {
     public abstract class Actor : Sprite
     {

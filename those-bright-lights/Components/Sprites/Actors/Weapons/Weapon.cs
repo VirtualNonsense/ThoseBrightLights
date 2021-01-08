@@ -1,14 +1,12 @@
 ﻿using System;
-using System.Runtime.CompilerServices;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using NLog;
-using SE_Praktikum.Components.Sprites.Bullets;
-using SE_Praktikum.Services;
+using SE_Praktikum.Components.Sprites.Actors.Bullets;
 using SE_Praktikum.Extensions;
 using SE_Praktikum.Services.Abilities;
 
-namespace SE_Praktikum.Components.Sprites.Weapons
+namespace SE_Praktikum.Components.Sprites.Actors.Weapons
 {
     public abstract class Weapon
     {

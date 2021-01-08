@@ -1,19 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Input;
 using NLog;
-using SE_Praktikum.Components.Sprites.Weapons;
 using SE_Praktikum.Extensions;
-using SE_Praktikum.Models;
 using SE_Praktikum.Services;
 using SE_Praktikum.Services.Abilities;
 using Vector2 = Microsoft.Xna.Framework.Vector2;
 
-namespace SE_Praktikum.Components.Sprites
+namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
 {
     public class Enemy : Spaceship
     {
