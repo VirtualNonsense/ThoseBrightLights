@@ -19,6 +19,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
         public Player(AnimationHandler animationHandler, AnimationHandler propulsion, Input input=null, int health=100, float speed = 5, SoundEffect impactSound = null) 
             : base(animationHandler, health, speed, impactSound)
         {
+            Score = 0;
             _input = input;
             Health = health;
             Speed = speed;
@@ -37,9 +38,11 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
                 if (value < 0)
                 {
                     _score = 0;
+                    InvokeOnScoreChanged();
                     return;
                 }
                 _score = value;
+                InvokeOnScoreChanged();
             }
         }
 
@@ -84,6 +87,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
             {
                 ShootCurrentWeapon();
                 _shot = true;
+                Score++;
             }
             else if (CurrentKey.IsKeyUp(_input.Shoot))
                 _shot = false;
