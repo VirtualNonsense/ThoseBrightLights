@@ -17,10 +17,16 @@ namespace SE_Praktikum.Components.HUD
 
        
 
-        public HUD(Player player, List<HUDItem> hUDItems)
+        public HUD(Player player)
         {
-            this._player = player;
-            this._hUDItems = hUDItems;
+            _player = player;
+            _hUDItems = new List<HUDItem>();
+            _player.OnPositionChanged += _player_OnPositionChanged;
+        }
+
+        private void _player_OnPositionChanged(object sender, EventArgs e)
+        {
+            Position = _player.Position;
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -31,6 +37,11 @@ namespace SE_Praktikum.Components.HUD
         public void Update(GameTime gameTime)
         {
             throw new NotImplementedException();
+        }
+
+        public void AddHUDItem(HUDItem hUDItem)
+        {
+            _hUDItems.Add(hUDItem);
         }
     }
 }
