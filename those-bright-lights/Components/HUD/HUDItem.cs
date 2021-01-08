@@ -42,7 +42,6 @@ namespace SE_Praktikum.Components.HUD
 
         public virtual void Update(GameTime gameTime)
         {
-            throw new NotImplementedException();
         }
 
         private void UpdateAnimationHandler(Vector2 position)

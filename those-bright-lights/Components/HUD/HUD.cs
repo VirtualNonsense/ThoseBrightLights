@@ -39,7 +39,6 @@ namespace SE_Praktikum.Components.HUD
 
         public void Update(GameTime gameTime)
         {
-            throw new NotImplementedException();
         }
 
         public void AddHUDItem(HUDItem hUDItem)
