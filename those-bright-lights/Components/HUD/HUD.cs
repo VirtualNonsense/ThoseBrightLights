@@ -11,14 +11,14 @@ namespace SE_Praktikum.Components.HUD
     {
         public Player Player;
         private readonly List<HUDItem> _hUDItems;
+        public float Layer;
 
         public Vector2 Position { get; set; }
         public bool IsRemoveAble { get; set; }
 
-       
-
         public HUD(Player player)
         {
+            Layer = player.Layer + 1;
             Player = player;
             _hUDItems = new List<HUDItem>();
             Player.OnPositionChanged += _player_OnPositionChanged;
