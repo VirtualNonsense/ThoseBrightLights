@@ -20,13 +20,19 @@ namespace SE_Praktikum.Components.HUD
         {
             HealthPerHeart = 5;
             parent.Player.OnHealthChanged += Player_OnHealthChanged;
+            parent.Player.OnMaxHealthChanged += Player_OnMaxHealthChanged;
             this.animationSettingsLeftHeart = animationSettingsLeftHeart;
             this.animationSettingsRightHeart = animationSettingsRightHeart;
         }
 
+        private void Player_OnMaxHealthChanged(object sender, EventArgs e)
+        {
+            UpdateAmountHearts(_parent.Player.MaxHealth);
+        }
+
         private void Player_OnHealthChanged(object sender, EventArgs e)
         {
-            
+            UpdateAmountHearts(_parent.Player.Health);
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -54,14 +60,33 @@ namespace SE_Praktikum.Components.HUD
             {
                 for (int i = _handler.Count; i <= hearts; i++)
                 {
-                    if(i % 2 == 0)
+                    if (i % 2 == 0)
                     {
-                        _handler.Add(ConstructHeart(new Vector2(i * tileSet.TileDimX, 0),animationSettingsLeftHeart));
+                        _handler.Add(ConstructHeart(new Vector2(i * tileSet.TileDimX, 0), animationSettingsLeftHeart));
                     }
                     else
                     {
                         _handler.Add(ConstructHeart(new Vector2(i * tileSet.TileDimX, 0), animationSettingsRightHeart));
                     }
+                }
+            }
+            UpdateHearts(_parent.Player.Health);
+        }
+
+        public void UpdateHearts(float health)
+        {
+            for (int i = 0; i < _handler.Count; i++)
+            {
+                var healthThreshold = (i + 1) * HealthPerHeart;
+
+                // 0 represents empty heart and 1 a full heart
+                if (healthThreshold >= health)
+                {
+                    _handler[i].CurrentIndex = 0;
+                }
+                else
+                {
+                    _handler[i].CurrentIndex = 1;
                 }
             }
         }

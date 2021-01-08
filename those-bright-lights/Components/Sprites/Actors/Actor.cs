@@ -46,8 +46,8 @@ namespace SE_Praktikum.Components.Sprites.Actors
                     InvokeOnHealthChanged();
                     return;
                 }
-                InvokeOnHealthChanged();
                 _health = value;
+                InvokeOnHealthChanged();
             }
         }
 
