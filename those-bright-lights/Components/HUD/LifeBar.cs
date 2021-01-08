@@ -33,7 +33,7 @@ namespace SE_Praktikum.Components.HUD
 
         private void Player_OnHealthChanged(object sender, EventArgs e)
         {
-            UpdateAmountHearts(_parent.Player.Health);
+            UpdateHearts(_parent.Player.Health);
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -48,7 +48,7 @@ namespace SE_Praktikum.Components.HUD
 
         private void UpdateAmountHearts(float newHealth)
         {
-            var hearts = (int)(HealthPerHeart / newHealth);
+            var hearts = (int)(newHealth / HealthPerHeart);
 
             if (hearts < _handler.Count)
             {
@@ -59,15 +59,17 @@ namespace SE_Praktikum.Components.HUD
             }
             else
             {
-                for (int i = _handler.Count; i <= hearts; i++)
+                for (int i = _handler.Count; i < hearts; i++)
                 {
+                    var posX = i * tileSet.TileDimX;
+                    
                     if (i % 2 == 0)
                     {
-                        _handler.Add(ConstructHeart(new Vector2(i * tileSet.TileDimX, 0), animationSettingsLeftHeart));
+                        _handler.Add(ConstructHeart(new Vector2(posX, 0), animationSettingsLeftHeart));
                     }
                     else
                     {
-                        _handler.Add(ConstructHeart(new Vector2(i * tileSet.TileDimX, 0), animationSettingsRightHeart));
+                        _handler.Add(ConstructHeart(new Vector2(posX, 0), animationSettingsRightHeart));
                     }
                 }
             }
@@ -81,7 +83,7 @@ namespace SE_Praktikum.Components.HUD
                 var healthThreshold = (i + 1) * HealthPerHeart;
 
                 // 0 represents empty heart and 1 a full heart
-                if (healthThreshold >= health)
+                if (healthThreshold > health)
                 {
                     _handler[i].CurrentIndex = 0;
                 }

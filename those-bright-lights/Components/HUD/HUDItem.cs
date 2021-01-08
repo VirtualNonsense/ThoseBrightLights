@@ -6,6 +6,7 @@ using SE_Praktikum.Services.Factories;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using SE_Praktikum.Components.Sprites.Actors;
 
 namespace SE_Praktikum.Components.HUD
 {
@@ -17,7 +18,11 @@ namespace SE_Praktikum.Components.HUD
         public Vector2 Position { get; set; }
         public bool IsRemoveAble { get; set; }
         public Vector2 Offset => Position-Origin;
-        public Vector2 Origin;
+        public Vector2 Origin => new Vector2(ElementWidth/2f, ElementHeight/2f);
+
+        public float ElementWidth => _handler.Count * tileSet.TileDimX;
+
+        public float ElementHeight => tileSet.TileDimY;
 
         protected List<AnimationHandler> _handler;
         protected HUD _parent;
