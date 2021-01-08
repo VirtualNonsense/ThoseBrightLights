@@ -127,6 +127,11 @@ namespace SE_Praktikum.Components.Sprites.Weapons
         /// </summary>
         public override void Fire()
         {
+            if (!AreClipsLeft && !IsAmmunitionInClip)
+            {
+                InvokeOnWeaponEmpty();
+                return;
+            }
             if (!IsAmmunitionInClip)
             {
                 InvokeOnClipEmpty();
@@ -156,23 +161,13 @@ namespace SE_Praktikum.Components.Sprites.Weapons
 
         protected override void FireAbility()
         {
-            if (!IsAmmunitionInClip)
-            {
-                InvokeOnClipEmpty();
-                return;
-            }
             base.FireAbility();
             AmmunitionInClip--;
         }
 
         private void ExecuteReload()
         {
-            if (!AreClipsLeft)
-            {
-                InvokeOnWeaponEmpty();
-                return;
-            }
-            _logger.Trace($"Reloading {NameTag}");
+            _logger.Trace($"Reloading {NameTag} bullets in clips: {AmmunitionInClip} clips: {_clips}");
             _reloadSoundEffect?.Play();
             AmmunitionInClip = _clipSize;
             Clips--;
