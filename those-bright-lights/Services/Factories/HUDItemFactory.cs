@@ -31,5 +31,24 @@ namespace SE_Praktikum.Services.Factories
             }, isPlaying: false);
             return new LifeBar(hUD,animationHandlerFactory,tileSet,animationSettingsLeftHeart,animationSettingsRightHeart);
         }
+
+        public HUDItem GetScoreBar(HUD hUD)
+        {
+            var tileSet = tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\numbers.json", 0);
+            var animationSettings = new AnimationSettings(new List<(int, float)> {
+                (0,0),
+                (1,0),
+                (2,0),
+                (3,0),
+                (4,0),
+                (5,0),
+                (6,0),
+                (7,0),
+                (8,0),
+                (9,0)
+            }, isPlaying: false);
+
+            return new ScoreBar(hUD, animationHandlerFactory, tileSet, animationSettings);
+        }
     }
 }
