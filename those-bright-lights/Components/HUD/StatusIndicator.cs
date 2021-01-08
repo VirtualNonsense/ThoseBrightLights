@@ -4,7 +4,7 @@ using System.Text;
 
 namespace SE_Praktikum.Components.HUD
 {
-    public class StatusIndicator : HUDItem
-    {
-    }
+    //public class StatusIndicator : HUDItem
+    //{
+    //}
 }

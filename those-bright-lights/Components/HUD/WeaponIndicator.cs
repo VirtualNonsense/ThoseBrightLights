@@ -4,7 +4,7 @@ using System.Text;
 
 namespace SE_Praktikum.Components.HUD
 {
-    public class WeaponIndicator : HUDItem
-    {
-    }
+    //public class WeaponIndicator : HUDItem
+    //{
+    //}
 }
