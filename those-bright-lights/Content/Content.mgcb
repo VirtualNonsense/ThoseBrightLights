@@ -325,6 +325,30 @@
 /processorParam:TextureFormat=Color
 /build:Artwork/Powerups/infammoanimation.png
 
+#begin Artwork/Powerups/skull_19_24.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Artwork/Powerups/skull_19_24.png
+
+#begin Artwork/Powerups/skullanimation_19_24_9.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Artwork/Powerups/skullanimation_19_24_9.png
+
 #begin Artwork/Projectiles/cartridge_13_6.png
 /importer:TextureImporter
 /processor:TextureProcessor
