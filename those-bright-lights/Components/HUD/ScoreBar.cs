@@ -21,7 +21,8 @@ namespace SE_Praktikum.Components.HUD
 
         private void Player_OnScoreChanged(object sender, EventArgs e)
         {
-            
+            UpdateAmountDigits(_parent.Player.Score);
+            UpdateDigits(_parent.Player.Score);
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -34,7 +35,7 @@ namespace SE_Praktikum.Components.HUD
             base.Update(gameTime);
         }
 
-        public void AmountDigits(int newScore)
+        public void UpdateAmountDigits(int newScore)
         {
             var digits = Math.Log10(newScore);
 
@@ -53,6 +54,17 @@ namespace SE_Praktikum.Components.HUD
 
                     _handler.Add(ConstrucDigit(new Vector2(posX, 0)));
                 }
+            }
+        }
+
+        public void UpdateDigits(int score)
+        {
+            int rest = score;
+            foreach (var item in _handler)
+            {
+                var digit = rest % 10;
+                item.CurrentIndex = digit;
+                rest /= 10;
             }
         }
 
