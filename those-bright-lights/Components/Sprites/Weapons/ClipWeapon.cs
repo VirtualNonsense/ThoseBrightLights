@@ -96,6 +96,8 @@ namespace SE_Praktikum.Components.Sprites.Weapons
         public bool AreClipsLeft => Clips > 0;
         public int TotalAmmunition => _clips * _clipSize + AmmunitionInClip;
 
+        public bool WeaponEmpty => TotalAmmunition <= 0;
+
         public int AmmunitionInClip
         {
             get => _ammunitionInClip;
@@ -127,7 +129,7 @@ namespace SE_Praktikum.Components.Sprites.Weapons
         /// </summary>
         public override void Fire()
         {
-            if (!AreClipsLeft && !IsAmmunitionInClip)
+            if (WeaponEmpty)
             {
                 InvokeOnWeaponEmpty();
                 return;
@@ -144,6 +146,7 @@ namespace SE_Praktikum.Components.Sprites.Weapons
         /// </summary>
         public virtual void Reload()
         {
+            if (WeaponEmpty) return;
             _reloadDownTime.Fire();
         }
 
