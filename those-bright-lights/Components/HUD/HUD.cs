@@ -31,7 +31,10 @@ namespace SE_Praktikum.Components.HUD
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            throw new NotImplementedException();
+            foreach (var item in _hUDItems)
+            {
+                item.Draw(spriteBatch);
+            }
         }
 
         public void Update(GameTime gameTime)
