@@ -36,17 +36,21 @@ namespace SE_Praktikum.Components.Sprites.Actors
                 {
                     _health = 0;
                     IsRemoveAble = true;
+                    InvokeOnHealthChanged();
                     return;
                 }
 
                 if (value > _maxHealth)
                 {
                     _health = _maxHealth;
+                    InvokeOnHealthChanged();
+                    return;
                 }
-
                 _health = value;
+                InvokeOnHealthChanged();
             }
         }
+
         public float MaxHealth { 
             get => _maxHealth;
             set
@@ -54,11 +58,13 @@ namespace SE_Praktikum.Components.Sprites.Actors
                 if (value <= 1)
                 {
                     _health = MathExtensions.Remap(value,0,_maxHealth,0,1);
-                    _maxHealth = 1;                
+                    _maxHealth = 1;
+                    InvokeOnMaxHealthChanged();
                     return;
                 }
                 _health = MathExtensions.Remap(value, 0, _maxHealth, 0, value);
                 _maxHealth = value;
+                InvokeOnMaxHealthChanged();
             }
         }
         protected bool _indestructible;
@@ -69,6 +75,7 @@ namespace SE_Praktikum.Components.Sprites.Actors
         public event EventHandler<EventArgs> OnExplosion;
         public event EventHandler<EventArgs> OnDeath;
         public event EventHandler OnHealthChanged;
+        public event EventHandler OnMaxHealthChanged;
         #endregion
 
         public void InterAct(Actor other)
@@ -192,6 +199,11 @@ namespace SE_Praktikum.Components.Sprites.Actors
         protected virtual void InvokeOnHealthChanged()
         {
             OnHealthChanged?.Invoke(this, EventArgs.Empty);
+        }
+
+        protected virtual void InvokeOnMaxHealthChanged()
+        {
+            OnMaxHealthChanged?.Invoke(this, EventArgs.Empty);
         }
 
         #endregion
