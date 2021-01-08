@@ -18,8 +18,8 @@ namespace SE_Praktikum.Components.HUD
         public Vector2 Offset => Position-Origin;
         public Vector2 Origin;
 
-        private List<AnimationHandler> _handler;
-        private HUD _parent;
+        protected List<AnimationHandler> _handler;
+        protected HUD _parent;
 
         public HUDItem(HUD parent, List<AnimationHandler> handler)
         {
