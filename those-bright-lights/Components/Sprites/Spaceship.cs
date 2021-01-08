@@ -24,17 +24,31 @@ namespace SE_Praktikum.Components.Sprites
         protected KeyboardState PreviousKey;
         protected Polygon _impactPolygon;
         protected AnimationHandler Propulsion;
-        protected bool FlippedHorizontal => _animationHandler.SpriteEffects == SpriteEffects.FlipVertically;
+        // #############################################################################################################
+        // Constructor
+        // #############################################################################################################
+        public Spaceship(AnimationHandler animationHandler, float speed = 3, float health = 100, SoundEffect impactSound = null) : base(
+            animationHandler, impactSound)
+        {
+            Speed = speed;
+            Health = health;
+            Weapons = new List<Weapon>();
+            _logger = LogManager.GetCurrentClassLogger();
+        }
         
-
-
+        // #############################################################################################################
+        // Events
+        // #############################################################################################################
         #region Events
         public event EventHandler OnShoot;
-        public event EventHandler OnDie;
-        public event EventHandler OnPickUpWeapon;
         public event EventHandler OnTakeDamage;
 
         #endregion
+        
+        // #############################################################################################################
+        // Properties
+        // #############################################################################################################
+        protected bool FlippedHorizontal => _animationHandler.SpriteEffects == SpriteEffects.FlipVertically;
 
         public override float Rotation
         {
@@ -58,16 +72,11 @@ namespace SE_Praktikum.Components.Sprites
 
             }
         }
+        
+        // #############################################################################################################
+        // public Methods
+        // #############################################################################################################
 
-
-        public Spaceship(AnimationHandler animationHandler, float speed = 3, float health = 100, SoundEffect impactSound = null) : base(
-            animationHandler, impactSound)
-        {
-            Speed = speed;
-            Health = health;
-            Weapons = new List<Weapon>();
-            _logger = LogManager.GetCurrentClassLogger();
-        }
 
         public override void Update(GameTime gameTime)
         {
@@ -105,25 +114,6 @@ namespace SE_Praktikum.Components.Sprites
             base.Draw(spriteBatch);
         }
 
-
-        protected virtual void InvokeOnTakeDamage(float damage)
-        {
-            OnTakeDamage?.Invoke(this,EventArgs.Empty);
-        }
-
-        protected virtual void InvokeOnDie()
-        {
-            OnDie?.Invoke(this, EventArgs.Empty);
-        }
-        protected virtual void InvokeOnShoot(Bullet b)
-        {
-            if (b is null)
-                return;
-            var e = new LevelEvent.ShootBullet {Bullet = b};
-            b.Layer = Layer;
-            OnShoot?.Invoke(this,e);
-        }
-
         public virtual void AddWeapon(Weapon weapon)
         {
             weapon.Parent = this;
@@ -139,8 +129,6 @@ namespace SE_Praktikum.Components.Sprites
                     ssw.OnWeaponEmpty += (sender, args) => _logger.Debug("weapon empty!");
                     break;
             }
-            
-            OnPickUpWeapon?.Invoke(this, EventArgs.Empty);
         }
 
         public virtual void RemoveWeapon(Weapon weapon)
@@ -149,6 +137,23 @@ namespace SE_Praktikum.Components.Sprites
             weapon.OnEmitBullet -= EmitBulletToOnShot;
             // Weapons.Remove(weapon);
             weapon.IsRemoveAble = true;
+        }
+
+        // #############################################################################################################
+        // protected / private Methods
+        // #############################################################################################################
+
+        protected virtual void InvokeOnTakeDamage(float damage)
+        {
+            OnTakeDamage?.Invoke(this,EventArgs.Empty);
+        }
+        protected virtual void InvokeOnShoot(Bullet b)
+        {
+            if (b is null)
+                return;
+            var e = new LevelEvent.ShootBullet {Bullet = b};
+            b.Layer = Layer;
+            OnShoot?.Invoke(this,e);
         }
 
         private void EmitBulletToOnShot(object sender, Weapon.EmitBulletEventArgs args)
