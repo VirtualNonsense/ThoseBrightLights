@@ -22,14 +22,17 @@ namespace SE_Praktikum.Services.Factories
         public HUD GetInstance(Player player)
         {
             var hud = new HUD(player);
-            var lifebar = hUDItemFactory.GetLifeBar(hud);
+            
             var width = screen.Camera.GetPerspectiveScreenWidth(player.Layer);
             var height = screen.Camera.GetPerspectiveScreenHeight(player.Layer);
-           
 
+            var lifebar = hUDItemFactory.GetLifeBar(hud);
             lifebar.Position = new Vector2(-width / 2f, -height / 2f);
-
             hud.AddHUDItem(lifebar);
+
+            var scorebar = hUDItemFactory.GetScoreBar(hud);
+            scorebar.Position = new Vector2(width / 2f, -height / 2f);
+            hud.AddHUDItem(scorebar);
 
             return hud;
         }

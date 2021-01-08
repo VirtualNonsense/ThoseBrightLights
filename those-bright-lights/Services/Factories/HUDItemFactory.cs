@@ -34,7 +34,7 @@ namespace SE_Praktikum.Services.Factories
 
         public HUDItem GetScoreBar(HUD hUD)
         {
-            var tileSet = tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\numbers.json", 0);
+            var tileSet = tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\numbers_8_12.json", 0);
             var animationSettings = new AnimationSettings(new List<(int, float)> {
                 (0,0),
                 (1,0),

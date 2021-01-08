@@ -17,6 +17,7 @@ namespace SE_Praktikum.Components.HUD
         {
             parent.Player.OnScoreChanged += Player_OnScoreChanged;
             this.numberAnimationSettings = numberAnimationSettings;
+            UpdateAmountDigits(parent.Player.Score);
         }
 
         private void Player_OnScoreChanged(object sender, EventArgs e)
