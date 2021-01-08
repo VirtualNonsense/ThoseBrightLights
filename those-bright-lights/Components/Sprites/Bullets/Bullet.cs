@@ -83,7 +83,6 @@ namespace SE_Praktikum.Components.Sprites.Bullets
             if (_timeAlive >= MaxTime)
             {
                 IsRemoveAble = true;
-                _logger.Info("Removed Bullet because it was on the screen for to long");
             }
             base.Update(gameTime);
         }
