@@ -18,13 +18,55 @@ namespace SE_Praktikum.Components.Sprites.Bullets
         protected float MidAirSoundCooldown;
         protected float TimeSinceUsedMidAir;
 
-        protected Bullet(AnimationHandler animationHandler, Particle explosion, SoundEffect midAirSound, SoundEffect impactSound) : base(animationHandler, impactSound)
+        public override Vector2 Position
         {
+            get => base.Position;
+            set
+            {
+                base.Position = value;
+                if (Explosion == null) return;
+                Explosion.Position = base.Position;
+            }
+        }
+
+        public override float Layer
+        {
+
+            get => base.Layer;
+            set
+            {
+                base.Layer = value;
+                if (Explosion == null) return;
+                Explosion.Layer = base.Layer;
+            }
+        }
+
+        public override float Rotation
+        {
+            get => base.Rotation;
+            set
+            {
+                base.Rotation = value;
+                if (Explosion == null) return;
+                Explosion.Rotation = base.Rotation;
+            }
+        }
+
+        protected Bullet(AnimationHandler animationHandler,
+                         Actor parent,
+                         Particle explosion,
+                         SoundEffect midAirSound,
+                         SoundEffect impactSound,
+                         float damage) 
+            : base(animationHandler, impactSound)
+        {
+            Parent = parent;
             Explosion = explosion;
             Velocity = 0;
             Acceleration = 0;
             MidAirSound = midAirSound;
             _logger = LogManager.GetCurrentClassLogger();
+            Damage = damage;
         }
 
         protected Vector2 Movement(Vector2 spaceshipVelocity, float elapsedTime)
@@ -37,15 +79,11 @@ namespace SE_Praktikum.Components.Sprites.Bullets
         public override void Update(GameTime gameTime)
         {
             _timeAlive += gameTime.ElapsedGameTime.Milliseconds / 1000f;
+            //TODO: replace with CooldownAbility
             if (_timeAlive >= MaxTime)
             {
                 IsRemoveAble = true;
-                _logger.Info("Removed Bullet because it was on the screen for to long");
             }
-
-            Explosion.Position =
-                Position;
-            Explosion.Rotation = Rotation;
             base.Update(gameTime);
         }
         

@@ -20,21 +20,33 @@ namespace SE_Praktikum.Components.Sprites
         protected int CurrentWeapon;
         protected float Speed;
         private Logger _logger;
-        protected KeyboardState CurrentKey;
-        protected KeyboardState PreviousKey;
         protected Polygon _impactPolygon;
         protected AnimationHandler Propulsion;
-        protected bool FlippedHorizontal => _animationHandler.SpriteEffects == SpriteEffects.FlipVertically;
+        // #############################################################################################################
+        // Constructor
+        // #############################################################################################################
+        public Spaceship(AnimationHandler animationHandler, float speed = 3, float health = 100, SoundEffect impactSound = null) : base(
+            animationHandler, impactSound)
+        {
+            Speed = speed;
+            Health = health;
+            Weapons = new List<Weapon>();
+            _logger = LogManager.GetCurrentClassLogger();
+        }
         
-
-
+        // #############################################################################################################
+        // Events
+        // #############################################################################################################
         #region Events
         public event EventHandler OnShoot;
-        public event EventHandler OnDie;
-        public event EventHandler OnPickUpWeapon;
         public event EventHandler OnTakeDamage;
 
         #endregion
+        
+        // #############################################################################################################
+        // Properties
+        // #############################################################################################################
+        protected bool FlippedHorizontal => _animationHandler.SpriteEffects == SpriteEffects.FlipVertically;
 
         public override float Rotation
         {
@@ -58,22 +70,28 @@ namespace SE_Praktikum.Components.Sprites
 
             }
         }
-
-
-        public Spaceship(AnimationHandler animationHandler, float speed = 3, float health = 100, SoundEffect impactSound = null) : base(
-            animationHandler, impactSound)
-        {
-            Speed = speed;
-            Health = health;
-            Weapons = new List<Weapon>();
-            _logger = LogManager.GetCurrentClassLogger();
-        }
-
+        
+        // #############################################################################################################
+        // public Methods
+        // #############################################################################################################
         public override void Update(GameTime gameTime)
         {
             foreach (var weapon in Weapons)
             {
                 weapon.Update(gameTime);
+            }
+
+            for (var i = 0; i < Weapons.Count;)
+            {
+                var w = Weapons[i];
+                if (!w.IsRemoveAble)
+                {
+                    i++;
+                    continue;
+                }
+                Weapons.RemoveAt(i);
+                if (CurrentWeapon >= Weapons.Count)
+                    CurrentWeapon = Weapons.Count - 1;
             }
 
             if (Propulsion != null)
@@ -92,15 +110,43 @@ namespace SE_Praktikum.Components.Sprites
             base.Draw(spriteBatch);
         }
 
+        public virtual void AddWeapon(Weapon weapon)
+        {
+            weapon.Parent = this;
+            Weapons.Add(weapon);
+            CurrentWeapon = Weapons.Count - 1;
+            weapon.OnEmitBullet += EmitBulletToOnShot;
+            switch (weapon)
+            {
+                case SingleShotWeapon ssw:
+                    ssw.OnClipEmpty += (sender, args) => ReloadWeapon((ClipWeapon)sender);
+                    ssw.OnWeaponEmpty += (sender, args) => RemoveWeapon((Weapon)sender);
+                    ssw.OnReloadProgressUpdate += (sender, args) => _logger.Debug(args.Progress * 100);
+                    ssw.OnWeaponEmpty += (sender, args) => _logger.Debug("weapon empty!");
+                    break;
+            }
+        }
+
+        public virtual void RemoveWeapon(Weapon weapon)
+        {
+            if (!Weapons.Contains(weapon)) return;
+            weapon.OnEmitBullet -= EmitBulletToOnShot;
+            // Weapons.Remove(weapon);
+            weapon.IsRemoveAble = true;
+        }
+
+        // #############################################################################################################
+        // protected / private Methods
+        // #############################################################################################################
+        protected virtual void ShootCurrentWeapon()
+        {
+            if (Weapons.Count == 0) return;
+            Weapons[CurrentWeapon].Fire();
+        }
 
         protected virtual void InvokeOnTakeDamage(float damage)
         {
             OnTakeDamage?.Invoke(this,EventArgs.Empty);
-        }
-
-        protected virtual void InvokeOnDie()
-        {
-            OnDie?.Invoke(this, EventArgs.Empty);
         }
         protected virtual void InvokeOnShoot(Bullet b)
         {
@@ -111,13 +157,17 @@ namespace SE_Praktikum.Components.Sprites
             OnShoot?.Invoke(this,e);
         }
 
-        public virtual void AddWeapon(Weapon weapon)
+        private void EmitBulletToOnShot(object sender, Weapon.EmitBulletEventArgs args)
         {
-            Weapons.Add(weapon);
-            CurrentWeapon = Weapons.Count - 1;
-            OnPickUpWeapon?.Invoke(this, EventArgs.Empty);
+            InvokeOnShoot(args.Bullet);
         }
-        
+
+        private void ReloadWeapon(ClipWeapon w)
+        {
+            _logger.Debug(w);
+            w.Reload();
+        }
+
         protected override bool Collide(Actor other)
         {
             if ( this == other || 

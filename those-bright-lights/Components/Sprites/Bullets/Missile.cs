@@ -12,10 +12,53 @@ namespace SE_Praktikum.Components.Sprites.Bullets
         private readonly Vector2 _offSet;
         private float _elapsedTime = 0;
 
-        public Missile(AnimationHandler animationHandler, Vector2 spaceShipVelocity,Vector2 spaceShipPosition,float rotation, AnimationHandler propulsion, Particle explosion, Sprite parent, SoundEffect midAirSound, SoundEffect impactSound) : base(animationHandler, explosion, midAirSound, impactSound)
+        public override Vector2 Position
+        {
+            get => base.Position;
+            set
+            {
+                base.Position = value;
+                if (_propulsionAnimationHandler == null) return;
+                _propulsionAnimationHandler.Position = base.Position;
+            }    
+        }
+        public override float Rotation
+        {
+            get => base.Rotation;
+            set
+            {
+                base.Rotation = value;
+                if (_propulsionAnimationHandler == null) return;
+                _propulsionAnimationHandler.Rotation = base.Rotation;
+            }    
+        }
+
+        public override float Layer
+        {
+            
+            get => base.Layer;
+            set
+            {
+                base.Layer = value;
+                if (_propulsionAnimationHandler == null) return;
+                _propulsionAnimationHandler.Layer = base.Layer;
+            }
+            
+        }
+
+        public Missile(AnimationHandler animationHandler, 
+                       Vector2 spaceShipVelocity,
+                       Vector2 spaceShipPosition,
+                       float rotation,
+                       AnimationHandler propulsion,
+                       Particle explosion,
+                       Actor parent,
+                       SoundEffect midAirSound,
+                       SoundEffect impactSound,
+                       float damage = 20) 
+            : base(animationHandler, parent, explosion, midAirSound, impactSound, damage)
         {
             Rotation = rotation;
-            Parent = parent;
             _spaceShipVelocity = spaceShipVelocity;
             var positionOffset = new Vector2(0,10);
             Position = spaceShipPosition + positionOffset;
@@ -24,7 +67,6 @@ namespace SE_Praktikum.Components.Sprites.Bullets
             _offSet = new Vector2(-animationHandler.FrameWidth/2-_propulsionAnimationHandler.FrameWidth/2,0);
             Acceleration = 5;
             MaxTime = 5;
-            Damage = 20;
         }
 
 
@@ -33,9 +75,8 @@ namespace SE_Praktikum.Components.Sprites.Bullets
             _elapsedTime += gameTime.ElapsedGameTime.Milliseconds / 1000f;
             TimeSinceUsedMidAir += gameTime.ElapsedGameTime.Milliseconds;
             Position = Movement(_spaceShipVelocity,_elapsedTime);
-            _propulsionAnimationHandler.Position =  Position; 
-            _propulsionAnimationHandler.Rotation = Rotation;
             _propulsionAnimationHandler.Update(gameTime);
+            // TODO: cooldownAbility
             if (MidAirSoundCooldown < TimeSinceUsedMidAir)
             {
                 TimeSinceUsedMidAir = 0;

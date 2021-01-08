@@ -1,59 +1,131 @@
-﻿using System.Collections.Generic;
-using System.Linq.Expressions;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Content;
 using SE_Praktikum.Components.Sprites;
 using SE_Praktikum.Components.Sprites.Weapons;
-using SE_Praktikum.Models;
 
 namespace SE_Praktikum.Services.Factories
 {
     public class WeaponFactory
     {
+        private readonly ContentManager _contentManager;
         private AnimationHandlerFactory _animationHandlerFactory;
         private readonly ParticleFactory _particleFactory;
         private readonly TileSetFactory _tileSetFactory;
+        private readonly BulletFactory _bulletFactory;
 
-        public WeaponFactory(AnimationHandlerFactory animationHandlerFactory, ParticleFactory particleFactory, TileSetFactory tileSetFactory)
+        public WeaponFactory(ContentManager contentManager,
+                             AnimationHandlerFactory animationHandlerFactory,
+                             ParticleFactory particleFactory,
+                             TileSetFactory tileSetFactory,
+                             BulletFactory bulletFactory)
         {
+            _contentManager = contentManager;
             _animationHandlerFactory = animationHandlerFactory;
             _particleFactory = particleFactory;
             _tileSetFactory = tileSetFactory;
+            _bulletFactory = bulletFactory;
         }
 
-        public MissileLauncher GetMissileLauncher(ContentManager contentManager)
+        /// <summary>
+        /// A missile launcher. Rocket goes brrrr
+        /// </summary>
+        /// <param name="owner"></param>
+        /// <param name="clipSize"></param>
+        /// <param name="clips"></param>
+        /// <param name="shotCooldown"></param>
+        /// <param name="reloadTime"></param>
+        /// <param name="damage"></param>
+        /// <param name="nameTag"></param>
+        /// <returns></returns>
+        public SingleShotWeapon GetMissileLauncher(Actor owner,
+                                                   int clipSize = 4,
+                                                   int clips = 10,
+                                                   int shotCooldown = 100,
+                                                   int reloadTime = 1000,
+                                                   float damage = 20,
+                                                   string nameTag = "Missile Launcher")
         {
-            var textureTileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\missile.json",0);
-            //Texture2D propulsion = contentManager.Load<Texture2D>("Artwork/projectiles/missile_propulsion_15_15");
-            //TileSet propulsionTileSet = new TileSet(propulsion,15,15, null);
-            var propulsionTileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\missile_propulsion_15_15.json", 0);
-            SoundEffect flightEffect = null; //contentManager.Load<SoundEffect>("Audio/Sound_Effects/Airborne/Flight_plane_c");
-            SoundEffect impactSound = contentManager.Load<SoundEffect>("Audio/Sound_Effects/Collusion/Big_Explo");
-            var m = new MissileLauncher(_animationHandlerFactory,textureTileSet, propulsionTileSet,
-                _particleFactory, null, flightEffect, impactSound);
+            // TODO: create and load missing sound effects
+            var m = new SingleShotWeapon(owner,
+                null, 
+                null, 
+                null,
+                null,
+                nameTag,
+                clipSize,
+                clips,
+                () => _bulletFactory.GetMissile(owner, damage),
+                shotCoolDown: shotCooldown,
+                reloadTime: reloadTime);
             return m;
         }
 
-        public Lasergun GetLasergun(ContentManager contentManager)
+        /// <summary>
+        /// A vanilla laser gun
+        /// </summary>
+        /// <param name="owner"></param>
+        /// <param name="clipSize"></param>
+        /// <param name="clips"></param>
+        /// <param name="shotCooldown"></param>
+        /// <param name="reloadTime"></param>
+        /// <param name="damage"></param>
+        /// <param name="nameTag"></param>
+        /// <returns></returns>
+        public SingleShotWeapon GetLaserGun(Actor owner, 
+                                            int clipSize = 20,
+                                            int clips = 10,
+                                            int shotCooldown = 10,
+                                            int reloadTime = 100,
+                                            float damage = 5,
+                                            string nameTag = "Laser gun")
         {
-            var laserTileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\laser.json",0);
-            SoundEffect soundEffect = contentManager.Load<SoundEffect>("Audio/Sound_Effects/Shot/Laser_Short");
-            SoundEffect flightEffect = contentManager.Load<SoundEffect>("Audio/Sound_Effects/Airborne/Wobble_test");
-            SoundEffect impactSound = contentManager.Load<SoundEffect>("Audio/Sound_Effects/Collusion/Clink");
-            var l = new Lasergun(_animationHandlerFactory, laserTileSet, _particleFactory, soundEffect, flightEffect, impactSound);
-            return l;
+            // TODO: create and load missing sound effects
+            var m = new SingleShotWeapon(owner,
+                null, 
+                null, 
+                null,
+                null,
+                nameTag,
+                clipSize,
+                clips,
+                () => _bulletFactory.GetLaser(owner, damage),
+                shotCoolDown: shotCooldown,
+                reloadTime: reloadTime);
+            return m;
         }
 
-        public Lasergun EnemyGetLasergun(ContentManager contentManager)
+        /// <summary>
+        /// Returns a gun that is meant for the current std. enemy.
+        /// But i'm just a dev you don't have to listen to me.
+        /// </summary>
+        /// <param name="owner"></param>
+        /// <param name="clipSize"></param>
+        /// <param name="clips"></param>
+        /// <param name="shotCooldown"></param>
+        /// <param name="reloadTime"></param>
+        /// <param name="damage"></param>
+        /// <param name="nameTag"></param>
+        /// <returns></returns>
+        public SingleShotWeapon GetEnemyLaserGun(Actor owner,
+                                                 int clipSize = 20,
+                                                 int clips = 3,
+                                                 int shotCooldown = 20,
+                                                 int reloadTime = 100,
+                                                 float damage = 10,
+                                                 string nameTag = "Enemy laser gun")
         {
-            var enemylaserTileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\enemylaser.json", 0);
-            SoundEffect soundEffect = contentManager.Load<SoundEffect>("Audio/Sound_Effects/Shot/Laser_Short");
-            SoundEffect flightEffect = contentManager.Load<SoundEffect>("Audio/Sound_Effects/Airborne/Wobble_test");
-            SoundEffect impactSound = contentManager.Load<SoundEffect>("Audio/Sound_Effects/Collusion/Clink");
-            var k = new Lasergun(_animationHandlerFactory, enemylaserTileSet, _particleFactory, soundEffect, flightEffect, impactSound);
-            return k;
+            // TODO: create and load missing sound effects
+            var m = new SingleShotWeapon(owner,
+                null, 
+                null, 
+                null,
+                null,
+                nameTag,
+                clipSize,
+                clips,
+                () => _bulletFactory.GetEnemyLaser(owner, damage),
+                shotCoolDown: shotCooldown,
+                reloadTime: reloadTime);
+            return m;
         }
     }
 }

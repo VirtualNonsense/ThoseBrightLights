@@ -15,6 +15,8 @@ namespace SE_Praktikum.Components.Sprites
         private Input _input;
         private Logger _logger;
         private bool _shot = false;
+        private KeyboardState CurrentKey;
+        private KeyboardState PreviousKey;
         public Player(AnimationHandler animationHandler, AnimationHandler propulsion, Input input=null, int health=100, float speed = 5, SoundEffect impactSound = null) 
             : base(animationHandler, health, speed, impactSound)
         {
@@ -65,8 +67,7 @@ namespace SE_Praktikum.Components.Sprites
 
             if (CurrentKey.IsKeyDown(_input.Shoot) && !_shot)
             {
-                var b = Weapons[CurrentWeapon].GetBullet(velocity, Position, Rotation, this);
-                InvokeOnShoot(b);
+                ShootCurrentWeapon();
                 _shot = true;
             }
             else if (CurrentKey.IsKeyUp(_input.Shoot))

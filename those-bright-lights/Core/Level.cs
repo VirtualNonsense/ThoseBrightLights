@@ -132,7 +132,6 @@ namespace SE_Praktikum.Core
                         if (!(args is LevelEvent e)) return;
                         OnLevelEvent(e);
                     };
-                    _logger.Info("Shot bullet!");
                     return;
                 case LevelEvent.Explosion s:
                     if (s.Particle is null) return;

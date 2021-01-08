@@ -30,7 +30,7 @@ namespace SE_Praktikum.Services.Factories
             var animationSettings = new AnimationSettings(1,isPlaying:false);
             var e = new Enemy(_animationHandlerFactory.GetAnimationHandler(tileSet,animationSettings), impactSound:impactSound);
             e.Position = new Vector2(100,50);
-            e.AddWeapon(_weaponFactory.EnemyGetLasergun(contentManager));
+            e.AddWeapon(_weaponFactory.GetEnemyLaserGun(e));
 
             return e;
         }
@@ -48,7 +48,7 @@ namespace SE_Praktikum.Services.Factories
                 Position = new Vector2(100, 50),
                 Scale = 2
             };
-            e.AddWeapon(_weaponFactory.EnemyGetLasergun(contentManager));
+            e.AddWeapon(_weaponFactory.GetEnemyLaserGun(e));
 
             return e;
         }

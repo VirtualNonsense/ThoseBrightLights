@@ -10,6 +10,7 @@ using SE_Praktikum.Components.Sprites.Weapons;
 using SE_Praktikum.Extensions;
 using SE_Praktikum.Models;
 using SE_Praktikum.Services;
+using SE_Praktikum.Services.Abilities;
 using Vector2 = Microsoft.Xna.Framework.Vector2;
 
 namespace SE_Praktikum.Components.Sprites
@@ -28,7 +29,9 @@ namespace SE_Praktikum.Components.Sprites
         /// </summary>
         protected float RotationThreshold = MathExtensions.DegToRad(5);
 
-
+        // TODO: consider enforcing the HitboxFlipped in the setter
+        // this way you don't have to check/set it every couple of lines
+        // and you can be sure the bool does not lie
         protected bool HitBoxFlipped = false;
         public override float Rotation
         {
@@ -71,8 +74,10 @@ namespace SE_Praktikum.Components.Sprites
             else if(directAngle > 0)
                 rotation += offSetRotation;
         
-            var b =  Weapons[CurrentWeapon].GetBullet(Velocity, Position, rotation, this);
-            InvokeOnShoot(b);
+            // Weapon currently grabs parents position and rotation
+            // this will change most likely give me a bit time to figure out how to implement it properly
+            ShootCurrentWeapon();
+
         }
         
         
@@ -174,7 +179,6 @@ namespace SE_Praktikum.Components.Sprites
                 }
             }
         }
-        
 
     }
 
