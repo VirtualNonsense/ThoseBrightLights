@@ -76,6 +76,19 @@ namespace SE_Praktikum.Components.Sprites
                 weapon.Update(gameTime);
             }
 
+            for (var i = 0; i < Weapons.Count;)
+            {
+                var w = Weapons[i];
+                if (!w.IsRemoveAble)
+                {
+                    i++;
+                    continue;
+                }
+                Weapons.RemoveAt(i);
+                if (CurrentWeapon >= Weapons.Count)
+                    CurrentWeapon = Weapons.Count - 1;
+            }
+
             if (Propulsion != null)
             {
                 Propulsion.Position = Position;
@@ -134,9 +147,8 @@ namespace SE_Praktikum.Components.Sprites
         {
             if (!Weapons.Contains(weapon)) return;
             weapon.OnEmitBullet -= EmitBulletToOnShot;
-            Weapons.Remove(weapon);
-            if (CurrentWeapon >= Weapons.Count)
-                CurrentWeapon = Weapons.Count - 1;
+            // Weapons.Remove(weapon);
+            weapon.IsRemoveAble = true;
         }
 
         private void EmitBulletToOnShot(object sender, Weapon.EmitBulletEventArgs args)
