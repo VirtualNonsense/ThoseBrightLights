@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using SE_Praktikum.Models;
 using SE_Praktikum.Services;
+using SE_Praktikum.Services.Factories;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -20,11 +21,15 @@ namespace SE_Praktikum.Components.HUD
 
         protected List<AnimationHandler> _handler;
         protected HUD _parent;
+        private readonly AnimationHandlerFactory animationHandlerFactory;
+        private readonly TileSet tileSet;
 
-        public HUDItem(HUD parent, List<AnimationHandler> handler)
+        public HUDItem(HUD parent, AnimationHandlerFactory animationHandlerFactory, TileSet tileSet)
         {
+            _handler = new List<AnimationHandler>();
             _parent = parent;
-            _handler = handler;
+            this.animationHandlerFactory = animationHandlerFactory;
+            this.tileSet = tileSet;
         }
 
         public virtual void Draw(SpriteBatch spriteBatch)
