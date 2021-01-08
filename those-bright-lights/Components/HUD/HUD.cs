@@ -9,7 +9,7 @@ namespace SE_Praktikum.Components.HUD
 {
     public class HUD : IComponent
     {
-        private readonly Player _player;
+        public Player Player;
         private readonly List<HUDItem> _hUDItems;
 
         public Vector2 Position { get; set; }
@@ -19,14 +19,14 @@ namespace SE_Praktikum.Components.HUD
 
         public HUD(Player player)
         {
-            _player = player;
+            Player = player;
             _hUDItems = new List<HUDItem>();
-            _player.OnPositionChanged += _player_OnPositionChanged;
+            Player.OnPositionChanged += _player_OnPositionChanged;
         }
 
         private void _player_OnPositionChanged(object sender, EventArgs e)
         {
-            Position = _player.Position;
+            Position = Player.Position;
         }
 
         public void Draw(SpriteBatch spriteBatch)
