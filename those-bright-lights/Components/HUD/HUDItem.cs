@@ -10,6 +10,9 @@ namespace SE_Praktikum.Components.HUD
 {
     public abstract class HUDItem : IComponent
     {
+        /// <summary>
+        /// HUD Item coordinates in parent system
+        /// </summary>
         public Vector2 Position { get; set; }
         public bool IsRemoveAble { get; set; }
         public Vector2 Offset => Position-Origin;
@@ -41,7 +44,7 @@ namespace SE_Praktikum.Components.HUD
         {
             foreach (var item in _handler)
             {
-                item.Offset = Offset;
+                item.Offset = Offset+_parent.Position;
             }
         }
     }
