@@ -76,8 +76,8 @@ namespace SE_Praktikum.Components.Sprites
         
             // Weapon currently grabs parents position and rotation
             // this will change most likely give me a bit time to figure out how to implement it properly
-            Weapons[CurrentWeapon].Fire();
-            
+            ShootCurrentWeapon();
+
         }
         
         

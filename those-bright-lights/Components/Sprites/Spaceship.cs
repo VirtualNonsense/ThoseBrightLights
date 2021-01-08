@@ -74,8 +74,6 @@ namespace SE_Praktikum.Components.Sprites
         // #############################################################################################################
         // public Methods
         // #############################################################################################################
-
-
         public override void Update(GameTime gameTime)
         {
             foreach (var weapon in Weapons)
@@ -140,6 +138,11 @@ namespace SE_Praktikum.Components.Sprites
         // #############################################################################################################
         // protected / private Methods
         // #############################################################################################################
+        protected virtual void ShootCurrentWeapon()
+        {
+            if (Weapons.Count == 0) return;
+            Weapons[CurrentWeapon].Fire();
+        }
 
         protected virtual void InvokeOnTakeDamage(float damage)
         {
