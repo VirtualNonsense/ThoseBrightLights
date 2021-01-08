@@ -19,8 +19,10 @@ namespace SE_Praktikum.Components.Sprites.Actors
         public Actor Parent;
         
 
-        public Actor(AnimationHandler animationHandler, SoundEffect impactSound) : base(animationHandler)
+        public Actor(AnimationHandler animationHandler, SoundEffect impactSound, float health = 100, float maxHealth = 100) : base(animationHandler)
         {
+            Health = health;
+            MaxHealth = maxHealth;
             _logger = LogManager.GetCurrentClassLogger();
             _impactSound = impactSound;
         }

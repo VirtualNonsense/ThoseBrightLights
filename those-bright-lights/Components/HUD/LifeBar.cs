@@ -23,6 +23,7 @@ namespace SE_Praktikum.Components.HUD
             parent.Player.OnMaxHealthChanged += Player_OnMaxHealthChanged;
             this.animationSettingsLeftHeart = animationSettingsLeftHeart;
             this.animationSettingsRightHeart = animationSettingsRightHeart;
+            UpdateAmountHearts(parent.Player.MaxHealth);
         }
 
         private void Player_OnMaxHealthChanged(object sender, EventArgs e)
