@@ -52,5 +52,22 @@ namespace SE_Praktikum.Services.Factories
 
             return e;
         }
+
+        public Boss GetBoss(ContentManager contentManager)
+        {
+            SoundEffect impactSound;
+            var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\boss.json", 0);
+            var animationSettings = new AnimationSettings(1,isPlaying:false);
+            var b = new Boss(_animationHandlerFactory.GetAnimationHandler(tileSet, animationSettings),
+                new Polygon(Vector2.Zero, Vector2.Zero, 0,
+                    new List<Vector2> {new Vector2(0, 0), new Vector2(1000, -300), new Vector2(1000, 300),}))
+            {
+                Position = new Vector2(100, 50),
+                Scale = 2
+            };
+            b.AddWeapon(_weaponFactory.EnemyGetLasergun(contentManager));
+
+            return b;
+        }
     }
 }

@@ -172,25 +172,25 @@ namespace SE_Praktikum.Core
             _screen.Camera.Position += new Vector3(0, 0, player.Layer);
             _components.Add(player);
 
-            var turret = _enemyFactory.GetTurret(contentManager);
-            turret.Layer = player.Layer;
-            turret.X = 400;
-            turret.Y = 0;
-            turret.Rotation = (float) Math.PI;
-            turret.OnShoot += (sender, args) =>
+            var boss = _enemyFactory.GetBoss(contentManager);
+            boss.Layer = player.Layer;
+            boss.X = 400;
+            boss.Y = 0;
+            boss.Rotation = (float) Math.PI;
+            boss.OnShoot += (sender, args) =>
             {
                 if (!(args is LevelEvent e)) return;
                 OnLevelEvent(e);
             };
-            _components.Add(turret);
+            _components.Add(boss);
             
             //_components.AddRange(map);
             
             
-            turret.OnExplosion += (sender, args) =>
-            _components.Add(turret);
+            boss.OnExplosion += (sender, args) =>
+            _components.Add(boss);
                 
-            turret.OnExplosion += (sender, args) =>
+            boss.OnExplosion += (sender, args) =>
             {
                 if (!(args is LevelEvent e)) return;
                 OnLevelEvent(e);
