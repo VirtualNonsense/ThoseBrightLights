@@ -4,7 +4,7 @@ using System.Text;
 
 namespace SE_Praktikum.Components.HUD
 {
-    class LifeBar
+    public class LifeBar : HUDItem
     {
     }
 }
