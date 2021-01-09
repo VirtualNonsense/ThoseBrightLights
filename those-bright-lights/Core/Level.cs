@@ -8,7 +8,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json;
 using NLog;
 using SE_Praktikum.Components;
-using SE_Praktikum.Components.Actors;
 using SE_Praktikum.Components.Sprites.Actors;
 using SE_Praktikum.Components.Sprites.Actors.Spaceships;
 using SE_Praktikum.Models;
@@ -71,10 +70,10 @@ namespace SE_Praktikum.Core
 
         public void Update(GameTime gameTime)
         {
-            _previousMousestate = _mouseState;
-            _mouseState = Mouse.GetState();
-            if (_previousMousestate.Position != _mouseState.Position)
-                _logger.Trace($"{_screen.Camera.ProjectScreenPosIntoWorld(_mouseState.Position.ToVector2())}");
+            //_previousMousestate = _mouseState;
+            //_mouseState = Mouse.GetState();
+            //if (_previousMousestate.Position != _mouseState.Position)
+            //    _logger.Trace($"{_screen.Camera.ProjectScreenPosIntoWorld(_mouseState.Position.ToVector2())}");
             int index=0;
             while (index < _components.Count)
             {
@@ -161,13 +160,13 @@ namespace SE_Praktikum.Core
             
             //TODO: try to load the json map via the contentmanager
             // var map = _mapFactory.LoadMap(JsonConvert.DeserializeObject<LevelBlueprint>(File.ReadAllText(@".\Content\MetaData\Level\AlphaMap.json")));
-            _map = _mapFactory.LoadMap(@".\Content\MetaData\Level\TestLevel.json");
+            _map = _mapFactory.LoadMap(@".\Content\MetaData\Level\AlphaMap.json");
             _map.WinningZone.OnZoneEntered += (sender, args) => _logger.Debug($"Player{args.Player} entered WinningZone");
             _map.WinningZone.OnZoneLeft += (sender, args) => _logger.Debug($"Player:{args.Player} left WinningZone");
             //var healthPowerup = powerUpFactory.HealthGetInstance(25);
             //_components.Add(healthPowerup);
            //_components.Add(powerUpFactory.LaserGetInstance(new Vector2(10, 10), _map.TopLayer));
-            _components.Add(powerUpFactory.RocketGetInstance(new Vector2(100,20),_map.TopLayer));
+           //_components.Add(powerUpFactory.RocketGetInstance(new Vector2(100,20),_map.TopLayer));
             _collisionLayer = _map.TopLayer;
             //TODO: Set player level to _map.TopLayer
             

@@ -11,8 +11,8 @@ using SE_Praktikum.Components;
 using SE_Praktikum.Models;
 using SE_Praktikum.Models.Tiled;
 using Microsoft.Xna.Framework;
-using SE_Praktikum.Components.Actors;
 using SE_Praktikum.Components.Sprites.Actors;
+
 
 namespace SE_Praktikum.Services.Factories
 {
