@@ -224,9 +224,43 @@
          "width":256,
          "x":0,
          "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "id":19,
+         "name":"ObjectLayerZone",
+         "objects":[
+                {
+                 "height":0,
+                 "id":1,
+                 "name":"Spawn",
+                 "point":true,
+                 "rotation":0,
+                 "type":"PlayerSpawnPoint",
+                 "visible":true,
+                 "width":0,
+                 "x":184,
+                 "y":1384
+                }, 
+                {
+                 "height":253,
+                 "id":2,
+                 "name":"WinningZone",
+                 "rotation":0,
+                 "type":"WinningZone",
+                 "visible":true,
+                 "width":156,
+                 "x":7973,
+                 "y":1408
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
         }],
- "nextlayerid":19,
- "nextobjectid":1,
+ "nextlayerid":20,
+ "nextobjectid":3,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.4.2",
