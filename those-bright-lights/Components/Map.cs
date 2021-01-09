@@ -33,7 +33,7 @@ namespace SE_Praktikum.Components
             }
         }
       
-        public List<Tile> GetCollidable(float layer, Rectangle rect)
+        public List<Tile> RetrieveItems(float layer, Rectangle rect)
         {
             if (_tileContainer.ContainsKey(layer))
             {
@@ -43,7 +43,7 @@ namespace SE_Praktikum.Components
             return new List<Tile>();
         }
 
-        public List<Tile> GetCollidable(Rectangle rect)
+        public List<Tile> RetrieveItems(Rectangle rect)
         {
             var list = new List<Tile>();
 

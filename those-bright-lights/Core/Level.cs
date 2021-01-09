@@ -63,7 +63,10 @@ namespace SE_Praktikum.Core
                 if(actor is EnemyWithViewbox e)
                     _gameEngine.Render(e.ViewBox);
             }
-            _gameEngine.Render(_map.GetCollidable(_map.Area));
+
+            var tiles = _map.RetrieveItems(_map.Area);
+           
+            _gameEngine.Render(tiles);
             _gameEngine.Render(_map.WinningZone.Polygons);
             _gameEngine.Render(_components);
         }
@@ -85,7 +88,7 @@ namespace SE_Praktikum.Core
             var actor = _components.OfType<Actor>().ToList();
             for (int i = 0; i < actor.Count; i++)
             {
-                var mapObjects = _map.GetCollidable(actor[i].Layer, actor[i].HitBox.GetBoundingRectangle());
+                var mapObjects = _map.RetrieveItems(actor[i].Layer, actor[i].HitBox.GetBoundingRectangle());
 
                 for (int j = 0; j < mapObjects.Count; j++)
                 {
