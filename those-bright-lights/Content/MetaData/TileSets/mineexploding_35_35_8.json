@@ -1,0 +1,14 @@
+{ "columns":8,
+ "image":"..\/..\/Artwork\/Effects\/mineexploding_35_35_8.png",
+ "imageheight":35,
+ "imagewidth":280,
+ "margin":0,
+ "name":"mineexploding_35_35_8",
+ "spacing":0,
+ "tilecount":8,
+ "tiledversion":"1.4.3",
+ "tileheight":35,
+ "tilewidth":35,
+ "type":"tileset",
+ "version":1.4
+}
