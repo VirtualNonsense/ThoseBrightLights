@@ -135,7 +135,7 @@ namespace SE_Praktikum.Services.Factories
             {
                 polygon = new Polygon(
                 new Vector2(objectt.x, objectt.y),
-                new Vector2(objectt.width / 2, objectt.height / 2),
+                new Vector2(0,0),
                 0,
                 new List<Vector2>
                 {
