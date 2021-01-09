@@ -39,75 +39,15 @@
                  "y":150.295368907257
                 }, 
                 {
-                 "height":55.7773185851465,
+                 "height":1,
                  "id":7,
                  "name":"WinningZone",
                  "rotation":0,
                  "type":"WinningZone",
                  "visible":true,
-                 "width":44.1084234836514,
-                 "x":5.83444755074754,
-                 "y":105.720189619545
-                }, 
-                {
-                 "height":0,
-                 "id":8,
-                 "name":"",
-                 "point":true,
-                 "rotation":0,
-                 "type":"TurretSpawn",
-                 "visible":true,
-                 "width":0,
-                 "x":19.8371216725416,
-                 "y":34.0731736963656
-                }, 
-                {
-                 "height":0,
-                 "id":9,
-                 "name":"",
-                 "point":true,
-                 "rotation":0,
-                 "type":"TurretSpawn",
-                 "visible":true,
-                 "width":0,
-                 "x":80.0486203962562,
-                 "y":25.2048134192294
-                }, 
-                {
-                 "height":0,
-                 "id":10,
-                 "name":"",
-                 "point":true,
-                 "rotation":0,
-                 "type":"TurretSpawn",
-                 "visible":true,
-                 "width":0,
-                 "x":168.265467363559,
-                 "y":25.9049471253191
-                }, 
-                {
-                 "height":0,
-                 "id":11,
-                 "name":"",
-                 "point":true,
-                 "rotation":0,
-                 "type":"TurretSpawn",
-                 "visible":true,
-                 "width":0,
-                 "x":224.276163850735,
-                 "y":42.2414002674122
-                }, 
-                {
-                 "height":0,
-                 "id":12,
-                 "name":"",
-                 "point":true,
-                 "rotation":0,
-                 "type":"TurretSpawn",
-                 "visible":true,
-                 "width":0,
-                 "x":119.956241643369,
-                 "y":37.5738422268141
+                 "width":1,
+                 "x":0,
+                 "y":0
                 }, 
                 {
                  "height":0,
@@ -120,6 +60,18 @@
                  "width":0,
                  "x":139.559985413881,
                  "y":150.295368907257
+                }, 
+                {
+                 "height":0,
+                 "id":14,
+                 "name":"",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":0,
+                 "y":0
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -140,7 +92,7 @@
          "y":0
         }],
  "nextlayerid":8,
- "nextobjectid":14,
+ "nextobjectid":15,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.4.2",
