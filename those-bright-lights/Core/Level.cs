@@ -8,8 +8,9 @@ using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json;
 using NLog;
 using SE_Praktikum.Components;
-using SE_Praktikum.Components.Sprites;
-using SE_Praktikum.Components.Sprites.Weapons;
+using SE_Praktikum.Components.Actors;
+using SE_Praktikum.Components.Sprites.Actors;
+using SE_Praktikum.Components.Sprites.Actors.Spaceships;
 using SE_Praktikum.Models;
 using SE_Praktikum.Models.Tiled;
 using SE_Praktikum.Services;
@@ -57,7 +58,7 @@ namespace SE_Praktikum.Core
             {
                 if(actor.IsCollideAble)
                     _gameEngine.Render(actor.HitBox);
-                if(actor is Enemy e)
+                if(actor is EnemyWithViewbox e)
                     _gameEngine.Render(e.ViewBox);
             }
             _gameEngine.Render(_map.GetCollidable(_map.Area));
@@ -83,7 +84,6 @@ namespace SE_Praktikum.Core
                 for (int j = 0; j < mapObjects.Count; j++)
                 {
                     actor[i].InterAct(mapObjects[j]);
-
                 }
                 
                 for (int j = i+1; j < actor.Count; j++)
@@ -97,7 +97,6 @@ namespace SE_Praktikum.Core
                         break;
                 }
             }
-            
             _screen.Camera.Update(gameTime);
         }
         
@@ -141,7 +140,6 @@ namespace SE_Praktikum.Core
                         if (!(args is LevelEvent e)) return;
                         OnLevelEvent(e);
                     };
-                    _logger.Info("Shot bullet!");
                     return;
                 case LevelEvent.Explosion s:
                     if (s.Particle is null) return;
