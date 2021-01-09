@@ -205,17 +205,6 @@
                  "width":0,
                  "x":187,
                  "y":2110
-                }, 
-                {
-                 "height":866,
-                 "id":2,
-                 "name":"WinningZone",
-                 "rotation":0,
-                 "type":"WinningZone",
-                 "visible":true,
-                 "width":90,
-                 "x":8036,
-                 "y":1564
                 }],
          "opacity":1,
          "type":"objectgroup",
