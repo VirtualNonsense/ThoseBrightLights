@@ -96,6 +96,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
             {
                 Propulsion.Position = Position;
                 Propulsion.Rotation = Rotation;
+                Propulsion.Layer = Layer;
                 Propulsion.Update(gameTime);
             }
 
