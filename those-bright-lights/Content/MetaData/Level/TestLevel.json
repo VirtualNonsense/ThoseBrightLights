@@ -39,15 +39,15 @@
                  "y":150.295368907257
                 }, 
                 {
-                 "height":1,
+                 "height":20,
                  "id":7,
                  "name":"WinningZone",
                  "rotation":0,
                  "type":"WinningZone",
                  "visible":true,
-                 "width":1,
-                 "x":0,
-                 "y":0
+                 "width":20,
+                 "x":32,
+                 "y":56
                 }, 
                 {
                  "height":0,
