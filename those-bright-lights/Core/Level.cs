@@ -8,7 +8,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json;
 using NLog;
 using SE_Praktikum.Components;
-using SE_Praktikum.Components.Actors;
 using SE_Praktikum.Components.Sprites.Actors;
 using SE_Praktikum.Components.Sprites.Actors.Spaceships;
 using SE_Praktikum.Models;
@@ -161,7 +160,7 @@ namespace SE_Praktikum.Core
             
             //TODO: try to load the json map via the contentmanager
             // var map = _mapFactory.LoadMap(JsonConvert.DeserializeObject<LevelBlueprint>(File.ReadAllText(@".\Content\MetaData\Level\AlphaMap.json")));
-            _map = _mapFactory.LoadMap(@".\Content\MetaData\Level\TestLevel.json");
+            _map = _mapFactory.LoadMap(@".\Content\MetaData\Level\AlphaMap.json");
             _map.WinningZone.OnZoneEntered += (sender, args) => _logger.Debug($"Player{args.Player} entered WinningZone");
             _map.WinningZone.OnZoneLeft += (sender, args) => _logger.Debug($"Player:{args.Player} left WinningZone");
             //var healthPowerup = powerUpFactory.HealthGetInstance(25);
@@ -185,7 +184,7 @@ namespace SE_Praktikum.Core
                 OnLevelEvent(e);
             };
             _screen.Camera.Follow(player);
-            _screen.Camera.Position += new Vector3(0, 0,-100);
+            _screen.Camera.Position += new Vector3(0, 0, player.Layer);
             _components.Add(player);
 
             foreach(var e in _map.EnemySpawnpoints)
