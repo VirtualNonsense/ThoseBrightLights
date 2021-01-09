@@ -14,10 +14,11 @@ namespace SE_Praktikum.Components.Sprites.Actors
         public Tile(AnimationHandler animationHandler, TileModifier tileModifier = TileModifier.None, SoundEffect impactSound = null) : base(animationHandler, impactSound)
         {
             _logger = LogManager.GetCurrentClassLogger();
-            base._animationHandler.Origin = new Vector2(_animationHandler.FrameWidth/2f, animationHandler.FrameWidth/2f);
             SetTileModifier(tileModifier);
             Damage = 4;
             _indestructible = true;
+            _animationHandler.PointOfRotation =
+                new Vector2(_animationHandler.FrameWidth / 2f, _animationHandler.FrameHeight / 2f);
 
         }
 

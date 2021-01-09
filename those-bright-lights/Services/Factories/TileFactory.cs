@@ -30,7 +30,7 @@ namespace SE_Praktikum.Services.Factories
                 if (index > tileset.StartEntry + tileset.Tiles-1)
                     continue;
                 var settings = new AnimationSettings(new List<(int, float)>{((int)index, 1f)}, isPlaying:false, opacity: opacity, layer: layer);
-                var handler = _factory.GetAnimationHandler(tileset, settings);
+                var handler = _factory.GetAnimationHandler(tileset, settings, origin: Vector2.Zero);
                 handler.Position = position;
                 return new Tile(handler, t.Item1);
                 

@@ -139,10 +139,10 @@ namespace SE_Praktikum.Services.Factories
                 0,
                 new List<Vector2>
                 {
-                            new Vector2(-objectt.width/2,-objectt.height/2),
-                            new Vector2(objectt.width/2,-objectt.height/2),
-                            new Vector2(objectt.width/2,objectt.height/2),
-                            new Vector2(-objectt.width/2,objectt.height/2)
+                            new Vector2(0,0),
+                            new Vector2(objectt.width,0),
+                            new Vector2(objectt.width,objectt.height),
+                            new Vector2(0,objectt.height)
                 }
                 );
             }

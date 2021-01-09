@@ -148,6 +148,12 @@ namespace SE_Praktikum.Services
             set => _origin = value;
         }
 
+        public Vector2 PointOfRotation
+        {
+            get;
+            set;
+        }
+
         public float Opacity
         {
             get => _settings.Opacity;
@@ -182,6 +188,7 @@ namespace SE_Praktikum.Services
             _position = position ?? new Vector2(0,0);
             _origin = origin ?? new Vector2(0,0);
             _offset = Vector2.Zero;
+            PointOfRotation = Vector2.Zero;
             CurrentHitBox = Tileset.GetHitBox(_settings.UpdateList[_currentIndex].Item1);
             HitBoxTransition();
             HitBoxUpdate();
@@ -199,11 +206,11 @@ namespace SE_Praktikum.Services
 
             spriteBatch.Draw(
                 Tileset.Texture,
-                Position + Offset,
+                Position + Offset + PointOfRotation,
                 Frame,
                 _settings.Color * _settings.Opacity,
                 _settings.Rotation,
-                Origin,
+                Origin + PointOfRotation,
                 _settings.Scale,
                 _settings.SpriteEffects,
                 _settings.Layer
