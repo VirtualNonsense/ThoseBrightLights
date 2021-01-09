@@ -156,7 +156,7 @@ namespace SE_Praktikum.Core
             
             //TODO: try to load the json map via the contentmanager
             // var map = _mapFactory.LoadMap(JsonConvert.DeserializeObject<LevelBlueprint>(File.ReadAllText(@".\Content\MetaData\Level\AlphaMap.json")));
-            _map = _mapFactory.LoadMap(@".\Content\MetaData\Level\TestLevel.json");
+            _map = _mapFactory.LoadMap(@".\Content\MetaData\Level\BetaMap.json");
             _map.WinningZone.OnZoneEntered += (sender, args) => _logger.Debug($"Player{args.Player} entered WinningZone");
             _map.WinningZone.OnZoneLeft += (sender, args) => _logger.Debug($"Player:{args.Player} left WinningZone");
             //var healthPowerup = powerUpFactory.HealthGetInstance(25);
