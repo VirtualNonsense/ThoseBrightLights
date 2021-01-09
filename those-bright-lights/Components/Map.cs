@@ -27,6 +27,10 @@ namespace SE_Praktikum.Components
             Area = area;
             WinningZone = winningZone;
             EnemySpawnpoints = enemySpawnPoints;
+            foreach(var p in winningZone.Polygons)
+            {
+                p.Layer = TopLayer;
+            }
         }
       
         public List<Tile> GetCollidable(float layer, Rectangle rect)
