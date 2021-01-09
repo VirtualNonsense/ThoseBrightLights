@@ -1,10 +1,7 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using SE_Praktikum.Models;
+﻿using SE_Praktikum.Models;
 using SE_Praktikum.Services;
-using SE_Praktikum.Services.Factories;
 
-namespace SE_Praktikum.Components.Sprites
+namespace SE_Praktikum.Components
 {
     public abstract class Particle : Sprite
     {

@@ -4,11 +4,9 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using SE_Praktikum.Components.Sprites;
-using SE_Praktikum.Components.Sprites.Weapons;
 using SE_Praktikum.Models;
 using NLog;
-using SE_Praktikum.Components.Sprites.PowerUps;
+using SE_Praktikum.Components.Sprites.Actors.PowerUps;
 
 namespace SE_Praktikum.Services.Factories
 {
@@ -35,9 +33,12 @@ namespace SE_Praktikum.Services.Factories
         {
             var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\PowerUpTry1.json", 0);
             var animationSettings = new AnimationSettings(new List<(int,float)> {(0,1)}, isPlaying: false);
-            var hp = new HealthPowerUp(_animationHandlerFactory.GetAnimationHandler(tileSet, animationSettings), healthbonus:health);
-            hp.Layer = layer;
-            hp.Position = position ?? new Vector2(0, 0);
+            var hp = new HealthPowerUp(_animationHandlerFactory.GetAnimationHandler(tileSet, animationSettings),
+                healthbonus: health)
+            {
+                Layer = layer,
+                Position = position ?? new Vector2(0, 0)
+            };
             return hp;
         }
 
@@ -45,9 +46,11 @@ namespace SE_Praktikum.Services.Factories
         {
             var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\PowerUpTry1.json", 0);
             var animationSettings = new AnimationSettings(1, isPlaying: false);
-            var ikp = new InstaDeathPowerUp(_animationHandlerFactory.GetAnimationHandler(tileSet, animationSettings));
-            ikp.Layer = layer;
-            ikp.Position = position ?? new Vector2(0, 0);
+            var ikp = new InstaDeathPowerUp(_animationHandlerFactory.GetAnimationHandler(tileSet, animationSettings))
+            {
+                Layer = layer,
+                Position = position ?? new Vector2(0, 0)
+            };
             return ikp;
         }
 
@@ -55,9 +58,12 @@ namespace SE_Praktikum.Services.Factories
         {
             var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\PowerUpTry1.json", 0);
             var animationSettings = new AnimationSettings(new List<(int, float)> { (11,1) }, isPlaying: false);
-            var rp = new WeaponPowerUp(_animationHandlerFactory.GetAnimationHandler(tileSet, animationSettings),_weaponFactory.GetMissileLauncher(_contentManager));
-            rp.Layer = layer;
-            rp.Position = position ?? new Vector2(0, 0);
+            var rp = new WeaponPowerUp(_animationHandlerFactory.GetAnimationHandler(tileSet, animationSettings),
+                _weaponFactory.GetMissileLauncher(null))
+            {
+                Layer = layer,
+                Position = position ?? new Vector2(0, 0)
+            };
             return rp;
         }
 
@@ -65,9 +71,12 @@ namespace SE_Praktikum.Services.Factories
         {
             var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\PowerUpTry1.json", 0);
             var animationSettings = new AnimationSettings(new List<(int, float)> { (9, 1) }, isPlaying: false);
-            var lp = new WeaponPowerUp(_animationHandlerFactory.GetAnimationHandler(tileSet, animationSettings), _weaponFactory.EnemyGetLasergun(_contentManager));
-            lp.Layer = layer;
-            lp.Position = position ?? new Vector2(0, 0);
+            var lp = new WeaponPowerUp(_animationHandlerFactory.GetAnimationHandler(tileSet, animationSettings),
+                _weaponFactory.GetEnemyLaserGun(null))
+            {
+                Layer = layer,
+                Position = position ?? new Vector2(0, 0)
+            };
             return lp;
         }
 
@@ -75,9 +84,11 @@ namespace SE_Praktikum.Services.Factories
         {
             var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\PowerUpTry1.json", 0);
             var animationSettings = new AnimationSettings(new List<(int, float)> { (22, 1) }, isPlaying: false);
-            var la = new AmmoPowerUp(_animationHandlerFactory.GetAnimationHandler(tileSet, animationSettings),ammo);
-            la.Layer = layer;
-            la.Position = position ?? new Vector2(0, 0);
+            var la = new AmmoPowerUp(_animationHandlerFactory.GetAnimationHandler(tileSet, animationSettings), ammo)
+            {
+                Layer = layer,
+                Position = position ?? new Vector2(0, 0)
+            };
             return la;
         }
 
@@ -85,30 +96,12 @@ namespace SE_Praktikum.Services.Factories
         {
             var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\PowerUpTry1.json", 0);
             var animationSettings = new AnimationSettings(new List<(int, float)> { (22, 1) }, isPlaying: false);
-            var ra = new AmmoPowerUp(_animationHandlerFactory.GetAnimationHandler(tileSet, animationSettings),ammo);
-            ra.Layer = layer;
-            ra.Position = position ?? new Vector2(0, 0);
+            var ra = new AmmoPowerUp(_animationHandlerFactory.GetAnimationHandler(tileSet, animationSettings), ammo)
+            {
+                Layer = layer, 
+                Position = position ?? new Vector2(0, 0)
+            };
             return ra;
         }
-
-
-
-
-
-
-
-
-
-
-        //public ScoreBonusPowerUp ScoreGetInstance()
-        //{
-
-        //}
-
-
-
-
-
-
     }
 }

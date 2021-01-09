@@ -1,15 +1,9 @@
 ﻿using SE_Praktikum.Models;
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Text;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using SE_Praktikum.Components.Sprites;
-using System.Data;
 using System.Linq;
-using SE_Praktikum.Models.Tiled;
+using SE_Praktikum.Components.Sprites.Actors;
+using SE_Praktikum.Components.Sprites.Actors.Spaceships;
 
 namespace SE_Praktikum.Components
 {

@@ -1,11 +1,12 @@
 ﻿using Microsoft.Xna.Framework;
 using NLog;
 using NVorbis.Ogg;
-using SE_Praktikum.Components.Sprites;
 using SE_Praktikum.Models;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using SE_Praktikum.Components.Actors;
+using SE_Praktikum.Components.Sprites.Actors;
 using SE_Praktikum.Extensions;
 
 namespace SE_Praktikum.Services.Factories

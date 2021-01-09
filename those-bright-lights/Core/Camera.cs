@@ -5,7 +5,6 @@ using Microsoft.Xna.Framework.Input;
 using Ninject;
 using NLog;
 using SE_Praktikum.Components;
-using SE_Praktikum.Components.Sprites;
 using SE_Praktikum.Extensions;
 using SE_Praktikum.Models;
 

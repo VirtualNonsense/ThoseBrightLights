@@ -4,7 +4,9 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using SE_Praktikum.Components.Sprites;
+using SE_Praktikum.Components.Actors;
+using SE_Praktikum.Components.Sprites.Actors;
+using SE_Praktikum.Components.Sprites.Actors.Spaceships;
 using SE_Praktikum.Extensions;
 using SE_Praktikum.Models;
 
@@ -30,13 +32,7 @@ namespace SE_Praktikum.Services.Factories
             var animationSettings = new AnimationSettings(1,isPlaying:false);
             var e = new Enemy(_animationHandlerFactory.GetAnimationHandler(tileSet,animationSettings), impactSound:impactSound);
             e.Position = new Vector2(100,50);
-            e.ViewBox = new Polygon(Vector2.Zero, Vector2.Zero, 0, new List<Vector2>
-            {
-                new Vector2(0,0),
-                new Vector2(300,-100),
-                new Vector2(300,100),
-            });
-            e.AddWeapon(_weaponFactory.EnemyGetLasergun(contentManager));
+            e.AddWeapon(_weaponFactory.GetEnemyLaserGun(e));
 
             return e;
         }
@@ -47,16 +43,33 @@ namespace SE_Praktikum.Services.Factories
             var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\turret_16_21.json",0);
             var animationSettings = new AnimationSettings(1,isPlaying:false);
             var e = new Turret(_animationHandlerFactory.GetAnimationHandler(tileSet, animationSettings),
-                impactSound: impactSound)
+                impactSound: impactSound, 
+                viewbox:new Polygon(Vector2.Zero, Vector2.Zero, 0,
+                    new List<Vector2> {new Vector2(0, 0), new Vector2(300, -100), new Vector2(300, 100),}))
             {
                 Position = new Vector2(100, 50),
-                Scale = 2,
-                ViewBox = new Polygon(Vector2.Zero, Vector2.Zero, 0,
-                    new List<Vector2> {new Vector2(0, 0), new Vector2(300, -100), new Vector2(300, 100),})
+                Scale = 2
             };
-            e.AddWeapon(_weaponFactory.EnemyGetLasergun(contentManager));
+            e.AddWeapon(_weaponFactory.GetEnemyLaserGun(e));
 
             return e;
+        }
+
+        public Boss GetBoss(ContentManager contentManager)
+        {
+            SoundEffect impactSound;
+            var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\boss.json", 0);
+            var animationSettings = new AnimationSettings(1,isPlaying:false);
+            var b = new Boss(_animationHandlerFactory.GetAnimationHandler(tileSet, animationSettings),
+                new Polygon(Vector2.Zero, Vector2.Zero, 0,
+                    new List<Vector2> {new Vector2(0, 0), new Vector2(1000, -300), new Vector2(1000, 300),}))
+            {
+                Position = new Vector2(100, 50),
+                Scale = 2
+            };
+            b.AddWeapon(_weaponFactory.GetEnemyLaserGun(b));
+
+            return b;
         }
     }
 }

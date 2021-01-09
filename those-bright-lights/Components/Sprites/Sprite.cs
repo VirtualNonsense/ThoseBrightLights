@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using SE_Praktikum.Models;
 using SE_Praktikum.Services;
-using SE_Praktikum.Services.Factories;
 
-namespace SE_Praktikum.Components.Sprites
+namespace SE_Praktikum.Components
 {
   public class Sprite : IComponent
   {
@@ -15,7 +12,6 @@ namespace SE_Praktikum.Components.Sprites
     // #################################################################################################################
     protected AnimationHandler _animationHandler;
 
-    public Sprite Parent;
     /// <summary>
     /// The time it takes the object to rotate 360 degrees in milliseconds
     /// </summary>
@@ -37,14 +33,14 @@ namespace SE_Praktikum.Components.Sprites
 
     public List<Sprite> Children { get; set; }
     
-    public Vector2 Origin { 
+    public virtual Vector2 Origin { 
       get => _animationHandler.Origin;
     }
 
     public readonly Color[] TextureData;
 
 
-    public Vector2 Position
+    public virtual Vector2 Position
     {
       get => _animationHandler.Position;
       set => _animationHandler.Position = value;
@@ -63,7 +59,7 @@ namespace SE_Praktikum.Components.Sprites
     }
 
     //TODO: does layer have to be float? maybe use int instead
-    public float Layer
+    public virtual float Layer
     {
       get => _animationHandler.Layer;
       set => _animationHandler.Layer = value;
@@ -97,48 +93,6 @@ namespace SE_Praktikum.Components.Sprites
           (int) (height * Scale));
       }
     }
-    
-
-    #region VectorShortcuts
-
-    public Vector2 TopLeft => new Vector2(Rectangle.X, Rectangle.Y);
-
-    public Vector2 TopRight => new Vector2(Rectangle.X + Rectangle.Width, Rectangle.Y);
-
-    public Vector2 BottomLeft => new Vector2(Rectangle.X, Rectangle.Y + Rectangle.Height);
-
-    public Vector2 BottomRight => new Vector2(Rectangle.X + Rectangle.Width, Rectangle.Y + Rectangle.Height);
-
-    public Vector2 Centre => new Vector2(Rectangle.X + (Rectangle.Width / 2), Rectangle.Y + (Rectangle.Height / 2));
-
-    public List<Vector2> Dots =>
-      new List<Vector2>()
-      {
-        Centre,
-        TopRight,
-        BottomRight,
-        BottomLeft,
-        TopLeft,
-      };
-
-    public List<Vector2> GetNormals()
-    {
-      var normals = new List<Vector2>();
-
-      var dots = Dots;
-
-      for (int i = 1; i < dots.Count - 1; i++)
-      {
-        normals.Add(Vector2.Normalize(new Vector2(dots[i + 1].X - dots[i].X, dots[i + 1].Y - dots[i].Y)));
-      }
-
-      normals.Add(
-        Vector2.Normalize(new Vector2(dots[1].X - dots[dots.Count - 1].X, dots[1].Y - dots[dots.Count - 1].Y)));
-
-      return normals;
-    }
-
-    #endregion
 
     public bool IsRemoveAble { get; set; }
     public Vector2 Velocity { get; set; }
