@@ -185,7 +185,7 @@ namespace SE_Praktikum.Core
                 OnLevelEvent(e);
             };
             _screen.Camera.Follow(player);
-            _screen.Camera.Position += new Vector3(0, 0,-100);
+            _screen.Camera.Position += new Vector3(0, 0, player.Layer);
             _components.Add(player);
 
             foreach(var e in _map.EnemySpawnpoints)
