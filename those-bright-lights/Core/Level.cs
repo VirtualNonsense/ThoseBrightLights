@@ -65,7 +65,12 @@ namespace SE_Praktikum.Core
             }
 
             var tiles = _map.RetrieveItems(_map.Area);
-           
+            var polys = tiles.Where(t => t.HitBox != null).Select(t => t.HitBox);
+            foreach (var poly in polys)
+            {
+                _gameEngine.Render(poly);
+            }
+
             _gameEngine.Render(tiles);
             _gameEngine.Render(_map.WinningZone.Polygons);
             _gameEngine.Render(_components);
