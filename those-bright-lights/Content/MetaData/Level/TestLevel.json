@@ -108,6 +108,18 @@
                  "width":0,
                  "x":119.956241643369,
                  "y":37.5738422268141
+                }, 
+                {
+                 "height":0,
+                 "id":13,
+                 "name":"Spawn",
+                 "point":true,
+                 "rotation":0,
+                 "type":"PlayerSpawnPoint",
+                 "visible":true,
+                 "width":0,
+                 "x":139.559985413881,
+                 "y":150.295368907257
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -128,7 +140,7 @@
          "y":0
         }],
  "nextlayerid":8,
- "nextobjectid":13,
+ "nextobjectid":14,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.4.2",
