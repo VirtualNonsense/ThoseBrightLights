@@ -181,6 +181,18 @@
 /processorParam:TextureFormat=Color
 /build:Artwork/Effects/laesr_explosion_6_6_6.png
 
+#begin Artwork/Effects/mineexploding_35_35_8.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Artwork/Effects/mineexploding_35_35_8.png
+
 #begin Artwork/Effects/minigunexplosions_8_10_5.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -372,6 +384,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Artwork/Powerups/skullanimation_19_24_9.png
+
+#begin Artwork/Projectiles/allprojectiles_20_20.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Artwork/Projectiles/allprojectiles_20_20.png
 
 #begin Artwork/Projectiles/cartridge_13_6.png
 /importer:TextureImporter
@@ -744,6 +768,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Artwork/Tilemaps/Venus.png
+
+#begin Artwork/Weapons/allweapons_32_32.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Artwork/Weapons/allweapons_32_32.png
 
 #begin Artwork/Weapons/bossweapon_20_16.png
 /importer:TextureImporter
