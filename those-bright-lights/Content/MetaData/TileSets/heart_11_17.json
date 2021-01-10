@@ -1,0 +1,14 @@
+{ "columns":4,
+ "image":"..\/..\/Artwork\/misc\/heart_11_17.png",
+ "imageheight":17,
+ "imagewidth":44,
+ "margin":0,
+ "name":"heart_11_17",
+ "spacing":0,
+ "tilecount":4,
+ "tiledversion":"1.4.2",
+ "tileheight":17,
+ "tilewidth":11,
+ "type":"tileset",
+ "version":1.4
+}

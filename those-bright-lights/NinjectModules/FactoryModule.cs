@@ -19,6 +19,8 @@ namespace SE_Praktikum.NinjectModules
             Bind<TileSetFactory>().ToSelf().InSingletonScope();
             Bind<PowerUpFactory>().ToSelf().InSingletonScope();
             Bind<BulletFactory>().ToSelf().InSingletonScope();
+            Bind<HUDFactory>().ToSelf().InSingletonScope();
+            Bind<HUDItemFactory>().ToSelf().InSingletonScope();
         }
     }
 }

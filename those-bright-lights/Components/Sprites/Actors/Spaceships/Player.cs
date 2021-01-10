@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Input;
 using NLog;
 using SE_Praktikum.Models;
 using SE_Praktikum.Services;
+using System;
 
 namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
 {
@@ -14,6 +15,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
         private bool _shot = false;
         private KeyboardState CurrentKey;
         private KeyboardState PreviousKey;
+        private int _score;
         public Player(AnimationHandler animationHandler, AnimationHandler propulsion, Input input=null, int health=100, float speed = 5, SoundEffect impactSound = null) 
             : base(animationHandler, health, speed, impactSound)
         {
@@ -23,6 +25,22 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
             _logger = LogManager.GetCurrentClassLogger();
             Propulsion = propulsion;
             Propulsion.Origin += new Vector2(animationHandler.FrameWidth / 2 + Propulsion.FrameWidth/2 +2, 0);
+        }
+
+        public event EventHandler OnScoreChanged;
+
+        public int Score 
+        { 
+            get => _score;
+            set
+            {
+                if (value < 0)
+                {
+                    _score = 0;
+                    return;
+                }
+                _score = value;
+            }
         }
 
         public override void Update(GameTime gameTime)
@@ -72,6 +90,11 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
             #endregion
             
             base.Update(gameTime);
+        }
+
+        protected void InvokeOnScoreChanged()
+        {
+            OnScoreChanged?.Invoke(this, EventArgs.Empty);
         }
 
         protected override void ExecuteInteraction(Actor other)

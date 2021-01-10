@@ -205,6 +205,9 @@
         <None Update="Content\Artwork\Actors\boss.png">
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
+        <None Update="Content\MetaData\TileSets\heart_11_17.json">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
         <None Update="Content\MetaData\TileSets\health.json">
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>

@@ -28,6 +28,7 @@ namespace SE_Praktikum.Core
         private readonly PowerUpFactory powerUpFactory;
         private readonly IScreen _screen;
         private readonly IGameEngine _gameEngine;
+        private readonly HUDFactory hUDFactory;
         private readonly List<IComponent> _components;
         private readonly Logger _logger;
         private float _collisionLayer;
@@ -39,7 +40,7 @@ namespace SE_Praktikum.Core
         private event EventHandler OnExplosion;
 
         //Constructor
-        public Level(MapFactory mapFactory, PlayerFactory playerFactory, ParticleFactory particleFactory, EnemyFactory enemyFactory,PowerUpFactory powerUpFactory, IScreen screen, IGameEngine gameEngine)
+        public Level(MapFactory mapFactory, PlayerFactory playerFactory, ParticleFactory particleFactory, EnemyFactory enemyFactory,PowerUpFactory powerUpFactory, IScreen screen, IGameEngine gameEngine, HUDFactory hUDFactory)
         {
             
             _mapFactory = mapFactory;
@@ -49,6 +50,7 @@ namespace SE_Praktikum.Core
             this.powerUpFactory = powerUpFactory;
             _screen = screen;
             _gameEngine = gameEngine;
+            this.hUDFactory = hUDFactory;
             _components = new List<IComponent>();
             _logger = LogManager.GetCurrentClassLogger();
         }
@@ -191,6 +193,8 @@ namespace SE_Praktikum.Core
                 if (!(args is LevelEvent e)) return;
                 OnLevelEvent(e);
             };
+            var hud = hUDFactory.GetInstance(player);
+            _components.Add(hud);
             _screen.Camera.Follow(player);
             _screen.Camera.Position += new Vector3(0, 0, player.Layer);
             _components.Add(player);

@@ -37,6 +37,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
         // #############################################################################################################
         #region Events
         public event EventHandler OnShoot;
+        public event EventHandler OnPositionChanged;
 
         #endregion
         
@@ -67,7 +68,17 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
 
             }
         }
-        
+
+        public override Vector2 Position 
+        { 
+            get => base.Position;
+            set
+            {
+                base.Position = value;
+                InvokeOnPositionChanged();
+            } 
+        }
+
         // #############################################################################################################
         // public Methods
         // #############################################################################################################
@@ -143,6 +154,10 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
             Weapons[CurrentWeapon].Fire();
         }
 
+        protected virtual void InvokeOnTakeDamage(float damage)
+        {
+            OnTakeDamage?.Invoke(this,EventArgs.Empty);
+        }
         protected virtual void InvokeOnShoot(Bullet b)
         {
             if (b is null)

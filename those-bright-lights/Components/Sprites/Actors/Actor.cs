@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Audio;
 using NLog;
 using SE_Praktikum.Models;
 using SE_Praktikum.Services;
+using SE_Praktikum.Extensions;
 
 namespace SE_Praktikum.Components.Sprites.Actors
 {
@@ -11,14 +12,17 @@ namespace SE_Praktikum.Components.Sprites.Actors
     {
 
         private float _health;
+        private float _maxHealth;
         public bool CollisionEnabled = true;
         private Logger _logger;
         protected SoundEffect _impactSound;
         public Actor Parent;
         
 
-        public Actor(AnimationHandler animationHandler, SoundEffect impactSound) : base(animationHandler)
+        public Actor(AnimationHandler animationHandler, SoundEffect impactSound, float health = 100, float maxHealth = 100) : base(animationHandler)
         {
+            Health = health;
+            MaxHealth = maxHealth;
             _logger = LogManager.GetCurrentClassLogger();
             _impactSound = impactSound;
         }
@@ -34,10 +38,35 @@ namespace SE_Praktikum.Components.Sprites.Actors
                 {
                     _health = 0;
                     IsRemoveAble = true;
+                    InvokeOnHealthChanged();
                     return;
                 }
 
+                if (value > _maxHealth)
+                {
+                    _health = _maxHealth;
+                    InvokeOnHealthChanged();
+                    return;
+                }
                 _health = value;
+                InvokeOnHealthChanged();
+            }
+        }
+
+        public float MaxHealth { 
+            get => _maxHealth;
+            set
+            {
+                if (value <= 1)
+                {
+                    _health = MathExtensions.Remap(value,0,_maxHealth,0,1);
+                    _maxHealth = 1;
+                    InvokeOnMaxHealthChanged();
+                    return;
+                }
+                _health = MathExtensions.Remap(value, 0, _maxHealth, 0, value);
+                _maxHealth = value;
+                InvokeOnMaxHealthChanged();
             }
         }
         protected bool _indestructible;
@@ -47,6 +76,8 @@ namespace SE_Praktikum.Components.Sprites.Actors
         #region Events
         public event EventHandler<EventArgs> OnExplosion;
         public event EventHandler<EventArgs> OnDeath;
+        public event EventHandler OnHealthChanged;
+        public event EventHandler OnMaxHealthChanged;
         #endregion
 
         public void InterAct(Actor other)
@@ -101,6 +132,16 @@ namespace SE_Praktikum.Components.Sprites.Actors
         protected virtual void InvokeDeath()
         {
             OnDeath?.Invoke(this, EventArgs.Empty);
+        }
+
+        protected virtual void InvokeOnHealthChanged()
+        {
+            OnHealthChanged?.Invoke(this, EventArgs.Empty);
+        }
+
+        protected virtual void InvokeOnMaxHealthChanged()
+        {
+            OnMaxHealthChanged?.Invoke(this, EventArgs.Empty);
         }
 
         #endregion
