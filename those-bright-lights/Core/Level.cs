@@ -229,10 +229,40 @@ namespace SE_Praktikum.Core
                         _components.Add(turret);
                         break;
                     case EnemyType.Alienship:
+                        var alienship = _enemyFactory.GetInstance(contentManager);
+                        alienship.Layer = player.Layer;
+                        alienship.Position = e.Item2;
+                        alienship.Rotation = (float)Math.PI;
+                        alienship.OnShoot += (sender, args) =>
+                        {
+                            if (!(args is LevelEvent e)) return;
+                            OnLevelEvent(e);
+                        };
 
+                        alienship.OnExplosion += (sender, args) =>
+                        {
+                            if (!(args is LevelEvent e)) return;
+                            OnLevelEvent(e);
+                        };
+                        _components.Add(alienship);
                         break;
                     case EnemyType.Boss:
+                        var boss = _enemyFactory.GetBoss(contentManager);
+                        boss.Layer = player.Layer;
+                        boss.Position = e.Item2;
+                        boss.Rotation = (float)Math.PI;
+                        boss.OnShoot += (sender, args) =>
+                        {
+                            if (!(args is LevelEvent e)) return;
+                            OnLevelEvent(e);
+                        };
 
+                        boss.OnExplosion += (sender, args) =>
+                        {
+                            if (!(args is LevelEvent e)) return;
+                            OnLevelEvent(e);
+                        };
+                        _components.Add(boss);
                         break;
                     case EnemyType.Minen:
 
