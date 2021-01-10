@@ -12,12 +12,14 @@ namespace SE_Praktikum.Components.HUD
     public class ScoreBar : HUDItem
     {
         private readonly AnimationSettings numberAnimationSettings;
+        private const int margin = 5;
 
         public ScoreBar(HUD parent, AnimationHandlerFactory animationHandlerFactory, TileSet tileSet, AnimationSettings numberAnimationSettings) : base(parent, animationHandlerFactory, tileSet)
         {
             parent.Player.OnScoreChanged += Player_OnScoreChanged;
             this.numberAnimationSettings = numberAnimationSettings;
             UpdateAmountDigits(parent.Player.Score);
+            UpdateDigits(_parent.Player.Score);
         }
 
         private void Player_OnScoreChanged(object sender, EventArgs e)
@@ -38,7 +40,7 @@ namespace SE_Praktikum.Components.HUD
 
         public void UpdateAmountDigits(int newScore)
         {
-            var digits = Math.Log10(newScore);
+            var digits = newScore == 0 ? 1 : Math.Floor(Math.Log10(newScore)+1);
 
             if (digits < _handler.Count)
             {
@@ -51,7 +53,7 @@ namespace SE_Praktikum.Components.HUD
             {
                 for (int i = _handler.Count; i < digits; i++)
                 {
-                    var posX = -i * tileSet.TileDimX;
+                    var posX = -i * (tileSet.TileDimX+margin)-margin;
 
                     _handler.Add(ConstrucDigit(new Vector2(posX, 0)));
                 }

@@ -15,7 +15,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
     public abstract class Spaceship : Actor
     {
         protected List<Weapon> Weapons;
-        protected int CurrentWeapon;
+        protected int _currentWeapon;
         protected float MaxSpeed;
         protected readonly float Acceleration;
         private Logger _logger;
@@ -41,6 +41,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
         public event EventHandler OnShoot;
         //TODO: Consider moving this into sprite
         public event EventHandler OnPositionChanged;
+        public event EventHandler OnWeaponChanged;
 
         #endregion
         
@@ -49,6 +50,28 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
         // #############################################################################################################
         protected bool FlippedHorizontal => _animationHandler.SpriteEffects == SpriteEffects.FlipVertically;
 
+        public int CurrentWeapon 
+        {
+            get => _currentWeapon;
+            set
+            {
+                if (value < 0)
+                {
+                    _currentWeapon = 0;
+                    InvokeOnWeaponChanged();
+                    return;
+                }
+
+                if (value >= Weapons.Count)
+                {
+                    _currentWeapon = Weapons.Count - 1;
+                    InvokeOnWeaponChanged();
+                    return;
+                }
+                _currentWeapon = value;
+                InvokeOnWeaponChanged();
+            }
+        }
         public override float Rotation
         {
             get => base.Rotation;
@@ -101,8 +124,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
                     continue;
                 }
                 Weapons.RemoveAt(i);
-                if (CurrentWeapon >= Weapons.Count)
-                    CurrentWeapon = Weapons.Count - 1;
+                CurrentWeapon = Weapons.Count;
             }
 
             if (Propulsion != null)
@@ -127,7 +149,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
         {
             weapon.Parent = this;
             Weapons.Add(weapon);
-            CurrentWeapon = Weapons.Count - 1;
+            CurrentWeapon = Weapons.Count;
             weapon.OnEmitBullet += EmitBulletToOnShot;
             switch (weapon)
             {
@@ -156,7 +178,10 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
             if (Weapons.Count == 0) return;
             Weapons[CurrentWeapon].Fire();
         }
-
+        protected virtual void InvokeOnWeaponChanged()
+        {
+            OnWeaponChanged?.Invoke(this, EventArgs.Empty);
+        }
         protected virtual void InvokeOnPositionChanged()
         {
             OnPositionChanged?.Invoke(this, EventArgs.Empty);
@@ -172,6 +197,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
 
         private void EmitBulletToOnShot(object sender, Weapon.EmitBulletEventArgs args)
         {
+            _logger.Debug("emiting bullet");
             InvokeOnShoot(args.Bullet);
         }
 

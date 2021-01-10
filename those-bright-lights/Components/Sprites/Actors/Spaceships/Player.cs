@@ -18,6 +18,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
         public Player(AnimationHandler animationHandler, AnimationHandler propulsion, Input input=null, float acceleration = 5, float maxSpeed = 30, int health=100, SoundEffect impactSound = null) 
             : base(animationHandler, maxSpeed, acceleration,health, impactSound)
         {
+            Score = 0;
             _input = input;
             Health = health;
             MaxSpeed = maxSpeed;
@@ -36,9 +37,11 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
                 if (value < 0)
                 {
                     _score = 0;
+                    InvokeOnScoreChanged();
                     return;
                 }
                 _score = value;
+                InvokeOnScoreChanged();
             }
         }
 
