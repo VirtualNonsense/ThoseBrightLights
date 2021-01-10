@@ -43,7 +43,7 @@ namespace SE_Praktikum.Services.StateMachines
             
             _machine.Configure(State.Menu).OnEntry(onEntry)
                 .Permit(GameStateMachineTrigger.StartLevelSelect, State.LevelSelect)
-                .Permit(GameStateMachineTrigger.StartGame, State.InGame)
+                // .Permit(GameStateMachineTrigger.StartGame, State.InGame)
                 .Permit(GameStateMachineTrigger.QuitGame, State.Quit)
                 .Permit(GameStateMachineTrigger.StartSettings, State.Settings)
                 .Permit(GameStateMachineTrigger.BackToSaveSlotSelection, State.SaveSlotSelection);
@@ -52,11 +52,12 @@ namespace SE_Praktikum.Services.StateMachines
                 .Permit(GameStateMachineTrigger.Back, State.Menu);
             
             _machine.Configure(State.LevelSelect).OnEntry(onEntry)
-                .Permit(GameStateMachineTrigger.Back, State.Menu);
+                .Permit(GameStateMachineTrigger.Back, State.Menu)
+                .Permit(GameStateMachineTrigger.StartGame, State.InGame);
             
             _machine.Configure(State.InGame).OnEntry(onEntry)
                 .Permit(GameStateMachineTrigger.SaveAndQuit, State.Quit)
-                .Permit(GameStateMachineTrigger.SaveAndBackToMenu, State.Menu);
+                .Permit(GameStateMachineTrigger.SaveAndBackToMenu, State.LevelSelect);
             
             _machine.Configure(State.Quit).OnEntry(onComplete);
 

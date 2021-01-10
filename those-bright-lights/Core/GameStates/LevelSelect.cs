@@ -1,13 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
 using NLog;
 using SE_Praktikum.Components.Controls;
 using SE_Praktikum.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.IO;
+using SE_Praktikum.Components;
+using SE_Praktikum.Services.Factories;
 using SE_Praktikum.Services.StateMachines;
 
 namespace SE_Praktikum.Core.GameStates
@@ -16,16 +13,19 @@ namespace SE_Praktikum.Core.GameStates
     {
         private readonly IGameEngine _engine;
         private readonly IScreen _screen;
-        private readonly ContentManager _contentManager;
-        private List<MenuButton> _buttons;
+        private readonly ControlElementFactory _factory;
+        private readonly ISaveGameHandler _saveGameHandler;
+        private ComponentGrid _buttons;
         private Logger _logger;
+        private const string _levelPath = @".\Content\MetaData\Level\";
 
-        public LevelSelect(IGameEngine engine, IScreen screen, ContentManager contentManager)
+        public LevelSelect(IGameEngine engine, IScreen screen, ControlElementFactory factory, ISaveGameHandler saveGameHandler)
         {
             _logger = LogManager.GetCurrentClassLogger();
             _engine = engine;
             _screen = screen;
-            _contentManager = contentManager;
+            _factory = factory;
+            _saveGameHandler = saveGameHandler;
         }
 
         public override void Draw()
@@ -36,38 +36,30 @@ namespace SE_Praktikum.Core.GameStates
         public override void LoadContent()
         {
             if (_buttons != null) return;
-            // {
-            //     Text = "Level 1",
-            //     Position = new Vector2(_screen.ScreenWidth / 2f, _screen.ScreenHeight / 4f - texture.Height),
-            //     TextColor = Color.White
-            // });
-            // _buttons.Last().Click += (sender, args) => { _logger.Debug("Level 1 selected"); };
-            // _buttons.Add(new Menubutton(texture, font)
-            // {
-            //     Text = "Level 2",
-            //     Position = new Vector2(_screen.ScreenWidth / 2f, _screen.ScreenHeight / 4f),
-            //     TextColor = Color.White
-            // });
-            // _buttons.Last().Click += (sender, args) => { _logger.Debug("Level 2 selected"); };
-            // _buttons.Add(new Menubutton(texture, font)
-            // {
-            //     Text = "Level 3",
-            //     Position = new Vector2(_screen.ScreenWidth / 2f, _screen.ScreenHeight / 4f + texture.Height),
-            //     TextColor = Color.White
-            // });
-            // _buttons.Last().Click += (sender, args) => { _logger.Debug("Level 3 selected"); };
-            // _buttons.Add(new Menubutton(texture, font)
-            // {
-            //     Text = "Back",
-            //     Position = new Vector2(_screen.ScreenWidth / 2f, _screen.ScreenHeight / 4f + 2*texture.Height),
-            //     TextColor = Color.White
-            // });
-            // _buttons.Last().Click += (sender, args) => { _logger.Debug("back"); _subject.OnNext(GameStateMachine.GameStateMachineTrigger.Back);};
-            _buttons = new List<MenuButton>();
+            
             _logger.Debug("LoadingContent");
-            var font = _contentManager.Load<SpriteFont>("Font/Font2");
-            var texture = _contentManager.Load<Texture2D>("Artwork/Controls/button");
-            // _buttons.Add(new Menubutton(texture, font)
+            _buttons = new ComponentGrid(new Vector2(0,0), 
+                _screen.Camera.GetPerspectiveScreenWidth(),
+                _screen.Camera.GetPerspectiveScreenHeight(),
+                1);
+            var level = Directory.GetFiles(_levelPath, "json$");
+            _logger.Debug(level);
+            var buttons = 3;
+            uint width = (uint) (_screen.Camera.GetPerspectiveScreenWidth() / buttons);
+            uint height = (uint) (_screen.Camera.GetPerspectiveScreenHeight() / buttons);
+            MenuButton b = _factory.GetButton(
+                width,
+                height,
+                new Vector2(0, 0),
+                "back to mainmenu",
+                _screen.Camera);
+
+            b.Click += (sender, args) => 
+            {
+                _logger.Debug("Levelselection 0");
+                _subject.OnNext(GameStateMachine.GameStateMachineTrigger.Back);
+            };
+            _buttons.Add(b);
         }
 
         public override void PostUpdate(GameTime gameTime)
