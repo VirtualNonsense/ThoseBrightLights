@@ -62,7 +62,7 @@ namespace SE_Praktikum.Core.GameStates
                     new Vector2(0, 0),
                     n,
                     _screen.Camera);
-                // button.Enabled = _saveGameHandler.SaveGame.clearedStage >= c;
+                button.Enabled = _saveGameHandler.SaveGame.clearedStage >= c;
                 button.Click += (sender, args) => 
                 {
                     _logger.Debug($"starting {n}");

@@ -27,6 +27,7 @@ namespace SE_Praktikum.Core.GameStates
         private bool _pause;
         private readonly ControlElementFactory _factory;
         private readonly ILevelContainer _levelContainer;
+        private readonly ISaveGameHandler saveGameHandler;
         private ComponentGrid _components;
         private KeyboardState _lastKeyboardState;
         private Polygon _origin;
@@ -35,7 +36,8 @@ namespace SE_Praktikum.Core.GameStates
                       IScreen screen,
                       ContentManager contentManager,
                       ControlElementFactory factory,
-                      ILevelContainer levelContainer)
+                      ILevelContainer levelContainer,
+                      ISaveGameHandler saveGameHandler)
         {
             _logger = LogManager.GetCurrentClassLogger();
             _engine = engine;
@@ -45,6 +47,7 @@ namespace SE_Praktikum.Core.GameStates
             _lastKeyboardState = Keyboard.GetState();
             _factory = factory;
             _levelContainer = levelContainer;
+            this.saveGameHandler = saveGameHandler;
             _origin = new Polygon(Vector2.Zero, Vector2.Zero, 0,new List<Vector2>
             {
                 new Vector2(0,0),
@@ -57,6 +60,13 @@ namespace SE_Praktikum.Core.GameStates
         {
             _pause = false;
             _levelContainer.SelectedLevel?.LoadContent(_contentManager);
+            _levelContainer.SelectedLevel.OnLevelComplete +=
+                (sender, args) =>
+                {
+                    saveGameHandler.SaveGame.clearedStage++;
+                    saveGameHandler.Save();
+                    _subject.OnNext(GameStateMachine.GameStateMachineTrigger.SaveAndBackToMenu);
+                };
             // TODO: move into level
             _song = _contentManager.Load<Song>("Audio/Music/Song3_remaster2_mp3");
             MediaPlayer.Play(_song);
