@@ -71,7 +71,7 @@ namespace SE_Praktikum.Core.GameStates
                     _subject.OnNext(GameStateMachine.GameStateMachineTrigger.SaveAndBackToMenu);
                 };
             // TODO: move into level
-            _song = _contentManager.Load<Song>("Audio/Music/Song3_remaster2_mp3");
+            _song = _contentManager.Load<Song>("Audio/Music/Song4_remaster_mp3");
             MediaPlayer.Play(_song);
             MediaPlayer.IsRepeating = true;
             
