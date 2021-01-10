@@ -37,6 +37,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
         // #############################################################################################################
         #region Events
         public event EventHandler OnShoot;
+        //TODO: Consider moving this into sprite
         public event EventHandler OnPositionChanged;
 
         #endregion
