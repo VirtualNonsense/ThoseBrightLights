@@ -246,7 +246,9 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
                 case ScoreBonusPowerUp sb:
                     //score+= sb.bonusScore;
                     break;
-                
+                case StarPowerUp s:
+
+                    break;
                     
             }
         }
