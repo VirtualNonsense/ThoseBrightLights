@@ -63,8 +63,11 @@ namespace SE_Praktikum.Core.GameStates
             _levelContainer.SelectedLevel.OnLevelComplete +=
                 (sender, args) =>
                 {
-                    saveGameHandler.SaveGame.clearedStage++;
-                    saveGameHandler.Save();
+                    if (_levelContainer.SelectedLevel.LevelNumber >= saveGameHandler.SaveGame.clearedStage)
+                    {
+                        saveGameHandler.SaveGame.clearedStage++;
+                        saveGameHandler.Save();
+                    }
                     _subject.OnNext(GameStateMachine.GameStateMachineTrigger.SaveAndBackToMenu);
                 };
             // TODO: move into level

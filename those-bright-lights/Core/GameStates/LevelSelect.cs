@@ -62,11 +62,12 @@ namespace SE_Praktikum.Core.GameStates
                     new Vector2(0, 0),
                     n,
                     _screen.Camera);
+                var l = _levelFactory.GetInstance(path, c);
                 button.Enabled = _saveGameHandler.SaveGame.clearedStage >= c;
                 button.Click += (sender, args) => 
                 {
                     _logger.Debug($"starting {n}");
-                    SelectedLevel = _levelFactory.GetInstance(path);
+                    SelectedLevel = l;
                     _subject.OnNext(GameStateMachine.GameStateMachineTrigger.StartGame);
                 };
                 _buttons.Add(button);

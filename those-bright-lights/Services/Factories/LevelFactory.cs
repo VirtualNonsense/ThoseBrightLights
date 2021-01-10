@@ -34,9 +34,10 @@ namespace SE_Praktikum.Services.Factories
             _gameEngine = gameEngine;
             _hUdFactory = hUDFactory;
         }
-        public Level GetInstance(string path)
+        public Level GetInstance(string path, int levelNumber)
         {
             return new Level(path,
+                levelNumber,
                 _mapFactory,
                 _playerFactory,
                 _particleFactory,

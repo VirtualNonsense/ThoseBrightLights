@@ -22,6 +22,7 @@ namespace SE_Praktikum.Core
     public class Level 
     {
         private readonly string _mapPath;
+        public readonly int LevelNumber;
         private readonly MapFactory _mapFactory;
         private readonly PlayerFactory _playerFactory;
         private readonly ParticleFactory _particleFactory;
@@ -43,6 +44,7 @@ namespace SE_Praktikum.Core
 
         //Constructor
         public Level(string mapPath, 
+                     int levelNumber,
                      MapFactory mapFactory,
                      PlayerFactory playerFactory,
                      ParticleFactory particleFactory,
@@ -50,9 +52,11 @@ namespace SE_Praktikum.Core
                      PowerUpFactory powerUpFactory,
                      IScreen screen,
                      IGameEngine gameEngine,
-                     HUDFactory hUDFactory)
+                     HUDFactory hUDFactory
+                     )
         {
             _mapPath = mapPath;
+            this.LevelNumber = levelNumber;
             _mapFactory = mapFactory;
             _playerFactory = playerFactory;
             _particleFactory = particleFactory;
