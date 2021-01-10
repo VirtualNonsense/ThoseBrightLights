@@ -42,11 +42,31 @@ namespace SE_Praktikum.Core.GameStates
                 _screen.Camera.GetPerspectiveScreenWidth(),
                 _screen.Camera.GetPerspectiveScreenHeight(),
                 1);
-            var level = Directory.GetFiles(_levelPath, "json$");
-            _logger.Debug(level);
-            var buttons = 3;
-            uint width = (uint) (_screen.Camera.GetPerspectiveScreenWidth() / buttons);
+            var level = Directory.GetFiles(_levelPath, "*.json");
+            var buttons = level.Length + 1;
+            uint width = (uint) (_screen.Camera.GetPerspectiveScreenWidth());
             uint height = (uint) (_screen.Camera.GetPerspectiveScreenHeight() / buttons);
+            int c = 0;
+            foreach (var path in level)
+            {
+                var n = path.Split(".json")[0].Split("\\").Last();
+                
+                var button = _factory.GetButton(
+                    width,
+                    height,
+                    new Vector2(0, 0),
+                    n,
+                    _screen.Camera);
+                button.Enabled = _saveGameHandler.SaveGame.clearedStage >= c;
+                button.Click += (sender, args) => 
+                {
+                    _logger.Debug(n);
+                    _subject.OnNext(GameStateMachine.GameStateMachineTrigger.Back);
+                };
+                _buttons.Add(button);
+                c++;
+            }
+            
             MenuButton b = _factory.GetButton(
                 width,
                 height,
