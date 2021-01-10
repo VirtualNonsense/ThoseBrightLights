@@ -210,9 +210,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
                     _impactSound?.Play();
                     break;
                 case Tile t :
-                    var v = _impactPolygon.Position - t.Position;
-                    v /= v.Length();
-                    Position += v;
+                    ApproachDestination(t, 100);
                     break;
                 case PowerUp p:
                     ProcessPowerUp(p);
@@ -247,6 +245,31 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
                 
                     
             }
+        }
+        protected void ApproachDestination(Actor other, int maxIteration, int iteration=0)
+        {
+            if (iteration >= maxIteration)
+            {
+                _logger.Debug($"Approachdestination after {iteration} abborted");
+                return;
+            }
+            if (DeltaPosition.Length() <= 10 * float.Epsilon)
+            {
+                var v = _impactPolygon.Position - other.Position;
+                v /= v.Length();
+                Position += 10 * v;
+            }
+            else
+            {
+                Position -= DeltaPosition;
+                DeltaPosition /= 2;
+                Position += DeltaPosition;
+            }
+
+            if (!Collide(other))
+                return;
+            iteration++;
+            ApproachDestination(other, maxIteration, iteration);
         }
     }
 }

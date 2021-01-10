@@ -47,25 +47,26 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
         {
             PreviousKey = CurrentKey;
             CurrentKey = Keyboard.GetState();
+            var t = gameTime.ElapsedGameTime.Milliseconds/10f;
 
             #region Movement
-            var velocity = Vector2.Zero;
+            var velocity = Velocity;
 
             if (CurrentKey.IsKeyDown(_input.Up))
             {
-                velocity.Y = -Speed;
+                velocity.Y = -Acceleration * t * t;
             }
             else if (CurrentKey.IsKeyDown(_input.Down))
             {
-                velocity.Y += Speed;
+                velocity.Y += Acceleration * t * t;
             }
             if (CurrentKey.IsKeyDown(_input.Left))
             {
-                velocity.X -= Speed;
+                velocity.X -= Acceleration * t * t;
             }
             else if (CurrentKey.IsKeyDown(_input.Right))
             {
-                velocity.X += Speed;
+                velocity.X += Acceleration * t * t;
             }
             if (CurrentKey.IsKeyDown(_input.TurnLeft))
             {
@@ -75,7 +76,20 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
             {
                 Rotation -= 0.01f;
             }
-            Position += velocity;
+
+            var newVelocity = velocity.Length();
+            if (newVelocity > 0)
+            {
+                velocity /= newVelocity;
+                newVelocity = .95f * newVelocity * (1 - newVelocity / MaxSpeed);
+                if(newVelocity < 0)
+                    _logger.Warn($"newVelocity < 0 consider rising MaxSpeed or decreasing acceleration");
+                
+                Velocity = Math.Abs(newVelocity) * velocity;
+            }
+
+            DeltaPosition = Velocity * t;
+            Position += DeltaPosition;
             #endregion
             
             #region Weapon
