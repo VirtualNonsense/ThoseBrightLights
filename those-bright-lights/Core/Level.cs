@@ -39,13 +39,14 @@ namespace SE_Praktikum.Core
         
 
         private event EventHandler OnExplosion;
+        public event EventHandler OnLevelComplete;
 
         //Constructor
         public Level(string mapPath, 
                      MapFactory mapFactory,
                      PlayerFactory playerFactory,
                      ParticleFactory particleFactory,
-                      EnemyFactory enemyFactory,
+                     EnemyFactory enemyFactory,
                      PowerUpFactory powerUpFactory,
                      IScreen screen,
                      IGameEngine gameEngine,
@@ -182,8 +183,8 @@ namespace SE_Praktikum.Core
             {
                 _map.WinningZone.OnZoneEntered +=
                     (sender, args) => _logger.Debug($"Player{args.Player} entered WinningZone");
-                _map.WinningZone.OnZoneLeft +=
-                    (sender, args) => _logger.Debug($"Player:{args.Player} left WinningZone");
+                _map.WinningZone.OnZoneEntered +=
+                    (sender, args) => InvokeOnLevelComplete();
             }
             _collisionLayer = _map.TopLayer;
             
@@ -244,6 +245,11 @@ namespace SE_Praktikum.Core
         public void Unload()
         {
             _components = null;
+        }
+
+        public void InvokeOnLevelComplete()
+        {
+            OnLevelComplete?.Invoke(this, EventArgs.Empty);
         }
     }
 }
