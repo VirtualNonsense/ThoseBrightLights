@@ -74,8 +74,8 @@ namespace SE_Praktikum.Services.Factories
         public SingleShotWeapon GetLaserGun(Actor owner, 
                                             int clipSize = 20,
                                             int clips = 10,
-                                            int shotCooldown = 10,
-                                            int reloadTime = 100,
+                                            int shotCooldown = 100,
+                                            int reloadTime = 1000,
                                             float damage = 5,
                                             string nameTag = "Laser gun")
         {
