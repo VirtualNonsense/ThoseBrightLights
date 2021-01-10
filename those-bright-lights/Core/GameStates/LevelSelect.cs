@@ -49,7 +49,7 @@ namespace SE_Praktikum.Core.GameStates
                 1);
             var level = Directory.GetFiles(_levelPath, "*.json");
             var buttons = level.Length + 1;
-            uint width = (uint) (_screen.Camera.GetPerspectiveScreenWidth());
+            uint width = (uint) (_screen.Camera.GetPerspectiveScreenWidth()/3);
             uint height = (uint) (_screen.Camera.GetPerspectiveScreenHeight() / buttons);
             int c = 0;
             foreach (var path in level)
