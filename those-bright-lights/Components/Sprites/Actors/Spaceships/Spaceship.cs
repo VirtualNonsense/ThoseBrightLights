@@ -93,8 +93,10 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
 
             if (Propulsion != null)
             {
+                // TODO: Move into separate setter
                 Propulsion.Position = Position;
                 Propulsion.Rotation = Rotation;
+                Propulsion.Layer = Layer;
                 Propulsion.Update(gameTime);
             }
 

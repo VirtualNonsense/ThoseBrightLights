@@ -29,7 +29,7 @@
                 {
                  "height":0,
                  "id":6,
-                 "name":"",
+                 "name":"Spawn",
                  "point":true,
                  "rotation":0,
                  "type":"PlayerSpawnPoint",
@@ -37,6 +37,41 @@
                  "width":0,
                  "x":139.559985413881,
                  "y":150.295368907257
+                }, 
+                {
+                 "height":20,
+                 "id":7,
+                 "name":"WinningZone",
+                 "rotation":0,
+                 "type":"WinningZone",
+                 "visible":true,
+                 "width":20,
+                 "x":32,
+                 "y":56
+                }, 
+                {
+                 "height":0,
+                 "id":13,
+                 "name":"Spawn",
+                 "point":true,
+                 "rotation":0,
+                 "type":"PlayerSpawnPoint",
+                 "visible":true,
+                 "width":0,
+                 "x":139.559985413881,
+                 "y":150.295368907257
+                }, 
+                {
+                 "height":0,
+                 "id":14,
+                 "name":"",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":0,
+                 "y":0
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -57,7 +92,7 @@
          "y":0
         }],
  "nextlayerid":8,
- "nextobjectid":7,
+ "nextobjectid":15,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.4.2",

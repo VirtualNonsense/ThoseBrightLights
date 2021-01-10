@@ -70,7 +70,7 @@ namespace SE_Praktikum.Services.Factories
         public WeaponPowerUp LaserGetInstance(Vector2? position = null, float layer = 0)
         {
             var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\PowerUpTry1.json", 0);
-            var animationSettings = new AnimationSettings(new List<(int, float)> { (22, 1) }, isPlaying: false);
+            var animationSettings = new AnimationSettings(new List<(int, float)> { (9, 1) }, isPlaying: false);
             var lp = new WeaponPowerUp(_animationHandlerFactory.GetAnimationHandler(tileSet, animationSettings),
                 _weaponFactory.GetEnemyLaserGun(null))
             {

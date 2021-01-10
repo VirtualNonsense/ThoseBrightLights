@@ -8,7 +8,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json;
 using NLog;
 using SE_Praktikum.Components;
-using SE_Praktikum.Components.Actors;
 using SE_Praktikum.Components.Sprites.Actors;
 using SE_Praktikum.Components.Sprites.Actors.Spaceships;
 using SE_Praktikum.Models;
@@ -16,6 +15,7 @@ using SE_Praktikum.Models.Tiled;
 using SE_Praktikum.Services;
 using SE_Praktikum.Services.Factories;
 using SE_Praktikum.Extensions;
+using Microsoft.Xna.Framework.Input;
 
 namespace SE_Praktikum.Core
 {
@@ -32,6 +32,8 @@ namespace SE_Praktikum.Core
         private readonly Logger _logger;
         private float _collisionLayer;
         private Map _map;
+        private MouseState _previousMousestate;
+        private MouseState _mouseState;
         
 
         private event EventHandler OnExplosion;
@@ -61,12 +63,25 @@ namespace SE_Praktikum.Core
                 if(actor is EnemyWithViewbox e)
                     _gameEngine.Render(e.ViewBox);
             }
-            _gameEngine.Render(_map.GetCollidable(_map.Area));
+
+            var tiles = _map.RetrieveItems(_map.Area);
+            var polys = tiles.Where(t => t.HitBox != null).Select(t => t.HitBox);
+            foreach (var poly in polys)
+            {
+                _gameEngine.Render(poly);
+            }
+
+            _gameEngine.Render(tiles);
+            _gameEngine.Render(_map.WinningZone.Polygons);
             _gameEngine.Render(_components);
         }
 
         public void Update(GameTime gameTime)
         {
+            //_previousMousestate = _mouseState;
+            //_mouseState = Mouse.GetState();
+            //if (_previousMousestate.Position != _mouseState.Position)
+            //    _logger.Trace($"{_screen.Camera.ProjectScreenPosIntoWorld(_mouseState.Position.ToVector2())}");
             int index=0;
             while (index < _components.Count)
             {
@@ -78,7 +93,7 @@ namespace SE_Praktikum.Core
             var actor = _components.OfType<Actor>().ToList();
             for (int i = 0; i < actor.Count; i++)
             {
-                var mapObjects = _map.GetCollidable(actor[i].Layer, actor[i].HitBox.GetBoundingRectangle());
+                var mapObjects = _map.RetrieveItems(actor[i].Layer, actor[i].HitBox.GetBoundingRectangle());
 
                 for (int j = 0; j < mapObjects.Count; j++)
                 {
@@ -88,6 +103,12 @@ namespace SE_Praktikum.Core
                 for (int j = i+1; j < actor.Count; j++)
                 {
                     actor[i].InterAct(actor[j]); 
+                }
+                switch(actor[i])
+                {
+                    case Player p:
+                        _map.ZoneUpdate(p);
+                        break;
                 }
             }
             _screen.Camera.Update(gameTime);
@@ -148,10 +169,12 @@ namespace SE_Praktikum.Core
             //TODO: try to load the json map via the contentmanager
             // var map = _mapFactory.LoadMap(JsonConvert.DeserializeObject<LevelBlueprint>(File.ReadAllText(@".\Content\MetaData\Level\AlphaMap.json")));
             _map = _mapFactory.LoadMap(@".\Content\MetaData\Level\AlphaMap.json");
+            _map.WinningZone.OnZoneEntered += (sender, args) => _logger.Debug($"Player{args.Player} entered WinningZone");
+            _map.WinningZone.OnZoneLeft += (sender, args) => _logger.Debug($"Player:{args.Player} left WinningZone");
             //var healthPowerup = powerUpFactory.HealthGetInstance(25);
             //_components.Add(healthPowerup);
-            
-            _components.Add(powerUpFactory.RocketGetInstance(new Vector2(100,20),_map.TopLayer));
+           //_components.Add(powerUpFactory.LaserGetInstance(new Vector2(10, 10), _map.TopLayer));
+           //_components.Add(powerUpFactory.RocketGetInstance(new Vector2(100,20),_map.TopLayer));
             _collisionLayer = _map.TopLayer;
             //TODO: Set player level to _map.TopLayer
             
@@ -172,34 +195,39 @@ namespace SE_Praktikum.Core
             _screen.Camera.Position += new Vector3(0, 0, player.Layer);
             _components.Add(player);
 
-            var boss = _enemyFactory.GetBoss(contentManager);
-            boss.Layer = player.Layer;
-            boss.X = 400;
-            boss.Y = 0;
-            boss.Rotation = (float) Math.PI;
-            boss.OnShoot += (sender, args) =>
+            foreach(var e in _map.EnemySpawnpoints)
             {
-                if (!(args is LevelEvent e)) return;
-                OnLevelEvent(e);
-            };
-            _components.Add(boss);
-            
-            //_components.AddRange(map);
-            
-            
-            boss.OnExplosion += (sender, args) =>
-            _components.Add(boss);
-                
-            boss.OnExplosion += (sender, args) =>
-            {
-                if (!(args is LevelEvent e)) return;
-                OnLevelEvent(e);
-            };
+                switch(e.Item1)
+                {
+                    case EnemyType.Turret:
+                        var turret = _enemyFactory.GetTurret(contentManager);
+                        turret.Layer = player.Layer;
+                        turret.Position = e.Item2;
+                        turret.Rotation = (float)Math.PI;
+                        turret.OnShoot += (sender, args) =>
+                        {
+                            if (!(args is LevelEvent e)) return;
+                            OnLevelEvent(e);
+                        };
+                         
+                        turret.OnExplosion += (sender, args) =>
+                        {
+                            if (!(args is LevelEvent e)) return;
+                            OnLevelEvent(e);
+                        };
+                        _components.Add(turret);
+                        break;
+                    case EnemyType.Alienship:
 
-            // //TODO: try to load the json map via the contentmanager
-            // _components.Add(_mapFactory.LoadMap(contentManager,
-            //     JsonConvert.DeserializeObject<LevelBlueprint>(File.ReadAllText(@".\Content\Level\TestLevel\TestLevel.json"))));
-            //
+                        break;
+                    case EnemyType.Boss:
+
+                        break;
+                    case EnemyType.Minen:
+
+                        break;
+                }
+            }
         }
 
     }

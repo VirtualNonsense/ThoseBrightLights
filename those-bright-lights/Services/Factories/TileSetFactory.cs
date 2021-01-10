@@ -54,7 +54,8 @@ namespace SE_Praktikum.Services.Factories
                     {
                        polygon = new Polygon(
                        Vector2.Zero,
-                       new Vector2(objectt.width / 2, objectt.height / 2),
+                       // new Vector2(objectt.width / 2, objectt.height / 2),
+                       new Vector2(0, 0),
                        0,
                        new List<Vector2>
                        {

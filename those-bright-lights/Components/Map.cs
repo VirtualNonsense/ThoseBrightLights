@@ -1,16 +1,9 @@
 ﻿using SE_Praktikum.Models;
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Text;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using System.Data;
 using System.Linq;
-using SE_Praktikum.Components.Actors;
 using SE_Praktikum.Components.Sprites.Actors;
-using SE_Praktikum.Models.Tiled;
+using SE_Praktikum.Components.Sprites.Actors.Spaceships;
 
 namespace SE_Praktikum.Components
 {
@@ -24,13 +17,23 @@ namespace SE_Praktikum.Components
 
         public Polygon PlayerSpawnPoint;
 
-        public Map (Dictionary<float, QuadTree<Tile>> tiles, Rectangle area)
+        public List<(EnemyType,Vector2)> EnemySpawnpoints;
+
+        public EventZone WinningZone { get; set; }
+
+        public Map (Dictionary<float, QuadTree<Tile>> tiles, Rectangle area, EventZone winningZone, List<(EnemyType, Vector2)> enemySpawnPoints)
         {
             _tileContainer = tiles;
             Area = area;
+            WinningZone = winningZone;
+            EnemySpawnpoints = enemySpawnPoints;
+            foreach(var p in winningZone.Polygons)
+            {
+                p.Layer = TopLayer;
+            }
         }
       
-        public List<Tile> GetCollidable(float layer, Rectangle rect)
+        public List<Tile> RetrieveItems(float layer, Rectangle rect)
         {
             if (_tileContainer.ContainsKey(layer))
             {
@@ -40,7 +43,7 @@ namespace SE_Praktikum.Components
             return new List<Tile>();
         }
 
-        public List<Tile> GetCollidable(Rectangle rect)
+        public List<Tile> RetrieveItems(Rectangle rect)
         {
             var list = new List<Tile>();
 
@@ -52,14 +55,19 @@ namespace SE_Praktikum.Components
             return list;
         }
 
+        public void ZoneUpdate(Player player)
+        {
+            WinningZone.Update(player);
+        }
+
 
     }
-    //enum ObjectLayerType
-    //{
-    //    PlayerSpawn,
-    //    EnemySpawn,
-    //    VictoryZone,
-
-    //}
+    public enum EnemyType
+    {
+        Turret, 
+        Alienship,
+        Boss,
+        Minen
+    }
     
 }

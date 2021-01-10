@@ -11,8 +11,8 @@ using SE_Praktikum.Components;
 using SE_Praktikum.Models;
 using SE_Praktikum.Models.Tiled;
 using Microsoft.Xna.Framework;
-using SE_Praktikum.Components.Actors;
 using SE_Praktikum.Components.Sprites.Actors;
+
 
 namespace SE_Praktikum.Services.Factories
 {
@@ -64,7 +64,9 @@ namespace SE_Praktikum.Services.Factories
                 }
             }
             Polygon SpawnPoint = null;
+            EventZone WinningZone = null;
             Dictionary<float, QuadTree<Tile>> tiles = new Dictionary<float, QuadTree<Tile>>();
+            List<(EnemyType, Vector2)> EnemySpawnpoints = new List<(EnemyType, Vector2)>();
             var l = 0f;
             var area = new Rectangle(0, 0, blueprint.Width * blueprint.TileWidth, blueprint.Height * blueprint.TileHeight);
             foreach(var layer in blueprint.Layers)
@@ -95,10 +97,19 @@ namespace SE_Praktikum.Services.Factories
                             case "PlayerSpawnPoint":
                                 SpawnPoint = ConvertObjectToPolygon(obj);
                                 break;
+                            case "WinningZone":
+                                if (WinningZone == null)
+                                    WinningZone = new EventZone();
+                                WinningZone.Polygons.Add(ConvertObjectToPolygon(obj));
+                                break;
+                            case "TurretSpawn":
+                                EnemySpawnpoints.Add((EnemyType.Turret, ConvertObjectToPolygon(obj).Center));
+                                break;
 
                             default:
                                 _logger.Warn($"{obj.type} not found");
                                 break;
+                                
 
                         }
                     }
@@ -106,7 +117,7 @@ namespace SE_Praktikum.Services.Factories
 
                 
             }
-            return new Map(tiles, area) { PlayerSpawnPoint = SpawnPoint};
+            return new Map(tiles, area, winningZone: WinningZone, EnemySpawnpoints) { PlayerSpawnPoint = SpawnPoint};
         }
         private Polygon ConvertObjectToPolygon(ObjectBluePrint objectt)
         {
@@ -124,7 +135,7 @@ namespace SE_Praktikum.Services.Factories
             {
                 polygon = new Polygon(
                 new Vector2(objectt.x, objectt.y),
-                new Vector2(objectt.width / 2, objectt.height / 2),
+                new Vector2(0,0),
                 0,
                 new List<Vector2>
                 {
@@ -137,5 +148,7 @@ namespace SE_Praktikum.Services.Factories
             }
             return polygon;
         }
+
+        
     }
 }

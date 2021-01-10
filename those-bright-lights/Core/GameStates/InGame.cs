@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -28,6 +29,7 @@ namespace SE_Praktikum.Core.GameStates
         private readonly ControlElementFactory _factory;
         private ComponentGrid _components;
         private KeyboardState _lastKeyboardState;
+        private Polygon _origin;
 
         public InGame(IGameEngine engine, IScreen screen, Level level, ContentManager contentManager, ControlElementFactory factory)
         {
@@ -39,6 +41,12 @@ namespace SE_Praktikum.Core.GameStates
             _pause = false;
             _lastKeyboardState = Keyboard.GetState();
             _factory = factory;
+            _origin = new Polygon(Vector2.Zero, Vector2.Zero, 0,new List<Vector2>
+            {
+                new Vector2(0,0),
+                new Vector2(10,0),
+                new Vector2(0,10),
+            }, color: Color.Red);
         }
 
         public override void LoadContent()
@@ -101,7 +109,7 @@ namespace SE_Praktikum.Core.GameStates
 
         public override void Draw()
         {
-            
+            _engine.Render(_origin);
             if(!_pause)
                 _level.Draw();
             else
