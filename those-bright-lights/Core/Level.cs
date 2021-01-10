@@ -21,6 +21,7 @@ namespace SE_Praktikum.Core
 {
     public class Level 
     {
+        private readonly string _mapPath;
         private readonly MapFactory _mapFactory;
         private readonly PlayerFactory _playerFactory;
         private readonly ParticleFactory _particleFactory;
@@ -29,7 +30,7 @@ namespace SE_Praktikum.Core
         private readonly IScreen _screen;
         private readonly IGameEngine _gameEngine;
         private readonly HUDFactory hUDFactory;
-        private readonly List<IComponent> _components;
+        private List<IComponent> _components;
         private readonly Logger _logger;
         private float _collisionLayer;
         private Map _map;
@@ -40,9 +41,17 @@ namespace SE_Praktikum.Core
         private event EventHandler OnExplosion;
 
         //Constructor
-        public Level(MapFactory mapFactory, PlayerFactory playerFactory, ParticleFactory particleFactory, EnemyFactory enemyFactory,PowerUpFactory powerUpFactory, IScreen screen, IGameEngine gameEngine, HUDFactory hUDFactory)
+        public Level(string mapPath, 
+                     MapFactory mapFactory,
+                     PlayerFactory playerFactory,
+                     ParticleFactory particleFactory,
+                      EnemyFactory enemyFactory,
+                     PowerUpFactory powerUpFactory,
+                     IScreen screen,
+                     IGameEngine gameEngine,
+                     HUDFactory hUDFactory)
         {
-            
+            _mapPath = mapPath;
             _mapFactory = mapFactory;
             _playerFactory = playerFactory;
             _particleFactory = particleFactory;
@@ -167,18 +176,10 @@ namespace SE_Praktikum.Core
 
         public void LoadContent(ContentManager contentManager)
         {
-            
-            //TODO: try to load the json map via the contentmanager
-            // var map = _mapFactory.LoadMap(JsonConvert.DeserializeObject<LevelBlueprint>(File.ReadAllText(@".\Content\MetaData\Level\AlphaMap.json")));
-            _map = _mapFactory.LoadMap(@".\Content\MetaData\Level\AlphaMap.json");
+            _map = _mapFactory.LoadMap(_mapPath);
             _map.WinningZone.OnZoneEntered += (sender, args) => _logger.Debug($"Player{args.Player} entered WinningZone");
             _map.WinningZone.OnZoneLeft += (sender, args) => _logger.Debug($"Player:{args.Player} left WinningZone");
-            //var healthPowerup = powerUpFactory.HealthGetInstance(25);
-            //_components.Add(healthPowerup);
-           //_components.Add(powerUpFactory.LaserGetInstance(new Vector2(10, 10), _map.TopLayer));
-           //_components.Add(powerUpFactory.RocketGetInstance(new Vector2(100,20),_map.TopLayer));
             _collisionLayer = _map.TopLayer;
-            //TODO: Set player level to _map.TopLayer
             
             var player = _playerFactory.GetInstance(contentManager);
             player.Position = _map.PlayerSpawnPoint?.Center ?? new Vector2(0, 0);
@@ -234,5 +235,9 @@ namespace SE_Praktikum.Core
             }
         }
 
+        public void Unload()
+        {
+            _components = null;
+        }
     }
 }

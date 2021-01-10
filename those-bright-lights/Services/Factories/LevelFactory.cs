@@ -1,13 +1,50 @@
 ﻿using System;
 using SE_Praktikum.Core;
+using SE_Praktikum.Models;
 
 namespace SE_Praktikum.Services.Factories
 {
     public class LevelFactory
     {
-        public Level GetInstance()
+        private readonly MapFactory _mapFactory;
+        private readonly PlayerFactory _playerFactory;
+        private readonly ParticleFactory _particleFactory;
+        private readonly EnemyFactory _enemyFactory;
+        private readonly PowerUpFactory _powerUpFactory;
+        private readonly IScreen _screen;
+        private readonly IGameEngine _gameEngine;
+        private readonly HUDFactory _hUdFactory;
+
+        public LevelFactory(
+            MapFactory mapFactory,
+            PlayerFactory playerFactory,
+            ParticleFactory particleFactory,
+            EnemyFactory enemyFactory,
+            PowerUpFactory powerUpFactory,
+            IScreen screen,
+            IGameEngine gameEngine,
+            HUDFactory hUDFactory)
         {
-            throw new NotImplementedException();
+            _mapFactory = mapFactory;
+            _playerFactory = playerFactory;
+            _particleFactory = particleFactory;
+            _enemyFactory = enemyFactory;
+            _powerUpFactory = powerUpFactory;
+            _screen = screen;
+            _gameEngine = gameEngine;
+            _hUdFactory = hUDFactory;
+        }
+        public Level GetInstance(string path)
+        {
+            return new Level(path,
+                _mapFactory,
+                _playerFactory,
+                _particleFactory,
+                _enemyFactory,
+                _powerUpFactory,
+                _screen,
+                _gameEngine,
+                _hUdFactory);
         }
     }
 }

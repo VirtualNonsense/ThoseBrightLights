@@ -22,25 +22,29 @@ namespace SE_Praktikum.Core.GameStates
         private readonly IGameEngine _engine;
         private IScreen _screen;
         private Logger _logger;
-        private readonly Level _level;
         private readonly ContentManager _contentManager;
         private Song _song;
         private bool _pause;
         private readonly ControlElementFactory _factory;
+        private readonly ILevelContainer _levelContainer;
         private ComponentGrid _components;
         private KeyboardState _lastKeyboardState;
         private Polygon _origin;
 
-        public InGame(IGameEngine engine, IScreen screen, Level level, ContentManager contentManager, ControlElementFactory factory)
+        public InGame(IGameEngine engine, 
+                      IScreen screen,
+                      ContentManager contentManager,
+                      ControlElementFactory factory,
+                      ILevelContainer levelContainer)
         {
             _logger = LogManager.GetCurrentClassLogger();
             _engine = engine;
             _screen = screen;
-            _level = level;
             _contentManager = contentManager;
             _pause = false;
             _lastKeyboardState = Keyboard.GetState();
             _factory = factory;
+            _levelContainer = levelContainer;
             _origin = new Polygon(Vector2.Zero, Vector2.Zero, 0,new List<Vector2>
             {
                 new Vector2(0,0),
@@ -52,11 +56,13 @@ namespace SE_Praktikum.Core.GameStates
         public override void LoadContent()
         {
             _pause = false;
-            _level.LoadContent(_contentManager);
+            _levelContainer.SelectedLevel?.LoadContent(_contentManager);
+            // TODO: move into level
             _song = _contentManager.Load<Song>("Audio/Music/Song3_remaster2_mp3");
             MediaPlayer.Play(_song);
             MediaPlayer.IsRepeating = true;
-
+            
+            // creating pause menu
             _components = new ComponentGrid(new Vector2(0,0), 
                 _screen.Camera.GetPerspectiveScreenWidth(),
                 _screen.Camera.GetPerspectiveScreenHeight(),
@@ -83,6 +89,7 @@ namespace SE_Praktikum.Core.GameStates
         public override void UnloadContent()
         {
             _logger.Debug("unloading content");
+            _levelContainer.SelectedLevel?.Unload();
         }
 
         public override void Update(GameTime gameTime)
@@ -91,7 +98,7 @@ namespace SE_Praktikum.Core.GameStates
             if (_lastKeyboardState.IsKeyDown(Keys.Escape) && !state.IsKeyDown(Keys.Escape)) _pause = !_pause;
             _lastKeyboardState = state;
             if(!_pause)
-                _level.Update(gameTime);
+                _levelContainer.SelectedLevel?.Update(gameTime);
             else
             {
                 _components.Position = new Vector2( _screen.Camera.Position.X, _screen.Camera.Position.Y);
@@ -104,14 +111,14 @@ namespace SE_Praktikum.Core.GameStates
 
         public override void PostUpdate(GameTime gameTime)
         {
-            _level.PostUpdate();
+            _levelContainer.SelectedLevel?.PostUpdate();
         }
 
         public override void Draw()
         {
             _engine.Render(_origin);
             if(!_pause)
-                _level.Draw();
+                _levelContainer.SelectedLevel?.Draw();
             else
             {
                 _engine.Render(_components);

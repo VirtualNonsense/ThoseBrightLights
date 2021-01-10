@@ -3,29 +3,32 @@ using NLog;
 using SE_Praktikum.Components.Controls;
 using SE_Praktikum.Models;
 using System.IO;
+using System.Linq;
 using SE_Praktikum.Components;
 using SE_Praktikum.Services.Factories;
 using SE_Praktikum.Services.StateMachines;
 
 namespace SE_Praktikum.Core.GameStates
 {
-    public class LevelSelect : GameState
+    public class LevelSelect : GameState, ILevelContainer
     {
         private readonly IGameEngine _engine;
         private readonly IScreen _screen;
         private readonly ControlElementFactory _factory;
         private readonly ISaveGameHandler _saveGameHandler;
+        private readonly LevelFactory _levelFactory;
         private ComponentGrid _buttons;
         private Logger _logger;
         private const string _levelPath = @".\Content\MetaData\Level\";
 
-        public LevelSelect(IGameEngine engine, IScreen screen, ControlElementFactory factory, ISaveGameHandler saveGameHandler)
+        public LevelSelect(IGameEngine engine, IScreen screen, ControlElementFactory factory, ISaveGameHandler saveGameHandler, LevelFactory levelFactory)
         {
             _logger = LogManager.GetCurrentClassLogger();
             _engine = engine;
             _screen = screen;
             _factory = factory;
             _saveGameHandler = saveGameHandler;
+            _levelFactory = levelFactory;
         }
 
         public override void Draw()
@@ -36,6 +39,8 @@ namespace SE_Praktikum.Core.GameStates
         public override void LoadContent()
         {
             if (_buttons != null) return;
+            
+            _screen.Camera.Position = new Vector3(0, 0,150);
             
             _logger.Debug("LoadingContent");
             _buttons = new ComponentGrid(new Vector2(0,0), 
@@ -57,11 +62,12 @@ namespace SE_Praktikum.Core.GameStates
                     new Vector2(0, 0),
                     n,
                     _screen.Camera);
-                button.Enabled = _saveGameHandler.SaveGame.clearedStage >= c;
+                // button.Enabled = _saveGameHandler.SaveGame.clearedStage >= c;
                 button.Click += (sender, args) => 
                 {
-                    _logger.Debug(n);
-                    _subject.OnNext(GameStateMachine.GameStateMachineTrigger.Back);
+                    _logger.Debug($"starting {n}");
+                    SelectedLevel = _levelFactory.GetInstance(path);
+                    _subject.OnNext(GameStateMachine.GameStateMachineTrigger.StartGame);
                 };
                 _buttons.Add(button);
                 c++;
@@ -76,7 +82,7 @@ namespace SE_Praktikum.Core.GameStates
 
             b.Click += (sender, args) => 
             {
-                _logger.Debug("Levelselection 0");
+                _logger.Debug("back to mainmenu");
                 _subject.OnNext(GameStateMachine.GameStateMachineTrigger.Back);
             };
             _buttons.Add(b);
@@ -99,5 +105,7 @@ namespace SE_Praktikum.Core.GameStates
                 button.Update(gameTime);
             }
         }
+
+        public Level SelectedLevel { get; private set; }
     }
 }

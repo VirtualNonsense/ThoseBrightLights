@@ -20,7 +20,6 @@ namespace SE_Praktikum.NinjectModules
             Bind<ContentManager>().ToMethod(c => c.Kernel.Get<SE_Praktikum_Game>().Content);
             Bind<IObservable<GameState>>().To<GameStateMachine>();
             Bind<ExplosionEmitter>().ToSelf();
-            Bind<Level>().ToSelf();
             Bind<SaveHandler>().ToSelf().InSingletonScope();
 
         }
