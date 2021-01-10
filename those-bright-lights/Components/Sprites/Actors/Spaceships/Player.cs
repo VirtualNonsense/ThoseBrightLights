@@ -12,7 +12,6 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
     {
         private Input _input;
         private Logger _logger;
-        private bool _shot = false;
         private KeyboardState CurrentKey;
         private KeyboardState PreviousKey;
         private int _score;
@@ -94,13 +93,10 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
             
             #region Weapon
 
-            if (CurrentKey.IsKeyDown(_input.Shoot) && !_shot)
+            if (CurrentKey.IsKeyDown(_input.Shoot))
             {
                 ShootCurrentWeapon();
-                _shot = true;
             }
-            else if (CurrentKey.IsKeyUp(_input.Shoot))
-                _shot = false;
             #endregion
             
             base.Update(gameTime);
