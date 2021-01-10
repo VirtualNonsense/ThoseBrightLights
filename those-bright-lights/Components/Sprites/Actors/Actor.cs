@@ -57,6 +57,8 @@ namespace SE_Praktikum.Components.Sprites.Actors
             get=> _health;
             set
             {
+                if (value < 0 && Indestructible)
+                    return;
                 if (value <= 0)
                 {
                     _health = 0;
@@ -91,6 +93,12 @@ namespace SE_Praktikum.Components.Sprites.Actors
                 _maxHealth = value;
                 InvokeOnMaxHealthChanged();
             }
+        }
+
+        public bool Indestructible
+        {
+            get => _indestructible;
+            set => _indestructible = value;
         }
         // #############################################################################################################
         // Public Methods
