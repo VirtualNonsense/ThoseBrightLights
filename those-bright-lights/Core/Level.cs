@@ -83,7 +83,8 @@ namespace SE_Praktikum.Core
             }
 
             _gameEngine.Render(tiles);
-            _gameEngine.Render(_map.WinningZone.Polygons);
+            if(_map.WinningZone != null)
+                _gameEngine.Render(_map.WinningZone.Polygons);
             _gameEngine.Render(_components);
         }
 
@@ -177,8 +178,13 @@ namespace SE_Praktikum.Core
         public void LoadContent(ContentManager contentManager)
         {
             _map = _mapFactory.LoadMap(_mapPath);
-            _map.WinningZone.OnZoneEntered += (sender, args) => _logger.Debug($"Player{args.Player} entered WinningZone");
-            _map.WinningZone.OnZoneLeft += (sender, args) => _logger.Debug($"Player:{args.Player} left WinningZone");
+            if(_map.WinningZone != null)
+            {
+                _map.WinningZone.OnZoneEntered +=
+                    (sender, args) => _logger.Debug($"Player{args.Player} entered WinningZone");
+                _map.WinningZone.OnZoneLeft +=
+                    (sender, args) => _logger.Debug($"Player:{args.Player} left WinningZone");
+            }
             _collisionLayer = _map.TopLayer;
             
             var player = _playerFactory.GetInstance(contentManager);

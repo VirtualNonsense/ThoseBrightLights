@@ -27,6 +27,7 @@ namespace SE_Praktikum.Components
             Area = area;
             WinningZone = winningZone;
             EnemySpawnpoints = enemySpawnPoints;
+            if (winningZone == null) return;
             foreach(var p in winningZone.Polygons)
             {
                 p.Layer = TopLayer;
@@ -57,7 +58,7 @@ namespace SE_Praktikum.Components
 
         public void ZoneUpdate(Player player)
         {
-            WinningZone.Update(player);
+            WinningZone?.Update(player);
         }
 
 
