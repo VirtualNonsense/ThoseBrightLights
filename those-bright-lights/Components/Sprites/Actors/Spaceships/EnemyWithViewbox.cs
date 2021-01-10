@@ -30,9 +30,10 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
         }
 
 
-        public EnemyWithViewbox(AnimationHandler animationHandler, Polygon viewBox, float maxSpeed = 3, float acceleration =5, float health = 50, SoundEffect impactSound = null) : base(animationHandler, maxSpeed, acceleration,health, impactSound)
+        public EnemyWithViewbox(AnimationHandler animationHandler, Polygon viewBox, float maxSpeed = 20,float acceleration = 5, float health = 50, SoundEffect impactSound = null) : base(animationHandler, maxSpeed, acceleration, health, impactSound)
         {
             ViewBox = viewBox;
+            RotateAndShoot = true;
         }
 
 
@@ -41,6 +42,9 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
             ViewBox.Position = Position;
             ViewBox.Rotation = Rotation;
             ViewBox.Layer = Layer;
+            Shoot.Update(gameTime);
+            if (I == InterAction.InView && Target != null)
+                Shoot.Fire();
 
             base.Update(gameTime);
         }
