@@ -19,14 +19,17 @@ namespace SE_Praktikum.Components
 
         public List<(EnemyType,Vector2)> EnemySpawnpoints;
 
+        public List<(PowerUpType, Vector2)> PowerUpSpawnpoints;
+
         public EventZone WinningZone { get; set; }
 
-        public Map (Dictionary<float, QuadTree<Tile>> tiles, Rectangle area, EventZone winningZone, List<(EnemyType, Vector2)> enemySpawnPoints)
+        public Map (Dictionary<float, QuadTree<Tile>> tiles, Rectangle area, EventZone winningZone, List<(EnemyType, Vector2)> enemySpawnPoints, List<(PowerUpType, Vector2)> powerUpSpawnpoints)
         {
             _tileContainer = tiles;
             Area = area;
             WinningZone = winningZone;
             EnemySpawnpoints = enemySpawnPoints;
+            PowerUpSpawnpoints = powerUpSpawnpoints;
             if (winningZone == null) return;
             foreach(var p in winningZone.Polygons)
             {
@@ -69,6 +72,16 @@ namespace SE_Praktikum.Components
         Alienship,
         Boss,
         Minen
+    }
+    public enum PowerUpType
+    {
+        HealthPowerUp,
+        FullHealthPowerUp,
+        AmmoPowerUp,
+        InstaDeathPowerUp,
+        ScoreBonusPowerUp,
+        StarPowerUp,
+        WeaponPowerUp
     }
     
 }
