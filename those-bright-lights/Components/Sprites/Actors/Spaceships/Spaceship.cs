@@ -154,9 +154,9 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
             Weapons[CurrentWeapon].Fire();
         }
 
-        protected virtual void InvokeOnTakeDamage(float damage)
+        protected virtual void InvokeOnPositionChanged()
         {
-            OnTakeDamage?.Invoke(this,EventArgs.Empty);
+            OnPositionChanged?.Invoke(this, EventArgs.Empty);
         }
         protected virtual void InvokeOnShoot(Bullet b)
         {
