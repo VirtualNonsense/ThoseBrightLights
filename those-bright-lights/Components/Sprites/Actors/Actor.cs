@@ -11,14 +11,24 @@ namespace SE_Praktikum.Components.Sprites.Actors
     public abstract class Actor : Sprite
     {
 
+        protected bool _indestructible;
+        protected Particle Explosion;
         private float _health;
         private float _maxHealth;
         public bool CollisionEnabled = true;
         private Logger _logger;
         protected SoundEffect _impactSound;
         public Actor Parent;
-        
-
+        // #############################################################################################################
+        // Constructor
+        // #############################################################################################################
+        /// <summary>
+        /// Sprite that supports collision
+        /// </summary>
+        /// <param name="animationHandler"></param>
+        /// <param name="impactSound"></param>
+        /// <param name="health"></param>
+        /// <param name="maxHealth"></param>
         public Actor(AnimationHandler animationHandler, SoundEffect impactSound, float health = 100, float maxHealth = 100) : base(animationHandler)
         {
             Health = health;
@@ -26,6 +36,19 @@ namespace SE_Praktikum.Components.Sprites.Actors
             _logger = LogManager.GetCurrentClassLogger();
             _impactSound = impactSound;
         }
+        
+        // #############################################################################################################
+        // Events
+        // #############################################################################################################
+        #region Events
+        public event EventHandler<EventArgs> OnExplosion;
+        public event EventHandler<EventArgs> OnDeath;
+        public event EventHandler OnHealthChanged;
+        public event EventHandler OnMaxHealthChanged;
+        #endregion
+        // #############################################################################################################
+        // Properties
+        // #############################################################################################################
 
         public bool IsCollideAble => HitBox != null;
         public Polygon[] HitBox => _animationHandler.CurrentHitBox;
@@ -69,16 +92,10 @@ namespace SE_Praktikum.Components.Sprites.Actors
                 InvokeOnMaxHealthChanged();
             }
         }
-        protected bool _indestructible;
-        protected Particle Explosion;
+        // #############################################################################################################
+        // Public Methods
+        // #############################################################################################################
 
-
-        #region Events
-        public event EventHandler<EventArgs> OnExplosion;
-        public event EventHandler<EventArgs> OnDeath;
-        public event EventHandler OnHealthChanged;
-        public event EventHandler OnMaxHealthChanged;
-        #endregion
 
         public void InterAct(Actor other)
         {
@@ -88,6 +105,9 @@ namespace SE_Praktikum.Components.Sprites.Actors
             if(other.InteractAble(this))
                 other.ExecuteInteraction(this);
         }
+        // #############################################################################################################
+        // Protected/ Private Methods
+        // #############################################################################################################
 
         /// <summary>
         /// This method checks whether the other has an impact on this
