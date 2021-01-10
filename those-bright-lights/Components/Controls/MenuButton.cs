@@ -43,6 +43,8 @@ namespace SE_Praktikum.Components.Controls
 
         
         public string Text { get; set; }
+        
+        public bool Enabled { get; set; }
 
         #endregion
 
@@ -54,7 +56,9 @@ namespace SE_Praktikum.Components.Controls
                           Color? textColor = null,
                           Vector2? position = null,
                           Camera camera = null,
-                          string text = "", int textOffSetWhenPressed = 0) : base(handler, camera)
+                          string text = "",
+                          int textOffSetWhenPressed = 0,
+                          bool enabled = true) : base(handler, camera)
         {
             _logger = LogManager.GetCurrentClassLogger();
             _position = position ?? Vector2.Zero;
@@ -64,6 +68,7 @@ namespace SE_Praktikum.Components.Controls
             _textOffSetWhenPressed = textOffSetWhenPressed;
             TextColor = textColor ?? Color.CornflowerBlue;
             Text = text;
+            Enabled = true;
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -81,7 +86,7 @@ namespace SE_Praktikum.Components.Controls
             foreach (var handler in _handler)
             {
                 handler.Color = co;
-                handler.CurrentIndex = Clicked? 1 : 0;
+                handler.CurrentIndex = Clicked || !Enabled? 1 : 0;
                 handler.Offset = Offset;
                 handler.Draw(spriteBatch);
             }
@@ -105,7 +110,7 @@ namespace SE_Praktikum.Components.Controls
 
             var mouseRectangle = new Rectangle((int) Math.Round(pos.X), (int) Math.Round(pos.Y), 1, 1);
             _isHovering = false;
-            if (mouseRectangle.Intersects(Frame))
+            if (mouseRectangle.Intersects(Frame) && Enabled)
             {
                 _isHovering = true;
 
