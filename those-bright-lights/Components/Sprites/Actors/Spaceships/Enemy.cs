@@ -82,15 +82,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
 
             base.Update(gameTime);
         }
-
         
-
-        protected override void InvokeOnTakeDamage(float damage)
-        {
-            _logger.Info(Health);
-            Health -= damage;
-            base.InvokeOnTakeDamage(damage);
-        }
         
 
         protected override bool InteractAble(Actor other)

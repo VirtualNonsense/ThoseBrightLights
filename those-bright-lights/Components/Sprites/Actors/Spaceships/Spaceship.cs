@@ -37,7 +37,6 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
         // #############################################################################################################
         #region Events
         public event EventHandler OnShoot;
-        public event EventHandler OnTakeDamage;
 
         #endregion
         
@@ -142,10 +141,6 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
             Weapons[CurrentWeapon].Fire();
         }
 
-        protected virtual void InvokeOnTakeDamage(float damage)
-        {
-            OnTakeDamage?.Invoke(this,EventArgs.Empty);
-        }
         protected virtual void InvokeOnShoot(Bullet b)
         {
             if (b is null)
