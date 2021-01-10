@@ -105,7 +105,12 @@ namespace SE_Praktikum.Services.Factories
                             case "TurretSpawn":
                                 EnemySpawnpoints.Add((EnemyType.Turret, ConvertObjectToPolygon(obj).Center));
                                 break;
-
+                            case "AlienSpawn":
+                                EnemySpawnpoints.Add((EnemyType.Alienship, ConvertObjectToPolygon(obj).Center));
+                                break;
+                            case "BossSpawn":
+                                EnemySpawnpoints.Add((EnemyType.Boss, ConvertObjectToPolygon(obj).Center));
+                                break;
                             default:
                                 _logger.Warn($"{obj.type} not found");
                                 break;
