@@ -30,7 +30,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
         }
 
 
-        public EnemyWithViewbox(AnimationHandler animationHandler, Polygon viewBox, float speed = 3, float health = 50, SoundEffect impactSound = null) : base(animationHandler, speed, health, impactSound)
+        public EnemyWithViewbox(AnimationHandler animationHandler, Polygon viewBox, float maxSpeed = 3, float acceleration =5, float health = 50, SoundEffect impactSound = null) : base(animationHandler, maxSpeed, acceleration,health, impactSound)
         {
             ViewBox = viewBox;
         }

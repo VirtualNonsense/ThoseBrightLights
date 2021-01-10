@@ -16,17 +16,19 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
     {
         protected List<Weapon> Weapons;
         protected int CurrentWeapon;
-        protected float Speed;
+        protected float MaxSpeed;
+        protected readonly float Acceleration;
         private Logger _logger;
         protected Polygon _impactPolygon;
         protected AnimationHandler Propulsion;
         // #############################################################################################################
         // Constructor
         // #############################################################################################################
-        public Spaceship(AnimationHandler animationHandler, float speed = 3, float health = 100, SoundEffect impactSound = null) : base(
+        public Spaceship(AnimationHandler animationHandler, float maxSpeed = 3, float acceleration = 5, float health = 100, SoundEffect impactSound = null) : base(
             animationHandler, impactSound)
         {
-            Speed = speed;
+            MaxSpeed = maxSpeed;
+            Acceleration = acceleration;
             Health = health;
             Weapons = new List<Weapon>();
             _logger = LogManager.GetCurrentClassLogger();

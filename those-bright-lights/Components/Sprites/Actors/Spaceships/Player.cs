@@ -16,12 +16,12 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
         private KeyboardState CurrentKey;
         private KeyboardState PreviousKey;
         private int _score;
-        public Player(AnimationHandler animationHandler, AnimationHandler propulsion, Input input=null, int health=100, float speed = 5, SoundEffect impactSound = null) 
-            : base(animationHandler, health, speed, impactSound)
+        public Player(AnimationHandler animationHandler, AnimationHandler propulsion, Input input=null, float acceleration = 5, float maxSpeed = 30, int health=100, SoundEffect impactSound = null) 
+            : base(animationHandler, maxSpeed, acceleration,health, impactSound)
         {
             _input = input;
             Health = health;
-            Speed = speed;
+            MaxSpeed = maxSpeed;
             _logger = LogManager.GetCurrentClassLogger();
             Propulsion = propulsion;
             Propulsion.Origin += new Vector2(animationHandler.FrameWidth / 2 + Propulsion.FrameWidth/2 +2, 0);

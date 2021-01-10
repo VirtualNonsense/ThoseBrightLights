@@ -25,6 +25,7 @@ namespace SE_Praktikum.Components
     public Sprite(AnimationHandler animationHandler)
     {
       _animationHandler = animationHandler;
+      DeltaPosition = Vector2.Zero;
     }
     // #################################################################################################################
     // Properties
@@ -96,6 +97,8 @@ namespace SE_Praktikum.Components
 
     public bool IsRemoveAble { get; set; }
     public Vector2 Velocity { get; set; }
+    
+    public Vector2 DeltaPosition { get; set; }
 
 
     // #################################################################################################################
