@@ -67,6 +67,7 @@ namespace SE_Praktikum.Services.Factories
             EventZone WinningZone = null;
             Dictionary<float, QuadTree<Tile>> tiles = new Dictionary<float, QuadTree<Tile>>();
             List<(EnemyType, Vector2)> EnemySpawnpoints = new List<(EnemyType, Vector2)>();
+            List<(PowerUpType, Vector2)> PowerUpSpawnpoints = new List<(PowerUpType, Vector2)>();
             var l = 0f;
             var area = new Rectangle(0, 0, blueprint.Width * blueprint.TileWidth, blueprint.Height * blueprint.TileHeight);
             foreach(var layer in blueprint.Layers)
@@ -111,6 +112,27 @@ namespace SE_Praktikum.Services.Factories
                             case "BossSpawn":
                                 EnemySpawnpoints.Add((EnemyType.Boss, ConvertObjectToPolygon(obj).Center));
                                 break;
+                            case "HealthPowerUpSpawn":
+                                PowerUpSpawnpoints.Add((PowerUpType.HealthPowerUp, ConvertObjectToPolygon(obj).Center));
+                                break;
+                            case "FullHealthPowerUpSpawn":
+                                PowerUpSpawnpoints.Add((PowerUpType.FullHealthPowerUp, ConvertObjectToPolygon(obj).Center));
+                                break;
+                            case "AmmoPowerUpSpawn":
+                                PowerUpSpawnpoints.Add((PowerUpType.AmmoPowerUp, ConvertObjectToPolygon(obj).Center));
+                                break;
+                            case "InstaDeathPowerUpSpawn":
+                                PowerUpSpawnpoints.Add((PowerUpType.InstaDeathPowerUp, ConvertObjectToPolygon(obj).Center));
+                                break;
+                            case "ScoreBonusPowerUpSpawn":
+                                PowerUpSpawnpoints.Add((PowerUpType.ScoreBonusPowerUp, ConvertObjectToPolygon(obj).Center));
+                                break;
+                            case "StarPowerUpSpawn":
+                                PowerUpSpawnpoints.Add((PowerUpType.StarPowerUp, ConvertObjectToPolygon(obj).Center));
+                                break;
+                            case "WeaponPowerUpSpawn":
+                                PowerUpSpawnpoints.Add((PowerUpType.WeaponPowerUp, ConvertObjectToPolygon(obj).Center));
+                                break;
                             default:
                                 _logger.Warn($"{obj.type} not found");
                                 break;
@@ -122,7 +144,7 @@ namespace SE_Praktikum.Services.Factories
 
                 
             }
-            return new Map(tiles, area, winningZone: WinningZone, EnemySpawnpoints) { PlayerSpawnPoint = SpawnPoint};
+            return new Map(tiles, area, winningZone: WinningZone, EnemySpawnpoints, PowerUpSpawnpoints) { PlayerSpawnPoint = SpawnPoint};
         }
         private Polygon ConvertObjectToPolygon(ObjectBluePrint objectt)
         {
