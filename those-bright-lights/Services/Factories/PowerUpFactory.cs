@@ -103,5 +103,30 @@ namespace SE_Praktikum.Services.Factories
             };
             return ra;
         }
+
+        public StarPowerUp StarGetInstance(Vector2? position = null, float layer = 0)
+        {
+            var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\PowerUpTry1.json", 0);
+            var animationSettings = new AnimationSettings(new List<(int, float)> { (22, 1) }, isPlaying: false);
+            var s = new StarPowerUp(_animationHandlerFactory.GetAnimationHandler(tileSet, animationSettings))
+            {
+                Layer = layer,
+                Position = position ?? new Vector2(0, 0)
+            };
+            return s;
+        }
+
+        public ScoreBonusPowerUp ScoreBonusGetInstance(Vector2? position = null, float layer = 0)
+        {
+            var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\PowerUpTry1.json", 0);
+            var animationSettings = new AnimationSettings(new List<(int, float)> { (22, 1) }, isPlaying: false);
+            var sc = new ScoreBonusPowerUp(_animationHandlerFactory.GetAnimationHandler(tileSet, animationSettings))
+            {
+                Layer = layer,
+                
+                Position = position ?? new Vector2(0, 0)
+            };
+            return sc;
+        }
     }
 }
