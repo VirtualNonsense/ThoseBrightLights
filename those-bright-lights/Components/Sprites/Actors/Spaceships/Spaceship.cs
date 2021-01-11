@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
@@ -14,7 +15,6 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
 {
     public abstract class Spaceship : Actor
     {
-        protected List<Weapon> Weapons;
         protected List<SpaceshipAddOn> Components;
         protected int CurrentWeapon;
         protected float MaxSpeed;
@@ -48,7 +48,9 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
         // #############################################################################################################
         // Properties
         // #############################################################################################################
-        protected bool FlippedHorizontal => _animationHandler.SpriteEffects == SpriteEffects.FlipVertically;
+        
+
+        protected List<Weapon> WeaponList => Components.OfType<Weapon>().ToList();
 
         public override float Rotation
         {
@@ -80,7 +82,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
         // #############################################################################################################
         public override void Update(GameTime gameTime)
         {
-            foreach (var weapon in Weapons)
+            foreach (var weapon in WeaponList)
             {
                 weapon.Update(gameTime);
             }
@@ -90,17 +92,17 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
                 component.Update(gameTime);
             }
 
-            for (var i = 0; i < Weapons.Count;)
+            for (var i = 0; i < WeaponList.Count;)
             {
-                var w = Weapons[i];
+                var w = WeaponList[i];
                 if (!w.IsRemoveAble)
                 {
                     i++;
                     continue;
                 }
-                Weapons.RemoveAt(i);
-                if (CurrentWeapon >= Weapons.Count)
-                    CurrentWeapon = Weapons.Count - 1;
+                Components.Remove(w);
+                if (CurrentWeapon >= WeaponList.Count)
+                    CurrentWeapon = WeaponList.Count - 1;
             }
 
             if (Propulsion != null)
@@ -118,11 +120,10 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
         public override void Draw(SpriteBatch spriteBatch)
         {
             Propulsion?.Draw(spriteBatch);
-            foreach (var weapon in Weapons)
+            foreach (var weapon in WeaponList)
             {
                 weapon.Draw(spriteBatch);
             }
-            _logger.Info("Spaceship position:" + Position);
             base.Draw(spriteBatch);
         }
 
@@ -130,7 +131,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
         {
             weapon.Parent = this;
             Components.Add(weapon);
-            CurrentWeapon = Weapons.Count - 1;
+            CurrentWeapon = Components.Count - 1;
             weapon.OnEmitBullet += EmitBulletToOnShot;
             switch (weapon)
             {
@@ -145,7 +146,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
 
         public virtual void RemoveWeapon(Weapon weapon)
         {
-            if (!Weapons.Contains(weapon)) return;
+            if (!WeaponList.Contains(weapon)) return;
             weapon.OnEmitBullet -= EmitBulletToOnShot;
             // Weapons.Remove(weapon);
             weapon.IsRemoveAble = true;
@@ -156,8 +157,8 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
         // #############################################################################################################
         protected virtual void ShootCurrentWeapon()
         {
-            if (Weapons.Count == 0) return;
-            Weapons[CurrentWeapon].Fire();
+            if (WeaponList.Count == 0) return;
+            WeaponList[CurrentWeapon].Fire();
         }
 
         protected virtual void InvokeOnShoot(Bullet b)
