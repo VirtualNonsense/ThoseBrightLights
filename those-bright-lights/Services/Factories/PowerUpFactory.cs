@@ -93,19 +93,6 @@ namespace SE_Praktikum.Services.Factories
             return lp;
         }
 
-        public WeaponPowerUp MiniGunGetInstance(Vector2? position = null, float layer = 0)          
-        {
-            var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\laser.json", 0);    //add minigun
-            var animationSettings = new AnimationSettings(1);
-            var m = new WeaponPowerUp(_animationHandlerFactory.GetAnimationHandler(tileSet, animationSettings),
-                _weaponFactory.GetEnemyLaserGun(null))          //add minigun
-            {
-                Layer = layer,
-                Position = position ?? new Vector2(0, 0)
-            };
-            return m;
-        }
-
         public AmmoPowerUp AmmoGetInstance(int ammo, Vector2? position = null, float layer = 0)
         {
             var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\infammoanimation.json", 0);

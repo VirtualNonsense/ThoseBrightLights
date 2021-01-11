@@ -71,7 +71,7 @@ namespace SE_Praktikum.Components
         Turret, 
         Alienship,
         Boss,
-        Minen
+        Mines
     }
     public enum PowerUpType
     {
