@@ -1,14 +1,17 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Graphics;
 using NLog;
 using SE_Praktikum.Components.Sprites.Actors.Bullets;
+using SE_Praktikum.Components.Sprites.Actors.Spaceships;
 using SE_Praktikum.Extensions;
+using SE_Praktikum.Services;
 using SE_Praktikum.Services.Abilities;
 
 namespace SE_Praktikum.Components.Sprites.Actors.Weapons
 {
-    public abstract class Weapon
+    public abstract class Weapon : SpaceshipAddOn
     {
         private readonly SoundEffect _shotSoundEffect;
 
@@ -23,11 +26,24 @@ namespace SE_Praktikum.Components.Sprites.Actors.Weapons
         /// Base class for all weapons.
         /// It implements the base mechanism for bullet creation, bullet firing and shot cooldown
         /// </summary>
+        /// <param name="animationHandler"></param>
         /// <param name="parent"></param>
         /// <param name="shotSoundEffect"></param>
+        /// <param name="impactSound"></param>
         /// <param name="nameTag">Name of the gun</param>
+        /// <param name="maxHealth"></param>
         /// <param name="shotCoolDown">in milliseconds</param>
-        public Weapon(Actor parent, SoundEffect shotSoundEffect, string nameTag, int shotCoolDown = 10)
+        /// <param name="health"></param>
+        public Weapon(
+                AnimationHandler animationHandler, 
+                Actor parent, 
+                SoundEffect shotSoundEffect, 
+                SoundEffect impactSound,
+                string nameTag, 
+                float health,
+                float maxHealth ,
+                int shotCoolDown = 10)
+                : base(animationHandler, parent, impactSound,health,maxHealth)
         {
             _logger = LogManager.GetCurrentClassLogger();
             _shotAbility = new CooldownAbility(shotCoolDown, FireAbility);
@@ -68,27 +84,10 @@ namespace SE_Praktikum.Components.Sprites.Actors.Weapons
         /// <summary>
         /// the owner of the gun.
         /// </summary>
-        public Actor Parent { get; set; }
+        //public Actor Parent { get; set; }
         public bool CanShoot => _shotAbility.AbilityAvailable;
 
-        /// <summary>
-        /// bullet rotation
-        /// </summary>
-        public float Rotation
-        {
-            get => _rotation;
-            set => _rotation = MathExtensions.Modulo2PiPositive(value);
-        }
-        
-        /// <summary>
-        /// bullet spawn point
-        /// </summary>
-        public Vector2 Position
-        {
-            get;
-            set;
-        }
-        
+
         /// <summary>
         /// Velocity of the moving system e.g. the spaceship
         /// </summary>
@@ -103,6 +102,11 @@ namespace SE_Praktikum.Components.Sprites.Actors.Weapons
             get;
             protected set;
         }
+        
+        /// <summary>
+        /// Position is in space of Weapon, so relative position
+        /// </summary>
+        public Vector2 BulletSpawnPoint { get; set; }
         
         // #############################################################################################################
         // public methods
@@ -159,5 +163,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Weapons
         {
             public Bullet Bullet { get; set; }
         }
+        
+
     }
 }
