@@ -35,6 +35,13 @@ namespace SE_Praktikum.Services.Factories
             var laserexpTileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\laesr_explosion_6_6_6.json", 0);
             return new ExplosionsParticle(_factory.GetAnimationHandler(laserexpTileSet,animationSettings),_screen);
         }
+
+        public ExplosionsParticle BuildProjectileExplosionParticle(AnimationSettings settings = null)
+        {
+            var animationSettings = settings ?? new AnimationSettings(4, 50f, 1);
+            var explosionTileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\projectile_5_6_4.json", 0);
+            return new ExplosionsParticle(_factory.GetAnimationHandler(explosionTileSet, animationSettings), _screen);
+        }
         
     }
 }
