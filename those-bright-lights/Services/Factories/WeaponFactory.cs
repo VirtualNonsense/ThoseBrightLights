@@ -102,9 +102,9 @@ namespace SE_Praktikum.Services.Factories
             var m = new SingleShotWeapon(
                 _animationHandlerFactory.GetAnimationHandler(tileSet,new AnimationSettings(1,isPlaying:false)),
                 owner,
-                new Vector2(30, -50),
+                new Vector2(28, -38),
                 0,
-                new Vector2(10,-10),
+                new Vector2(13,0),
                 null, 
                 null, 
                 nameTag,
@@ -118,8 +118,7 @@ namespace SE_Praktikum.Services.Factories
                 () => _bulletFactory.GetLaser(owner, damage),
                 shotCoolDown: shotCooldown,
                 reloadTime: reloadTime);
-            m.Scale = 2;
-            m.Layer = owner.Layer;
+            m.Scale = 1.5f;
             return m;
         }
 
@@ -216,7 +215,6 @@ namespace SE_Praktikum.Services.Factories
                 shotCoolDown: shotCooldown,
                 reloadTime: reloadTime);
             m.Scale = 1.8f;
-            m.Layer = owner.Layer;
             return m;
         } 
     }

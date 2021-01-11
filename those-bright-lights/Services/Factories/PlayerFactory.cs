@@ -35,7 +35,7 @@ namespace SE_Praktikum.Services.Factories
                 new AnimationSettings(frames: 6, duration: 75, isLooping: true));
             var p = new Player(_animationHandlerFactory.GetAnimationHandler(tileSet,animationSettings), propulsionHandler, input);
             p.Position = new Vector2(-50,50);
-            p.AddWeapon(_weaponFactory.GetMinigun(p));
+            p.AddWeapon(_weaponFactory.GetLaserGun(p));
 
             return p;
         } 
