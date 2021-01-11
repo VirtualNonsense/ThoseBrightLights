@@ -33,6 +33,7 @@ namespace SE_Praktikum.Components
     // #################################################################################################################
     public event EventHandler OnPositionChanged;
     public event EventHandler OnRotationChanged;
+    public event EventHandler OnLayerChanged;
     
     // #################################################################################################################
     // Properties
@@ -74,7 +75,7 @@ namespace SE_Praktikum.Components
     public virtual float Layer
     {
       get => _animationHandler.Layer;
-      set => _animationHandler.Layer = value;
+      set { _animationHandler.Layer = value; InvokeOnLayerChanged(); }
     }
 
     public virtual float Rotation
@@ -136,6 +137,11 @@ namespace SE_Praktikum.Components
     protected virtual void InvokeOnRotationChanged()
     {
       OnRotationChanged?.Invoke(this, EventArgs.Empty);
+    }
+
+    protected virtual void InvokeOnLayerChanged()
+    {
+      OnLayerChanged?.Invoke(this, EventArgs.Empty);
     }
   }
 }

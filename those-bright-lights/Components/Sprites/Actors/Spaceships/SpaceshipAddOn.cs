@@ -92,12 +92,19 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
                 {
                     base.Parent.OnPositionChanged -= ParentOnOnPositionChanged;
                     base.Parent.OnRotationChanged -= ParentOnOnRotationChanged;
+                    base.Parent.OnLayerChanged -= ParentOnOnLayerChanged;
                 }
 
                 base.Parent = value;
                 base.Parent.OnPositionChanged += ParentOnOnPositionChanged;
                 base.Parent.OnRotationChanged += ParentOnOnRotationChanged;
+                base.Parent.OnLayerChanged += ParentOnOnLayerChanged;
             } 
+        }
+
+        private void ParentOnOnLayerChanged(object sender, EventArgs e)
+        {
+            Layer = Parent.Layer;
         }
 
         private void ParentOnOnRotationChanged(object sender, EventArgs e)
@@ -115,5 +122,6 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
             _animationHandler.SpriteEffects = Parent.FlippedHorizontal ? SpriteEffects.FlipVertically : SpriteEffects.None;
             base.Draw(spriteBatch);
         }
+
     }
 }
