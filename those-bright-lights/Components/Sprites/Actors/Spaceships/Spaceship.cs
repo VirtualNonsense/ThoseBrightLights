@@ -15,7 +15,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
 {
     public abstract class Spaceship : Actor
     {
-        protected List<SpaceshipAddOn> Components;
+        public List<SpaceshipAddOn> Components;
         protected int CurrentWeapon;
         protected float MaxSpeed;
         protected readonly float Acceleration;
