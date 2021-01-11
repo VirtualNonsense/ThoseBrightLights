@@ -205,6 +205,18 @@
 /processorParam:TextureFormat=Color
 /build:Artwork/Effects/minigunexplosions_8_10_5.png
 
+#begin Artwork/Effects/projectile_5_6_4.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Artwork/Effects/projectile_5_6_4.png
+
 #begin Artwork/misc/100x50PixelTest.png
 /importer:TextureImporter
 /processor:TextureProcessor
