@@ -80,7 +80,11 @@ namespace SE_Praktikum.Components
     public virtual float Rotation
     {
       get => _animationHandler.Rotation;
-      set => _animationHandler.Rotation = value;
+      set
+      {
+        _animationHandler.Rotation = value;
+        InvokeOnRotationChanged();
+      }
     }
 
     public float Scale
@@ -128,6 +132,10 @@ namespace SE_Praktikum.Components
     {
       OnPositionChanged?.Invoke(this, EventArgs.Empty);
     }
-    
+
+    protected virtual void InvokeOnRotationChanged()
+    {
+      OnRotationChanged?.Invoke(this, EventArgs.Empty);
+    }
   }
 }
