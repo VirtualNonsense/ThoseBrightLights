@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SE_Praktikum.Services;
@@ -28,6 +29,12 @@ namespace SE_Praktikum.Components
       DeltaPosition = Vector2.Zero;
     }
     // #################################################################################################################
+    // Events
+    // #################################################################################################################
+    public event EventHandler OnPositionChanged;
+    public event EventHandler OnRotationChanged;
+    
+    // #################################################################################################################
     // Properties
     // #################################################################################################################
 
@@ -40,11 +47,15 @@ namespace SE_Praktikum.Components
 
     public readonly Color[] TextureData;
 
-
-    public virtual Vector2 Position
-    {
+    
+    public virtual Vector2 Position 
+    { 
       get => _animationHandler.Position;
-      set => _animationHandler.Position = value;
+      set
+      {
+        _animationHandler.Position = value;
+        InvokeOnPositionChanged();
+      } 
     }
 
     public float X
@@ -112,6 +123,10 @@ namespace SE_Praktikum.Components
     public virtual void Draw(SpriteBatch spriteBatch)
     {
       _animationHandler.Draw(spriteBatch);
+    }
+    protected virtual void InvokeOnPositionChanged()
+    {
+      OnPositionChanged?.Invoke(this, EventArgs.Empty);
     }
     
   }

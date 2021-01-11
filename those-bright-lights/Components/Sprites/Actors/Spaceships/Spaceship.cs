@@ -15,6 +15,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
     public abstract class Spaceship : Actor
     {
         protected List<Weapon> Weapons;
+        protected List<SpaceshipAddOn> Components;
         protected int CurrentWeapon;
         protected float MaxSpeed;
         protected readonly float Acceleration;
@@ -30,7 +31,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
             MaxSpeed = maxSpeed;
             Acceleration = acceleration;
             Health = health;
-            Weapons = new List<Weapon>();
+            Components = new List<SpaceshipAddOn>();
             _logger = LogManager.GetCurrentClassLogger();
         }
         
@@ -40,7 +41,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
         #region Events
         public event EventHandler OnShoot;
         //TODO: Consider moving this into sprite
-        public event EventHandler OnPositionChanged;
+        
 
         #endregion
         
@@ -72,15 +73,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
             }
         }
 
-        public override Vector2 Position 
-        { 
-            get => base.Position;
-            set
-            {
-                base.Position = value;
-                InvokeOnPositionChanged();
-            } 
-        }
+        
 
         // #############################################################################################################
         // public Methods
@@ -90,6 +83,11 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
             foreach (var weapon in Weapons)
             {
                 weapon.Update(gameTime);
+            }
+
+            foreach (var component in Components)
+            {
+                component.Update(gameTime);
             }
 
             for (var i = 0; i < Weapons.Count;)
@@ -120,13 +118,18 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
         public override void Draw(SpriteBatch spriteBatch)
         {
             Propulsion?.Draw(spriteBatch);
+            foreach (var weapon in Weapons)
+            {
+                weapon.Draw(spriteBatch);
+            }
+            _logger.Info("Spaceship position:" + Position);
             base.Draw(spriteBatch);
         }
 
         public virtual void AddWeapon(Weapon weapon)
         {
             weapon.Parent = this;
-            Weapons.Add(weapon);
+            Components.Add(weapon);
             CurrentWeapon = Weapons.Count - 1;
             weapon.OnEmitBullet += EmitBulletToOnShot;
             switch (weapon)
@@ -157,10 +160,6 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
             Weapons[CurrentWeapon].Fire();
         }
 
-        protected virtual void InvokeOnPositionChanged()
-        {
-            OnPositionChanged?.Invoke(this, EventArgs.Empty);
-        }
         protected virtual void InvokeOnShoot(Bullet b)
         {
             if (b is null)
