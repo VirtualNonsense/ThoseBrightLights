@@ -104,7 +104,7 @@ namespace SE_Praktikum.Services.Factories
                 owner,
                 new Vector2(30, -50),
                 0,
-                new Vector2(17,13),
+                new Vector2(10,-10),
                 null, 
                 null, 
                 nameTag,
