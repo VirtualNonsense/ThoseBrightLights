@@ -6,10 +6,10 @@ namespace SE_Praktikum.Components.Sprites.Actors.PowerUps
 {
     public class StarPowerUp : PowerUp
     {
-        
-        public StarPowerUp(AnimationHandler animationHandler, float health = 0.01f, SoundEffect soundEffect = null) : base(animationHandler, health, soundEffect)
+        public readonly float Duration;
+        public StarPowerUp(AnimationHandler animationHandler,float duration, float health = 0.01f, SoundEffect soundEffect = null) : base(animationHandler, health, soundEffect)
         {
-            
+            Duration = duration;
         }
     }
 }
