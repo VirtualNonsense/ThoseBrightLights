@@ -39,6 +39,9 @@ namespace SE_Praktikum.Components.Sprites.Actors.Weapons
         /// <param name="initialBulletsInClip"></param>
         protected ClipWeapon(AnimationHandler animationHandler, 
                              Actor parent,   
+                             Vector2 relativePosition,
+                             float relativeRotation,
+                             Vector2 bulletSpawnPoint,
                              SoundEffect shotSoundEffect, 
                              SoundEffect impactSound,
                              string nameTag, 
@@ -52,7 +55,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Weapons
                              int shotCoolDown = 10,
                              int reloadTime = 1000,
                              int? initialBulletsInClip = null)
-            : base(animationHandler,parent, shotSoundEffect, impactSound,nameTag, health, maxHealth,shotCoolDown)
+            : base(animationHandler,parent, relativePosition, relativeRotation,bulletSpawnPoint,shotSoundEffect, impactSound,nameTag, health, maxHealth,shotCoolDown)
         {
             _logger = LogManager.GetCurrentClassLogger();
             Clips = clips;

@@ -46,7 +46,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
             }
         }
 
-        protected Vector2 TransformIntoWorldSpace(Vector2 vector2)
+        private Vector2 TransformIntoWorldSpace(Vector2 vector2)
         {
             var (x, y) = vector2;
             var (px, py) = Parent.Position;
@@ -54,9 +54,22 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
         }
 
         //TODO: set relative position in constructor
-        protected SpaceshipAddOn(AnimationHandler animationHandler, Actor parent, SoundEffect impactSound, float health = 100, float maxHealth = 100) 
-            : base(animationHandler, impactSound, health, maxHealth)
+        protected SpaceshipAddOn(
+                        AnimationHandler animationHandler, 
+                        Actor parent, 
+                        Vector2 relativePosition, 
+                        float relativeRotation, 
+                        SoundEffect impactSound, 
+                        float health = 100, 
+                        float maxHealth = 100) 
+            : base(
+                        animationHandler, 
+                        impactSound, 
+                        health, 
+                        maxHealth)
         {
+            RelativePosition = relativePosition;
+            RelativeRotation = relativeRotation;
             Parent = parent;
             _logger = LogManager.GetCurrentClassLogger();
         }

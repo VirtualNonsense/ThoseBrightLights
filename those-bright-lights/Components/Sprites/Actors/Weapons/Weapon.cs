@@ -28,6 +28,9 @@ namespace SE_Praktikum.Components.Sprites.Actors.Weapons
         /// </summary>
         /// <param name="animationHandler"></param>
         /// <param name="parent"></param>
+        /// <param name="relativePosition"></param>
+        /// <param name="relativeRotation"></param> Rotation in body space of parent
+        /// <param name="bulletSpawnPoint"></param> in relative coordinates to parent
         /// <param name="shotSoundEffect"></param>
         /// <param name="impactSound"></param>
         /// <param name="nameTag">Name of the gun</param>
@@ -37,19 +40,23 @@ namespace SE_Praktikum.Components.Sprites.Actors.Weapons
         public Weapon(
                 AnimationHandler animationHandler, 
                 Actor parent, 
+                Vector2 relativePosition,
+                float relativeRotation,
+                Vector2 bulletSpawnPoint,
                 SoundEffect shotSoundEffect, 
                 SoundEffect impactSound,
                 string nameTag, 
                 float health,
                 float maxHealth ,
                 int shotCoolDown = 10)
-                : base(animationHandler, parent, impactSound,health,maxHealth)
+                : base(animationHandler, parent,relativePosition, relativeRotation, impactSound,health,maxHealth)
         {
             _logger = LogManager.GetCurrentClassLogger();
             _shotAbility = new CooldownAbility(shotCoolDown, FireAbility);
             Parent = parent;
             _shotSoundEffect = shotSoundEffect;
             NameTag = nameTag;
+            BulletSpawnPoint = bulletSpawnPoint;
         }
 
         // #############################################################################################################

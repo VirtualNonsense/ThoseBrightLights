@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using SE_Praktikum.Components.Sprites.Actors.Bullets;
 using SE_Praktikum.Components.Sprites.Actors.Spaceships;
@@ -16,6 +17,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Weapons
         /// </summary>
         /// <param name="animationHandler"></param>
         /// <param name="parent">the owner of the gun. it will be assigned to each bullet as well</param>
+        /// <param name="relativeRotation"></param>
         /// <param name="shotSoundEffect"></param>
         /// <param name="impactSound"></param>
         /// <param name="health"></param>
@@ -29,8 +31,12 @@ namespace SE_Praktikum.Components.Sprites.Actors.Weapons
         /// <param name="constructPreconfiguredBullet">method that will create a bullet</param>
         /// <param name="shotCoolDown">in milliseconds</param>
         /// <param name="reloadTime">in milliseconds</param>
+        /// <param name="relativePosition"></param>
         public SingleShotWeapon(AnimationHandler animationHandler,
                                 Actor parent,
+                                Vector2 relativePosition,
+                                float relativeRotation,
+                                Vector2 bulletSpawnPoint,
                                 SoundEffect shotSoundEffect, 
                                 SoundEffect impactSound,
                                 string nameTag,
@@ -46,6 +52,9 @@ namespace SE_Praktikum.Components.Sprites.Actors.Weapons
                                 int reloadTime = 1000) 
                             : base(animationHandler,
                                 parent,
+                                relativePosition,
+                                relativeRotation,
+                                bulletSpawnPoint,
                                 shotSoundEffect,
                                 impactSound,
                                 nameTag,

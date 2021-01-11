@@ -55,8 +55,11 @@ namespace SE_Praktikum.Services.Factories
             var m = new SingleShotWeapon(
                 _animationHandlerFactory.GetAnimationHandler(null,null),
                 owner,
+                new Vector2(0,10),
+                0,
+                new Vector2(0,0),
                 null, 
-                null, 
+                null,
                 nameTag,
                 health,
                 maxHealth,
@@ -99,6 +102,9 @@ namespace SE_Praktikum.Services.Factories
             var m = new SingleShotWeapon(
                 _animationHandlerFactory.GetAnimationHandler(tileSet,new AnimationSettings(1,isPlaying:false)),
                 owner,
+                new Vector2(30, -50),
+                0,
+                new Vector2(0,0),
                 null, 
                 null, 
                 nameTag,
@@ -112,7 +118,6 @@ namespace SE_Praktikum.Services.Factories
                 () => _bulletFactory.GetLaser(owner, damage),
                 shotCoolDown: shotCooldown,
                 reloadTime: reloadTime);
-            m.RelativePosition = new Vector2(30, -50);
             m.BulletSpawnPoint = new Vector2(0, 0);
             m.Scale = 2;
             m.Layer = owner.Layer;
@@ -148,6 +153,9 @@ namespace SE_Praktikum.Services.Factories
             var m = new SingleShotWeapon(
                 _animationHandlerFactory.GetAnimationHandler(null,null),
                 owner,
+                new Vector2(0,0),
+                0,
+                new Vector2(0,0),
                 null, 
                 null, 
                 nameTag,
