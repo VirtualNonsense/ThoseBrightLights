@@ -121,7 +121,7 @@ namespace SE_Praktikum.Services.Factories
         {
             var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\health.json", 0);
             var animationSettings = new AnimationSettings(8,10,layer);
-            var s = new StarPowerUp(_animationHandlerFactory.GetAnimationHandler(tileSet, animationSettings), healthinf:health)
+            var s = new StarPowerUp(_animationHandlerFactory.GetAnimationHandler(tileSet, animationSettings))
             {
                 
                 Layer = layer,
