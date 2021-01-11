@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System.Runtime.CompilerServices;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using SE_Praktikum.Components.Actors;
 using SE_Praktikum.Components.Sprites.Actors;
@@ -87,7 +88,7 @@ namespace SE_Praktikum.Services.Factories
         /// <param name="health"></param>
         /// <param name="maxHealth"></param>
         /// <returns></returns>
-        public SingleShotWeapon GetLaserGun(Actor owner, 
+        public SingleShotWeapon GetUpperLaserGun(Actor owner, 
                                             int clipSize = 20,
                                             int clips = 10,
                                             int shotCooldown = 100,
@@ -121,6 +122,42 @@ namespace SE_Praktikum.Services.Factories
             m.Scale = 1.5f;
             return m;
         }
+        public SingleShotWeapon GetLowerLaserGun(Actor owner, 
+                                            int clipSize = 20,
+                                            int clips = 10,
+                                            int shotCooldown = 100,
+                                            int reloadTime = 1000,
+                                            float damage = 5,
+                                            string nameTag = "Laser gun",
+                                            float health = 1,
+                                            float maxHealth = 1)
+        {
+            // TODO: create and load missing sound effects
+            var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\lasergunFire_30_13_7.json", 0);
+            var m = new SingleShotWeapon(
+                _animationHandlerFactory.GetAnimationHandler(tileSet,new AnimationSettings(7,isPlaying:false,duration:50f)),
+                owner,
+                new Vector2(28, 36),
+                0,
+                new Vector2(13,0),
+                null, 
+                null, 
+                nameTag,
+                health,
+                maxHealth,
+                null,
+                null,
+                null,
+                clipSize,
+                clips,
+                () => _bulletFactory.GetLaser(owner, damage),
+                shotCoolDown: shotCooldown,
+                reloadTime: reloadTime);
+            m.Scale = 1.5f;
+            return m;
+        }
+        
+       
 
         /// <summary>
         /// Returns a gun that is meant for the current std. enemy.
@@ -194,9 +231,9 @@ namespace SE_Praktikum.Services.Factories
             float maxHealth = 1)
         {
             // TODO: create and load missing sound effects
-            var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\minigun_50_20.json", 0);
+            var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\minigunFire_50_20_10.json", 0);
             var m = new SingleShotWeapon(
-                _animationHandlerFactory.GetAnimationHandler(tileSet,new AnimationSettings(1,isPlaying:false)),
+                _animationHandlerFactory.GetAnimationHandler(tileSet,new AnimationSettings(10,isPlaying:false,duration:50f)),
                 owner,
                 new Vector2(55, 30),
                 0,

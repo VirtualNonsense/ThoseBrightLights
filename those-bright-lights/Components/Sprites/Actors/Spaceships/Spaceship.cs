@@ -17,6 +17,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
     {
         public List<SpaceshipAddOn> Components;
         protected int CurrentWeapon;
+        protected int IndexOfWeaponsOfTheSameType;
         protected float MaxSpeed;
         protected readonly float Acceleration;
         private Logger _logger;
@@ -50,7 +51,8 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
         // #############################################################################################################
         
 
-        protected List<Weapon> WeaponList => Components.OfType<Weapon>().ToList();
+        protected List<Weapon> AllWeaponsList => Components.OfType<Weapon>().ToList();
+        protected List<Weapon> CurrentWeapons => (from w in AllWeaponsList where w.NameTag == AllWeaponsList[CurrentWeapon].NameTag select w).ToList(); 
 
         public override float Rotation
         {
@@ -82,7 +84,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
         // #############################################################################################################
         public override void Update(GameTime gameTime)
         {
-            foreach (var weapon in WeaponList)
+            foreach (var weapon in AllWeaponsList)
             {
                 weapon.Update(gameTime);
             }
@@ -92,17 +94,17 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
                 component.Update(gameTime);
             }
 
-            for (var i = 0; i < WeaponList.Count;)
+            for (var i = 0; i < AllWeaponsList.Count;)
             {
-                var w = WeaponList[i];
+                var w = AllWeaponsList[i];
                 if (!w.IsRemoveAble)
                 {
                     i++;
                     continue;
                 }
                 Components.Remove(w);
-                if (CurrentWeapon >= WeaponList.Count)
-                    CurrentWeapon = WeaponList.Count - 1;
+                if (CurrentWeapon >= AllWeaponsList.Count)
+                    CurrentWeapon = AllWeaponsList.Count - 1;
             }
 
             if (Propulsion != null)
@@ -120,7 +122,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
         public override void Draw(SpriteBatch spriteBatch)
         {
             Propulsion?.Draw(spriteBatch);
-            foreach (var weapon in WeaponList)
+            foreach (var weapon in AllWeaponsList)
             {
                 weapon.Draw(spriteBatch);
             }
@@ -146,7 +148,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
 
         public virtual void RemoveWeapon(Weapon weapon)
         {
-            if (!WeaponList.Contains(weapon)) return;
+            if (!AllWeaponsList.Contains(weapon)) return;
             weapon.OnEmitBullet -= EmitBulletToOnShot;
             // Weapons.Remove(weapon);
             weapon.IsRemoveAble = true;
@@ -157,8 +159,18 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
         // #############################################################################################################
         protected virtual void ShootCurrentWeapon()
         {
-            if (WeaponList.Count == 0) return;
-            WeaponList[CurrentWeapon].Fire();
+            if (AllWeaponsList.Count == 0) return;
+            var previousWeapon = ((IndexOfWeaponsOfTheSameType - 1) +CurrentWeapons.Count)% CurrentWeapons.Count;
+            if (!CurrentWeapons[previousWeapon].CanShoot) return;
+            CurrentWeapons[IndexOfWeaponsOfTheSameType].Fire();
+            IndexOfWeaponsOfTheSameType = (IndexOfWeaponsOfTheSameType +1) % CurrentWeapons.Count;
+        }
+
+        protected virtual void ShootAllWeapons()
+        {
+            if (AllWeaponsList.Count == 0) return;
+            foreach (var weapon in AllWeaponsList)
+                weapon.Fire();
         }
 
         protected virtual void InvokeOnShoot(Bullet b)
