@@ -120,7 +120,7 @@ namespace SE_Praktikum.Services.Factories
 
         public ScoreBonusPowerUp ScoreBonusGetInstance(Vector2? position = null, float layer = 0)
         {
-            var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\health.json", 0);
+            var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\healthIcon.json", 0);
             var animationSettings = new AnimationSettings(1,50,layer,isLooping:true);
             var sc = new ScoreBonusPowerUp(_animationHandlerFactory.GetAnimationHandler(tileSet, animationSettings))
             {
