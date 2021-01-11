@@ -633,6 +633,54 @@
                  "width":0,
                  "x":2336,
                  "y":3377.33333333333
+                }, 
+                {
+                 "height":0,
+                 "id":46,
+                 "name":"HealthPowerUpSpawn",
+                 "point":true,
+                 "rotation":0,
+                 "type":"HealthPowerUpSpawn",
+                 "visible":true,
+                 "width":0,
+                 "x":440,
+                 "y":4062
+                }, 
+                {
+                 "height":0,
+                 "id":47,
+                 "name":"InstaDeathPowerUpSpawn",
+                 "point":true,
+                 "rotation":0,
+                 "type":"InstaDeathPowerUpSpawn",
+                 "visible":true,
+                 "width":0,
+                 "x":396,
+                 "y":3898
+                }, 
+                {
+                 "height":0,
+                 "id":48,
+                 "name":"WeaponPowerUpSpawn",
+                 "point":true,
+                 "rotation":0,
+                 "type":"WeaponPowerUpSpawn",
+                 "visible":true,
+                 "width":0,
+                 "x":651,
+                 "y":3910
+                }, 
+                {
+                 "height":0,
+                 "id":49,
+                 "name":"StarPowerUpSpawn",
+                 "point":true,
+                 "rotation":0,
+                 "type":"StarPowerUpSpawn",
+                 "visible":true,
+                 "width":0,
+                 "x":166,
+                 "y":3895
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -653,7 +701,7 @@
          "y":0
         }],
  "nextlayerid":25,
- "nextobjectid":46,
+ "nextobjectid":50,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.4.2",

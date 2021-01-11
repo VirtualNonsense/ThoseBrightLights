@@ -51,18 +51,6 @@
                 }, 
                 {
                  "height":0,
-                 "id":13,
-                 "name":"Spawn",
-                 "point":true,
-                 "rotation":0,
-                 "type":"PlayerSpawnPoint",
-                 "visible":true,
-                 "width":0,
-                 "x":139.559985413881,
-                 "y":150.295368907257
-                }, 
-                {
-                 "height":0,
                  "id":14,
                  "name":"",
                  "point":true,
@@ -75,39 +63,27 @@
                 }, 
                 {
                  "height":0,
-                 "id":15,
-                 "name":"AlienSpawn",
+                 "id":18,
+                 "name":"HealthPowerUpSpawn",
                  "point":true,
                  "rotation":0,
-                 "type":"AlienSpawn",
+                 "type":"HealthPowerUpSpawn",
                  "visible":true,
                  "width":0,
-                 "x":35.5,
-                 "y":190
+                 "x":51.5,
+                 "y":27.75
                 }, 
                 {
                  "height":0,
-                 "id":16,
-                 "name":"TurretSpawn",
+                 "id":19,
+                 "name":"InstaDeathPowerUpSpawn",
                  "point":true,
                  "rotation":0,
-                 "type":"TurretSpawn",
+                 "type":"InstaDeathPowerUpSpawn",
                  "visible":true,
                  "width":0,
-                 "x":50.25,
-                 "y":35
-                }, 
-                {
-                 "height":0,
-                 "id":17,
-                 "name":"BossSpawn",
-                 "point":true,
-                 "rotation":0,
-                 "type":"BossSpawn",
-                 "visible":true,
-                 "width":0,
-                 "x":181.75,
-                 "y":274.25
+                 "x":162.25,
+                 "y":26.5
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -128,7 +104,7 @@
          "y":0
         }],
  "nextlayerid":8,
- "nextobjectid":18,
+ "nextobjectid":20,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.4.2",
