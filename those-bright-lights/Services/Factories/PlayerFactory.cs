@@ -27,8 +27,7 @@ namespace SE_Praktikum.Services.Factories
 
         public Player GetInstance(ContentManager contentManager)
         {
-            var texture2D = contentManager.Load<Texture2D>("Artwork/Actors/spaceship");
-            var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\spaceship.json",0);
+            var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\shipv3.json",0);
             var animationSettings = new AnimationSettings(1,isPlaying:false);
             var input = _inputFactory.GetInstance();
             var propulsionTileSet =_tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\flyingEngineOnly.json",0);
