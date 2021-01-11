@@ -210,7 +210,7 @@ namespace SE_Praktikum.Core
                 switch(p.Item1)
                 {
                     case PowerUpType.HealthPowerUp:
-                        var healthpowerup = powerUpFactory.HealthGetInstance(health:10, new Vector2(0,0));
+                        var healthpowerup = powerUpFactory.HealthGetInstance(10, new Vector2(0,0));
                         healthpowerup.Layer = player.Layer;
                         healthpowerup.Position = p.Item2;
                         healthpowerup.OnExplosion += (sender, args) =>
@@ -234,7 +234,7 @@ namespace SE_Praktikum.Core
                         break;
 
                         case PowerUpType.FullHealthPowerUp:
-                        var fullhealthpowerup = powerUpFactory.FullHealthGetInstance(health: 100, new Vector2(0,0));
+                        var fullhealthpowerup = powerUpFactory.FullHealthGetInstance(100, new Vector2(0,0));
                         fullhealthpowerup.Layer = player.Layer;
                         fullhealthpowerup.Position = p.Item2;
                         fullhealthpowerup.OnExplosion += (sender, args) =>
@@ -258,7 +258,7 @@ namespace SE_Praktikum.Core
                         break;
 
                         case PowerUpType.AmmoPowerUp:
-                        var ammopowerup = powerUpFactory.RocketAmmoGetInstance(10, new Vector2(0,0));
+                        var ammopowerup = powerUpFactory.AmmoGetInstance(200, new Vector2(0,0));
                         ammopowerup.Layer = player.Layer;
                         ammopowerup.Position = p.Item2;
                         ammopowerup.OnExplosion += (sender, args) =>
@@ -269,8 +269,8 @@ namespace SE_Praktikum.Core
                         _components.Add(ammopowerup);
                         break;
 
-                        case PowerUpType.StarPowerUp:
-                        var starpowerup = powerUpFactory.StarGetInstance(100000, new Vector2(0,0));
+                    case PowerUpType.StarPowerUp:
+                        var starpowerup = powerUpFactory.StarGetInstance(200,new Vector2(0, 0));
                         starpowerup.Layer = player.Layer;
                         starpowerup.Position = p.Item2;
                         starpowerup.OnExplosion += (sender, args) =>
@@ -281,7 +281,7 @@ namespace SE_Praktikum.Core
                         _components.Add(starpowerup);
                         break;
 
-                        case PowerUpType.WeaponPowerUp:
+                    case PowerUpType.WeaponPowerUp:
                         var weaponpowerup = powerUpFactory.RocketGetInstance(new Vector2(0, 0));
                         weaponpowerup.Layer = player.Layer;
                         weaponpowerup.Position = p.Item2;
@@ -355,9 +355,25 @@ namespace SE_Praktikum.Core
                         };
                         _components.Add(boss);
                         break;
-                    case EnemyType.Minen:
+                    case EnemyType.Mines:
+                        var mines = _enemyFactory.GetMines(contentManager);
+                        mines.Layer = player.Layer;
+                        mines.Position = e.Item2;
+                        mines.Rotation = (float)Math.PI;
+                        mines.OnShoot += (sender, args) =>
+                        {
+                            if (!(args is LevelEvent e)) return;
+                            OnLevelEvent(e);
+                        };
 
+                        mines.OnExplosion += (sender, args) =>
+                        {
+                            if (!(args is LevelEvent e)) return;
+                            OnLevelEvent(e);
+                        };
+                        _components.Add(mines);
                         break;
+                        
                 }
             }
         }
