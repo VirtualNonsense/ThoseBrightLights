@@ -15,7 +15,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Weapons
     {
         private readonly SoundEffect _shotSoundEffect;
 
-        private readonly CooldownAbility _shotAbility;
+        //private readonly CooldownAbility _shotAbility;
         private float _rotation;
         private Logger _logger;
 
@@ -52,7 +52,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Weapons
                 : base(animationHandler, parent,relativePosition, relativeRotation, impactSound,health,maxHealth)
         {
             _logger = LogManager.GetCurrentClassLogger();
-            _shotAbility = new CooldownAbility(shotCoolDown, FireAbility);
+            //_shotAbility = new CooldownAbility(shotCoolDown, FireAbility);
             Parent = parent;
             _shotSoundEffect = shotSoundEffect;
             NameTag = nameTag;
@@ -68,31 +68,33 @@ namespace SE_Praktikum.Components.Sprites.Actors.Weapons
         /// Informs the subscriber about the current state of the shotCooldown.
         /// the value will be between 0 and 1 and can be read as percent/100
         /// </summary>
-        public event EventHandler<CooldownAbility.CooldownProgressArgs> OnShotCooldownProgressUpdate
+        public event EventHandler<AnimationHandler.AnimationProgressArgs> OnShotCooldownProgressUpdate
         {
-            add => _shotAbility.OnCoolDownUpdate += value;
-            remove => _shotAbility.OnCoolDownUpdate -= value;
+            add => _animationHandler.OnAnimationProgressUpdate += value;
+            remove => _animationHandler.OnAnimationProgressUpdate -= value;
         }
-        
+
+      
+
         /// <summary>
         /// will be triggered when the weapon is able to fire again
         /// </summary>
         public event EventHandler OnShotAvailable
         {
-            add => _shotAbility.OnCoolAbilityAvailable += value;
-            remove => _shotAbility.OnCoolAbilityAvailable -= value;
+            add => _animationHandler.OnAnimationComplete += value;
+            remove => _animationHandler.OnAnimationComplete -= value;
         }
         
         // #############################################################################################################
         // Properties
         // #############################################################################################################
         public bool IsRemoveAble { get; set; }
-        
+
         /// <summary>
         /// the owner of the gun.
         /// </summary>
         //public Actor Parent { get; set; }
-        public bool CanShoot => _shotAbility.AbilityAvailable;
+        public bool CanShoot => !_animationHandler.IsPlaying;
 
 
         /// <summary>
@@ -118,20 +120,15 @@ namespace SE_Praktikum.Components.Sprites.Actors.Weapons
         // #############################################################################################################
         // public methods
         // #############################################################################################################
-        public virtual void Update(GameTime gameTime)
-        {
-            _shotAbility.Update(gameTime);
-        }
+      
 
         public virtual void Fire()
         {
-            _shotAbility.Fire();
+            if (_animationHandler.IsPlaying) return;
+            _animationHandler.IsPlaying = true;
+            FireAbility();
         }
-
-        public override string ToString()
-        {
-            return $"{NameTag} FireCooldown: {_shotAbility.CoolDownProgress * 100}%";
-        }
+        
 
         // #############################################################################################################
         // private / protected methods

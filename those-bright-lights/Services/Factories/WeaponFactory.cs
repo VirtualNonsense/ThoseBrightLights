@@ -98,9 +98,9 @@ namespace SE_Praktikum.Services.Factories
                                             float maxHealth = 1)
         {
             // TODO: create and load missing sound effects
-            var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\lasergun.json", 0);
+            var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\lasergunFire_30_13_7.json", 0);
             var m = new SingleShotWeapon(
-                _animationHandlerFactory.GetAnimationHandler(tileSet,new AnimationSettings(1,isPlaying:false)),
+                _animationHandlerFactory.GetAnimationHandler(tileSet,new AnimationSettings(7,isPlaying:false,duration:50f)),
                 owner,
                 new Vector2(28, -38),
                 0,

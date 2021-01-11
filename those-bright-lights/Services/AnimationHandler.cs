@@ -87,6 +87,12 @@ namespace SE_Praktikum.Services
             }
         }
 
+        public bool IsPlaying
+        {
+            get => _settings.IsPlaying;
+            set => _settings.IsPlaying = value;
+        }
+
         public SpriteEffects SpriteEffects
         {
             get=>_settings.SpriteEffects;
@@ -179,6 +185,7 @@ namespace SE_Praktikum.Services
         public Rectangle Frame => Tileset.GetFrame((uint)_settings.UpdateList[_currentIndex].Item1);
 
         public event EventHandler OnAnimationComplete;
+        public event EventHandler<AnimationProgressArgs> OnAnimationProgressUpdate;
 
         public AnimationHandler(TileSet tileset, AnimationSettings settings, Vector2? position = null, Vector2? origin = null)
         {
@@ -231,9 +238,9 @@ namespace SE_Praktikum.Services
                     CurrentIndex++;
                 else
                 {
+                    CurrentIndex = 0;
                     if (_settings.IsLooping)
                     {
-                        CurrentIndex = 0;
                         return;
                     }
                     InvokeOnAnimationComplete();
@@ -297,5 +304,14 @@ namespace SE_Praktikum.Services
             }
         }
 
+        protected virtual void InvokeOnAnimationProgressUpdate()
+        {
+            OnAnimationProgressUpdate?.Invoke(this, new AnimationProgressArgs{Progress = (float)_currentIndex/_settings.UpdateList.Count});
+        }
+
+        public class AnimationProgressArgs : EventArgs
+        {
+            public float Progress;
+        }
     }
 }
