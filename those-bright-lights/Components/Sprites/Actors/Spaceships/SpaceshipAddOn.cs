@@ -108,7 +108,6 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
         private void ParentOnOnPositionChanged(object sender, EventArgs e)
         {
                 Position = Parent.Position - _relativePosition;
-                _logger.Trace("Relative position " + RelativePosition);
         }
 
         public override void Draw(SpriteBatch spriteBatch)
