@@ -75,8 +75,10 @@ namespace SE_Praktikum.Components.Sprites.Actors.Weapons
         {
             var b = _constructPreconfiguredBullet();
             b.Parent = Parent;
-            //b.Position = Parent.Position;
-            b.Position = Position + BulletSpawnPoint.Rotate(Rotation);
+            var offset = FlippedHorizontal
+                ? BulletSpawnPoint.Rotate(Rotation)
+                : new Vector2(BulletSpawnPoint.X, -BulletSpawnPoint.Y).Rotate(Rotation);
+            b.Position = Position + offset;
             b.Rotation = Parent.Rotation + RelativeRotation;
             b.Velocity = Parent.Velocity;
             b.Layer = Parent.Layer;
