@@ -204,6 +204,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
             {
                 return true;
             }
+
             _impactPolygon = null;
             return false;
         }
@@ -229,6 +230,17 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
 
             _impactPolygon = null;
         }
+
+        public override void InterAct(Actor other)
+        {
+            base.InterAct(other);
+            foreach (var comp in Components)
+            {
+                comp.InterAct(other);
+            }
+        }
+        
+
         private void ProcessPowerUp(PowerUp powerup)
         {
             switch(powerup)

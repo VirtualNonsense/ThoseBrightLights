@@ -108,7 +108,7 @@ namespace SE_Praktikum.Components.Sprites.Actors
         // #############################################################################################################
 
 
-        public void InterAct(Actor other)
+        public virtual void InterAct(Actor other)
         {
             if(InteractAble(other))
                 ExecuteInteraction(other);

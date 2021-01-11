@@ -87,7 +87,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Weapons
 
         protected override void ExecuteInteraction(Actor other)
         {
-            throw new NotImplementedException();
+            
         }
         
     }
