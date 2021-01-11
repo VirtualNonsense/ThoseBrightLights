@@ -104,7 +104,7 @@ namespace SE_Praktikum.Services.Factories
                 owner,
                 new Vector2(30, -50),
                 0,
-                new Vector2(0,0),
+                new Vector2(17,13),
                 null, 
                 null, 
                 nameTag,
@@ -118,7 +118,6 @@ namespace SE_Praktikum.Services.Factories
                 () => _bulletFactory.GetLaser(owner, damage),
                 shotCoolDown: shotCooldown,
                 reloadTime: reloadTime);
-            m.BulletSpawnPoint = new Vector2(0, 0);
             m.Scale = 2;
             m.Layer = owner.Layer;
             return m;
@@ -171,5 +170,54 @@ namespace SE_Praktikum.Services.Factories
                 reloadTime: reloadTime);
             return m;
         }
+        
+        /// <summary>
+        /// Minigun
+        /// </summary>
+        /// <param name="owner"></param>
+        /// <param name="clipSize"></param>
+        /// <param name="clips"></param>
+        /// <param name="shotCooldown"></param>
+        /// <param name="reloadTime"></param>
+        /// <param name="damage"></param>
+        /// <param name="nameTag"></param>
+        /// <param name="health"></param>
+        /// <param name="maxHealth"></param>
+        /// <returns></returns>
+        public SingleShotWeapon GetMinigun(Actor owner, 
+            int clipSize = 200,
+            int clips = 10,
+            int shotCooldown = 100,
+            int reloadTime = 1000,
+            float damage = 5,
+            string nameTag = "Minigun",
+            float health = 1,
+            float maxHealth = 1)
+        {
+            // TODO: create and load missing sound effects
+            var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\minigun_50_20.json", 0);
+            var m = new SingleShotWeapon(
+                _animationHandlerFactory.GetAnimationHandler(tileSet,new AnimationSettings(1,isPlaying:false)),
+                owner,
+                new Vector2(55, 30),
+                0,
+                new Vector2(15,8),
+                null, 
+                null, 
+                nameTag,
+                health,
+                maxHealth,
+                null,
+                null,
+                null,
+                clipSize,
+                clips,
+                () => _bulletFactory.GetProjectile(owner, damage),
+                shotCoolDown: shotCooldown,
+                reloadTime: reloadTime);
+            m.Scale = 1.8f;
+            m.Layer = owner.Layer;
+            return m;
+        } 
     }
 }
