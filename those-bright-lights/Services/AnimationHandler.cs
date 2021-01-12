@@ -123,6 +123,7 @@ namespace SE_Praktikum.Services
             set
             {
                 _settings.Scale = value;
+                if (CurrentHitBox == null) return;
                 foreach (var polygon in CurrentHitBox)
                 {
                     polygon.Scale = value;
