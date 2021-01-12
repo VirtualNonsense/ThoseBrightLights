@@ -237,7 +237,7 @@ namespace SE_Praktikum.Core
                         _components.Add(healthpowerup);
                         break;
 
-                        case PowerUpType.InstaDeathPowerUp:
+                    case PowerUpType.InstaDeathPowerUp:
                         var instadeathpowerup = powerUpFactory.DeathGetInstance(new Vector2(0,0));
                         instadeathpowerup.Layer = player.Layer;
                         instadeathpowerup.Position = p.Item2;
@@ -249,7 +249,7 @@ namespace SE_Praktikum.Core
                         _components.Add(instadeathpowerup);
                         break;
 
-                        case PowerUpType.FullHealthPowerUp:
+                    case PowerUpType.FullHealthPowerUp:
                         var fullhealthpowerup = powerUpFactory.FullHealthGetInstance(100, new Vector2(0,0));
                         fullhealthpowerup.Layer = player.Layer;
                         fullhealthpowerup.Position = p.Item2;
@@ -261,8 +261,8 @@ namespace SE_Praktikum.Core
                         _components.Add(fullhealthpowerup);
                         break;
 
-                        case PowerUpType.ScoreBonusPowerUp:
-                        var scorebonuspowerup = powerUpFactory.ScoreBonusGetInstance(new Vector2(0,0));
+                    case PowerUpType.ScoreBonusPowerUp:
+                        var scorebonuspowerup = powerUpFactory.ScoreBonusGetInstance(50, new Vector2(0,0));
                         scorebonuspowerup.Layer = player.Layer;
                         scorebonuspowerup.Position = p.Item2;
                         scorebonuspowerup.OnExplosion += (sender, args) =>
@@ -273,7 +273,7 @@ namespace SE_Praktikum.Core
                         _components.Add(scorebonuspowerup);
                         break;
 
-                        case PowerUpType.AmmoPowerUp:
+                    case PowerUpType.AmmoPowerUp:
                         var ammopowerup = powerUpFactory.AmmoGetInstance(200, new Vector2(0,0));
                         ammopowerup.Layer = player.Layer;
                         ammopowerup.Position = p.Item2;

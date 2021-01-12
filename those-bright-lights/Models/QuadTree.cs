@@ -97,6 +97,30 @@ namespace SE_Praktikum.Models
             return index;
         }
 
+        public void Remove(T obj)
+        {
+            for (int i = 0; i < objects.Count; i++)
+            {
+                if (objects[i].Item2.Equals(obj))
+                { 
+                    objects.RemoveAt(i); 
+                    return; 
+                }
+                
+                
+            }
+            
+            if (wasDivided)
+            {
+                foreach (var node in nodes)
+                {
+                    if (node == null) continue;
+                    node.Remove(obj);
+                    
+                }
+            }
+            
+        }
         public void Insert(Rectangle rect, T payload)
         {
             if (wasDivided == false)

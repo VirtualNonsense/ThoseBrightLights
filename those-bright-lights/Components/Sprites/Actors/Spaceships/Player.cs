@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Input;
 using NLog;
+using SE_Praktikum.Components.Sprites.Actors.PowerUps;
 using SE_Praktikum.Models;
 using SE_Praktikum.Services;
 using System;
@@ -123,6 +124,9 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
                     var v = _impactPolygon.Position - e.Position;
                     v /= v.Length();
                     Position += v;
+                    break;
+                case ScoreBonusPowerUp sp:
+                    Score += sp.BonusScore;
                     break;
             }
             base.ExecuteInteraction(other);

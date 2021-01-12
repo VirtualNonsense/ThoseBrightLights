@@ -3,11 +3,13 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using NLog;
+using SE_Praktikum.Components.Sprites.Actors.Bullets;
+using SE_Praktikum.Components.Sprites.Actors.Spaceships;
 using SE_Praktikum.Services;
 
 namespace SE_Praktikum.Components.Sprites.Actors
 {
-    public class Tile:Actor
+    public class Tile: Actor
     {
         private Logger _logger;
 
@@ -55,13 +57,30 @@ namespace SE_Praktikum.Components.Sprites.Actors
 
         protected override bool InteractAble(Actor other)
         {
-            // tile doesnt care about interactions
-            // a destroyable tile might be of use on some point
-            return false;
+            if(Indestructible)
+                return false;
+            return base.InteractAble(other);
+
         }
         
         protected override void ExecuteInteraction(Actor other)
         {
+            
+            switch (other)
+            {
+                case Bullet b:
+                    Health -= b.Damage;
+                    break;
+                case Spaceship s:
+                    Health -= s.Damage;
+                    break;
+                    
+
+            }
+            _logger.Debug(Health);
+
+
+
         }
     }
     

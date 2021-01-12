@@ -60,13 +60,14 @@ namespace SE_Praktikum.Components.Sprites.Actors
             get=> _health;
             set
             {
-                if (value < 0 && Indestructible)
+                if (value < _health && Indestructible)
                     return;
                 if (value <= 0)
                 {
                     _health = 0;
                     IsRemoveAble = true;
                     InvokeOnHealthChanged();
+                    InvokeDeath();
                     return;
                 }
 

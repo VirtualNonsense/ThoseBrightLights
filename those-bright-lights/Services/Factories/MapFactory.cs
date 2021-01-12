@@ -83,7 +83,7 @@ namespace SE_Praktikum.Services.Factories
                                                               blueprint.Width,
                                                               layer.Visible ? 1 : 0,
                                                               area);
-
+                    
                     tiles.Add(l, c);
                     l += 3;
                     continue;
@@ -124,7 +124,7 @@ namespace SE_Praktikum.Services.Factories
                             case "InstaDeathPowerUpSpawn":
                                 PowerUpSpawnpoints.Add((PowerUpType.InstaDeathPowerUp, ConvertObjectToPolygon(obj).Center));
                                 break;
-                            case "ScoreBonusPowerUpSpawn":
+                            case "ScoreBonusPowerUp":
                                 PowerUpSpawnpoints.Add((PowerUpType.ScoreBonusPowerUp, ConvertObjectToPolygon(obj).Center));
                                 break;
                             case "StarPowerUpSpawn":
