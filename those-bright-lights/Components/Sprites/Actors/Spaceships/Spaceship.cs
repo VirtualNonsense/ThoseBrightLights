@@ -42,8 +42,6 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
         // #############################################################################################################
         #region Events
         public event EventHandler OnShoot;
-        //TODO: Consider moving this into sprite
-        public event EventHandler OnPositionChanged;
         public event EventHandler OnWeaponChanged;
 
         #endregion
@@ -95,16 +93,6 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
                 }
 
             }
-        }
-
-        public override Vector2 Position 
-        { 
-            get => base.Position;
-            set
-            {
-                base.Position = value;
-                InvokeOnPositionChanged();
-            } 
         }
 
         // #############################################################################################################
@@ -196,11 +184,6 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
             OnWeaponChanged?.Invoke(this, EventArgs.Empty);
         }
         
-        protected virtual void InvokeOnPositionChanged()
-        {
-            OnPositionChanged?.Invoke(this, EventArgs.Empty);
-        }
-
         protected virtual void InvokeOnShoot(Bullet b)
         {
             if (b is null)
