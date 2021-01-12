@@ -33,10 +33,10 @@ namespace SE_Praktikum.Services.Factories
             var propulsionTileSet =_tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\flyingEngineOnly.json",0);
             var propulsionHandler = _animationHandlerFactory.GetAnimationHandler(propulsionTileSet,
                 new AnimationSettings(frames: 6, duration: 75, isLooping: true));
+            
             var p = new Player(_animationHandlerFactory.GetAnimationHandler(tileSet,animationSettings), propulsionHandler, input);
             p.Position = new Vector2(-50,50);
-            p.AddWeapon(_weaponFactory.GetShotgun(p));
-
+            p.AddWeapon(_weaponFactory.GetMinigun(p));
             return p;
         } 
     }

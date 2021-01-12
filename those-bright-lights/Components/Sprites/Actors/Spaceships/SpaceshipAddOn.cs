@@ -75,7 +75,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
                         health, 
                         maxHealth)
         {
-            base.Parent = parent;
+            Parent = parent;
             _relativePosition = relativePosition;
             _relativeRotation = relativeRotation;
             _logger = LogManager.GetCurrentClassLogger();

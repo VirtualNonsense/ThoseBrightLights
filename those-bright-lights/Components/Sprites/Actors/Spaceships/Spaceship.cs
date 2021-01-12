@@ -22,7 +22,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
         protected readonly float Acceleration;
         private Logger _logger;
         protected Polygon _impactPolygon;
-        protected AnimationHandler Propulsion;
+        public Propulsion Propulsion;
         // #############################################################################################################
         // Constructor
         // #############################################################################################################
@@ -52,7 +52,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
         
 
         protected List<Weapon> AllWeaponsList => Components.OfType<Weapon>().ToList();
-        protected List<Weapon> CurrentWeapons => (from w in AllWeaponsList where w.NameTag == AllWeaponsList[CurrentWeapon].NameTag select w).ToList(); 
+        protected List<Weapon> CurrentWeapons => (from w in AllWeaponsList where w.NameTag == AllWeaponsList[IndexOfWeaponsOfTheSameType].NameTag select w).ToList(); 
 
         public override float Rotation
         {
@@ -64,16 +64,12 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
                 {
                     if (FlippedHorizontal) return;
                     _animationHandler.SpriteEffects = SpriteEffects.FlipVertically;
-                    if (Propulsion == null) return;
-                    Propulsion.SpriteEffects = SpriteEffects.FlipVertically;
                 }
                 else if (FlippedHorizontal)
                 {
                     _animationHandler.SpriteEffects = SpriteEffects.None;
-                    if (Propulsion == null) return;
-                    Propulsion.SpriteEffects = SpriteEffects.None;
                 }
-
+        
             }
         }
 
@@ -121,10 +117,9 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            Propulsion?.Draw(spriteBatch);
-            foreach (var weapon in AllWeaponsList)
+            foreach (var comp in Components)
             {
-                weapon.Draw(spriteBatch);
+                comp.Draw(spriteBatch);
             }
             base.Draw(spriteBatch);
         }
@@ -202,13 +197,14 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
             foreach (var polygon in HitBox)
             {
                 _impactPolygon = polygon;
-                foreach (var polygon1 in other.HitBox)
+                if (other.HitBox.Any(polygon1 => polygon.Overlap(polygon1)))
                 {
-                    if(polygon.Overlap(polygon1)) return true;
+                    return true;
                 }
             }
 
             if ((from component in Components 
+                where component.HitBox != null 
                 from poly in component.HitBox 
                 from otherPoly in other.HitBox 
                 where poly.Overlap(otherPoly) 
