@@ -64,6 +64,7 @@ namespace SE_Praktikum.Components.Sprites.Actors
                     _health = 0;
                     IsRemoveAble = true;
                     InvokeOnHealthChanged();
+                    InvokeDeath();
                     return;
                 }
 
