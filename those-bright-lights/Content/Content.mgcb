@@ -577,6 +577,18 @@
 /processorParam:TextureFormat=Color
 /build:Artwork/Tilemaps/CollisionBlocks.png
 
+#begin Artwork/Tilemaps/DestructableBlocks.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Artwork/Tilemaps/DestructableBlocks.png
+
 #begin Artwork/Tilemaps/EarthObject.png
 /importer:TextureImporter
 /processor:TextureProcessor

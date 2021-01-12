@@ -55,6 +55,9 @@
         <None Update="Content\MetaData\TileSets\CollisionBlocks.json">
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
+        <None Update="Content\MetaData\TileSets\DestructableBlocks.json">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
         <None Update="Content\MetaData\TileSets\EarthObject.json">
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>

@@ -44,44 +44,48 @@ namespace SE_Praktikum.Services.Factories
                     List.Add(new TileInfo {Destructable = true, ID = index});
 
                 }
-                foreach(var objectt in tile.objectgroup.objects)
+                if (tile.objectgroup != null)
                 {
-                    Polygon polygon;
-                    if (objectt.polygon != null)
+                    foreach (var objectt in tile.objectgroup.objects)
                     {
-                        List<Vector2> Vector2List = new List<Vector2>();
-                        foreach(var p in objectt.polygon)
+                        Polygon polygon;
+                        if (objectt.polygon != null)
                         {
-                            Vector2List.Add(new Vector2(p.x + objectt.x, p.y + objectt.y));
+                            List<Vector2> Vector2List = new List<Vector2>();
+                            foreach (var p in objectt.polygon)
+                            {
+                                Vector2List.Add(new Vector2(p.x + objectt.x, p.y + objectt.y));
+                            }
+                            polygon = new Polygon(Vector2.Zero, Vector2.Zero, 0, Vector2List);
                         }
-                        polygon = new Polygon(Vector2.Zero, Vector2.Zero, 0, Vector2List);
-                    }
-                    else
-                    {
-                       polygon = new Polygon(
-                       Vector2.Zero,
-                       // new Vector2(objectt.width / 2, objectt.height / 2),
-                       new Vector2(0, 0),
-                       0,
-                       new List<Vector2>
-                       {
+
+                        else
+                        {
+                            polygon = new Polygon(
+                            Vector2.Zero,
+                            // new Vector2(objectt.width / 2, objectt.height / 2),
+                            new Vector2(0, 0),
+                            0,
+                            new List<Vector2>
+                            {
                             new Vector2(0,0),
                             new Vector2(objectt.width,0),
                             new Vector2(objectt.width,objectt.height),
                             new Vector2(0,objectt.height)
-                       }
-                       );
-                    }
-                       
-                    if(!(Dictionary.ContainsKey(index)))
-                    {
-                        Dictionary.Add(index, new Polygon[tile.objectgroup.objects.Length]);
+                            }
+                            );
+                        }
+
+                        if (!(Dictionary.ContainsKey(index)))
+                        {
+                            Dictionary.Add(index, new Polygon[tile.objectgroup.objects.Length]);
+
+                        }
+                        Dictionary[index][count] = polygon;
+                        count++;
+
 
                     }
-                    Dictionary[index][count] = polygon;
-                    count++;
-                    
-
                 }
                 
             }
