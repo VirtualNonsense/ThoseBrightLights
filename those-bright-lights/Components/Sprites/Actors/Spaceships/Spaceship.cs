@@ -68,9 +68,9 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
                     return;
                 }
 
-                if (value >= Weapons.Count)
+                if (value >= AllWeaponsList.Count)
                 {
-                    _currentWeapon = Weapons.Count - 1;
+                    _currentWeapon = AllWeaponsList.Count - 1;
                     InvokeOnWeaponChanged();
                     return;
                 }
