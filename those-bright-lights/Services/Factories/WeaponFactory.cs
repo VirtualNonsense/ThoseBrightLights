@@ -57,8 +57,9 @@ namespace SE_Praktikum.Services.Factories
                                                    float maxHealth = 1)
         {
             // TODO: create and load missing sound effects
+            var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\lasergunFire_30_13_7.json", 0);
             var m = new SingleShotWeapon(
-                _animationHandlerFactory.GetAnimationHandler(null,null),
+                _animationHandlerFactory.GetAnimationHandler(tileSet,new AnimationSettings(1,2000f)),
                 owner,
                 new Vector2(0,10),
                 0,
@@ -178,9 +179,9 @@ namespace SE_Praktikum.Services.Factories
         public SingleShotWeapon GetEnemyLaserGun(Actor owner,
                                                  int clipSize = 20,
                                                  int clips = 3,
-                                                 int shotCooldown = 20,
+                                                 int shotCooldown = 1000,
                                                  int reloadTime = 100,
-                                                 float damage = 10,
+                                                 float damage = 5,
                                                  string nameTag = "Enemy laser gun",
                                                  float health = 1,
                                                  float maxHealth = 1)
@@ -189,9 +190,9 @@ namespace SE_Praktikum.Services.Factories
             var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\enemylasergun_18_10_3.json", 0);
             
             var m = new SingleShotWeapon(
-                _animationHandlerFactory.GetAnimationHandler(tileSet,new AnimationSettings(3,isPlaying:false,duration:100f)),
+                _animationHandlerFactory.GetAnimationHandler(tileSet,new AnimationSettings(3,isPlaying:false,duration:600f)),
                 owner,
-                new Vector2(0,0),
+                new Vector2(30,15),
                 0,
                 new Vector2(0,0),
                 null, 
@@ -207,6 +208,7 @@ namespace SE_Praktikum.Services.Factories
                 () => _bulletFactory.GetEnemyLaser(owner, damage),
                 shotCoolDown: shotCooldown,
                 reloadTime: reloadTime);
+            m.Scale = 1.4f;
             return m;
         }
         
