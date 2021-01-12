@@ -23,8 +23,13 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
             Health = health;
             MaxSpeed = maxSpeed;
             _logger = LogManager.GetCurrentClassLogger();
-            Propulsion = propulsion;
-            Propulsion.Origin += new Vector2(animationHandler.FrameWidth / 2 + Propulsion.FrameWidth/2 +2, 0);
+            Components.Add(
+                new Propulsion(
+                    propulsion,
+                    this,
+                    new Vector2(-75,-1),
+                    0,
+                    null));
         }
 
         public event EventHandler OnScoreChanged;

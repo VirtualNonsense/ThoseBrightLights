@@ -1,18 +1,27 @@
 ﻿using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using SE_Praktikum.Components.Sprites.Actors.Bullets;
+using SE_Praktikum.Components.Sprites.Actors.Spaceships;
+using SE_Praktikum.Extensions;
+using SE_Praktikum.Services;
 
 namespace SE_Praktikum.Components.Sprites.Actors.Weapons
 {
     public class SingleShotWeapon : ClipWeapon
     {
         private readonly Func<Bullet> _constructPreconfiguredBullet;
-        
+
         /// <summary>
         /// A precise gun that fires one shot at a time.
         /// </summary>
-        /// <param name="Parent">the owner of the gun. it will be assigned to each bullet as well</param>
+        /// <param name="animationHandler"></param>
+        /// <param name="parent">the owner of the gun. it will be assigned to each bullet as well</param>
+        /// <param name="relativeRotation"></param>
         /// <param name="shotSoundEffect"></param>
+        /// <param name="impactSound"></param>
+        /// <param name="health"></param>
+        /// <param name="maxHealth"></param>
         /// <param name="clipEmptySound"></param>
         /// <param name="weaponEmptySound"></param>
         /// <param name="reloadSound"></param>
@@ -22,27 +31,42 @@ namespace SE_Praktikum.Components.Sprites.Actors.Weapons
         /// <param name="constructPreconfiguredBullet">method that will create a bullet</param>
         /// <param name="shotCoolDown">in milliseconds</param>
         /// <param name="reloadTime">in milliseconds</param>
-        public SingleShotWeapon(Actor Parent,
+        /// <param name="relativePosition"></param>
+        public SingleShotWeapon(AnimationHandler animationHandler,
+                                Actor parent,
+                                Vector2 relativePosition,
+                                float relativeRotation,
+                                Vector2 bulletSpawnPoint,
                                 SoundEffect shotSoundEffect, 
+                                SoundEffect impactSound,
+                                string nameTag,
+                                float health,
+                                float maxHealth,
                                 SoundEffect clipEmptySound,
                                 SoundEffect weaponEmptySound,
                                 SoundEffect reloadSound,
-                                string nameTag,
                                 int clipSize,
                                 int clips,
                                 Func<Bullet> constructPreconfiguredBullet,
                                 int shotCoolDown = 10,
-                                int reloadTime = 1000)
-            : base(Parent,
-                shotSoundEffect,
-                clipEmptySound,
-                weaponEmptySound,
-                reloadSound,
-                nameTag,
-                clipSize,
-                clips,
-                shotCoolDown,
-                reloadTime)
+                                int reloadTime = 1000) 
+                            : base(animationHandler,
+                                parent,
+                                relativePosition,
+                                relativeRotation,
+                                bulletSpawnPoint,
+                                shotSoundEffect,
+                                impactSound,
+                                nameTag,
+                                health,
+                                maxHealth,
+                                clipEmptySound,
+                                weaponEmptySound,
+                                reloadSound,
+                                clipSize,
+                                clips,
+                                shotCoolDown,
+                                reloadTime)
         {
             _constructPreconfiguredBullet = constructPreconfiguredBullet;
         }
@@ -51,11 +75,20 @@ namespace SE_Praktikum.Components.Sprites.Actors.Weapons
         {
             var b = _constructPreconfiguredBullet();
             b.Parent = Parent;
-            b.Position = Parent.Position;
-            b.Rotation = Parent.Rotation;
+            var offset = FlippedHorizontal
+                ? BulletSpawnPoint.Rotate(Rotation)
+                : new Vector2(BulletSpawnPoint.X, -BulletSpawnPoint.Y).Rotate(Rotation);
+            b.Position = Position + offset;
+            b.Rotation = Parent.Rotation + RelativeRotation;
             b.Velocity = Parent.Velocity;
             b.Layer = Parent.Layer;
             return b;
         }
+
+        protected override void ExecuteInteraction(Actor other)
+        {
+            
+        }
+        
     }
 }

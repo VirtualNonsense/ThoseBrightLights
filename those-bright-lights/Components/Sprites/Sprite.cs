@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SE_Praktikum.Services;
@@ -28,6 +29,13 @@ namespace SE_Praktikum.Components
       DeltaPosition = Vector2.Zero;
     }
     // #################################################################################################################
+    // Events
+    // #################################################################################################################
+    public event EventHandler OnPositionChanged;
+    public event EventHandler OnRotationChanged;
+    public event EventHandler OnLayerChanged;
+    
+    // #################################################################################################################
     // Properties
     // #################################################################################################################
 
@@ -40,11 +48,15 @@ namespace SE_Praktikum.Components
 
     public readonly Color[] TextureData;
 
-
-    public virtual Vector2 Position
-    {
+    
+    public virtual Vector2 Position 
+    { 
       get => _animationHandler.Position;
-      set => _animationHandler.Position = value;
+      set
+      {
+        _animationHandler.Position = value;
+        InvokeOnPositionChanged();
+      } 
     }
 
     public float X
@@ -63,13 +75,17 @@ namespace SE_Praktikum.Components
     public virtual float Layer
     {
       get => _animationHandler.Layer;
-      set => _animationHandler.Layer = value;
+      set { _animationHandler.Layer = value; InvokeOnLayerChanged(); }
     }
 
     public virtual float Rotation
     {
       get => _animationHandler.Rotation;
-      set => _animationHandler.Rotation = value;
+      set
+      {
+        _animationHandler.Rotation = value;
+        InvokeOnRotationChanged();
+      }
     }
 
     public float Scale
@@ -113,6 +129,19 @@ namespace SE_Praktikum.Components
     {
       _animationHandler.Draw(spriteBatch);
     }
-    
+    protected virtual void InvokeOnPositionChanged()
+    {
+      OnPositionChanged?.Invoke(this, EventArgs.Empty);
+    }
+
+    protected virtual void InvokeOnRotationChanged()
+    {
+      OnRotationChanged?.Invoke(this, EventArgs.Empty);
+    }
+
+    protected virtual void InvokeOnLayerChanged()
+    {
+      OnLayerChanged?.Invoke(this, EventArgs.Empty);
+    }
   }
 }

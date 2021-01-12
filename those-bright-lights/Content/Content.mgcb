@@ -49,6 +49,30 @@
 /processorParam:TextureFormat=Color
 /build:Artwork/Actors/flyingEngineOnly.png
 
+#begin Artwork/Actors/kamikazeEngage_40_25_6.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Artwork/Actors/kamikazeEngage_40_25_6.png
+
+#begin Artwork/Actors/kamikazeIdle_40_25_6.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Artwork/Actors/kamikazeIdle_40_25_6.png
+
 #begin Artwork/Actors/mine_29_29.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -204,6 +228,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Artwork/Effects/minigunexplosions_8_10_5.png
+
+#begin Artwork/Effects/projectile_5_6_4.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Artwork/Effects/projectile_5_6_4.png
 
 #begin Artwork/misc/100x50PixelTest.png
 /importer:TextureImporter
@@ -876,6 +912,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Artwork/Weapons/minigunFire_50_20_10.png
+
+#begin Artwork/Weapons/minigunFire_50_20_4.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Artwork/Weapons/minigunFire_50_20_4.png
 
 #begin Artwork/Weapons/shotgun_28_13.png
 /importer:TextureImporter

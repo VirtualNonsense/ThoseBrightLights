@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
@@ -14,13 +15,13 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
 {
     public abstract class Spaceship : Actor
     {
-        protected List<Weapon> Weapons;
-        protected int _currentWeapon;
+        public List<SpaceshipAddOn> Components;
+        protected int CurrentWeapon;
+        protected int IndexOfWeaponsOfTheSameType;
         protected float MaxSpeed;
         protected readonly float Acceleration;
         private Logger _logger;
         protected Polygon _impactPolygon;
-        protected AnimationHandler Propulsion;
         // #############################################################################################################
         // Constructor
         // #############################################################################################################
@@ -30,7 +31,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
             MaxSpeed = maxSpeed;
             Acceleration = acceleration;
             Health = health;
-            Weapons = new List<Weapon>();
+            Components = new List<SpaceshipAddOn>();
             _logger = LogManager.GetCurrentClassLogger();
         }
         
@@ -48,7 +49,10 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
         // #############################################################################################################
         // Properties
         // #############################################################################################################
-        protected bool FlippedHorizontal => _animationHandler.SpriteEffects == SpriteEffects.FlipVertically;
+        
+
+        protected List<Weapon> AllWeaponsList => Components.OfType<Weapon>().ToList();
+        protected List<Weapon> CurrentWeapons => (from w in AllWeaponsList where w.NameTag == AllWeaponsList[IndexOfWeaponsOfTheSameType].NameTag select w).ToList(); 
 
         public int CurrentWeapon 
         {
@@ -82,14 +86,10 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
                 {
                     if (FlippedHorizontal) return;
                     _animationHandler.SpriteEffects = SpriteEffects.FlipVertically;
-                    if (Propulsion == null) return;
-                    Propulsion.SpriteEffects = SpriteEffects.FlipVertically;
                 }
                 else if (FlippedHorizontal)
                 {
                     _animationHandler.SpriteEffects = SpriteEffects.None;
-                    if (Propulsion == null) return;
-                    Propulsion.SpriteEffects = SpriteEffects.None;
                 }
 
             }
@@ -110,30 +110,27 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
         // #############################################################################################################
         public override void Update(GameTime gameTime)
         {
-            foreach (var weapon in Weapons)
+            foreach (var weapon in AllWeaponsList)
             {
                 weapon.Update(gameTime);
             }
 
-            for (var i = 0; i < Weapons.Count;)
+            foreach (var component in Components)
             {
-                var w = Weapons[i];
+                component.Update(gameTime);
+            }
+
+            for (var i = 0; i < AllWeaponsList.Count;)
+            {
+                var w = AllWeaponsList[i];
                 if (!w.IsRemoveAble)
                 {
                     i++;
                     continue;
                 }
-                Weapons.RemoveAt(i);
-                CurrentWeapon = Weapons.Count;
-            }
-
-            if (Propulsion != null)
-            {
-                // TODO: Move into separate setter
-                Propulsion.Position = Position;
-                Propulsion.Rotation = Rotation;
-                Propulsion.Layer = Layer;
-                Propulsion.Update(gameTime);
+                Components.Remove(w);
+                if (CurrentWeapon >= AllWeaponsList.Count)
+                    CurrentWeapon = AllWeaponsList.Count - 1;
             }
 
             base.Update(gameTime);
@@ -141,15 +138,18 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            Propulsion?.Draw(spriteBatch);
+            foreach (var comp in Components)
+            {
+                comp.Draw(spriteBatch);
+            }
             base.Draw(spriteBatch);
         }
 
         public virtual void AddWeapon(Weapon weapon)
         {
             weapon.Parent = this;
-            Weapons.Add(weapon);
-            CurrentWeapon = Weapons.Count;
+            Components.Add(weapon);
+            CurrentWeapon = Components.Count - 1;
             weapon.OnEmitBullet += EmitBulletToOnShot;
             switch (weapon)
             {
@@ -164,7 +164,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
 
         public virtual void RemoveWeapon(Weapon weapon)
         {
-            if (!Weapons.Contains(weapon)) return;
+            if (!AllWeaponsList.Contains(weapon)) return;
             weapon.OnEmitBullet -= EmitBulletToOnShot;
             // Weapons.Remove(weapon);
             weapon.IsRemoveAble = true;
@@ -175,17 +175,30 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
         // #############################################################################################################
         protected virtual void ShootCurrentWeapon()
         {
-            if (Weapons.Count == 0) return;
-            Weapons[CurrentWeapon].Fire();
+            if (AllWeaponsList.Count == 0) return;
+            var previousWeapon = ((IndexOfWeaponsOfTheSameType - 1) +CurrentWeapons.Count)% CurrentWeapons.Count;
+            if (!CurrentWeapons[previousWeapon].CanShoot) return;
+            CurrentWeapons[IndexOfWeaponsOfTheSameType].Fire();
+            IndexOfWeaponsOfTheSameType = (IndexOfWeaponsOfTheSameType +1) % CurrentWeapons.Count;
         }
+        
+        protected virtual void ShootAllWeapons()
+        {
+            if (AllWeaponsList.Count == 0) return;
+            foreach (var weapon in AllWeaponsList)
+                weapon.Fire();
+        }
+        
         protected virtual void InvokeOnWeaponChanged()
         {
             OnWeaponChanged?.Invoke(this, EventArgs.Empty);
         }
+        
         protected virtual void InvokeOnPositionChanged()
         {
             OnPositionChanged?.Invoke(this, EventArgs.Empty);
         }
+
         protected virtual void InvokeOnShoot(Bullet b)
         {
             if (b is null)
@@ -216,11 +229,22 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
             foreach (var polygon in HitBox)
             {
                 _impactPolygon = polygon;
-                foreach (var polygon1 in other.HitBox)
+                if (other.HitBox.Any(polygon1 => polygon.Overlap(polygon1)))
                 {
-                    if(polygon.Overlap(polygon1)) return true;
+                    return true;
                 }
             }
+
+            if ((from component in Components 
+                where component.HitBox != null 
+                from poly in component.HitBox 
+                from otherPoly in other.HitBox 
+                where poly.Overlap(otherPoly) 
+                select poly).Any())
+            {
+                return true;
+            }
+
             _impactPolygon = null;
             return false;
         }
@@ -246,6 +270,17 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
 
             _impactPolygon = null;
         }
+
+        public override void InterAct(Actor other)
+        {
+            base.InterAct(other);
+            foreach (var comp in Components)
+            {
+                comp.InterAct(other);
+            }
+        }
+        
+
         private void ProcessPowerUp(PowerUp powerup)
         {
             switch(powerup)

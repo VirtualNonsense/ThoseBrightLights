@@ -87,6 +87,17 @@ namespace SE_Praktikum.Core
                 _gameEngine.Render(poly);
             }
 
+            var nextPolys = _components.OfType<Spaceship>()
+                .Select(t=> t.Components)
+                .SelectMany(t=>
+                    t.Where(s=>s.HitBox!=null)
+                        .SelectMany(s=>s.HitBox));
+            foreach (var poly in nextPolys)
+            {
+                _gameEngine.Render(poly);
+            }
+            
+
             _gameEngine.Render(tiles);
             if(_map.WinningZone != null)
                 _gameEngine.Render(_map.WinningZone.Polygons);

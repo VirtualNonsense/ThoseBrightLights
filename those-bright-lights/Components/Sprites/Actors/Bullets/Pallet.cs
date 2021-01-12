@@ -5,28 +5,29 @@ using SE_Praktikum.Services;
 
 namespace SE_Praktikum.Components.Sprites.Actors.Bullets
 {
-    public class Laser : Bullet
+    public class Pallet : Bullet
     {
+        
         private readonly Vector2 _spaceShipVelocity;
         private float _elapsedTime = 0;
 
-        public Laser(AnimationHandler animationHandler,
-                     Vector2 positionSpaceship,
-                     float rotation,
-                     Particle explosion,
-                     Actor parent,
-                     SoundEffect midAirSound,
-                     SoundEffect impactSound,
-                     float damage = 5) 
+        public Pallet(AnimationHandler animationHandler,
+            Vector2 positionSpaceship,
+            float rotation,
+            Particle explosion,
+            Actor parent,
+            SoundEffect midAirSound,
+            SoundEffect impactSound,
+            float damage = 1) 
             : base(animationHandler,parent, explosion, midAirSound, impactSound, damage)
         {
             Rotation = rotation;
             Position = positionSpaceship;
-            Speed = 15;
+            Speed = 8;
             Acceleration = 0;
             _spaceShipVelocity = Vector2.Zero;
             MaxTime = 5;
-            Damage = 5;
+            Damage = 1;
             MidAirSoundCooldown = 1000;
             TimeSinceUsedMidAir = MidAirSoundCooldown;
         }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Xml.Serialization;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using NLog;
@@ -36,18 +37,25 @@ namespace SE_Praktikum.Components.Sprites.Actors.Weapons
         /// <param name="clipEmptySound"></param>
         /// <param name="weaponEmptySound"></param>
         /// <param name="initialBulletsInClip"></param>
-        protected ClipWeapon(Actor Parent,
-                             SoundEffect shotSoundEffect,
+        protected ClipWeapon(AnimationHandler animationHandler, 
+                             Actor parent,   
+                             Vector2 relativePosition,
+                             float relativeRotation,
+                             Vector2 bulletSpawnPoint,
+                             SoundEffect shotSoundEffect, 
+                             SoundEffect impactSound,
+                             string nameTag, 
+                             float health,
+                             float maxHealth ,
                              SoundEffect clipEmptySound,
                              SoundEffect weaponEmptySound,
                              SoundEffect reloadSoundEffect,
-                             string nameTag,
                              int clipSize,
                              int clips,
                              int shotCoolDown = 10,
                              int reloadTime = 1000,
                              int? initialBulletsInClip = null)
-            : base(Parent, shotSoundEffect, nameTag, shotCoolDown)
+            : base(animationHandler,parent, relativePosition, relativeRotation,bulletSpawnPoint,shotSoundEffect, impactSound,nameTag, health, maxHealth,shotCoolDown)
         {
             _logger = LogManager.GetCurrentClassLogger();
             Clips = clips;

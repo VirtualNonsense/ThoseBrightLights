@@ -8,7 +8,7 @@ using SE_Praktikum.Services;
 
 namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
 {
-    public class EnemyWithViewbox : Enemy
+    public abstract class EnemyWithViewbox : Enemy
     {
         public Polygon ViewBox;
         public override float Rotation
@@ -30,7 +30,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
         }
 
 
-        public EnemyWithViewbox(AnimationHandler animationHandler, Polygon viewBox, float maxSpeed = 20,float acceleration = 5, float health = 50, SoundEffect impactSound = null) : base(animationHandler, maxSpeed, acceleration, health, impactSound)
+        protected EnemyWithViewbox(AnimationHandler animationHandler, Polygon viewBox, float maxSpeed = 3, float acceleration =5, float health = 50, SoundEffect impactSound = null) : base(animationHandler, maxSpeed, acceleration,health, impactSound)
         {
             ViewBox = viewBox;
             RotateAndShoot = true;

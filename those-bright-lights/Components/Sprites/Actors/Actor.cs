@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Graphics;
 using NLog;
 using SE_Praktikum.Models;
 using SE_Praktikum.Services;
@@ -18,7 +19,7 @@ namespace SE_Praktikum.Components.Sprites.Actors
         public bool CollisionEnabled = true;
         private Logger _logger;
         protected SoundEffect _impactSound;
-        public Actor Parent;
+        
         // #############################################################################################################
         // Constructor
         // #############################################################################################################
@@ -50,6 +51,8 @@ namespace SE_Praktikum.Components.Sprites.Actors
         // Properties
         // #############################################################################################################
 
+        public virtual Actor Parent { get; set; }
+        public bool FlippedHorizontal => _animationHandler.SpriteEffects == SpriteEffects.FlipVertically;
         public bool IsCollideAble => HitBox != null;
         public Polygon[] HitBox => _animationHandler.CurrentHitBox;
         public float Damage { get; protected set; }
@@ -105,7 +108,7 @@ namespace SE_Praktikum.Components.Sprites.Actors
         // #############################################################################################################
 
 
-        public void InterAct(Actor other)
+        public virtual void InterAct(Actor other)
         {
             if(InteractAble(other))
                 ExecuteInteraction(other);

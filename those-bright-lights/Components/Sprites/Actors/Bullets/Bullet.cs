@@ -9,7 +9,6 @@ namespace SE_Praktikum.Components.Sprites.Actors.Bullets
     public class Bullet : Actor
     {
         private Vector2 Direction => new Vector2((float)Math.Cos(Rotation),(float)Math.Sin(Rotation));
-        protected new float Velocity;
         protected float Acceleration;
         protected float MaxTime;
         private float _timeAlive;
@@ -17,6 +16,12 @@ namespace SE_Praktikum.Components.Sprites.Actors.Bullets
         protected SoundEffect MidAirSound;
         protected float MidAirSoundCooldown;
         protected float TimeSinceUsedMidAir;
+        
+        // #################################################################################################################
+        // Properties
+        // #################################################################################################################
+        public float Speed { get; set; }
+    
 
         public override Vector2 Position
         {
@@ -62,7 +67,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Bullets
         {
             Parent = parent;
             Explosion = explosion;
-            Velocity = 0;
+            Speed = 0;
             Acceleration = 0;
             MidAirSound = midAirSound;
             _logger = LogManager.GetCurrentClassLogger();
@@ -72,7 +77,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Bullets
         protected Vector2 Movement(Vector2 spaceshipVelocity, float elapsedTime)
         {
             var position = spaceshipVelocity +
-                           0.5f * Acceleration * Direction * elapsedTime + Velocity * Direction + Position;
+                           0.5f * Acceleration * Direction * elapsedTime + Speed * Direction + Position;
             return position;
         }
 

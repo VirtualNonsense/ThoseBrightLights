@@ -1,18 +1,21 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Graphics;
 using NLog;
 using SE_Praktikum.Components.Sprites.Actors.Bullets;
+using SE_Praktikum.Components.Sprites.Actors.Spaceships;
 using SE_Praktikum.Extensions;
+using SE_Praktikum.Services;
 using SE_Praktikum.Services.Abilities;
 
 namespace SE_Praktikum.Components.Sprites.Actors.Weapons
 {
-    public abstract class Weapon
+    public abstract class Weapon : SpaceshipAddOn
     {
-        private readonly SoundEffect _shotSoundEffect;
+        protected readonly SoundEffect ShotSoundEffect;
 
-        private readonly CooldownAbility _shotAbility;
+        //private readonly CooldownAbility _shotAbility;
         private float _rotation;
         private Logger _logger;
 
@@ -23,17 +26,37 @@ namespace SE_Praktikum.Components.Sprites.Actors.Weapons
         /// Base class for all weapons.
         /// It implements the base mechanism for bullet creation, bullet firing and shot cooldown
         /// </summary>
+        /// <param name="animationHandler"></param>
         /// <param name="parent"></param>
+        /// <param name="relativePosition"></param>
+        /// <param name="relativeRotation"></param> Rotation in body space of parent
+        /// <param name="bulletSpawnPoint"></param> in relative coordinates to parent
         /// <param name="shotSoundEffect"></param>
+        /// <param name="impactSound"></param>
         /// <param name="nameTag">Name of the gun</param>
+        /// <param name="maxHealth"></param>
         /// <param name="shotCoolDown">in milliseconds</param>
-        public Weapon(Actor parent, SoundEffect shotSoundEffect, string nameTag, int shotCoolDown = 10)
+        /// <param name="health"></param>
+        public Weapon(
+                AnimationHandler animationHandler, 
+                Actor parent, 
+                Vector2 relativePosition,
+                float relativeRotation,
+                Vector2 bulletSpawnPoint,
+                SoundEffect shotSoundEffect, 
+                SoundEffect impactSound,
+                string nameTag, 
+                float health,
+                float maxHealth ,
+                int shotCoolDown = 10)
+                : base(animationHandler, parent,relativePosition, relativeRotation, impactSound,health,maxHealth)
         {
             _logger = LogManager.GetCurrentClassLogger();
-            _shotAbility = new CooldownAbility(shotCoolDown, FireAbility);
+            //_shotAbility = new CooldownAbility(shotCoolDown, FireAbility);
             Parent = parent;
-            _shotSoundEffect = shotSoundEffect;
+            ShotSoundEffect = shotSoundEffect;
             NameTag = nameTag;
+            BulletSpawnPoint = bulletSpawnPoint;
         }
 
         // #############################################################################################################
@@ -45,10 +68,10 @@ namespace SE_Praktikum.Components.Sprites.Actors.Weapons
         /// Informs the subscriber about the current state of the shotCooldown.
         /// the value will be between 0 and 1 and can be read as percent/100
         /// </summary>
-        public event EventHandler<CooldownAbility.CooldownProgressArgs> OnShotCooldownProgressUpdate
+        public event EventHandler<AnimationHandler.AnimationProgressArgs> OnShotCooldownProgressUpdate
         {
-            add => _shotAbility.OnCoolDownUpdate += value;
-            remove => _shotAbility.OnCoolDownUpdate -= value;
+            add => _animationHandler.OnAnimationProgressUpdate += value;
+            remove => _animationHandler.OnAnimationProgressUpdate -= value;
         }
         
         /// <summary>
@@ -56,8 +79,8 @@ namespace SE_Praktikum.Components.Sprites.Actors.Weapons
         /// </summary>
         public event EventHandler OnShotAvailable
         {
-            add => _shotAbility.OnCoolAbilityAvailable += value;
-            remove => _shotAbility.OnCoolAbilityAvailable -= value;
+            add => _animationHandler.OnAnimationComplete += value;
+            remove => _animationHandler.OnAnimationComplete -= value;
         }
         
         // #############################################################################################################
@@ -70,27 +93,10 @@ namespace SE_Praktikum.Components.Sprites.Actors.Weapons
         /// <summary>
         /// the owner of the gun.
         /// </summary>
-        public Actor Parent { get; set; }
-        public bool CanShoot => _shotAbility.AbilityAvailable;
+        //public Actor Parent { get; set; }
+        public bool CanShoot => !_animationHandler.IsPlaying;
 
-        /// <summary>
-        /// bullet rotation
-        /// </summary>
-        public float Rotation
-        {
-            get => _rotation;
-            set => _rotation = MathExtensions.Modulo2PiPositive(value);
-        }
-        
-        /// <summary>
-        /// bullet spawn point
-        /// </summary>
-        public Vector2 Position
-        {
-            get;
-            set;
-        }
-        
+
         /// <summary>
         /// Velocity of the moving system e.g. the spaceship
         /// </summary>
@@ -106,23 +112,23 @@ namespace SE_Praktikum.Components.Sprites.Actors.Weapons
             protected set;
         }
         
+        /// <summary>
+        /// Position is in space of Weapon, so relative position
+        /// </summary>
+        public Vector2 BulletSpawnPoint { get; set; }
+        
         // #############################################################################################################
         // public methods
         // #############################################################################################################
-        public virtual void Update(GameTime gameTime)
-        {
-            _shotAbility.Update(gameTime);
-        }
+      
 
         public virtual void Fire()
         {
-            _shotAbility.Fire();
+            if (_animationHandler.IsPlaying) return;
+            _animationHandler.IsPlaying = true;
+            FireAbility();
         }
-
-        public override string ToString()
-        {
-            return $"{NameTag} FireCooldown: {_shotAbility.CoolDownProgress * 100}%";
-        }
+        
 
         // #############################################################################################################
         // private / protected methods
@@ -142,7 +148,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Weapons
         {
             var e = new EmitBulletEventArgs() { Bullet = GetBullet()};
             InvokeOnEmitBullet(e);
-            _shotSoundEffect?.Play();
+            ShotSoundEffect?.Play();
         }
 
         // #############################################################################################################
@@ -161,5 +167,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Weapons
         {
             public Bullet Bullet { get; set; }
         }
+        
+
     }
 }

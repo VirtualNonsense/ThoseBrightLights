@@ -5,12 +5,12 @@ using SE_Praktikum.Services;
 
 namespace SE_Praktikum.Components.Sprites.Actors.Bullets
 {
-    public class Laser : Bullet
+    public class Projectile : Bullet
     {
         private readonly Vector2 _spaceShipVelocity;
         private float _elapsedTime = 0;
 
-        public Laser(AnimationHandler animationHandler,
+        public Projectile(AnimationHandler animationHandler,
                      Vector2 positionSpaceship,
                      float rotation,
                      Particle explosion,
@@ -26,7 +26,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Bullets
             Acceleration = 0;
             _spaceShipVelocity = Vector2.Zero;
             MaxTime = 5;
-            Damage = 5;
+            Damage = 1;
             MidAirSoundCooldown = 1000;
             TimeSinceUsedMidAir = MidAirSoundCooldown;
         }
