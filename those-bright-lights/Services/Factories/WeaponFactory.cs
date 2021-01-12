@@ -233,11 +233,11 @@ namespace SE_Praktikum.Services.Factories
             // TODO: create and load missing sound effects
             var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\minigunFire_50_20_4.json", 0);
             var m = new SingleShotWeapon(
-                _animationHandlerFactory.GetAnimationHandler(tileSet,new AnimationSettings(10,isPlaying:false,duration:50f)),
+                _animationHandlerFactory.GetAnimationHandler(tileSet,new AnimationSettings(4,isPlaying:false,duration:50f)),
                 owner,
-                new Vector2(55, 30),
+                new Vector2(55, 25),
                 0,
-                new Vector2(15,8),
+                new Vector2(30,8),
                 null, 
                 null, 
                 nameTag,
