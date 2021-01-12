@@ -237,15 +237,15 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
                 }
             }
 
-            if ((from component in Components 
-                where component.HitBox != null 
-                from poly in component.HitBox 
-                from otherPoly in other.HitBox 
-                where poly.Overlap(otherPoly) 
-                select poly).Any())
-            {
-                return true;
-            }
+            // if ((from component in Components 
+            //     where component.HitBox != null 
+            //     from poly in component.HitBox 
+            //     from otherPoly in other.HitBox 
+            //     where poly.Overlap(otherPoly) 
+            //     select poly).Any())
+            // {
+            //     return true;
+            // }
 
             _impactPolygon = null;
             return false;

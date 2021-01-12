@@ -63,7 +63,7 @@ namespace SE_Praktikum.Core.GameStates
                     n,
                     _screen.Camera);
                 var l = _levelFactory.GetInstance(path, c);
-                button.Enabled = _saveGameHandler.SaveGame.clearedStage >= c;
+                //button.Enabled = _saveGameHandler.SaveGame.clearedStage >= c;
                 button.Click += (sender, args) => 
                 {
                     _logger.Debug($"starting {n}");
