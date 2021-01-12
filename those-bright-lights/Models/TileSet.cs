@@ -22,10 +22,11 @@ using System.Collections.Generic;
         public int FrameCount => Columns * Rows;
         public int TextureWidth => Texture.Width;
         public int TextureHeight => Texture.Height;
+        private readonly List<TileInfo> tileSettings;
 
         public bool HasHitBox => _hitBoxDict != null;
-        
-        public TileSet(Texture2D texture, int tileDimX, int tileDimY, Dictionary<int, Polygon[]> hitBoxDict, int startEntry=0)
+
+        public TileSet(Texture2D texture, int tileDimX, int tileDimY, Dictionary<int, Polygon[]> hitBoxDict, int startEntry = 0, List<TileInfo> tileSettings = null)
         {
             _logger = LogManager.GetCurrentClassLogger();
             Texture = texture;
@@ -35,6 +36,17 @@ using System.Collections.Generic;
             Rows = Texture.Height / TileDimY;
             StartEntry = startEntry;
             _hitBoxDict = hitBoxDict;
+            this.tileSettings = tileSettings;
+        }
+
+        public TileInfo GetInfo(int index)
+        {
+            if (tileSettings == null)
+                return null;
+            var info = tileSettings.Where(t => t.ID == index);
+            if (info.Count() == 0)
+                return null;
+            return info.ElementAt(0);
         }
 
         public TileSet(Texture2D texture, Polygon[] hitBox = null, int startEntry = 0)

@@ -33,11 +33,17 @@ namespace SE_Praktikum.Services.Factories
             if(TileSet.tiles == null)
                 return new TileSet(Texture, TileSet.tilewidth, TileSet.tileheight, null, startindex);
             var Dictionary = new Dictionary<int, Polygon[]>();
-            
+            var List = new List<TileInfo>();
             foreach(var tile in TileSet.tiles)
             {
+                
                 var count = 0;
                 var index = tile.id + startindex;
+                if(tile.type == "DestructableTile")
+                { 
+                    List.Add(new TileInfo {Destructable = true, ID = index});
+
+                }
                 foreach(var objectt in tile.objectgroup.objects)
                 {
                     Polygon polygon;
@@ -79,7 +85,7 @@ namespace SE_Praktikum.Services.Factories
                 }
                 
             }
-            return new TileSet(Texture, TileSet.tilewidth,TileSet.tileheight,Dictionary,startindex);
+            return new TileSet(Texture, TileSet.tilewidth,TileSet.tileheight,Dictionary,startindex,List);
 
         }
     }

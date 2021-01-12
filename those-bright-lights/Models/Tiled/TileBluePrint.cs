@@ -8,6 +8,9 @@ namespace SE_Praktikum.Models.Tiled
     {
         public int id;
         public ObjectGroupBluePrint objectgroup;
+        public string type;
+
+        
         
     }
 }

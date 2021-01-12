@@ -29,10 +29,14 @@ namespace SE_Praktikum.Services.Factories
             {
                 if (index > tileset.StartEntry + tileset.Tiles-1)
                     continue;
+                var indestructable = true;
+                var tileInfo = tileset.GetInfo((int)index);
+                if (tileInfo != null)
+                    indestructable = !tileInfo.Destructable;
                 var settings = new AnimationSettings(new List<(int, float)>{((int)index, 1f)}, isPlaying:false, opacity: opacity, layer: layer);
                 var handler = _factory.GetAnimationHandler(tileset, settings, origin: Vector2.Zero);
                 handler.Position = position;
-                return new Tile(handler, t.Item1);
+                return new Tile(handler, t.Item1){Indestructible = indestructable,Health = 20,MaxHealth = 20};
                 
                 // return new Tile(tileset.Texture, tileset.GetFrame(index), position, layer, opacity, width, height, t.Item1);
 
