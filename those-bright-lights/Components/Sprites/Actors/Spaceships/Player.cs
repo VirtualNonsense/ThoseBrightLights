@@ -16,7 +16,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
         private KeyboardState CurrentKey;
         private KeyboardState PreviousKey;
         private int _score;
-        public Player(AnimationHandler animationHandler, AnimationHandler propulsion, Input input=null, float acceleration = 5, float maxSpeed = 30, int health=100, SoundEffect impactSound = null) 
+        public Player(AnimationHandler animationHandler, AnimationHandler propulsion, Input input=null, float acceleration = .1f, float maxSpeed = 30, int health=100, SoundEffect impactSound = null) 
             : base(animationHandler, maxSpeed, acceleration,health, impactSound)
         {
             Score = 0;
@@ -62,9 +62,9 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
 
             if (CurrentKey.IsKeyDown(_input.Up))
             {
-                velocity.Y = -Acceleration * t * t;
+                velocity.Y -= Acceleration * t * t;
             }
-            else if (CurrentKey.IsKeyDown(_input.Down))
+            if (CurrentKey.IsKeyDown(_input.Down))
             {
                 velocity.Y += Acceleration * t * t;
             }
@@ -72,7 +72,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
             {
                 velocity.X -= Acceleration * t * t;
             }
-            else if (CurrentKey.IsKeyDown(_input.Right))
+            if (CurrentKey.IsKeyDown(_input.Right))
             {
                 velocity.X += Acceleration * t * t;
             }
@@ -80,16 +80,17 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
             {
                 Rotation += 0.01f;
             }
-            else if (CurrentKey.IsKeyDown(_input.TurnRight))
+            if (CurrentKey.IsKeyDown(_input.TurnRight))
             {
                 Rotation -= 0.01f;
             }
 
             var newVelocity = velocity.Length();
+            
             if (newVelocity > 0)
             {
                 velocity /= newVelocity;
-                newVelocity = .95f * newVelocity * (1 - newVelocity / MaxSpeed);
+                newVelocity = 1 * newVelocity * (1 - (newVelocity / MaxSpeed));
                 if(newVelocity < 0)
                     _logger.Warn($"newVelocity < 0 consider rising MaxSpeed or decreasing acceleration");
                 
