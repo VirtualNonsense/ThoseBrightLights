@@ -22,7 +22,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Bullets
         {
             Rotation = rotation;
             Position = positionSpaceship;
-            Velocity = 15;
+            Speed = 15;
             Acceleration = 0;
             _spaceShipVelocity = Vector2.Zero;
             MaxTime = 5;
