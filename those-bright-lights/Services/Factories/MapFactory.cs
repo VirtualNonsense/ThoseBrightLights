@@ -124,7 +124,7 @@ namespace SE_Praktikum.Services.Factories
                             case "InstaDeathPowerUpSpawn":
                                 PowerUpSpawnpoints.Add((PowerUpType.InstaDeathPowerUp, ConvertObjectToPolygon(obj).Center));
                                 break;
-                            case "ScoreBonusPowerUpSpawn":
+                            case "ScoreBonusPowerUp":
                                 PowerUpSpawnpoints.Add((PowerUpType.ScoreBonusPowerUp, ConvertObjectToPolygon(obj).Center));
                                 break;
                             case "StarPowerUpSpawn":

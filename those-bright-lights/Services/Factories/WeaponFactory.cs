@@ -2,6 +2,7 @@
 using SE_Praktikum.Components.Actors;
 using SE_Praktikum.Components.Sprites.Actors;
 using SE_Praktikum.Components.Sprites.Actors.Weapons;
+using System;
 
 namespace SE_Praktikum.Services.Factories
 {
@@ -12,7 +13,7 @@ namespace SE_Praktikum.Services.Factories
         private readonly ParticleFactory _particleFactory;
         private readonly TileSetFactory _tileSetFactory;
         private readonly BulletFactory _bulletFactory;
-
+        private readonly Random _random;
         public WeaponFactory(ContentManager contentManager,
                              AnimationHandlerFactory animationHandlerFactory,
                              ParticleFactory particleFactory,
@@ -24,6 +25,8 @@ namespace SE_Praktikum.Services.Factories
             _particleFactory = particleFactory;
             _tileSetFactory = tileSetFactory;
             _bulletFactory = bulletFactory;
+            _random = new Random();
+            
         }
 
         /// <summary>
@@ -128,5 +131,23 @@ namespace SE_Praktikum.Services.Factories
                 reloadTime: reloadTime);
             return m;
         }
+
+        //public Weapon GetRandomWeapon(Actor owner)
+        //{
+        //    var i = _random.Next(3);
+        //    switch(i)
+        //    {
+        //        case 0:
+        //            return GetMinigun(owner);
+        //        case 1:
+        //            return GetMissileLauncher(owner);
+                    
+        //        case 2:
+        //            return GetShotgun(owner);
+
+        //        default:
+        //            throw new NotImplementedException();
+        //    }
+        //}
     }
 }
