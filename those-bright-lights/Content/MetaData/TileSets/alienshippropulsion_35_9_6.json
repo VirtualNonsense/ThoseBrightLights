@@ -1,0 +1,14 @@
+{ "columns":6,
+ "image":"..\/..\/Artwork\/Effects\/alienshippropulsion_35_9_6.png",
+ "imageheight":9,
+ "imagewidth":210,
+ "margin":0,
+ "name":"alienshippropulsion_35_9_6",
+ "spacing":0,
+ "tilecount":6,
+ "tiledversion":"1.4.3",
+ "tileheight":9,
+ "tilewidth":35,
+ "type":"tileset",
+ "version":1.4
+}

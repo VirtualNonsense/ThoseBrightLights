@@ -186,9 +186,10 @@ namespace SE_Praktikum.Services.Factories
                                                  float maxHealth = 1)
         {
             // TODO: create and load missing sound effects
+            var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\enemylasergun_18_10_3.json", 0);
             
             var m = new SingleShotWeapon(
-                _animationHandlerFactory.GetAnimationHandler(null,null),
+                _animationHandlerFactory.GetAnimationHandler(tileSet,new AnimationSettings(3,isPlaying:false,duration:100f)),
                 owner,
                 new Vector2(0,0),
                 0,

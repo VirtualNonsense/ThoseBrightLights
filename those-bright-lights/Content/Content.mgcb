@@ -25,6 +25,18 @@
 /processorParam:TextureFormat=Color
 /build:Artwork/Actors/alien_ship_56_59.png
 
+#begin Artwork/Actors/alien_ship_65_65_4.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Artwork/Actors/alien_ship_65_65_4.png
+
 #begin Artwork/Actors/boss.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -168,6 +180,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Artwork/Controls/ButtonsAndSwitches.png
+
+#begin Artwork/Effects/alienshippropulsion_35_9_6.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Artwork/Effects/alienshippropulsion_35_9_6.png
 
 #begin Artwork/Effects/bosspropulsion_11_9_6.png
 /importer:TextureImporter
@@ -888,6 +912,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Artwork/Weapons/bossweaponFire_20_16_4.png
+
+#begin Artwork/Weapons/enemylasergun_18_10_3.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Artwork/Weapons/enemylasergun_18_10_3.png
 
 #begin Artwork/Weapons/lasergun.png
 /importer:TextureImporter
