@@ -52,10 +52,9 @@ namespace SE_Praktikum.Components.Sprites.Actors.Weapons
                              SoundEffect reloadSoundEffect,
                              int clipSize,
                              int clips,
-                             int shotCoolDown = 10,
                              int reloadTime = 1000,
                              int? initialBulletsInClip = null)
-            : base(animationHandler,parent, relativePosition, relativeRotation,bulletSpawnPoint,shotSoundEffect, impactSound,nameTag, health, maxHealth,shotCoolDown)
+            : base(animationHandler,parent, relativePosition, relativeRotation,bulletSpawnPoint,shotSoundEffect, impactSound,nameTag, health, maxHealth)
         {
             _logger = LogManager.GetCurrentClassLogger();
             Clips = clips;
