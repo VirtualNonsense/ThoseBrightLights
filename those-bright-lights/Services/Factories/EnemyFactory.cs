@@ -71,5 +71,22 @@ namespace SE_Praktikum.Services.Factories
 
             return b;
         }
+        
+        public Kamikaze GetKamikaze(ContentManager contentManager)
+        {
+            SoundEffect impactSound;
+            var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\kamikazeIdle_40_25_6.json", 0);
+            var animationSettings = new AnimationSettings(6,isPlaying:true);
+            var b = new Kamikaze(_animationHandlerFactory.GetAnimationHandler(tileSet, animationSettings),
+                new Polygon(Vector2.Zero, Vector2.Zero, 0,
+                    new List<Vector2> {new Vector2(0, 0), new Vector2(400, -150), new Vector2(400, 150),}))
+            {
+                Position = new Vector2(100, 50),
+                Scale = 2
+            };
+            b.AddWeapon(_weaponFactory.GetEnemyLaserGun(b));
+
+            return b;
+        }
     }
 }
