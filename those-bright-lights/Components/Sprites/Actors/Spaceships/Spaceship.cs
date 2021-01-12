@@ -249,10 +249,10 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
         public override void InterAct(Actor other)
         {
             base.InterAct(other);
-            // foreach (var comp in Components)
-            // {
-            //     comp.InterAct(other);
-            // }
+            foreach (var comp in Components)
+            {
+                comp.InterAct(other);
+            }
         }
         
 
