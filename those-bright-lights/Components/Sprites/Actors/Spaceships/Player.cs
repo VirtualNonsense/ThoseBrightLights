@@ -16,8 +16,16 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
         private KeyboardState CurrentKey;
         private KeyboardState PreviousKey;
         private int _score;
-        public Player(AnimationHandler animationHandler, AnimationHandler propulsion, Input input=null, float acceleration = .1f, float maxSpeed = 30, int health=100, SoundEffect impactSound = null) 
-            : base(animationHandler, maxSpeed, acceleration,health, impactSound)
+        public Player(AnimationHandler animationHandler, 
+                      AnimationHandler propulsion,
+                      Input input=null,
+                      float acceleration = .1f,
+                      float maxSpeed = 30,
+                      float rotationAcceleration = .1f,
+                      float maxRotationSpeed = 10,
+                      int health=100,
+                      SoundEffect impactSound = null) 
+            : base(animationHandler, maxSpeed, acceleration, rotationAcceleration, maxRotationSpeed,health, impactSound)
         {
             Score = 0;
             _input = input;

@@ -46,7 +46,13 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
         }
 
 
-        public Enemy(AnimationHandler animationHandler, float maxSpeed = 3, float acceleration = 3, float health = 50, SoundEffect impactSound = null) : base(animationHandler, maxSpeed, acceleration, health, impactSound)
+        public Enemy(AnimationHandler animationHandler, 
+                     float maxSpeed = 3,
+                     float acceleration = 3,
+                     float rotationAcceleration = .1f,
+                     float maxRotationSpeed = 10,
+                     float health = 50,
+                     SoundEffect impactSound = null) : base(animationHandler, maxSpeed, acceleration, rotationAcceleration, maxRotationSpeed,health, impactSound)
         {
             _logger = LogManager.GetCurrentClassLogger();
             Shoot = new CooldownAbility(2000, _shootTarget);

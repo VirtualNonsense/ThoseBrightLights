@@ -8,7 +8,14 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
 {
     public class Boss : EnemyWithViewbox
     {
-        public Boss(AnimationHandler animationHandler, Polygon viewBox, float maxSpeed = 3,float acceleration = 4,float health = 200, SoundEffect impactSound = null) : base(animationHandler, viewBox, maxSpeed, acceleration, health,impactSound)
+        public Boss(AnimationHandler animationHandler, 
+                    Polygon viewBox,
+                    float maxSpeed = 3,
+                    float acceleration = 4,
+                    float rotationAcceleration = .1f,
+                    float maxRotationSpeed = 10,
+                    float health = 200,
+                    SoundEffect impactSound = null) : base(animationHandler, viewBox, maxSpeed, acceleration,rotationAcceleration, maxRotationSpeed, health,impactSound)
         {
             Shoot = new CooldownAbility(500, _shootTarget);
             RotateAndShoot = true;

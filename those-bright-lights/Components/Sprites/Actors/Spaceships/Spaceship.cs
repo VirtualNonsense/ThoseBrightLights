@@ -19,6 +19,8 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
         protected int IndexOfWeaponsOfTheSameType;
         protected float MaxSpeed;
         protected readonly float Acceleration;
+        protected readonly float _rotationAcceleration;
+        protected readonly float _maxRotationSpeed;
         private Logger _logger;
         protected Polygon _impactPolygon;
 
@@ -27,11 +29,19 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
         // #############################################################################################################
         // Constructor
         // #############################################################################################################
-        public Spaceship(AnimationHandler animationHandler, float maxSpeed = 3, float acceleration = 5, float health = 100, SoundEffect impactSound = null) : base(
+        public Spaceship(AnimationHandler animationHandler,
+                         float maxSpeed = 3,
+                         float acceleration = 5,
+                         float rotationAcceleration = .1f,
+                         float maxRotationSpeed = 10,
+                         float health = 100,
+                         SoundEffect impactSound = null) : base(
             animationHandler, impactSound)
         {
             MaxSpeed = maxSpeed;
             Acceleration = acceleration;
+            _rotationAcceleration = rotationAcceleration;
+            _maxRotationSpeed = maxRotationSpeed;
             Health = health;
             Components = new List<SpaceshipAddOn>();
             _logger = LogManager.GetCurrentClassLogger();

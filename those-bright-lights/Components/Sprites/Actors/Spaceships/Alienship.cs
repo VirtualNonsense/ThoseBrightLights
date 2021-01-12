@@ -9,7 +9,15 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
     public class Alienship : EnemyWithViewbox
     {
         
-        public Alienship(AnimationHandler animationHandler, Polygon viewBox, AnimationHandler propulsion, float maxSpeed = 3,float acceleration = 4,float health = 50, SoundEffect impactSound = null) : base(animationHandler, viewBox, maxSpeed, acceleration, health,impactSound)
+        public Alienship(AnimationHandler animationHandler,
+                         Polygon viewBox,
+                         AnimationHandler propulsion,
+                         float maxSpeed = 3,
+                         float acceleration = 4,
+                         float rotationAcceleration = .1f,
+                         float maxRotationSpeed = 10,
+                         float health = 50,
+                         SoundEffect impactSound = null) : base(animationHandler, viewBox, maxSpeed, acceleration,rotationAcceleration, maxRotationSpeed, health,impactSound)
         {
             Shoot = new CooldownAbility(1000, _shootTarget);
             RotateAndShoot = true;
