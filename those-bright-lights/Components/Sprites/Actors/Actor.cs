@@ -32,8 +32,8 @@ namespace SE_Praktikum.Components.Sprites.Actors
         /// <param name="maxHealth"></param>
         public Actor(AnimationHandler animationHandler, SoundEffect impactSound, float health = 100, float maxHealth = 100) : base(animationHandler)
         {
-            Health = health;
             MaxHealth = maxHealth;
+            Health = health;
             _logger = LogManager.GetCurrentClassLogger();
             _impactSound = impactSound;
         }
@@ -151,6 +151,32 @@ namespace SE_Praktikum.Components.Sprites.Actors
                 }
             }
             return false;
+        }
+        
+        protected virtual void ApproachDestination(Actor other, int maxIteration, int iteration=0)
+        {
+            if (iteration >= maxIteration)
+            {
+                _logger.Debug($"Approachdestination after {iteration} abborted");
+                return;
+            }
+            if (DeltaPosition.Length() <= 10 * float.Epsilon)
+            {
+                var v = Position - other.Position;
+                v /= v.Length();
+                Position += 10 * v;
+            }
+            else
+            {
+                Position -= DeltaPosition;
+                DeltaPosition /= 2;
+                Position += DeltaPosition;
+            }
+
+            if (!Collide(other))
+                return;
+            iteration++;
+            ApproachDestination(other, maxIteration, iteration);
         }
 
         #region EventInvoker
