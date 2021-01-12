@@ -65,7 +65,7 @@ namespace SE_Praktikum.Components.Sprites.Actors
         
         protected override void ExecuteInteraction(Actor other)
         {
-            _logger.Debug(Health);
+            
             switch (other)
             {
                 case Bullet b:
@@ -75,9 +75,12 @@ namespace SE_Praktikum.Components.Sprites.Actors
                     Health -= s.Damage;
                     break;
                     
-                    
+
             }
-            
+            _logger.Debug(Health);
+
+
+
         }
     }
     

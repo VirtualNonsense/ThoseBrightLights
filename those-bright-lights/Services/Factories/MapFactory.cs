@@ -83,7 +83,7 @@ namespace SE_Praktikum.Services.Factories
                                                               blueprint.Width,
                                                               layer.Visible ? 1 : 0,
                                                               area);
-
+                    
                     tiles.Add(l, c);
                     l += 3;
                     continue;

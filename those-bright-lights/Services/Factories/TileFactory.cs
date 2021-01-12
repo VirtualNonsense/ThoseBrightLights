@@ -36,7 +36,7 @@ namespace SE_Praktikum.Services.Factories
                 var settings = new AnimationSettings(new List<(int, float)>{((int)index, 1f)}, isPlaying:false, opacity: opacity, layer: layer);
                 var handler = _factory.GetAnimationHandler(tileset, settings, origin: Vector2.Zero);
                 handler.Position = position;
-                return new Tile(handler, t.Item1){Indestructible = indestructable, Health = 20, MaxHealth = 20};
+                return new Tile(handler, t.Item1){Indestructible = indestructable, MaxHealth = 20, Health = 20};
                 
                 // return new Tile(tileset.Texture, tileset.GetFrame(index), position, layer, opacity, width, height, t.Item1);
 
@@ -64,6 +64,10 @@ namespace SE_Praktikum.Services.Factories
                 {
                     var p = new Vector2(column * tilewidth, row * tileheight);
                     var tile = GenerateTile(index, p, layer, tilelist, layerOpacity, tileheight, tilewidth);
+                    tile.OnDeath += (sender, args) =>
+                    {
+                        list.Remove((Tile)sender);
+                    };
                     var hitbox = tile.HitBox == null ? tile.Rectangle : tile.HitBox.GetBoundingRectangle();
                     list.Insert(hitbox,tile);
                 }
@@ -81,6 +85,11 @@ namespace SE_Praktikum.Services.Factories
                 
             }
             return list;
+        }
+
+        private void Tile_OnDeath(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         private (TileModifier, uint) DecodeIndex(uint codedIndex)
