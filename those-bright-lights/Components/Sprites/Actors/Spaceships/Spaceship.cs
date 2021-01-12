@@ -16,12 +16,14 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
     public abstract class Spaceship : Actor
     {
         public List<SpaceshipAddOn> Components;
-        protected int CurrentWeapon;
         protected int IndexOfWeaponsOfTheSameType;
         protected float MaxSpeed;
         protected readonly float Acceleration;
         private Logger _logger;
         protected Polygon _impactPolygon;
+
+        private int _currentWeapon;
+
         // #############################################################################################################
         // Constructor
         // #############################################################################################################
