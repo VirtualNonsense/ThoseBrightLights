@@ -31,8 +31,8 @@ namespace SE_Praktikum.Services.Factories
 
         public HealthPowerUp HealthGetInstance(float health, Vector2? position = null, float layer = 0)
         {
-            var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\PowerUpTry1.json", 0);
-            var animationSettings = new AnimationSettings(new List<(int,float)> {(0,1)}, isPlaying: false);
+            var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\health.json", 0);
+            var animationSettings = new AnimationSettings(8, 200,layer, isLooping:true);
             var hp = new HealthPowerUp(_animationHandlerFactory.GetAnimationHandler(tileSet, animationSettings),
                 healthbonus: health)
             {
@@ -42,10 +42,23 @@ namespace SE_Praktikum.Services.Factories
             return hp;
         }
 
+        public FullHealthPowerUp FullHealthGetInstance(float health, Vector2? position = null, float layer = 0)
+        {
+            var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\health.json", 0);
+            var animationSettings = new AnimationSettings(8, 30,isLooping:true);
+            var fhp = new FullHealthPowerUp(_animationHandlerFactory.GetAnimationHandler(tileSet, animationSettings),
+                healthbonus: health)
+            {
+                Layer = layer,
+                Position = position ?? new Vector2(0, 0)
+            };
+            return fhp;
+        }
+
         public InstaDeathPowerUp DeathGetInstance(Vector2? position = null, float layer = 0)
         {
-            var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\PowerUpTry1.json", 0);
-            var animationSettings = new AnimationSettings(1, isPlaying: false);
+            var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\skullanimation_19_24_9.json", 0);
+            var animationSettings = new AnimationSettings(9, 50, layer, isLooping:true);
             var ikp = new InstaDeathPowerUp(_animationHandlerFactory.GetAnimationHandler(tileSet, animationSettings))
             {
                 Layer = layer,
@@ -56,8 +69,8 @@ namespace SE_Praktikum.Services.Factories
 
         public WeaponPowerUp RocketGetInstance(Vector2? position = null, float layer = 0)
         {
-            var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\PowerUpTry1.json", 0);
-            var animationSettings = new AnimationSettings(new List<(int, float)> { (11,1) }, isPlaying: false);
+            var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\missile.json", 0);
+            var animationSettings = new AnimationSettings(1);
             var rp = new WeaponPowerUp(_animationHandlerFactory.GetAnimationHandler(tileSet, animationSettings),
                 _weaponFactory.GetMissileLauncher(null))
             {
@@ -69,8 +82,8 @@ namespace SE_Praktikum.Services.Factories
 
         public WeaponPowerUp LaserGetInstance(Vector2? position = null, float layer = 0)
         {
-            var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\PowerUpTry1.json", 0);
-            var animationSettings = new AnimationSettings(new List<(int, float)> { (9, 1) }, isPlaying: false);
+            var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\laser.json", 0);
+            var animationSettings = new AnimationSettings(1);
             var lp = new WeaponPowerUp(_animationHandlerFactory.GetAnimationHandler(tileSet, animationSettings),
                 _weaponFactory.GetEnemyLaserGun(null))
             {
@@ -80,28 +93,42 @@ namespace SE_Praktikum.Services.Factories
             return lp;
         }
 
-        public AmmoPowerUp LaserAmmoGetInstance(int ammo, Vector2? position = null, float layer = 0)
+        public AmmoPowerUp AmmoGetInstance(int ammo, Vector2? position = null, float layer = 0)
         {
-            var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\PowerUpTry1.json", 0);
-            var animationSettings = new AnimationSettings(new List<(int, float)> { (22, 1) }, isPlaying: false);
-            var la = new AmmoPowerUp(_animationHandlerFactory.GetAnimationHandler(tileSet, animationSettings), ammo)
-            {
-                Layer = layer,
-                Position = position ?? new Vector2(0, 0)
-            };
-            return la;
-        }
-
-        public AmmoPowerUp RocketAmmoGetInstance(int ammo, Vector2? position = null, float layer = 0)
-        {
-            var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\PowerUpTry1.json", 0);
-            var animationSettings = new AnimationSettings(new List<(int, float)> { (22, 1) }, isPlaying: false);
+            var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\infammoanimation.json", 0);
+            var animationSettings = new AnimationSettings(20,50,layer,isLooping:true);
             var ra = new AmmoPowerUp(_animationHandlerFactory.GetAnimationHandler(tileSet, animationSettings), ammo)
             {
                 Layer = layer, 
                 Position = position ?? new Vector2(0, 0)
             };
             return ra;
+        }
+
+        public StarPowerUp StarGetInstance(float duration,Vector2? position = null, float layer = 0)
+        {
+            var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\health.json", 0);
+            var animationSettings = new AnimationSettings(8, 50, layer, isLooping:true);
+            var s = new StarPowerUp(_animationHandlerFactory.GetAnimationHandler(tileSet, animationSettings),duration)
+            {
+
+                Layer = layer,
+                Position = position ?? new Vector2(0, 0)
+            };
+            return s;
+        }
+
+        public ScoreBonusPowerUp ScoreBonusGetInstance(Vector2? position = null, float layer = 0)
+        {
+            var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\healthIcon.json", 0);
+            var animationSettings = new AnimationSettings(1,50,layer,isLooping:true);
+            var sc = new ScoreBonusPowerUp(_animationHandlerFactory.GetAnimationHandler(tileSet, animationSettings))
+            {
+                Layer = layer,
+                
+                Position = position ?? new Vector2(0, 0)
+            };
+            return sc;
         }
     }
 }

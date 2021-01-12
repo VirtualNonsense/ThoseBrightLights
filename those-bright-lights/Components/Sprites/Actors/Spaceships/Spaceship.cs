@@ -253,8 +253,12 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
                 case HealthPowerUp h:
                     Health += h.HealthBonus;
                     break;
+                case FullHealthPowerUp fh:
+                    Health = MaxHealth;
+                    break;
+
                 case InstaDeathPowerUp i:
-                    Health -= Health;
+                    Health = 0;
                     break;
                 
                 case AmmoPowerUp ra:
@@ -268,7 +272,9 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
                 case ScoreBonusPowerUp sb:
                     //score+= sb.bonusScore;
                     break;
-                
+                case StarPowerUp s:
+
+                    break;
                     
             }
         }

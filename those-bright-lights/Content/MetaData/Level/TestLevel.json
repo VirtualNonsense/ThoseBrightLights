@@ -51,18 +51,6 @@
                 }, 
                 {
                  "height":0,
-                 "id":13,
-                 "name":"Spawn",
-                 "point":true,
-                 "rotation":0,
-                 "type":"PlayerSpawnPoint",
-                 "visible":true,
-                 "width":0,
-                 "x":139.559985413881,
-                 "y":150.295368907257
-                }, 
-                {
-                 "height":0,
                  "id":14,
                  "name":"",
                  "point":true,
@@ -72,6 +60,30 @@
                  "width":0,
                  "x":0,
                  "y":0
+                }, 
+                {
+                 "height":0,
+                 "id":18,
+                 "name":"HealthPowerUpSpawn",
+                 "point":true,
+                 "rotation":0,
+                 "type":"HealthPowerUpSpawn",
+                 "visible":true,
+                 "width":0,
+                 "x":51.5,
+                 "y":27.75
+                }, 
+                {
+                 "height":0,
+                 "id":19,
+                 "name":"InstaDeathPowerUpSpawn",
+                 "point":true,
+                 "rotation":0,
+                 "type":"InstaDeathPowerUpSpawn",
+                 "visible":true,
+                 "width":0,
+                 "x":162.25,
+                 "y":26.5
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -92,7 +104,7 @@
          "y":0
         }],
  "nextlayerid":8,
- "nextobjectid":15,
+ "nextobjectid":20,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.4.2",
