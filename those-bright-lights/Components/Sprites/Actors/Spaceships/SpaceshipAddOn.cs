@@ -89,6 +89,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
             get => base.Parent;
             set
             {
+                if (value == null) return;
                 if (base.Parent != null)
                 {
                     base.Parent.OnPositionChanged -= ParentOnOnPositionChanged;
@@ -105,7 +106,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
 
         private void ParentOnOnLayerChanged(object sender, EventArgs e)
         {
-            Layer = Parent.Layer;
+            Layer = Parent.Layer + 2*float.Epsilon;
         }
 
         private void ParentOnOnRotationChanged(object sender, EventArgs e)

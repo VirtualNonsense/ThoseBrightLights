@@ -336,22 +336,22 @@ namespace SE_Praktikum.Core
                         _components.Add(turret);
                         break;
                     case EnemyType.Alienship:
-                        //var alienship = _enemyFactory.GetInstance(contentManager); //TODO: create class alienship
-                        // alienship.Layer = player.Layer;
-                        // alienship.Position = e.Item2;
-                        // alienship.Rotation = (float)Math.PI;
-                        // alienship.OnShoot += (sender, args) =>
-                        // {
-                        //     if (!(args is LevelEvent e)) return;
-                        //     OnLevelEvent(e);
-                        // };
-                        //
-                        // alienship.OnExplosion += (sender, args) =>
-                        // {
-                        //     if (!(args is LevelEvent e)) return;
-                        //     OnLevelEvent(e);
-                        // };
-                        // _components.Add(alienship);
+                        var alienship = _enemyFactory.GetAlienship(contentManager); 
+                         alienship.Layer = player.Layer;
+                         alienship.Position = e.Item2;
+                         alienship.Rotation = (float)Math.PI;
+                         alienship.OnShoot += (sender, args) =>
+                         {
+                             if (!(args is LevelEvent e)) return;
+                             OnLevelEvent(e);
+                         };
+                        
+                         alienship.OnExplosion += (sender, args) =>
+                         {
+                             if (!(args is LevelEvent e)) return;
+                             OnLevelEvent(e);
+                         };
+                         _components.Add(alienship);
                         break;
                     case EnemyType.Boss:
                         var boss = _enemyFactory.GetBoss(contentManager);

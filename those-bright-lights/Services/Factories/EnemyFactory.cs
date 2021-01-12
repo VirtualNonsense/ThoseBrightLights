@@ -25,24 +25,24 @@ namespace SE_Praktikum.Services.Factories
             _tileSetFactory = tileSetFactory;
         }
 
-        //TODO: Enemywithviewbox should not be instantiated
-        // public EnemyWithViewbox GetInstance(ContentManager contentManager)
-        // {
-        //     SoundEffect impactSound = contentManager.Load<SoundEffect>("Audio/Sound_Effects/Collusion/ClinkBell");
-        //     var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\alien_ship.json",0);
-        //     var animationSettings = new AnimationSettings(1,isPlaying:false);
-        //     var e = new EnemyWithViewbox(_animationHandlerFactory.GetAnimationHandler(tileSet, animationSettings),
-        //          viewBox:new Polygon(Vector2.Zero, Vector2.Zero, 0,
-        //              new List<Vector2> { new Vector2(0, 0), new Vector2(300, -100), new Vector2(300, 100), }), impactSound: impactSound)
-        //
-        //         {
-        //         Position = new Vector2(100, 50),
-        //         Scale = 2
-        //     };
-        //     e.AddWeapon(_weaponFactory.GetEnemyLaserGun(e));
-        //
-        //     return e;
-        // }
+         public Alienship GetAlienship(ContentManager contentManager)
+         {
+             SoundEffect impactSound = contentManager.Load<SoundEffect>("Audio/Sound_Effects/Collusion/ClinkBell");
+             var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\alien_ship_65_65_4.json",0);
+             var animationSettings = new AnimationSettings(4, isPlaying: true, duration: 200f, isLooping: true);
+             var propulsionTileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\alienshippropulsion_35_9_6.json",0);
+             var propulsionHandler = _animationHandlerFactory.GetAnimationHandler(propulsionTileSet,
+                 new AnimationSettings(frames: 6, duration: 75, isLooping: true));
+             var e = new Alienship(_animationHandlerFactory.GetAnimationHandler(tileSet, animationSettings),
+                  viewBox:new Polygon(Vector2.Zero, Vector2.Zero, 0,
+                      new List<Vector2> { new Vector2(0, 0), new Vector2(300, -100), new Vector2(300, 100), }), impactSound: impactSound, propulsion: propulsionHandler)
+             {
+                 Position = new Vector2(100, 50),
+             };
+             e.AddWeapon(_weaponFactory.GetEnemyLaserGun(e));
+        
+             return e;
+         }
 
         public Turret GetTurret(ContentManager contentManager)
         {

@@ -35,8 +35,8 @@
                  "type":"PlayerSpawnPoint",
                  "visible":true,
                  "width":0,
-                 "x":139.559985413881,
-                 "y":150.295368907257
+                 "x":82.0369957836717,
+                 "y":35.5233086450774
                 }, 
                 {
                  "height":20,
@@ -70,20 +70,20 @@
                  "type":"HealthPowerUpSpawn",
                  "visible":true,
                  "width":0,
-                 "x":51.5,
-                 "y":27.75
+                 "x":10.6860692623753,
+                 "y":32.9544609665428
                 }, 
                 {
                  "height":0,
                  "id":19,
-                 "name":"InstaDeathPowerUpSpawn",
+                 "name":"AlienSpawn",
                  "point":true,
                  "rotation":0,
-                 "type":"InstaDeathPowerUpSpawn",
+                 "type":"AlienSpawn",
                  "visible":true,
                  "width":0,
-                 "x":162.25,
-                 "y":26.5
+                 "x":338.921101545686,
+                 "y":28.8479749559773
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -107,7 +107,7 @@
  "nextobjectid":20,
  "orientation":"orthogonal",
  "renderorder":"right-down",
- "tiledversion":"1.4.2",
+ "tiledversion":"1.4.3",
  "tileheight":8,
  "tilesets":[
         {
