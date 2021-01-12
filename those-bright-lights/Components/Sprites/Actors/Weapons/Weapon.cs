@@ -13,7 +13,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Weapons
 {
     public abstract class Weapon : SpaceshipAddOn
     {
-        private readonly SoundEffect _shotSoundEffect;
+        protected readonly SoundEffect ShotSoundEffect;
 
         //private readonly CooldownAbility _shotAbility;
         private float _rotation;
@@ -54,7 +54,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Weapons
             _logger = LogManager.GetCurrentClassLogger();
             //_shotAbility = new CooldownAbility(shotCoolDown, FireAbility);
             Parent = parent;
-            _shotSoundEffect = shotSoundEffect;
+            ShotSoundEffect = shotSoundEffect;
             NameTag = nameTag;
             BulletSpawnPoint = bulletSpawnPoint;
         }
@@ -148,7 +148,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Weapons
         {
             var e = new EmitBulletEventArgs() { Bullet = GetBullet()};
             InvokeOnEmitBullet(e);
-            _shotSoundEffect?.Play();
+            ShotSoundEffect?.Play();
         }
 
         // #############################################################################################################

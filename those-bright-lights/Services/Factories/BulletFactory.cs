@@ -102,6 +102,24 @@ namespace SE_Praktikum.Services.Factories
                 damage: damage);
 
         }
+        
+        public Bullet GetPallet(Actor owner, float damage)
+        {
+            var projectileTileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\shotgunpallet.json", 0);
+            var projectileTileAnimation =
+                _animationHandlerFactory.GetAnimationHandler(projectileTileSet, new AnimationSettings(1, isPlaying: false));
+            var flightEffect = _contentManager.Load<SoundEffect>("Audio/Sound_Effects/Airborne/Wobble_test");
+            var impactSound = _contentManager.Load<SoundEffect>("Audio/Sound_Effects/Collusion/Clink");
+            return new Pallet(projectileTileAnimation, 
+                Vector2.Zero,
+                0,
+                _particleFactory.BuildProjectileExplosionParticle(),
+                owner, 
+                flightEffect,
+                impactSound,
+                damage: damage);
+
+        }
 
     }
 }
