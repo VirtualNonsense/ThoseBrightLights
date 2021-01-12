@@ -9,7 +9,7 @@ using SE_Praktikum.Services;
 
 namespace SE_Praktikum.Components.Sprites.Actors
 {
-    public class Tile:Actor
+    public class Tile: Actor
     {
         private Logger _logger;
 
@@ -57,14 +57,16 @@ namespace SE_Praktikum.Components.Sprites.Actors
 
         protected override bool InteractAble(Actor other)
         {
-            // tile doesnt care about interactions
-            // a destroyable tile might be of use on some point
-            return false;
+            if(Indestructible)
+                return false;
+            return base.InteractAble(other);
+
         }
         
         protected override void ExecuteInteraction(Actor other)
         {
-            switch(other)
+            _logger.Debug(Health);
+            switch (other)
             {
                 case Bullet b:
                     Health -= b.Damage;
@@ -75,6 +77,7 @@ namespace SE_Praktikum.Components.Sprites.Actors
                     
                     
             }
+            
         }
     }
     
