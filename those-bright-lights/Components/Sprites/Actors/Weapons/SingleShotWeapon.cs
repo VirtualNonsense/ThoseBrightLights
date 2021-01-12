@@ -84,11 +84,5 @@ namespace SE_Praktikum.Components.Sprites.Actors.Weapons
             b.Layer = Parent.Layer;
             return b;
         }
-
-        protected override void ExecuteInteraction(Actor other)
-        {
-            
-        }
-        
     }
 }

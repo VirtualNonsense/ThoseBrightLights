@@ -7,6 +7,7 @@ using SE_Praktikum.Services;
 using SE_Praktikum.Components;
 using NLog;
 using NLog.LayoutRenderers;
+using SE_Praktikum.Components.Sprites.Actors.Bullets;
 
 namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
 {
@@ -121,6 +122,46 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
         {
             _animationHandler.SpriteEffects = Parent.FlippedHorizontal ? SpriteEffects.FlipVertically : SpriteEffects.None;
             base.Draw(spriteBatch);
+        }
+        protected override void ExecuteInteraction(Actor other)
+        {
+            switch (other)
+            {
+                case Bullet b:
+                    if (b.Parent == Parent) return;
+                    Health -= b.Damage;
+                    _logger.Debug($"{this} health: {Health}");
+                    break;
+                case Tile t:
+                    ApproachDestination(other, 100);
+                    break;
+            }
+        }
+
+        protected override void ApproachDestination(Actor other, int maxIteration, int iteration = 0)
+        {
+            if (iteration >= maxIteration)
+            {
+                _logger.Debug($"Approachdestination after {iteration} abborted");
+                return;
+            }
+            if (Parent.DeltaPosition.Length() <= 10 * float.Epsilon)
+            {
+                var v = Parent.Position - other.Position;
+                v /= v.Length();
+                Parent.Position += 10 * v;
+            }
+            else
+            {
+                Parent.Position -= DeltaPosition;
+                Parent.DeltaPosition /= 2;
+                Parent.Position += DeltaPosition;
+            }
+
+            if (!Collide(other))
+                return;
+            iteration++;
+            ApproachDestination(other, maxIteration, iteration);
         }
 
     }

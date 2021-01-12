@@ -149,6 +149,8 @@ namespace SE_Praktikum.Components.Sprites.Actors.Weapons
             InvokeOnEmitBullet(e);
             ShotSoundEffect?.Play();
         }
+        
+
 
         // #############################################################################################################
         // Invoker
@@ -166,6 +168,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Weapons
         {
             public Bullet Bullet { get; set; }
         }
+        
         
 
     }

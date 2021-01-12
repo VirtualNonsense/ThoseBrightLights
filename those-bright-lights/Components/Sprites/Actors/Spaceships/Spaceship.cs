@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Loader;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
@@ -144,6 +145,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
             switch (weapon)
             {
                 case SingleShotWeapon ssw:
+                    ssw.OnDeath += (sender, args) => RemoveWeapon((Weapon) sender);
                     ssw.OnClipEmpty += (sender, args) => ReloadWeapon((ClipWeapon)sender);
                     ssw.OnWeaponEmpty += (sender, args) => RemoveWeapon((Weapon)sender);
                     ssw.OnReloadProgressUpdate += (sender, args) => _logger.Debug(args.Progress * 100);
@@ -219,17 +221,6 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
                     return true;
                 }
             }
-
-            if ((from component in Components 
-                where component.HitBox != null 
-                from poly in component.HitBox 
-                from otherPoly in other.HitBox 
-                where poly.Overlap(otherPoly) 
-                select poly).Any())
-            {
-                return true;
-            }
-
             _impactPolygon = null;
             return false;
         }
@@ -297,31 +288,6 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
                     break;
                     
             }
-        }
-        protected void ApproachDestination(Actor other, int maxIteration, int iteration=0)
-        {
-            if (iteration >= maxIteration)
-            {
-                _logger.Debug($"Approachdestination after {iteration} abborted");
-                return;
-            }
-            if (DeltaPosition.Length() <= 10 * float.Epsilon)
-            {
-                var v = _impactPolygon.Position - other.Position;
-                v /= v.Length();
-                Position += 10 * v;
-            }
-            else
-            {
-                Position -= DeltaPosition;
-                DeltaPosition /= 2;
-                Position += DeltaPosition;
-            }
-
-            if (!Collide(other))
-                return;
-            iteration++;
-            ApproachDestination(other, maxIteration, iteration);
         }
     }
 }
