@@ -225,8 +225,8 @@ namespace SE_Praktikum.Services.Factories
             int clipSize = 200,
             int clips = 10,
             int shotCooldown = 100,
-            int reloadTime = 1000,
-            float damage = 5,
+            int reloadTime = 5000,
+            float damage = 2,
             string nameTag = "Minigun",
             float health = 1,
             float maxHealth = 1)
@@ -236,9 +236,9 @@ namespace SE_Praktikum.Services.Factories
             var m = new SingleShotWeapon(
                 _animationHandlerFactory.GetAnimationHandler(tileSet,new AnimationSettings(4,isPlaying:false,duration:50f)),
                 owner,
-                new Vector2(55, 25),
+                new Vector2(50, 23),
                 0,
-                new Vector2(30,8),
+                new Vector2(30,5),
                 null, 
                 null, 
                 nameTag,
@@ -252,7 +252,7 @@ namespace SE_Praktikum.Services.Factories
                 () => _bulletFactory.GetProjectile(owner, damage),
                 shotCoolDown: shotCooldown,
                 reloadTime: reloadTime);
-            m.Scale = 1.8f;
+            m.Scale = 1.5f;
             return m;
         } 
         
