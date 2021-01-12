@@ -22,7 +22,6 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
         protected readonly float Acceleration;
         private Logger _logger;
         protected Polygon _impactPolygon;
-        public Propulsion Propulsion;
         // #############################################################################################################
         // Constructor
         // #############################################################################################################
@@ -101,15 +100,6 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
                 Components.Remove(w);
                 if (CurrentWeapon >= AllWeaponsList.Count)
                     CurrentWeapon = AllWeaponsList.Count - 1;
-            }
-
-            if (Propulsion != null)
-            {
-                // TODO: Move into separate setter
-                Propulsion.Position = Position;
-                Propulsion.Rotation = Rotation;
-                Propulsion.Layer = Layer;
-                Propulsion.Update(gameTime);
             }
 
             base.Update(gameTime);
