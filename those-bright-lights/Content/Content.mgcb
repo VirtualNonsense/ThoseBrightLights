@@ -1195,6 +1195,102 @@
 /processorParam:Quality=Best
 /build:Audio/Sound_Effects/Collusion/Small_Explo.wav
 
+#begin Audio/Sound_Effects/PowerUps/CautionOverheat.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound_Effects/PowerUps/CautionOverheat.wav
+
+#begin Audio/Sound_Effects/PowerUps/Clip_Empty.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound_Effects/PowerUps/Clip_Empty.wav
+
+#begin Audio/Sound_Effects/PowerUps/Doh_bassoon.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound_Effects/PowerUps/Doh_bassoon.wav
+
+#begin Audio/Sound_Effects/PowerUps/Doh_standard.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound_Effects/PowerUps/Doh_standard.wav
+
+#begin Audio/Sound_Effects/PowerUps/Invincible.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound_Effects/PowerUps/Invincible.mp3
+
+#begin Audio/Sound_Effects/PowerUps/Jungle.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound_Effects/PowerUps/Jungle.wav
+
+#begin Audio/Sound_Effects/PowerUps/Laser_Gather.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound_Effects/PowerUps/Laser_Gather.wav
+
+#begin Audio/Sound_Effects/PowerUps/RocketLoad.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound_Effects/PowerUps/RocketLoad.wav
+
+#begin Audio/Sound_Effects/PowerUps/Secret.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound_Effects/PowerUps/Secret.wav
+
+#begin Audio/Sound_Effects/PowerUps/Secret_Bell.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound_Effects/PowerUps/Secret_Bell.wav
+
+#begin Audio/Sound_Effects/PowerUps/Shotgun.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound_Effects/PowerUps/Shotgun.wav
+
+#begin Audio/Sound_Effects/PowerUps/Space-West.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound_Effects/PowerUps/Space-West.wav
+
+#begin Audio/Sound_Effects/PowerUps/West.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound_Effects/PowerUps/West.wav
+
+#begin Audio/Sound_Effects/PowerUps/Wonder Soft.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound_Effects/PowerUps/Wonder Soft.wav
+
+#begin Audio/Sound_Effects/PowerUps/Wonder_bit_more.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound_Effects/PowerUps/Wonder_bit_more.wav
+
+#begin Audio/Sound_Effects/PowerUps/Wrong.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound_Effects/PowerUps/Wrong.wav
+
 #begin Audio/Sound_Effects/Savepoint (1).wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
