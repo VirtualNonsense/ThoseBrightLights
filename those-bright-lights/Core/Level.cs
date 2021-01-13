@@ -115,10 +115,6 @@ namespace SE_Praktikum.Core
 
         public void Update(GameTime gameTime)
         {
-            //_previousMousestate = _mouseState;
-            //_mouseState = Mouse.GetState();
-            //if (_previousMousestate.Position != _mouseState.Position)
-            //    _logger.Trace($"{_screen.Camera.ProjectScreenPosIntoWorld(_mouseState.Position.ToVector2())}");
             int index=0;
             while (index < _components.Count)
             {
@@ -289,7 +285,7 @@ namespace SE_Praktikum.Core
                 switch(e.Item1)
                 {
                     case EnemyType.Turret:
-                        var turret = _enemyFactory.GetTurret(contentManager);
+                        var turret = _enemyFactory.GetTurret();
                         turret.Layer = player.Layer;
                         turret.Position = e.Item2;
                         turret.Rotation = (float)Math.PI;
@@ -307,7 +303,7 @@ namespace SE_Praktikum.Core
                         _components.Add(turret);
                         break;
                     case EnemyType.Alienship:
-                        var alienship = _enemyFactory.GetAlienship(contentManager); 
+                        var alienship = _enemyFactory.GetAlienship(); 
                          alienship.Layer = player.Layer;
                          alienship.Position = e.Item2;
                          alienship.Rotation = (float)Math.PI;
@@ -325,7 +321,7 @@ namespace SE_Praktikum.Core
                          _components.Add(alienship);
                         break;
                     case EnemyType.Boss:
-                        var boss = _enemyFactory.GetBoss(contentManager);
+                        var boss = _enemyFactory.GetBoss();
                         boss.Layer = player.Layer;
                         boss.Position = e.Item2;
                         boss.Rotation = (float)Math.PI;
@@ -334,7 +330,6 @@ namespace SE_Praktikum.Core
                             if (!(args is LevelEvent e)) return;
                             OnLevelEvent(e);
                         };
-
                         boss.OnExplosion += (sender, args) =>
                         {
                             if (!(args is LevelEvent e)) return;
@@ -344,7 +339,7 @@ namespace SE_Praktikum.Core
                         _components.Add(boss);
                         break;
                     case EnemyType.Mines:
-                        var mines = _enemyFactory.GetMines(contentManager);
+                        var mines = _enemyFactory.GetMines();
                         mines.Layer = player.Layer;
                         mines.Position = e.Item2;
                         mines.Rotation = (float)Math.PI;
@@ -418,6 +413,7 @@ namespace SE_Praktikum.Core
 
         private void InvokeOnLevelComplete()
         {
+            _logger.Debug("LEVEL COMPLETE!");
             OnLevelComplete?.Invoke(this, EventArgs.Empty);
         }
     }
