@@ -19,8 +19,9 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
         protected int IndexOfWeaponsOfTheSameType;
         protected float MaxSpeed;
         protected readonly float Acceleration;
-        protected readonly float _rotationAcceleration;
-        protected readonly float _maxRotationSpeed;
+        protected readonly float RotationAcceleration;
+        protected readonly float MaxRotationSpeed;
+        protected float DeltaRotation;
         private Logger _logger;
         protected Polygon _impactPolygon;
 
@@ -40,8 +41,8 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
         {
             MaxSpeed = maxSpeed;
             Acceleration = acceleration;
-            _rotationAcceleration = rotationAcceleration;
-            _maxRotationSpeed = maxRotationSpeed;
+            RotationAcceleration = rotationAcceleration;
+            MaxRotationSpeed = maxRotationSpeed;
             Health = health;
             Components = new List<SpaceshipAddOn>();
             _logger = LogManager.GetCurrentClassLogger();

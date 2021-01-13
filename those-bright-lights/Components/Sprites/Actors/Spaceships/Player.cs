@@ -6,6 +6,8 @@ using SE_Praktikum.Components.Sprites.Actors.PowerUps;
 using SE_Praktikum.Models;
 using SE_Praktikum.Services;
 using System;
+using NLog.Fluent;
+using SE_Praktikum.Extensions;
 
 namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
 {
@@ -16,6 +18,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
         private KeyboardState CurrentKey;
         private KeyboardState PreviousKey;
         private int _score;
+        private float omega;
         public Player(AnimationHandler animationHandler, 
                       AnimationHandler propulsion,
                       Input input=null,
@@ -67,31 +70,48 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
 
             #region Movement
             var velocity = Velocity;
-
-            if (CurrentKey.IsKeyDown(_input.Up))
-            {
-                velocity.Y -= Acceleration * t * t;
-            }
-            if (CurrentKey.IsKeyDown(_input.Down))
-            {
-                velocity.Y += Acceleration * t * t;
-            }
             if (CurrentKey.IsKeyDown(_input.Left))
+            {
+                if(Rotation > MathExtensions.DegToRad(270) || 
+                   Rotation <= MathExtensions.DegToRad(180))
+                    omega -= 0.5f * RotationAcceleration * t * t;
+            }
+            else if (CurrentKey.IsKeyDown(_input.Right))
+            {
+                
+                if(Rotation < MathExtensions.DegToRad(270) || 
+                   Rotation > MathExtensions.DegToRad(180))
+                    omega += 0.5f * RotationAcceleration * t * t;
+            }
+            else
+            {
+                if (Math.Abs(Rotation) >= MathExtensions.DegToRad(2))
+                {
+                    var p = Rotation > Math.PI ? 1 : -1;
+                    omega += p * 0.5f * RotationAcceleration * t * t;
+                }
+            }
+
+            omega *= 0.85f * (1 - Math.Abs(omega / MaxRotationSpeed));
+            DeltaRotation = MathExtensions.DegToRad(omega*t);
+            Rotation += DeltaRotation;
+            if (DeltaRotation != 0) _logger.Debug($"{DeltaRotation}, {Rotation}");
+            if (CurrentKey.IsKeyDown(_input.Down))
             {
                 velocity.X -= Acceleration * t * t;
             }
-            if (CurrentKey.IsKeyDown(_input.Right))
+            if (CurrentKey.IsKeyDown(_input.Up))
             {
                 velocity.X += Acceleration * t * t;
             }
-            if (CurrentKey.IsKeyDown(_input.TurnLeft))
-            {
-                Rotation += 0.01f;
-            }
-            if (CurrentKey.IsKeyDown(_input.TurnRight))
-            {
-                Rotation -= 0.01f;
-            }
+            // if (CurrentKey.IsKeyDown(_input.TurnLeft))
+            // {
+            //     Rotation += 0.01f;
+            // }
+            // if (CurrentKey.IsKeyDown(_input.TurnRight))
+            // {
+            //     Rotation -= 0.01f;
+            // }
 
             var newVelocity = velocity.Length();
             
@@ -105,7 +125,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
                 Velocity = Math.Abs(newVelocity) * velocity;
             }
 
-            DeltaPosition = Velocity * t;
+            DeltaPosition = (Velocity * t).Rotate(Rotation);
             Position += DeltaPosition;
             #endregion
             
