@@ -247,9 +247,14 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
                     break;
                 case Tile t :
                     ApproachDestination(t, 100);
+                    _impactSound?.Play();
                     break;
                 case PowerUp p:
                     ProcessPowerUp(p);
+                    break;
+                case Spaceship s:
+                    Health -= s.Damage;
+                    _impactSound?.Play();
                     break;
 
             }
