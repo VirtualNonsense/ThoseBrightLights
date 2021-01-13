@@ -1219,6 +1219,12 @@
 /processorParam:Quality=Best
 /build:Audio/Sound_Effects/PowerUps/Doh_standard.wav
 
+#begin Audio/Sound_Effects/PowerUps/Invincible.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound_Effects/PowerUps/Invincible.mp3
+
 #begin Audio/Sound_Effects/Savepoint (1).wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
