@@ -39,12 +39,9 @@ namespace SE_Praktikum.Core
         private Map _map;
         private MouseState _previousMousestate;
         private MouseState _mouseState;
-        
-
-        private event EventHandler OnExplosion;
-        public event EventHandler OnLevelComplete;
-
-        //Constructor
+        // #############################################################################################################
+        // Constructor
+        // #############################################################################################################
         public Level(string mapPath, 
                      int levelNumber,
                      MapFactory mapFactory,
@@ -73,6 +70,14 @@ namespace SE_Praktikum.Core
             _logger = LogManager.GetCurrentClassLogger();
         }
 
+        // #############################################################################################################
+        // Events
+        // #############################################################################################################
+        private event EventHandler OnExplosion;
+        public event EventHandler OnLevelComplete;
+        // #############################################################################################################
+        // public methods
+        // #############################################################################################################
 
         public void Draw()
         {
@@ -153,48 +158,6 @@ namespace SE_Praktikum.Core
             CheckForCollisions();
             RemoveDeadActors();
         }
-
-        private void RemoveDeadActors()
-        {
-            for (int i = 0; i < _components.Count;)
-            {
-                var c = _components[i];
-                if (!c.IsRemoveAble)
-                {
-                    i++;
-                    continue;
-                }
-                _components.RemoveAt(i);
-            }
-        }
-
-        private void CheckForCollisions()
-        {
-
-        }
-
-
-        private void OnLevelEvent(LevelEvent levelEvent)
-        {
-            switch (levelEvent)
-            {
-                //if player or enemy shoots the ShootBullet event triggers
-                case LevelEvent.ShootBullet t:
-                    _components.Add(t.Bullet);
-                    t.Bullet.OnExplosion += (sender, args) =>
-                    {
-                        if (!(args is LevelEvent e)) return;
-                        OnLevelEvent(e);
-                    };
-                    return;
-                case LevelEvent.Explosion s:
-                    if (s.Particle is null) return;
-                    _components.Add(s.Particle);
-                    _logger.Info("Added Particle");
-                    return;
-            }
-        }
-
         public void LoadContent(ContentManager contentManager)
         {
             if (song != null)
@@ -406,8 +369,53 @@ namespace SE_Praktikum.Core
         {
             _components = null;
         }
+        
 
-        public void InvokeOnLevelComplete()
+        // #############################################################################################################
+        // private methods
+        // #############################################################################################################
+        private void RemoveDeadActors()
+        {
+            for (int i = 0; i < _components.Count;)
+            {
+                var c = _components[i];
+                if (!c.IsRemoveAble)
+                {
+                    i++;
+                    continue;
+                }
+                _components.RemoveAt(i);
+            }
+        }
+
+        private void CheckForCollisions()
+        {
+
+        }
+
+
+        private void OnLevelEvent(LevelEvent levelEvent)
+        {
+            switch (levelEvent)
+            {
+                //if player or enemy shoots the ShootBullet event triggers
+                case LevelEvent.ShootBullet t:
+                    _components.Add(t.Bullet);
+                    t.Bullet.OnExplosion += (sender, args) =>
+                    {
+                        if (!(args is LevelEvent e)) return;
+                        OnLevelEvent(e);
+                    };
+                    return;
+                case LevelEvent.Explosion s:
+                    if (s.Particle is null) return;
+                    _components.Add(s.Particle);
+                    _logger.Info("Added Particle");
+                    return;
+            }
+        }
+
+        private void InvokeOnLevelComplete()
         {
             OnLevelComplete?.Invoke(this, EventArgs.Empty);
         }
