@@ -88,6 +88,12 @@ namespace SE_Praktikum.Components
       }
     }
 
+    public string NameTag
+    {
+      get;
+      set;
+    }
+
     public float Scale
     {
       get => _animationHandler.Scale;

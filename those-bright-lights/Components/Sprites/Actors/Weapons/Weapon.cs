@@ -104,12 +104,6 @@ namespace SE_Praktikum.Components.Sprites.Actors.Weapons
             get;
             set;
         }
-
-        public string NameTag
-        {
-            get;
-            protected set;
-        }
         
         /// <summary>
         /// Position is in space of Weapon, so relative position
