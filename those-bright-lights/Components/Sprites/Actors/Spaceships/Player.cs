@@ -19,12 +19,15 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
         private KeyboardState PreviousKey;
         private int _score;
         private float omega;
+        // #############################################################################################################
+        // Constructor
+        // #############################################################################################################
         public Player(AnimationHandler animationHandler, 
                       AnimationHandler propulsion,
                       Input input=null,
                       float acceleration = .1f,
                       float maxSpeed = 30,
-                      float rotationAcceleration = .1f,
+                      float rotationAcceleration = .2f,
                       float maxRotationSpeed = 10,
                       int health=100,
                       SoundEffect impactSound = null) 
@@ -43,6 +46,9 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
                     0,
                     null));
         }
+        // #############################################################################################################
+        // Events
+        // #############################################################################################################
 
         public event EventHandler OnScoreChanged;
 
@@ -61,7 +67,15 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
                 InvokeOnScoreChanged();
             }
         }
-
+        
+        // #############################################################################################################
+        // Properties
+        // #############################################################################################################
+        
+        
+        // #############################################################################################################
+        // public Methods
+        // #############################################################################################################
         public override void Update(GameTime gameTime)
         {
             PreviousKey = CurrentKey;
@@ -72,30 +86,30 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
             var velocity = Velocity;
             if (CurrentKey.IsKeyDown(_input.Left))
             {
-                if(Rotation > MathExtensions.DegToRad(270) || 
-                   Rotation <= MathExtensions.DegToRad(180))
-                    omega -= 0.5f * RotationAcceleration * t * t;
+                omega -= 0.5f * RotationAcceleration * t * t;
             }
             else if (CurrentKey.IsKeyDown(_input.Right))
             {
-                
-                if(Rotation < MathExtensions.DegToRad(270) || 
-                   Rotation > MathExtensions.DegToRad(180))
-                    omega += 0.5f * RotationAcceleration * t * t;
+                omega += 0.5f * RotationAcceleration * t * t;
             }
             else
             {
                 if (Math.Abs(Rotation) >= MathExtensions.DegToRad(2))
                 {
-                    var p = Rotation > Math.PI ? 1 : -1;
-                    omega += p * 0.5f * RotationAcceleration * t * t;
+                    var p = 0;
+                    // first quadrant
+                    if (Rotation >= 4.72124f || Rotation <= 1.5708f)
+                        p = Rotation > Math.PI ? 1 : -1;
+                    else
+                        p = Rotation < Math.PI ? 1 : -1;
+                    
+                    omega += p * 0.25f * RotationAcceleration * t * t;
                 }
             }
 
             omega *= 0.85f * (1 - Math.Abs(omega / MaxRotationSpeed));
             DeltaRotation = MathExtensions.DegToRad(omega*t);
             Rotation += DeltaRotation;
-            if (DeltaRotation != 0) _logger.Debug($"{DeltaRotation}, {Rotation}");
             if (CurrentKey.IsKeyDown(_input.Down))
             {
                 velocity.X -= Acceleration * t * t;
@@ -104,14 +118,6 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
             {
                 velocity.X += Acceleration * t * t;
             }
-            // if (CurrentKey.IsKeyDown(_input.TurnLeft))
-            // {
-            //     Rotation += 0.01f;
-            // }
-            // if (CurrentKey.IsKeyDown(_input.TurnRight))
-            // {
-            //     Rotation -= 0.01f;
-            // }
 
             var newVelocity = velocity.Length();
             
@@ -139,6 +145,11 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
             
             base.Update(gameTime);
         }
+        
+        
+        // #############################################################################################################
+        // private / protected methods
+        // #############################################################################################################
 
         protected void InvokeOnScoreChanged()
         {
