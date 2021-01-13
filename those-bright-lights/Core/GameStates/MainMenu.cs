@@ -54,8 +54,8 @@ namespace SE_Praktikum.Core.GameStates
                                       _screen.Camera.GetPerspectiveScreenWidth(),
                                       _screen.Camera.GetPerspectiveScreenHeight(),
                                       1);
-            var buttons = 3;
-            uint width = (uint) (_screen.Camera.GetPerspectiveScreenWidth() / buttons);
+            var buttons = 4;
+            uint width = (uint) (_screen.Camera.GetPerspectiveScreenWidth() / 3);
             uint height = (uint) (_screen.Camera.GetPerspectiveScreenHeight() / buttons);
             MenuButton b = _factory.GetButton(
                 width,
@@ -85,11 +85,20 @@ namespace SE_Praktikum.Core.GameStates
                 width,
                 height,
                 new Vector2(0, 0),
+                "Back to saveselection",
+                _screen.Camera);
+            b.Click += (sender, args) => { _logger.Debug("Back to save selection"); _subject.OnNext(GameStateMachine.GameStateMachineTrigger.BackToSaveSlotSelection); };
+            _buttons.Add(b);
+
+            b = _factory.GetButton(
+                width,
+                height,
+                new Vector2(0, 0),
                 "Quit",
                 _screen.Camera);
             b.Click += (sender, args) => { _logger.Debug("Quit game"); _subject.OnNext(GameStateMachine.GameStateMachineTrigger.QuitGame); };
             _buttons.Add(b);
-            
+
         }
 
         public override void UnloadContent()
