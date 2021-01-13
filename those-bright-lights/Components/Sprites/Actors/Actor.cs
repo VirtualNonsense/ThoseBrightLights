@@ -46,6 +46,8 @@ namespace SE_Praktikum.Components.Sprites.Actors
         public event EventHandler<EventArgs> OnDeath;
         public event EventHandler OnHealthChanged;
         public event EventHandler OnMaxHealthChanged;
+        public event EventHandler OnFlippedChange;
+        
         #endregion
         // #############################################################################################################
         // Properties
@@ -200,6 +202,11 @@ namespace SE_Praktikum.Components.Sprites.Actors
         protected virtual void InvokeOnMaxHealthChanged()
         {
             OnMaxHealthChanged?.Invoke(this, EventArgs.Empty);
+        }
+        
+        protected virtual void InvokeOnFlippedChange()
+        {
+            OnFlippedChange?.Invoke(this, EventArgs.Empty);
         }
 
         #endregion

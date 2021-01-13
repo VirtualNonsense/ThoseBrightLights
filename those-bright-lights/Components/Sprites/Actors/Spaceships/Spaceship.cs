@@ -93,16 +93,19 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
             set
             {
                 base.Rotation = value;
+                InvokeOnRotationChanged();
                 if (Rotation < 3 * Math.PI/2 && Rotation > Math.PI/2)
                 {
                     if (FlippedHorizontal) return;
                     _animationHandler.SpriteEffects = SpriteEffects.FlipVertically;
+                    InvokeOnFlippedChange();
+                    
                 }
                 else if (FlippedHorizontal)
                 {
                     _animationHandler.SpriteEffects = SpriteEffects.None;
+                    InvokeOnFlippedChange();
                 }
-
             }
         }
 
