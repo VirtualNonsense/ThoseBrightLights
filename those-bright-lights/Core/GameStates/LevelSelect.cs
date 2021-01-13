@@ -35,7 +35,6 @@ namespace SE_Praktikum.Core.GameStates
             _saveGameHandler = saveGameHandler;
             _levelFactory = levelFactory;
             this.contentManager = contentManager;
-            _songSelection = new Dictionary<int, Song>();
         }
 
         public override void Draw()
@@ -45,11 +44,13 @@ namespace SE_Praktikum.Core.GameStates
 
         public override void LoadContent()
         {
+            if (_buttons != null) return;
+
+            _songSelection = new Dictionary<int, Song>();
             _songSelection.Add(0, contentManager.Load<Song>("Audio/Music/Song3_remaster2_mp3"));
             _songSelection.Add(1, contentManager.Load<Song>("Audio/Music/Song2_remaster2_mp3"));
             _songSelection.Add(2, contentManager.Load<Song>("Audio/Music/Song4_remaster_mp3"));
-            if (_buttons != null) return;
-            
+                
             _screen.Camera.Position = new Vector3(0, 0,150);
             
             _logger.Debug("LoadingContent");
