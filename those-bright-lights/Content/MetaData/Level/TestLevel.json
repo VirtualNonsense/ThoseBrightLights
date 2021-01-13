@@ -76,10 +76,10 @@
                 {
                  "height":0,
                  "id":19,
-                 "name":"TurretSpawn",
+                 "name":"BossSpawn",
                  "point":true,
                  "rotation":0,
-                 "type":"TurretSpawn",
+                 "type":"BossSpawn",
                  "visible":true,
                  "width":0,
                  "x":484.254434879019,

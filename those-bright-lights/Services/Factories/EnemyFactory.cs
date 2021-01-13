@@ -87,12 +87,12 @@ namespace SE_Praktikum.Services.Factories
             var animationSettings = new AnimationSettings(1,isPlaying:false);
             var b = new Boss(_animationHandlerFactory.GetAnimationHandler(tileSet, animationSettings),
                viewBox: new Polygon(Vector2.Zero, Vector2.Zero, 0,
-                    new List<Vector2> {new Vector2(0, 0), new Vector2(1000, -300), new Vector2(1000, 300),}))
+                    new List<Vector2> {new Vector2(0, 0), new Vector2(100, -300), new Vector2(100, 300),}))
             {
                 Position = new Vector2(100, 50),
                 Scale = 2
             };
-            b.AddWeapon(_weaponFactory.GetEnemyLaserGun(b));
+            b.AddWeapon(_weaponFactory.GetUpperBossLaserGun(b));
 
             return b;
         }

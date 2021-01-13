@@ -7,6 +7,7 @@ using SE_Praktikum.Components.Sprites.Actors;
 using SE_Praktikum.Components.Sprites.Actors.Weapons;
 using SE_Praktikum.Models;
 using System;
+using SE_Praktikum.Components.Sprites.Actors.Spaceships;
 
 namespace SE_Praktikum.Services.Factories
 {
@@ -310,7 +311,7 @@ namespace SE_Praktikum.Services.Factories
         } 
         
         /// <summary>
-        /// Shotgun
+        /// Boss Weapon p1
         /// </summary>
         /// <param name="owner"></param>
         /// <param name="clipSize"></param>
@@ -328,7 +329,7 @@ namespace SE_Praktikum.Services.Factories
             int shotCooldown = 500,
             int reloadTime = 2000,
             float damage = 5,
-            string nameTag = "Minigun",
+            string nameTag = "Boss Lasergun",
             float health = 1,
             float maxHealth = 1)
         {
@@ -387,5 +388,103 @@ namespace SE_Praktikum.Services.Factories
         //            throw new NotImplementedException();
         //    }
         //}
+
+        /// <summary>
+        /// Boss Weapon p2
+        /// </summary>
+        /// <param name="owner"></param>
+        /// <param name="clipSize"></param>
+        /// <param name="clips"></param>
+        /// <param name="shotCooldown"></param>
+        /// <param name="reloadTime"></param>
+        /// <param name="damage"></param>
+        /// <param name="nameTag"></param>
+        /// <param name="health"></param>
+        /// <param name="maxHealth"></param>
+        /// <returns></returns>
+        public Weapon GetLowerBossLaserGun(Actor owner, 
+            int clipSize = 5,
+            int clips = 10,
+            int shotCooldown = 500,
+            int reloadTime = 2000,
+            float damage = 5,
+            string nameTag = "Boss Lasergun",
+            float health = 1,
+            float maxHealth = 1)
+        {
+
+            // TODO: create and load missing sound effects
+            var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\bossweaponFire_20_16_4.json", 0);
+            var m = new SingleShotWeapon(
+                _animationHandlerFactory.GetAnimationHandler(tileSet,
+                    new AnimationSettings(4,200f, isPlaying: false)),
+                owner,
+                new Vector2(45, 20),
+                0,
+                new Vector2(20, -2),
+                null,
+                null,
+                nameTag,
+                health,
+                maxHealth,
+                null,
+                null,
+                null,
+                clipSize,
+                clips,
+                () => _bulletFactory.GetEnemyLaser(owner, damage),
+                shotCoolDown: shotCooldown,
+                reloadTime: reloadTime);
+            m.Scale = 1.8f;
+            return m;
+        } /// <summary>
+        /// Shotgun
+        /// </summary>
+        /// <param name="owner"></param>
+        /// <param name="clipSize"></param>
+        /// <param name="clips"></param>
+        /// <param name="shotCooldown"></param>
+        /// <param name="reloadTime"></param>
+        /// <param name="damage"></param>
+        /// <param name="nameTag"></param>
+        /// <param name="health"></param>
+        /// <param name="maxHealth"></param>
+        /// <returns></returns>
+        public Weapon GetUpperBossLaserGun(Actor owner, 
+            int clipSize = 5,
+            int clips = 10,
+            int shotCooldown = 500,
+            int reloadTime = 2000,
+            float damage = 5,
+            string nameTag = "Minigun",
+            float health = 1,
+            float maxHealth = 1)
+        {
+
+            // TODO: create and load missing sound effects
+            var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\bossweaponFire_20_16_4.json", 0);
+            var m = new SingleShotWeapon(
+                _animationHandlerFactory.GetAnimationHandler(tileSet,
+                    new AnimationSettings(4,200f, isPlaying: false)),
+                owner,
+                new Vector2(45, 20),
+                0,
+                new Vector2(20, -2),
+                null,
+                null,
+                nameTag,
+                health,
+                maxHealth,
+                null,
+                null,
+                null,
+                clipSize,
+                clips,
+                () => _bulletFactory.GetEnemyLaser(owner, damage),
+                shotCoolDown: shotCooldown,
+                reloadTime: reloadTime);
+            m.Scale = 1.8f;
+            return m;
+        } 
     }
 }
