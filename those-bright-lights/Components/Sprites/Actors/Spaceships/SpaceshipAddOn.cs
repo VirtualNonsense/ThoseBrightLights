@@ -18,6 +18,32 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
         private Logger _logger;
         private float _absoluteRotation;
 
+        // #############################################################################################################
+        // Constructor
+        // #############################################################################################################
+        protected SpaceshipAddOn(
+            AnimationHandler animationHandler, 
+            Actor parent, 
+            Vector2 relativePosition, 
+            float relativeRotation, 
+            SoundEffect impactSound, 
+            float health = 100, 
+            float maxHealth = 100) 
+            : base(
+                animationHandler, 
+                impactSound, 
+                health, 
+                maxHealth)
+        {
+            Parent = parent;
+            RelativePosition = relativePosition;
+            RelativeRotation = relativeRotation;
+            _logger = LogManager.GetCurrentClassLogger();
+        }
+        
+        // #############################################################################################################
+        // Properties
+        // #############################################################################################################
         public Vector2 RelativePosition
         {
             get => _relativePosition;
@@ -62,25 +88,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
             return new Vector2(x + px, y + py);
         }
 
-        protected SpaceshipAddOn(
-                        AnimationHandler animationHandler, 
-                        Actor parent, 
-                        Vector2 relativePosition, 
-                        float relativeRotation, 
-                        SoundEffect impactSound, 
-                        float health = 100, 
-                        float maxHealth = 100) 
-            : base(
-                        animationHandler, 
-                        impactSound, 
-                        health, 
-                        maxHealth)
-        {
-            Parent = parent;
-            _relativePosition = relativePosition;
-            _relativeRotation = relativeRotation;
-            _logger = LogManager.GetCurrentClassLogger();
-        }
+        
         
         
 
