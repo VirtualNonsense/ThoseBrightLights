@@ -213,6 +213,55 @@ namespace SE_Praktikum.Services.Factories
         }
         
         /// <summary>
+        /// Weapon for the Turret
+        /// </summary>
+        /// <param name="owner"></param>
+        /// <param name="clipSize"></param>
+        /// <param name="clips"></param>
+        /// <param name="shotCooldown"></param>
+        /// <param name="reloadTime"></param>
+        /// <param name="damage"></param>
+        /// <param name="nameTag"></param>
+        /// <param name="health"></param>
+        /// <param name="maxHealth"></param>
+        /// <returns></returns>
+        public SingleShotWeapon GetTurretLaserGun(Actor owner,
+                                                 int clipSize = 20,
+                                                 int clips = 3,
+                                                 int shotCooldown = 1000,
+                                                 int reloadTime = 100,
+                                                 float damage = 5,
+                                                 string nameTag = "Enemy laser gun",
+                                                 float health = 1,
+                                                 float maxHealth = 1)
+        {
+            // TODO: create and load missing sound effects
+            var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\turretlaser_41_40_6.json", 0);
+            
+            var m = new SingleShotWeapon(
+                _animationHandlerFactory.GetAnimationHandler(tileSet,new AnimationSettings(6,isPlaying:false,duration:600f)),
+                owner,
+                new Vector2(-28,-4),
+                0,
+                new Vector2(30,-4),
+                null, 
+                null, 
+                nameTag,
+                health,
+                maxHealth,
+                null,
+                null,
+                null,
+                clipSize,
+                clips,
+                () => _bulletFactory.GetEnemyLaser(owner, damage),
+                shotCoolDown: shotCooldown,
+                reloadTime: reloadTime);
+            m.Scale = 1.8f;
+            return m;
+        }
+        
+        /// <summary>
         /// Minigun
         /// </summary>
         /// <param name="owner"></param>

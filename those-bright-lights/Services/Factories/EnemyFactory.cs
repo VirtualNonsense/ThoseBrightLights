@@ -57,7 +57,7 @@ namespace SE_Praktikum.Services.Factories
                 Position = new Vector2(100, 50),
                 Scale = 2
             };
-            e.AddWeapon(_weaponFactory.GetEnemyLaserGun(e));
+            e.AddWeapon(_weaponFactory.GetTurretLaserGun(e));
 
             return e;
         }
