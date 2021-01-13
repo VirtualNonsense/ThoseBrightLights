@@ -1195,6 +1195,12 @@
 /processorParam:Quality=Best
 /build:Audio/Sound_Effects/Collusion/Small_Explo.wav
 
+#begin Audio/Sound_Effects/PowerUps/CautionOverheat.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound_Effects/PowerUps/CautionOverheat.wav
+
 #begin Audio/Sound_Effects/PowerUps/Doh_bassoon.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
