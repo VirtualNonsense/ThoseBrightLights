@@ -150,13 +150,13 @@ namespace SE_Praktikum.Services.Factories
 
         public void LoadSoundEffects()
         {
-            _soundHandler.Add(ImpactSounds.Health, _contentManager.Load<SoundEffect>("Audio/Sound_Effects/PowerUps/Wonder Soft"));
+            _soundHandler.Add(ImpactSounds.Health, _contentManager.Load<SoundEffect>("Audio/Sound_Effects/PowerUps/Clip_Empty"));
             _soundHandler.Add(ImpactSounds.FullHealth, _contentManager.Load<SoundEffect>("Audio/Sound_Effects/PowerUps/Secret_Bell"));
             _soundHandler.Add(ImpactSounds.InstaDeath, _contentManager.Load<SoundEffect>("Audio/Sound_Effects/PowerUps/Doh_bassoon"));
             _soundHandler.Add(ImpactSounds.Weapon, _contentManager.Load<SoundEffect>("Audio/Sound_Effects/PowerUps/West"));
             _soundHandler.Add(ImpactSounds.ScoreBoni, _contentManager.Load<SoundEffect>("Audio/Sound_Effects/PowerUps/Wrong"));
-            _soundHandler.Add(ImpactSounds.Ammo, _contentManager.Load<SoundEffect>("Audio/Sound_Effects/PowerUps/Space-West"));
-            _soundHandler.Add(ImpactSounds.Ammo, _contentManager.Load<SoundEffect>("Audio/Sound_Effects/PowerUps/Jungle"));
+            _soundHandler.Add(ImpactSounds.Ammo, _contentManager.Load<SoundEffect>("Audio/Sound_Effects/PowerUps/CautionOverheat"));
+            _soundHandler.Add(ImpactSounds.Star, _contentManager.Load<SoundEffect>("Audio/Sound_Effects/PowerUps/Jungle"));
         }
     }
 }
