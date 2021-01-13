@@ -1225,6 +1225,12 @@
 /processorParam:Quality=Best
 /build:Audio/Sound_Effects/PowerUps/Invincible.mp3
 
+#begin Audio/Sound_Effects/PowerUps/Jungle.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound_Effects/PowerUps/Jungle.wav
+
 #begin Audio/Sound_Effects/PowerUps/Laser_Gather.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
