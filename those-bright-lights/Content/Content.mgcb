@@ -1237,6 +1237,18 @@
 /processorParam:Quality=Best
 /build:Audio/Sound_Effects/PowerUps/RocketLoad.wav
 
+#begin Audio/Sound_Effects/PowerUps/Secret.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound_Effects/PowerUps/Secret.wav
+
+#begin Audio/Sound_Effects/PowerUps/Secret_Bell.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound_Effects/PowerUps/Secret_Bell.wav
+
 #begin Audio/Sound_Effects/Savepoint (1).wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
