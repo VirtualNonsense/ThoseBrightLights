@@ -301,6 +301,18 @@
 /processorParam:TextureFormat=Color
 /build:Artwork/misc/arrow.png
 
+#begin Artwork/misc/coordinatesystem.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Artwork/misc/coordinatesystem.png
+
 #begin Artwork/misc/heart_11_17.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -1021,6 +1033,30 @@
 /processorParam:TextureFormat=Color
 /build:Artwork/Weapons/shotgunFire_28_13_9.png
 
+#begin Artwork/Weapons/turretlaser_3_3_6.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Artwork/Weapons/turretlaser_3_3_6.png
+
+#begin Artwork/Weapons/turretlaser_41_40_6.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Artwork/Weapons/turretlaser_41_40_6.png
+
 #begin Audio/Music/Death.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -1358,4 +1394,16 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:NWWP.png
+
+#begin turretlaser_3_3_6.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:turretlaser_3_3_6.png
 
