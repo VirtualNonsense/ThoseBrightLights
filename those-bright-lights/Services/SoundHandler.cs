@@ -8,6 +8,16 @@ namespace SE_Praktikum.Services
     public class SoundHandler<T> where T : Enum
     {
         private Dictionary<T, SoundEffect> _soundEffect;
+
+        public SoundEffect Get(T key)
+        {
+            if (_soundEffect.ContainsKey(key))
+            {
+                return _soundEffect[key];
+            }
+            return null;
+        }
+
         public SoundHandler()
         {
             _soundEffect = new Dictionary<T, SoundEffect>(); 

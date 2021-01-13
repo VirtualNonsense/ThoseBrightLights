@@ -33,6 +33,7 @@ namespace SE_Praktikum.Components.Sprites.Actors
             {
                 case Spaceship s:
                     IsRemoveAble = true;
+                    _impactSound?.Play();
                     break;
             }
         }
