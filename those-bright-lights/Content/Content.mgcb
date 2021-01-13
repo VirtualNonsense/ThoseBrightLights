@@ -1267,6 +1267,18 @@
 /processorParam:Quality=Best
 /build:Audio/Sound_Effects/PowerUps/West.wav
 
+#begin Audio/Sound_Effects/PowerUps/Wonder Soft.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound_Effects/PowerUps/Wonder Soft.wav
+
+#begin Audio/Sound_Effects/PowerUps/Wonder_bit_more.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound_Effects/PowerUps/Wonder_bit_more.wav
+
 #begin Audio/Sound_Effects/Savepoint (1).wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
