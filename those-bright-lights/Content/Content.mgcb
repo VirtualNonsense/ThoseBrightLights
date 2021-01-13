@@ -1195,6 +1195,18 @@
 /processorParam:Quality=Best
 /build:Audio/Sound_Effects/Collusion/Small_Explo.wav
 
+#begin Audio/Sound_Effects/PowerUps/Doh_bassoon.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound_Effects/PowerUps/Doh_bassoon.wav
+
+#begin Audio/Sound_Effects/PowerUps/Doh_standard.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound_Effects/PowerUps/Doh_standard.wav
+
 #begin Audio/Sound_Effects/Savepoint (1).wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
