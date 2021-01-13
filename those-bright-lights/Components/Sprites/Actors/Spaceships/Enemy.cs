@@ -141,11 +141,8 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
                 {
                     float rotationPortion =
                         (float) ((gameTime.ElapsedGameTime.TotalMilliseconds / RotationSpeed) * (2 * Math.PI));
-                    _logger.Info("Current Rotation: " + Rotation);
-                    _logger.Info("Final Rotation: " + desiredRotation);
                     //turn clock or anticlockwise
                     var angleToRotate = MathExtensions.Modulo2PiAlsoNegative(desiredRotation - Rotation);
-                    _logger.Info("AngleToRotate: " + angleToRotate);
                     if (Math.Abs(angleToRotate) > Math.PI)
                     {
                         if (angleToRotate < 0)
