@@ -16,6 +16,7 @@ using SE_Praktikum.Services;
 using SE_Praktikum.Services.Factories;
 using SE_Praktikum.Extensions;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 
 namespace SE_Praktikum.Core
 {
@@ -31,6 +32,7 @@ namespace SE_Praktikum.Core
         private readonly IScreen _screen;
         private readonly IGameEngine _gameEngine;
         private readonly HUDFactory hUDFactory;
+        private readonly Song song;
         private List<IComponent> _components;
         private readonly Logger _logger;
         private float _collisionLayer;
@@ -52,7 +54,8 @@ namespace SE_Praktikum.Core
                      PowerUpFactory powerUpFactory,
                      IScreen screen,
                      IGameEngine gameEngine,
-                     HUDFactory hUDFactory
+                     HUDFactory hUDFactory,
+                     Song song = null
                      )
         {
             _mapPath = mapPath;
@@ -65,6 +68,7 @@ namespace SE_Praktikum.Core
             _screen = screen;
             _gameEngine = gameEngine;
             this.hUDFactory = hUDFactory;
+            this.song = song;
             _components = new List<IComponent>();
             _logger = LogManager.GetCurrentClassLogger();
         }
@@ -193,6 +197,10 @@ namespace SE_Praktikum.Core
 
         public void LoadContent(ContentManager contentManager)
         {
+            if (song != null)
+            {
+                MediaPlayer.Play(song);
+            }
             _map = _mapFactory.LoadMap(_mapPath);
             if(_map.WinningZone != null)
             {
