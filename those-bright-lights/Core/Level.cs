@@ -340,6 +340,7 @@ namespace SE_Praktikum.Core
                             if (!(args is LevelEvent e)) return;
                             OnLevelEvent(e);
                         };
+                        boss.OnDeath += (sender, args) => InvokeOnLevelComplete();
                         _components.Add(boss);
                         break;
                     case EnemyType.Mines:
