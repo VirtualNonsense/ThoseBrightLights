@@ -23,7 +23,6 @@ namespace SE_Praktikum.Core.GameStates
         private IScreen _screen;
         private Logger _logger;
         private readonly ContentManager _contentManager;
-        private Song _song;
         private bool _pause;
         private readonly ControlElementFactory _factory;
         private readonly ILevelContainer _levelContainer;
@@ -70,11 +69,7 @@ namespace SE_Praktikum.Core.GameStates
                     }
                     _subject.OnNext(GameStateMachine.GameStateMachineTrigger.SaveAndBackToMenu);
                 };
-            // TODO: move into level
-            _song = _contentManager.Load<Song>("Audio/Music/Song4_remaster_mp3");
-            MediaPlayer.Play(_song);
-            MediaPlayer.IsRepeating = true;
-            
+
             // creating pause menu
             _components = new ComponentGrid(new Vector2(0,0), 
                 _screen.Camera.GetPerspectiveScreenWidth(),

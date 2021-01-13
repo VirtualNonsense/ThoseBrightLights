@@ -7,6 +7,9 @@ using System.Linq;
 using SE_Praktikum.Components;
 using SE_Praktikum.Services.Factories;
 using SE_Praktikum.Services.StateMachines;
+using System.Collections.Generic;
+using Microsoft.Xna.Framework.Media;
+using Microsoft.Xna.Framework.Content;
 
 namespace SE_Praktikum.Core.GameStates
 {
@@ -17,11 +20,13 @@ namespace SE_Praktikum.Core.GameStates
         private readonly ControlElementFactory _factory;
         private readonly ISaveGameHandler _saveGameHandler;
         private readonly LevelFactory _levelFactory;
+        private readonly ContentManager contentManager;
         private ComponentGrid _buttons;
         private Logger _logger;
         private const string _levelPath = @".\Content\MetaData\Level\";
+        private Dictionary<int,Song> _songSelection;
 
-        public LevelSelect(IGameEngine engine, IScreen screen, ControlElementFactory factory, ISaveGameHandler saveGameHandler, LevelFactory levelFactory)
+        public LevelSelect(IGameEngine engine, IScreen screen, ControlElementFactory factory, ISaveGameHandler saveGameHandler, LevelFactory levelFactory, ContentManager contentManager)
         {
             _logger = LogManager.GetCurrentClassLogger();
             _engine = engine;
@@ -29,6 +34,8 @@ namespace SE_Praktikum.Core.GameStates
             _factory = factory;
             _saveGameHandler = saveGameHandler;
             _levelFactory = levelFactory;
+            this.contentManager = contentManager;
+            _songSelection = new Dictionary<int, Song>();
         }
 
         public override void Draw()
@@ -38,6 +45,9 @@ namespace SE_Praktikum.Core.GameStates
 
         public override void LoadContent()
         {
+            _songSelection.Add(0, contentManager.Load<Song>("Audio/Music/Song3_remaster2_mp3"));
+            _songSelection.Add(1, contentManager.Load<Song>("Audio/Music/Song2_remaster2_mp3"));
+            _songSelection.Add(2, contentManager.Load<Song>("Audio/Music/Song4_remaster_mp3"));
             if (_buttons != null) return;
             
             _screen.Camera.Position = new Vector3(0, 0,150);
@@ -62,7 +72,7 @@ namespace SE_Praktikum.Core.GameStates
                     new Vector2(0, 0),
                     n,
                     _screen.Camera);
-                var l = _levelFactory.GetInstance(path, c);
+                var l = _levelFactory.GetInstance(path, c, _songSelection.ContainsKey(c)? _songSelection[c] : null);
                 //button.Enabled = _saveGameHandler.SaveGame.clearedStage >= c;
                 button.Click += (sender, args) => 
                 {

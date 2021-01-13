@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.Xna.Framework.Media;
 using SE_Praktikum.Core;
 using SE_Praktikum.Models;
 
@@ -34,7 +35,7 @@ namespace SE_Praktikum.Services.Factories
             _gameEngine = gameEngine;
             _hUdFactory = hUDFactory;
         }
-        public Level GetInstance(string path, int levelNumber)
+        public Level GetInstance(string path, int levelNumber, Song song = null)
         {
             return new Level(path,
                 levelNumber,
@@ -45,7 +46,8 @@ namespace SE_Praktikum.Services.Factories
                 _powerUpFactory,
                 _screen,
                 _gameEngine,
-                _hUdFactory);
+                _hUdFactory,
+                song);
         }
     }
 }
