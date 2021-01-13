@@ -1249,6 +1249,24 @@
 /processorParam:Quality=Best
 /build:Audio/Sound_Effects/PowerUps/Secret_Bell.wav
 
+#begin Audio/Sound_Effects/PowerUps/Shotgun.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound_Effects/PowerUps/Shotgun.wav
+
+#begin Audio/Sound_Effects/PowerUps/Space-West.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound_Effects/PowerUps/Space-West.wav
+
+#begin Audio/Sound_Effects/PowerUps/West.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound_Effects/PowerUps/West.wav
+
 #begin Audio/Sound_Effects/Savepoint (1).wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
