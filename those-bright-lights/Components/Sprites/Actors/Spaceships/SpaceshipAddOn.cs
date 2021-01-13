@@ -174,7 +174,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
 
         protected void UpdateBasePosition()
         {
-            base.Position = Parent.Position + RelativePosition.Rotate(Rotation);
+            base.Position = Parent.Position + RelativePosition.Rotate(Parent.Rotation);
         }
 
     }
