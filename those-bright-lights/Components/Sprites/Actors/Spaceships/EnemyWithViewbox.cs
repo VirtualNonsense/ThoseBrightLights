@@ -98,10 +98,11 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
             var angleToRotate = MathExtensions.Modulo2PiAlsoNegative(desiredRotation - weapon.Rotation);
             //from back to front: rotate counter or clockwise
             //-> if the actor is flipped, then +rotation is anticlockwise, hence the sign at the front
+            if (Math.Abs(angleToRotate) < RotationThreshold) return;
             weapon.RelativeRotation +=
                 Math.Sign(Math.PI - Math.Abs(angleToRotate)) * Math.Sign(angleToRotate) * rotationPortion;
             //TODO: balancing
-            if(Math.Abs(desiredRotation - Rotation) > weapon.MaxRelativeRotation*3/4)
+            if(Math.Abs(desiredRotation - Rotation) > weapon.MaxRelativeRotation*2/3)
                 Rotation +=  Math.Sign(Math.PI - Math.Abs(angleToRotate)) * Math.Sign(angleToRotate) * rotationPortion;
         }
 
