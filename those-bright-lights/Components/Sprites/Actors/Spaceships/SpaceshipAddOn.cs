@@ -129,7 +129,8 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            _animationHandler.SpriteEffects = Parent.FlippedHorizontal ? SpriteEffects.FlipVertically : SpriteEffects.None;
+            if(Parent != null)
+                _animationHandler.SpriteEffects = Parent.FlippedHorizontal ? SpriteEffects.FlipVertically : SpriteEffects.None;
             base.Draw(spriteBatch);
         }
 

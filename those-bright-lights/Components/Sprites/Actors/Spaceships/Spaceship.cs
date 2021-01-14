@@ -294,6 +294,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
 
         public override void InterAct(Actor other)
         {
+            base.InterAct(other);
             for (int i = 0; i < Components.Count; i++)
             {
                 Components[i].InterAct(other);
@@ -323,7 +324,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
                 case WeaponPowerUp r:
                     foreach(var e in r.Weaponlist)
                     {
-                        Components.Add(e);
+                        AddWeapon(e);
                     }
                     break;
                 case StarPowerUp s:

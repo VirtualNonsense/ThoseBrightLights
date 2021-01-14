@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
@@ -110,26 +111,17 @@ namespace SE_Praktikum.Services.Factories
         public WeaponPowerUp GetRandomInstance(Vector2? position = null,float layer = 0)
         {
             var t = _weaponFactory.GetRandomWeapon(null);
-            TileSet tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\allweapons_32_32.json",2);
-            switch (t[0].NameTag)
+            var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\allweapons_32_32.json",0);
+            var animationSettings = t[0].NameTag switch
             {
-                case "Minigun":
-                    tileSet =_tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\allweapons_32_32.json", 2);
-                    break;
-                case "Shotgun":
-                    tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\allweapons_32_32.json", 1);
-                    break;
-                case "Missile Launcher":
-                    tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\allweapons_32_32.json", 4);
-                    break;
-                case "Lasergun":
-                    tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\allweapons_32_32.json", 0);
-                    break;
-
-
-            }
-            
-            var animationSettings = new AnimationSettings(1);
+                "Minigun" => new AnimationSettings(new List<(int, float)> {(2, 100)}),
+                "Shotgun" => new AnimationSettings(new List<(int, float)> {(1, 100)}),
+                "Missile Launcher" => new AnimationSettings(new List<(int, float)> {(4, 100)}),
+                "Laser gun" => new AnimationSettings(new List<(int, float)> {(0, 100)}),
+                _ => throw new NotImplementedException()
+            };
+            animationSettings.IsPlaying = false;
+            animationSettings.Scale = 2;
             var rw = new WeaponPowerUp(_animationHandlerFactory.GetAnimationHandler(tileSet, animationSettings),
                     t, soundEffect: _soundHandler.Get(ImpactSounds.Weapon))
             {

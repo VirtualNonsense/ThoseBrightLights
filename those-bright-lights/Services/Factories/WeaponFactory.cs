@@ -59,7 +59,7 @@ namespace SE_Praktikum.Services.Factories
                                                    float? maxHealth = null)
         {
             // TODO: create and load missing sound effects
-            var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\lasergunFire_30_13_7.json", 0);
+            var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\missilelauncher_4_12.json", 0);
             var m = new SingleShotWeapon(
                 _animationHandlerFactory.GetAnimationHandler(tileSet,new AnimationSettings(1,2000f)),
                 owner,
@@ -374,30 +374,30 @@ namespace SE_Praktikum.Services.Factories
 
         public List<Weapon> GetRandomWeapon(Actor owner)
         {
-            var i = _random.Next(3);
-            List<Weapon> weaponlist = new List<Weapon>();
+            var i = _random.Next(4);
+            var weaponList = new List<Weapon>();
             switch (i)
             {
                 case 0:
-                     weaponlist.Add(GetMissileLauncher(owner));
+                     weaponList.Add(GetMissileLauncher(owner));
                     break;
                     
                 case 1:
-                    weaponlist.Add(GetShotgun(owner));
+                    weaponList.Add(GetShotgun(owner));
                     break;
 
                 case 2:
-                    weaponlist.Add(GetMinigun(owner));
+                    weaponList.Add(GetMinigun(owner));
                     break;
                 case 3:
-                    weaponlist.Add(GetLowerLaserGun(owner));
-                    weaponlist.Add(GetUpperLaserGun(owner));
+                    weaponList.Add(GetLowerLaserGun(owner));
+                    weaponList.Add(GetUpperLaserGun(owner));
                     break;
                 default:
                     throw new NotImplementedException();
 
             }
-            return weaponlist;
+            return weaponList;
         }
 
         #region BossWeapon
