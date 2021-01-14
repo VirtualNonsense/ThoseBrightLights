@@ -505,6 +505,18 @@
 /processorParam:TextureFormat=Color
 /build:Artwork/Powerups/skullanimation_19_24_9.png
 
+#begin Artwork/Powerups/star_21_21_10.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Artwork/Powerups/star_21_21_10.png
+
 #begin Artwork/Projectiles/allprojectiles_20_20.png
 /importer:TextureImporter
 /processor:TextureProcessor
