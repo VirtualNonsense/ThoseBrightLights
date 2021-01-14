@@ -136,8 +136,8 @@ namespace SE_Praktikum.Services.Factories
 
         public ScoreBonusPowerUp ScoreBonusGetInstance(int bonusscore, Vector2? position = null, float layer = 0)
         {
-            var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\PowerUpTry1.json", 0);
-            var animationSettings = new AnimationSettings(new List<(int, float)> { (2, 1) }, layer, isLooping: true, isPlaying: false) ;
+            var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\moneymoneymoney_20_20_9.json", 0);
+            var animationSettings = new AnimationSettings(9, 50, layer, isLooping: true, isPlaying: true) ;
             var sc = new ScoreBonusPowerUp(_animationHandlerFactory.GetAnimationHandler(tileSet, animationSettings),bonusscore,
                 soundEffect: _soundHandler.Get(ImpactSounds.ScoreBoni))
             {
