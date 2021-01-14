@@ -187,6 +187,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
             CurrentWeapons =
                 (from w in AllWeapons where w.NameTag == AllWeapons[^1].NameTag select w)
                 .ToList();
+            IndexOfWeaponsOfTheSameType = CurrentWeapons.Count - 1;
         }
 
         public virtual void RemoveWeapon(Weapon weapon)
@@ -199,6 +200,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
             CurrentWeapons =
                 (from w in AllWeapons where w.NameTag == AllWeapons[^1].NameTag select w)
                 .ToList();
+            IndexOfWeaponsOfTheSameType =  CurrentWeapons.Count - 1;
         }
 
         // #############################################################################################################
@@ -210,7 +212,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
             var previousWeapon = ((IndexOfWeaponsOfTheSameType - 1) +CurrentWeapons.Count)% CurrentWeapons.Count;
             if (!CurrentWeapons[previousWeapon].CanShoot) return;
             CurrentWeapons[IndexOfWeaponsOfTheSameType].Fire();
-            IndexOfWeaponsOfTheSameType = (IndexOfWeaponsOfTheSameType +1) % CurrentWeapons.Count;
+            //IndexOfWeaponsOfTheSameType = (IndexOfWeaponsOfTheSameType +1) % CurrentWeapons.Count;
         }
         
         protected virtual void ShootAllWeapons()
