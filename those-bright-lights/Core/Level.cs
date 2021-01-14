@@ -72,7 +72,7 @@ namespace SE_Praktikum.Core
             this.hUDFactory = hUDFactory;
             this.song = song;
             _components = new List<IComponent>();
-            _emitter = new StarEmitter(300, 700, _particleFactory);
+            _emitter = new StarEmitter(5, 700, _particleFactory);
         }
 
         // #############################################################################################################
