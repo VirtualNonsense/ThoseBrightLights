@@ -59,6 +59,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
             get => _relativeRotation;
             set
             {
+                if (Parent == null) return;
                 Rotation = Parent.Rotation + value;
                 _relativeRotation = value;
             }
@@ -182,6 +183,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
 
         protected void UpdateBasePosition()
         {
+            if (Parent == null) return;
             base.Position = Parent.Position + RelativePosition.Rotate(Parent.Rotation);
         }
 

@@ -15,14 +15,14 @@ namespace SE_Praktikum.Services
         /// <summary>
         /// Time that must be reached in order for something to happen
         /// </summary>
-        protected int _targetTime;
+        public int TargetTime;
         
         
         public Action Ability;
 
         protected TimeControlledAbility(int targetTime, Action ability)
         {
-            _targetTime = targetTime;
+            TargetTime = targetTime;
             Ability = ability;
         }
         // #############################################################################################################
@@ -40,7 +40,7 @@ namespace SE_Praktikum.Services
         {
             get
             {
-                var progress = _elapsedTime / (float) _targetTime;
+                var progress = _elapsedTime / (float) TargetTime;
                 return progress > 1 ? 1 : progress;
             }
         }
@@ -50,7 +50,7 @@ namespace SE_Praktikum.Services
         // ############################################################################################################# 
         public bool TargetTimeReached
         {
-            get => _elapsedTime >= _targetTime;
+            get => _elapsedTime >= TargetTime;
         }
 
         public abstract void Fire();

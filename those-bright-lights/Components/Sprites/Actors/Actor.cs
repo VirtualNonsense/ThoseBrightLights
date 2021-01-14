@@ -47,6 +47,7 @@ namespace SE_Praktikum.Components.Sprites.Actors
         public event EventHandler OnHealthChanged;
         public event EventHandler OnMaxHealthChanged;
         public event EventHandler OnFlippedChange;
+        public event EventHandler OnInvincibilityChanged; 
         
         #endregion
         // #############################################################################################################
@@ -104,7 +105,11 @@ namespace SE_Praktikum.Components.Sprites.Actors
         public bool Indestructible
         {
             get => _indestructible;
-            set => _indestructible = value;
+            set
+            {
+                _indestructible = value;
+                InvokeOnInvincibilityChanged();
+            }
         }
         // #############################################################################################################
         // Public Methods
@@ -210,5 +215,10 @@ namespace SE_Praktikum.Components.Sprites.Actors
         }
 
         #endregion
+
+        protected virtual void InvokeOnInvincibilityChanged()
+        {
+            OnInvincibilityChanged?.Invoke(this, EventArgs.Empty);
+        }
     }
 }

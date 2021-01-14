@@ -10,6 +10,7 @@ using SE_Praktikum.Components.Sprites.Actors.PowerUps;
 using SE_Praktikum.Components.Sprites.Actors.Weapons;
 using SE_Praktikum.Models;
 using SE_Praktikum.Services;
+using SE_Praktikum.Services.Abilities;
 
 namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
 {
@@ -24,8 +25,8 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
         protected float DeltaRotation;
         private Logger _logger;
         protected Polygon _impactPolygon;
-
         private int _currentWeapon;
+        private readonly Dictionary<string, CastTimeAbility> _statusChangeResetTimer;
 
         // #############################################################################################################
         // Constructor
@@ -39,13 +40,14 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
                          SoundEffect impactSound = null) : base(
             animationHandler, impactSound)
         {
+            _logger = LogManager.GetCurrentClassLogger();
             MaxSpeed = maxSpeed;
             Acceleration = acceleration;
             RotationAcceleration = rotationAcceleration;
             MaxRotationSpeed = maxRotationSpeed;
             Health = health;
             Components = new List<SpaceshipAddOn>();
-            _logger = LogManager.GetCurrentClassLogger();
+            _statusChangeResetTimer = new Dictionary<string, CastTimeAbility>();
         }
         
         // #############################################################################################################
@@ -122,6 +124,15 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
             foreach (var component in Components)
             {
                 component.Update(gameTime);
+            }
+
+            for (int i = 0; i < _statusChangeResetTimer.Count;)
+            {
+                var timer = _statusChangeResetTimer.ElementAt(i).Value;
+                var c = _statusChangeResetTimer.Count;
+                timer.Update(gameTime);
+                if (c == _statusChangeResetTimer.Count)
+                    i++;
             }
 
             for (var i = 0; i < AllWeaponsList.Count;)
@@ -297,12 +308,26 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
                 case WeaponPowerUp r:
                     AddWeapon(r.Weapon);
                     break;
-                
-                case ScoreBonusPowerUp sb:
-                    //score+= sb.bonusScore;
-                    break;
                 case StarPowerUp s:
+                    var key = "starpowerup";
+                    Indestructible = true;
+                    if (_statusChangeResetTimer.ContainsKey(key))
+                    {
+                        _statusChangeResetTimer[key].TargetTime += (int) s.Duration;
+                        _logger.Debug($"indestructable for {_statusChangeResetTimer[key].TargetTime} ms!");
 
+                        return;
+                    }
+                    _logger.Debug($"indestructable for {s.Duration} ms!");
+
+                    var castTime = new CastTimeAbility((int)s.Duration, () => { });
+                    castTime.Ability = () =>
+                    {
+                        Indestructible = false;
+                        _statusChangeResetTimer.Remove(key);
+                    };
+                    castTime.Fire();
+                    _statusChangeResetTimer.Add(key,castTime);
                     break;
                     
             }

@@ -189,7 +189,8 @@ namespace SE_Praktikum.Core
             _screen.Camera.Position += new Vector3(0, 0, player.Layer);
             _components.Add(player);
             SpawnPowerUps(player.Layer);
-            
+            SpawnEnemies(player.Layer);
+
         }
 
         public void Unload()
@@ -315,7 +316,7 @@ namespace SE_Praktikum.Core
                         break;
 
                     case PowerUpType.StarPowerUp:
-                        var starpowerup = powerUpFactory.StarGetInstance(200,new Vector2(0, 0));
+                        var starpowerup = powerUpFactory.StarGetInstance(30000,new Vector2(0, 0));
                         starpowerup.Layer = layer;
                         starpowerup.Position = p.Item2;
                         starpowerup.OnExplosion += (sender, args) =>
