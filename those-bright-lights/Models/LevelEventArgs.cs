@@ -48,7 +48,7 @@ namespace SE_Praktikum.Models
             
         }
 
-        public class PowerUpDieEventArgs : ActorDiedEventArgs
+        public class PowerUpDiedEventArgs : ActorDiedEventArgs
         {
             
         }

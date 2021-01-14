@@ -41,7 +41,7 @@ namespace SE_Praktikum.Components.Sprites.Actors
 
         protected override LevelEventArgs.ActorDiedEventArgs GetOnDeadEventArgs()
         {
-            return new LevelEventArgs.PowerUpDieEventArgs();
+            return new LevelEventArgs.PowerUpDiedEventArgs();
         }
     }
 
