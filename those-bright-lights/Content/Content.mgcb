@@ -1393,6 +1393,12 @@
 /processorParam:Quality=Best
 /build:Audio/Sound_Effects/Shot/ta.wav
 
+#begin Audio/Sound_Effects/Shot/tav2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound_Effects/Shot/tav2.wav
+
 #begin Audio/Sound_Effects/Shot2.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
