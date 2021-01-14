@@ -17,8 +17,11 @@ namespace SE_Praktikum.Components.Sprites.Actors.Bullets
                      Actor parent,
                      SoundEffect midAirSound,
                      SoundEffect impactSound,
-                     float damage = 5) 
-            : base(animationHandler,parent, explosion, midAirSound, impactSound, damage)
+                     float damage = 5,
+                     float health = 1,
+                     float? maxHealth = null,
+                     bool indestructible = false) 
+            : base(animationHandler,parent, explosion, midAirSound, impactSound, damage, health: health, maxHealth: maxHealth, indestructible: indestructible)
         {
             Rotation = rotation;
             Position = positionSpaceship;

@@ -63,8 +63,11 @@ namespace SE_Praktikum.Components.Sprites.Actors.Bullets
                          Particle explosion,
                          SoundEffect midAirSound,
                          SoundEffect impactSound,
-                         float damage) 
-            : base(animationHandler, impactSound)
+                         float damage,
+                         float health,
+                         float? maxHealth,
+                         bool indestructible) 
+            : base(animationHandler, impactSound, health: health, maxHealth: maxHealth, indestructible: indestructible)
         {
             Parent = parent;
             Explosion = explosion;

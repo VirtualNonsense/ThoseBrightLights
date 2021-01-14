@@ -17,7 +17,9 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
                          float rotationAcceleration = .1f,
                          float maxRotationSpeed = 10,
                          float health = 50,
-                         SoundEffect impactSound = null) : base(animationHandler, viewBox, maxSpeed, acceleration,rotationAcceleration, maxRotationSpeed, health,impactSound)
+                         float? maxHealth = null,
+                         float impactDamage = 5,
+                         SoundEffect impactSound = null) : base(animationHandler, viewBox, maxSpeed, acceleration,rotationAcceleration, maxRotationSpeed, health, maxHealth, impactDamage, impactSound)
         {
             Shoot = new CooldownAbility(1000, _shootTarget);
             RotateAndShoot = true;

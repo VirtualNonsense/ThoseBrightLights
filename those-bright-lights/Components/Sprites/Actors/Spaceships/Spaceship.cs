@@ -37,15 +37,16 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
                          float rotationAcceleration = .1f,
                          float maxRotationSpeed = 10,
                          float health = 100,
+                         float? maxHealth = null,
+                         float impactDamage = 5,
                          SoundEffect impactSound = null) : base(
-            animationHandler, impactSound)
+            animationHandler, impactSound, health: health, maxHealth: maxHealth, impactDamage: impactDamage)
         {
             _logger = LogManager.GetCurrentClassLogger();
             MaxSpeed = maxSpeed;
             Acceleration = acceleration;
             RotationAcceleration = rotationAcceleration;
             MaxRotationSpeed = maxRotationSpeed;
-            Health = health;
             Components = new List<SpaceshipAddOn>();
             _statusChangeResetTimer = new Dictionary<string, CastTimeAbility>();
         }
@@ -261,6 +262,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
                     break;
                 case Tile t :
                     ApproachDestination(t, 100);
+                    Health -= Velocity.Length()/MaxSpeed * t.Damage;
                     _impactSound?.Play();
                     break;
                 case PowerUp p:
