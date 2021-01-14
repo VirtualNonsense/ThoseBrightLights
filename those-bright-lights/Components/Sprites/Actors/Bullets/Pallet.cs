@@ -44,27 +44,5 @@ namespace SE_Praktikum.Components.Sprites.Actors.Bullets
             }
             base.Update(gameTime);
         }
-
-        protected override void ExecuteInteraction(Actor other)
-        {
-            switch (other)
-            {
-                case Spaceship s:
-                    if(s == Parent)
-                        return;
-                    IsRemoveAble = true;
-                    InvokeExplosion();
-                    break;
-                case Tile t:
-                    IsRemoveAble = true;
-                    InvokeExplosion();
-                    break;
-                case SpaceshipAddOn spaceshipAddOn:
-                    IsRemoveAble = true;
-                    InvokeExplosion();
-                    break;
-                
-            }
-        }
     }
 }

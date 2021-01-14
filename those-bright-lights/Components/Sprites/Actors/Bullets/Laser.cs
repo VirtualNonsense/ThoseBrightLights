@@ -51,16 +51,13 @@ namespace SE_Praktikum.Components.Sprites.Actors.Bullets
                 case Spaceship s:
                     if(s == Parent)
                         return;
-                    IsRemoveAble = true;
-                    InvokeExplosion();
+                    Health -= other.Damage;
                     break;
                 case Tile t:
-                    IsRemoveAble = true;
-                    InvokeExplosion();
+                    Health -= other.Damage;
                     break;
                 case SpaceshipAddOn spaceshipAddOn:
-                    IsRemoveAble = true;
-                    InvokeExplosion();
+                    Health -= other.Damage;
                     break;
                 
             }

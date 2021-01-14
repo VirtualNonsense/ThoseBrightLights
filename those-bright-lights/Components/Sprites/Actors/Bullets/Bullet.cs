@@ -75,6 +75,17 @@ namespace SE_Praktikum.Components.Sprites.Actors.Bullets
             Damage = damage;
         }
 
+        public override bool IsRemoveAble
+        {
+            get=>base.IsRemoveAble;
+            set
+            {
+                base.IsRemoveAble = value;
+                if(base.IsRemoveAble)
+                    InvokeExplosion();
+            }
+        }
+
         protected Vector2 Movement(Vector2 spaceshipVelocity, float elapsedTime)
         {
             var position = spaceshipVelocity +
@@ -99,8 +110,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Bullets
             {
                 default:
                     if (Parent == other) return;
-                    IsRemoveAble = true;
-                    InvokeExplosion();
+                    Health -= other.Damage;
                     break;
             }
         }
