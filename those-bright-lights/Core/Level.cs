@@ -173,12 +173,12 @@ namespace SE_Praktikum.Core
             player.OnShoot += (sender, args) =>
             {
                 if (!(args is LevelEventArgs e)) return;
-                OnLevelEvent(e);
+                ProcessLevelEvent(e);
             };
             player.OnExplosion += (sender, args) =>
             {
                 if (!(args is LevelEventArgs e)) return;
-                OnLevelEvent(e);
+                ProcessLevelEvent(e);
             };
             var hud = hUDFactory.GetInstance(player);
             _components.Add(hud);
@@ -219,7 +219,7 @@ namespace SE_Praktikum.Core
         }
 
 
-        private void OnLevelEvent(LevelEventArgs levelEventArgs)
+        private void ProcessLevelEvent(LevelEventArgs levelEventArgs)
         {
             switch (levelEventArgs)
             {
@@ -229,7 +229,7 @@ namespace SE_Praktikum.Core
                     t.Bullet.OnExplosion += (sender, args) =>
                     {
                         if (!(args is LevelEventArgs e)) return;
-                        OnLevelEvent(e);
+                        ProcessLevelEvent(e);
                     };
                     return;
                 case LevelEventArgs.ExplosionEventArgs s:
@@ -259,7 +259,7 @@ namespace SE_Praktikum.Core
                         healthPowerUp.OnExplosion += (sender, args) =>
                         {
                             if (!(args is LevelEventArgs e)) return;
-                            OnLevelEvent(e);
+                            ProcessLevelEvent(e);
                         };
                         _components.Add(healthPowerUp);
                         break;
@@ -271,7 +271,7 @@ namespace SE_Praktikum.Core
                         instaDeathPowerUp.OnExplosion += (sender, args) =>
                         {
                             if (!(args is LevelEventArgs e)) return;
-                            OnLevelEvent(e);
+                            ProcessLevelEvent(e);
                         };
                         _components.Add(instaDeathPowerUp);
                         break;
@@ -283,7 +283,7 @@ namespace SE_Praktikum.Core
                         fullHealthPowerUp.OnExplosion += (sender, args) =>
                         {
                             if (!(args is LevelEventArgs e)) return;
-                            OnLevelEvent(e);
+                            ProcessLevelEvent(e);
                         };
                         _components.Add(fullHealthPowerUp);
                         break;
@@ -295,7 +295,7 @@ namespace SE_Praktikum.Core
                         scoreBonusPowerUp.OnExplosion += (sender, args) =>
                         {
                             if (!(args is LevelEventArgs e)) return;
-                            OnLevelEvent(e);
+                            ProcessLevelEvent(e);
                         };
                         _components.Add(scoreBonusPowerUp);
                         break;
@@ -307,7 +307,7 @@ namespace SE_Praktikum.Core
                         infAmmoPowerUp.OnExplosion += (sender, args) =>
                         {
                             if (!(args is LevelEventArgs e)) return;
-                            OnLevelEvent(e);
+                            ProcessLevelEvent(e);
                         };
                         _components.Add(infAmmoPowerUp);
                         break;
@@ -319,7 +319,7 @@ namespace SE_Praktikum.Core
                         bonusClipPowerUp.OnExplosion += (sender, args) =>
                         {
                             if (!(args is LevelEventArgs e)) return;
-                            OnLevelEvent(e);
+                            ProcessLevelEvent(e);
                         };
                         _components.Add(bonusClipPowerUp);
                         break;
@@ -331,7 +331,7 @@ namespace SE_Praktikum.Core
                         starPowerUp.OnExplosion += (sender, args) =>
                         {
                             if (!(args is LevelEventArgs e)) return;
-                            OnLevelEvent(e);
+                            ProcessLevelEvent(e);
                         };
                         _components.Add(starPowerUp);
                         break;
@@ -343,7 +343,7 @@ namespace SE_Praktikum.Core
                         weaponPowerUp.OnExplosion += (sender, args) =>
                         {
                             if (!(args is LevelEventArgs e)) return;
-                            OnLevelEvent(e);
+                            ProcessLevelEvent(e);
                         };
                         _components.Add(weaponPowerUp);
                         break;
@@ -365,13 +365,13 @@ namespace SE_Praktikum.Core
                         turret.OnShoot += (sender, args) =>
                         {
                             if (!(args is LevelEventArgs e)) return;
-                            OnLevelEvent(e);
+                            ProcessLevelEvent(e);
                         };
                          
                         turret.OnExplosion += (sender, args) =>
                         {
                             if (!(args is LevelEventArgs e)) return;
-                            OnLevelEvent(e);
+                            ProcessLevelEvent(e);
                         };
                         _components.Add(turret);
                         break;
@@ -383,13 +383,13 @@ namespace SE_Praktikum.Core
                          alienship.OnShoot += (sender, args) =>
                          {
                              if (!(args is LevelEventArgs e)) return;
-                             OnLevelEvent(e);
+                             ProcessLevelEvent(e);
                          };
                         
                          alienship.OnExplosion += (sender, args) =>
                          {
                              if (!(args is LevelEventArgs e)) return;
-                             OnLevelEvent(e);
+                             ProcessLevelEvent(e);
                          };
                          _components.Add(alienship);
                         break;
@@ -401,12 +401,12 @@ namespace SE_Praktikum.Core
                         boss.OnShoot += (sender, args) =>
                         {
                             if (!(args is LevelEventArgs e)) return;
-                            OnLevelEvent(e);
+                            ProcessLevelEvent(e);
                         };
                         boss.OnExplosion += (sender, args) =>
                         {
                             if (!(args is LevelEventArgs e)) return;
-                            OnLevelEvent(e);
+                            ProcessLevelEvent(e);
                         };
                         boss.OnDeath += (sender, args) => InvokeOnLevelComplete();
                         _components.Add(boss);
@@ -419,13 +419,13 @@ namespace SE_Praktikum.Core
                         mines.OnShoot += (sender, args) =>
                         {
                             if (!(args is LevelEventArgs e)) return;
-                            OnLevelEvent(e);
+                            ProcessLevelEvent(e);
                         };
 
                         mines.OnExplosion += (sender, args) =>
                         {
                             if (!(args is LevelEventArgs e)) return;
-                            OnLevelEvent(e);
+                            ProcessLevelEvent(e);
                         };
                         _components.Add(mines);
                         break;
