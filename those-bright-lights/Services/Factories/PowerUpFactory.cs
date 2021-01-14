@@ -135,7 +135,7 @@ namespace SE_Praktikum.Services.Factories
 
         public StarPowerUp StarGetInstance(float duration,Vector2? position = null, float layer = 0)
         {
-            var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\health.json", 0);
+            var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\star_21_21_10.json", 0);
             var animationSettings = new AnimationSettings(8, 50, layer, isLooping:true);
             var s = new StarPowerUp(_animationHandlerFactory.GetAnimationHandler(tileSet, animationSettings),duration,
                 soundEffect: _soundHandler.Get(ImpactSounds.Star))
