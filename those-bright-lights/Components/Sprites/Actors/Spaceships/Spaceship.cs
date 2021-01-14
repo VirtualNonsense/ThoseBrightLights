@@ -222,7 +222,6 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
 
         private void EmitBulletToOnShot(object sender, Weapon.EmitBulletEventArgs args)
         {
-            _logger.Debug("emiting bullet");
             InvokeOnShoot(args.Bullet);
         }
 

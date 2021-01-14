@@ -69,8 +69,12 @@ namespace SE_Praktikum.Core.GameStates
                     }
                     _subject.OnNext(GameStateMachine.GameStateMachineTrigger.SaveAndBackToMenu);
                 };
+            _levelContainer.SelectedLevel.OnPlayerDead += (sender, args) =>
+            {
+                _subject.OnNext(GameStateMachine.GameStateMachineTrigger.Back);
+            };
 
-            // creating pause menu
+                // creating pause menu
             _components = new ComponentGrid(new Vector2(0,0), 
                 _screen.Camera.GetPerspectiveScreenWidth(),
                 _screen.Camera.GetPerspectiveScreenHeight(),
@@ -89,7 +93,7 @@ namespace SE_Praktikum.Core.GameStates
             {
                 _logger.Debug("Back to main menu");
                 _screen.Camera.StopFollowing();
-                _subject.OnNext(GameStateMachine.GameStateMachineTrigger.SaveAndBackToMenu);
+                _subject.OnNext(GameStateMachine.GameStateMachineTrigger.Back);
             };
             _components.Add(backButton);
         }

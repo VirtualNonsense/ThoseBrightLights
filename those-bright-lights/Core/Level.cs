@@ -75,6 +75,8 @@ namespace SE_Praktikum.Core
         // #############################################################################################################
         private event EventHandler OnExplosion;
         public event EventHandler OnLevelComplete;
+
+        public event EventHandler OnPlayerDead;
         // #############################################################################################################
         // public methods
         // #############################################################################################################
@@ -168,8 +170,10 @@ namespace SE_Praktikum.Core
             _collisionLayer = _map.TopLayer;
             
             var player = _playerFactory.GetInstance(contentManager);
+
             player.Position = _map.PlayerSpawnPoint?.Center ?? new Vector2(0, 0);
             player.Layer = _collisionLayer;
+            player.OnDeath += (sender, args) => ProcessLevelEvent(args);
             player.OnShoot += (sender, args) =>
             {
                 if (!(args is LevelEventArgs e)) return;
@@ -235,8 +239,30 @@ namespace SE_Praktikum.Core
                 case LevelEventArgs.ExplosionEventArgs s:
                     if (s.Particle is null) return;
                     _components.Add(s.Particle);
-                    _logger.Info("Added Particle");
                     return;
+                
+                case LevelEventArgs.BossDiedEventArgs s:
+                    if (s.Aggressor is Player p1)
+                    {
+                        p1.Score += (int)s.Victim.MaxHealth;
+                    }
+                    InvokeOnLevelComplete();
+                    break;
+                
+                case LevelEventArgs.EnemyDiedEventArgs enemyDiedEventArgs:
+                    if (enemyDiedEventArgs.Aggressor is Player p2)
+                    {
+                        p2.Score += (int) enemyDiedEventArgs.Victim.MaxHealth;
+                    }
+                    break;
+                case LevelEventArgs.PlayerDiedEventArgs playerDiedEventArgs:
+                    InvokeOnPlayerDead();
+                    break;
+                case LevelEventArgs.ActorDiedEventArgs a:
+                    var info = a.Tool == a.Aggressor ? $"{a.Aggressor}" : $"{a.Aggressor} with {a.Tool}";
+                    _logger.Info($"{a.Victim} was killed by {info}");
+                    
+                    break;
             }
         }
 
@@ -256,6 +282,7 @@ namespace SE_Praktikum.Core
                         var healthPowerUp = powerUpFactory.HealthGetInstance(10, new Vector2(0,0));
                         healthPowerUp.Layer = layer;
                         healthPowerUp.Position = p.Item2;
+                        healthPowerUp.OnDeath += (sender, args) => ProcessLevelEvent(args);
                         healthPowerUp.OnExplosion += (sender, args) =>
                         {
                             if (!(args is LevelEventArgs e)) return;
@@ -268,6 +295,7 @@ namespace SE_Praktikum.Core
                         var instaDeathPowerUp = powerUpFactory.DeathGetInstance(new Vector2(0,0));
                         instaDeathPowerUp.Layer = layer;
                         instaDeathPowerUp.Position = p.Item2;
+                        instaDeathPowerUp.OnDeath += (sender, args) => ProcessLevelEvent(args);
                         instaDeathPowerUp.OnExplosion += (sender, args) =>
                         {
                             if (!(args is LevelEventArgs e)) return;
@@ -280,6 +308,7 @@ namespace SE_Praktikum.Core
                         var fullHealthPowerUp = powerUpFactory.FullHealthGetInstance(100, new Vector2(0,0));
                         fullHealthPowerUp.Layer = layer;
                         fullHealthPowerUp.Position = p.Item2;
+                        fullHealthPowerUp.OnDeath += (sender, args) => ProcessLevelEvent(args);
                         fullHealthPowerUp.OnExplosion += (sender, args) =>
                         {
                             if (!(args is LevelEventArgs e)) return;
@@ -292,6 +321,7 @@ namespace SE_Praktikum.Core
                         var scoreBonusPowerUp = powerUpFactory.ScoreBonusGetInstance(50, new Vector2(0,0));
                         scoreBonusPowerUp.Layer = layer;
                         scoreBonusPowerUp.Position = p.Item2;
+                        scoreBonusPowerUp.OnDeath += (sender, args) => ProcessLevelEvent(args);
                         scoreBonusPowerUp.OnExplosion += (sender, args) =>
                         {
                             if (!(args is LevelEventArgs e)) return;
@@ -304,6 +334,7 @@ namespace SE_Praktikum.Core
                         var infAmmoPowerUp = powerUpFactory.InfAmmoGetInstance(200, new Vector2(0,0));
                         infAmmoPowerUp.Layer = layer;
                         infAmmoPowerUp.Position = p.Item2;
+                        infAmmoPowerUp.OnDeath += (sender, args) => ProcessLevelEvent(args);
                         infAmmoPowerUp.OnExplosion += (sender, args) =>
                         {
                             if (!(args is LevelEventArgs e)) return;
@@ -316,6 +347,7 @@ namespace SE_Praktikum.Core
                         var bonusClipPowerUp = powerUpFactory.BonusClipGetInstance(2, new Vector2(0, 0));
                         bonusClipPowerUp.Layer = layer;
                         bonusClipPowerUp.Position = p.Item2;
+                        bonusClipPowerUp.OnDeath += (sender, args) => ProcessLevelEvent(args);
                         bonusClipPowerUp.OnExplosion += (sender, args) =>
                         {
                             if (!(args is LevelEventArgs e)) return;
@@ -328,6 +360,7 @@ namespace SE_Praktikum.Core
                         var starPowerUp = powerUpFactory.StarGetInstance(30000,new Vector2(0, 0));
                         starPowerUp.Layer = layer;
                         starPowerUp.Position = p.Item2;
+                        starPowerUp.OnDeath += (sender, args) => ProcessLevelEvent(args);
                         starPowerUp.OnExplosion += (sender, args) =>
                         {
                             if (!(args is LevelEventArgs e)) return;
@@ -340,6 +373,7 @@ namespace SE_Praktikum.Core
                         var weaponPowerUp = powerUpFactory.RocketGetInstance(new Vector2(0, 0));
                         weaponPowerUp.Layer = layer;
                         weaponPowerUp.Position = p.Item2;
+                        weaponPowerUp.OnDeath += (sender, args) => ProcessLevelEvent(args);
                         weaponPowerUp.OnExplosion += (sender, args) =>
                         {
                             if (!(args is LevelEventArgs e)) return;
@@ -362,6 +396,7 @@ namespace SE_Praktikum.Core
                         turret.Layer = layer;
                         turret.Position = enemySpawnPoint.Item2;
                         turret.Rotation = (float)Math.PI;
+                        turret.OnDeath += (sender, args) => ProcessLevelEvent(args);
                         turret.OnShoot += (sender, args) =>
                         {
                             if (!(args is LevelEventArgs e)) return;
@@ -377,27 +412,30 @@ namespace SE_Praktikum.Core
                         break;
                     case EnemyType.Alienship:
                         var alienship = _enemyFactory.GetAlienship(); 
-                         alienship.Layer = layer;
-                         alienship.Position = enemySpawnPoint.Item2;
-                         alienship.Rotation = (float)Math.PI;
-                         alienship.OnShoot += (sender, args) =>
-                         {
-                             if (!(args is LevelEventArgs e)) return;
-                             ProcessLevelEvent(e);
-                         };
-                        
-                         alienship.OnExplosion += (sender, args) =>
-                         {
-                             if (!(args is LevelEventArgs e)) return;
-                             ProcessLevelEvent(e);
-                         };
-                         _components.Add(alienship);
+                        alienship.Layer = layer;
+                        alienship.Position = enemySpawnPoint.Item2;
+                        alienship.Rotation = (float)Math.PI;
+                        alienship.OnDeath += (sender, args) => ProcessLevelEvent(args);
+                        alienship.OnShoot += (sender, args) =>
+                        {
+                            if (!(args is LevelEventArgs e)) return;
+                            ProcessLevelEvent(e);
+                        };
+
+                        alienship.OnExplosion += (sender, args) =>
+                        {
+                            if (!(args is LevelEventArgs e)) return;
+                            ProcessLevelEvent(e);
+                        };
+                        alienship.OnDeath += (sender, args) => ProcessLevelEvent(args);
+                        _components.Add(alienship);
                         break;
                     case EnemyType.Boss:
                         var boss = _enemyFactory.GetBoss();
                         boss.Layer = layer;
                         boss.Position = enemySpawnPoint.Item2;
                         boss.Rotation = (float)Math.PI;
+                        boss.OnDeath += (sender, args) => ProcessLevelEvent(args);
                         boss.OnShoot += (sender, args) =>
                         {
                             if (!(args is LevelEventArgs e)) return;
@@ -416,6 +454,7 @@ namespace SE_Praktikum.Core
                         mines.Layer = layer;
                         mines.Position = enemySpawnPoint.Item2;
                         mines.Rotation = (float)Math.PI;
+                        mines.OnDeath += (sender, args) => ProcessLevelEvent(args);
                         mines.OnShoot += (sender, args) =>
                         {
                             if (!(args is LevelEventArgs e)) return;
@@ -431,6 +470,11 @@ namespace SE_Praktikum.Core
                         break;
                 }
             }
+        }
+
+        protected virtual void InvokeOnPlayerDead()
+        {
+            OnPlayerDead?.Invoke(this, EventArgs.Empty);
         }
     }
 }
