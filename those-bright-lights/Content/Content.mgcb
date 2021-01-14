@@ -1387,6 +1387,12 @@
 /processorParam:Quality=Best
 /build:Audio/Sound_Effects/Shot/Laser_sizzle.wav
 
+#begin Audio/Sound_Effects/Shot/ta.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound_Effects/Shot/ta.wav
+
 #begin Audio/Sound_Effects/Shot2.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

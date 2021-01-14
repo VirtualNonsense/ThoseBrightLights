@@ -7,6 +7,7 @@ using SE_Praktikum.Components.Sprites.Actors;
 using SE_Praktikum.Components.Sprites.Actors.Weapons;
 using SE_Praktikum.Models;
 using System;
+using Microsoft.Xna.Framework.Audio;
 using SE_Praktikum.Components.Sprites.Actors.Spaceships;
 
 namespace SE_Praktikum.Services.Factories
@@ -293,7 +294,7 @@ namespace SE_Praktikum.Services.Factories
                 new Vector2(50, 23),
                 0,
                 new Vector2(30,5),
-                null, 
+                _contentManager.Load<SoundEffect>("Audio/Sound_Effects/Shot/ta"), 
                 null, 
                 nameTag,
                 health,
