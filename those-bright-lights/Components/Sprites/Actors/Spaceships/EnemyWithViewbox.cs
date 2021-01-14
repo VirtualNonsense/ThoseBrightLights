@@ -80,7 +80,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
             return base.InteractAble(other);
         }
 
-        protected virtual void Rotate(Actor target, GameTime gameTime)
+        protected override void Rotate(Actor target, GameTime gameTime)
         {
             if (!RotateWeapon)
             {
@@ -88,7 +88,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
                 return;
             }
             if (Target == null || I != InterAction.InView) return;
-            var weapon = CurrentWeapons[IndexOfWeaponsOfTheSameType];
+            var weapon = CurrentWeapons[^1];
             if (weapon == null) return;
             var desiredRotation = MathExtensions.RotationToTarget(target, this);
             if (!(Math.Abs(desiredRotation - weapon.RelativeRotation) > RotationThreshold)) return;
