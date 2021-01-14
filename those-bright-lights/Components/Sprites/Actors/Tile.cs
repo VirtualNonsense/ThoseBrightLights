@@ -65,17 +65,19 @@ namespace SE_Praktikum.Components.Sprites.Actors
         
         protected override void ExecuteInteraction(Actor other)
         {
-            
+            if (_indestructible) return;
             switch (other)
             {
                 case Bullet b:
+                    _lastAggressor = b;
+                    _tool = b;
                     Health -= b.Damage;
                     break;
                 case Spaceship s:
+                    _lastAggressor = s;
+                    _tool = s;
                     Health -= s.Damage;
                     break;
-                    
-
             }
             _logger.Debug(Health);
 

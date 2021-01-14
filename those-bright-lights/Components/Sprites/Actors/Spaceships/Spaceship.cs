@@ -255,21 +255,30 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
             switch (other)
             {
                 case Bullet b:
+                    _lastAggressor = b.Parent;
+                    _tool = b;
                     // bullet shouldn't damage it's parent
                     if (this == b.Parent) return;
                     Health -= b.Damage;
                     _impactSound?.Play();
                     break;
                 case Tile t :
+                    _lastAggressor = t;
+                    _tool = t;
                     ApproachDestination(t, 100);
                     Health -= Velocity.Length()/MaxSpeed * t.Damage;
                     _impactSound?.Play();
                     break;
                 case PowerUp p:
+                    _lastAggressor = p;
+                    _tool = p;
                     ProcessPowerUp(p);
                     break;
                 case Spaceship s:
+                    _lastAggressor = s;
+                    _tool = s;
                     Health -= s.Damage;
+                    ApproachDestination(other, 100);
                     _impactSound?.Play();
                     break;
 

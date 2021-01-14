@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework.Audio;
 using NLog;
+using SE_Praktikum.Components.Sprites.Actors.Bullets;
 using SE_Praktikum.Components.Sprites.Actors.Spaceships;
 using SE_Praktikum.Models;
 using SE_Praktikum.Services;
@@ -32,6 +33,12 @@ namespace SE_Praktikum.Components.Sprites.Actors
         {
             switch(other)
             {
+                case Bullet b:
+                    _tool = b;
+                    _lastAggressor = b.Parent;
+                    Health -= b.Damage;
+                    break;
+                
                 case Spaceship s:
                     IsRemoveAble = true;
                     _impactSound?.Play();

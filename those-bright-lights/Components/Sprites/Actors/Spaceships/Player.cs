@@ -160,11 +160,6 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
         {
             switch (other)
             {
-                case Enemy e:
-                    var v = _impactPolygon.Position - e.Position;
-                    v /= v.Length();
-                    Position += v;
-                    break;
                 case ScoreBonusPowerUp sp:
                     Score += sp.BonusScore;
                     break;

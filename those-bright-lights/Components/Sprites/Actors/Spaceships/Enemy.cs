@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using NLog;
+using SE_Praktikum.Components.Sprites.Actors.Bullets;
 using SE_Praktikum.Extensions;
 using SE_Praktikum.Models;
 using SE_Praktikum.Services;
@@ -116,6 +117,8 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
                     switch (I)
                     {
                         case InterAction.BodyCollision:
+                            _tool = p;
+                            _lastAggressor = p;
                             Health -= p.Damage;
                             break;
                         case InterAction.None:
@@ -126,8 +129,17 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
                             throw new ArgumentOutOfRangeException();
                     }
                     break;
+                case Bullet b:
+                    if (other.Parent == this) return;
+                    _tool = b;
+                    _lastAggressor = b.Parent;
+                    Health -= b.Damage;
+                    break;
+                
                 default:
                     if (other.Parent == this) return;
+                    _tool = other;
+                    _lastAggressor = other;
                     Health -= other.Damage;
                     _logger.Debug($"health {Health}");
                     _impactSound?.Play();
