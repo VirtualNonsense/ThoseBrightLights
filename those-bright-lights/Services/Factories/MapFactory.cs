@@ -119,7 +119,7 @@ namespace SE_Praktikum.Services.Factories
                                 PowerUpSpawnpoints.Add((PowerUpType.FullHealthPowerUp, ConvertObjectToPolygon(obj).Center));
                                 break;
                             case "AmmoPowerUpSpawn":
-                                PowerUpSpawnpoints.Add((PowerUpType.AmmoPowerUp, ConvertObjectToPolygon(obj).Center));
+                                PowerUpSpawnpoints.Add((PowerUpType.InfAmmoPowerUp, ConvertObjectToPolygon(obj).Center));
                                 break;
                             case "InstaDeathPowerUpSpawn":
                                 PowerUpSpawnpoints.Add((PowerUpType.InstaDeathPowerUp, ConvertObjectToPolygon(obj).Center));

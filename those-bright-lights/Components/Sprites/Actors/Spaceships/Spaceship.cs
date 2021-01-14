@@ -303,7 +303,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
                     Health = 0;
                     break;
                 
-                case AmmoPowerUp ra:
+                case InfAmmoPowerUp ra:
                     //Weapons[CurrentWeapon].Ammo += ra.AmmoBonus;
                     break;
                 

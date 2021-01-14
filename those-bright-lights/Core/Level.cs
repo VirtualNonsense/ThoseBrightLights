@@ -253,87 +253,99 @@ namespace SE_Praktikum.Core
                 switch(p.Item1)
                 {
                     case PowerUpType.HealthPowerUp:
-                        var healthpowerup = powerUpFactory.HealthGetInstance(10, new Vector2(0,0));
-                        healthpowerup.Layer = layer;
-                        healthpowerup.Position = p.Item2;
-                        healthpowerup.OnExplosion += (sender, args) =>
+                        var healthPowerUp = powerUpFactory.HealthGetInstance(10, new Vector2(0,0));
+                        healthPowerUp.Layer = layer;
+                        healthPowerUp.Position = p.Item2;
+                        healthPowerUp.OnExplosion += (sender, args) =>
                         {
                             if (!(args is LevelEventArgs e)) return;
                             OnLevelEvent(e);
                         };
-                        _components.Add(healthpowerup);
+                        _components.Add(healthPowerUp);
                         break;
 
                     case PowerUpType.InstaDeathPowerUp:
-                        var instadeathpowerup = powerUpFactory.DeathGetInstance(new Vector2(0,0));
-                        instadeathpowerup.Layer = layer;
-                        instadeathpowerup.Position = p.Item2;
-                        instadeathpowerup.OnExplosion += (sender, args) =>
+                        var instaDeathPowerUp = powerUpFactory.DeathGetInstance(new Vector2(0,0));
+                        instaDeathPowerUp.Layer = layer;
+                        instaDeathPowerUp.Position = p.Item2;
+                        instaDeathPowerUp.OnExplosion += (sender, args) =>
                         {
                             if (!(args is LevelEventArgs e)) return;
                             OnLevelEvent(e);
                         };
-                        _components.Add(instadeathpowerup);
+                        _components.Add(instaDeathPowerUp);
                         break;
 
                     case PowerUpType.FullHealthPowerUp:
-                        var fullhealthpowerup = powerUpFactory.FullHealthGetInstance(100, new Vector2(0,0));
-                        fullhealthpowerup.Layer = layer;
-                        fullhealthpowerup.Position = p.Item2;
-                        fullhealthpowerup.OnExplosion += (sender, args) =>
+                        var fullHealthPowerUp = powerUpFactory.FullHealthGetInstance(100, new Vector2(0,0));
+                        fullHealthPowerUp.Layer = layer;
+                        fullHealthPowerUp.Position = p.Item2;
+                        fullHealthPowerUp.OnExplosion += (sender, args) =>
                         {
                             if (!(args is LevelEventArgs e)) return;
                             OnLevelEvent(e);
                         };
-                        _components.Add(fullhealthpowerup);
+                        _components.Add(fullHealthPowerUp);
                         break;
 
                     case PowerUpType.ScoreBonusPowerUp:
-                        var scorebonuspowerup = powerUpFactory.ScoreBonusGetInstance(50, new Vector2(0,0));
-                        scorebonuspowerup.Layer = layer;
-                        scorebonuspowerup.Position = p.Item2;
-                        scorebonuspowerup.OnExplosion += (sender, args) =>
+                        var scoreBonusPowerUp = powerUpFactory.ScoreBonusGetInstance(50, new Vector2(0,0));
+                        scoreBonusPowerUp.Layer = layer;
+                        scoreBonusPowerUp.Position = p.Item2;
+                        scoreBonusPowerUp.OnExplosion += (sender, args) =>
                         {
                             if (!(args is LevelEventArgs e)) return;
                             OnLevelEvent(e);
                         };
-                        _components.Add(scorebonuspowerup);
+                        _components.Add(scoreBonusPowerUp);
                         break;
 
-                    case PowerUpType.AmmoPowerUp:
-                        var ammopowerup = powerUpFactory.AmmoGetInstance(200, new Vector2(0,0));
-                        ammopowerup.Layer = layer;
-                        ammopowerup.Position = p.Item2;
-                        ammopowerup.OnExplosion += (sender, args) =>
+                    case PowerUpType.InfAmmoPowerUp:
+                        var infAmmoPowerUp = powerUpFactory.InfAmmoGetInstance(200, new Vector2(0,0));
+                        infAmmoPowerUp.Layer = layer;
+                        infAmmoPowerUp.Position = p.Item2;
+                        infAmmoPowerUp.OnExplosion += (sender, args) =>
                         {
                             if (!(args is LevelEventArgs e)) return;
                             OnLevelEvent(e);
                         };
-                        _components.Add(ammopowerup);
+                        _components.Add(infAmmoPowerUp);
+                        break;
+                    
+                    case PowerUpType.BonusClipPowerUp:
+                        var bonusClipPowerUp = powerUpFactory.BonusClipGetInstance(2, new Vector2(0, 0));
+                        bonusClipPowerUp.Layer = layer;
+                        bonusClipPowerUp.Position = p.Item2;
+                        bonusClipPowerUp.OnExplosion += (sender, args) =>
+                        {
+                            if (!(args is LevelEventArgs e)) return;
+                            OnLevelEvent(e);
+                        };
+                        _components.Add(bonusClipPowerUp);
                         break;
 
                     case PowerUpType.StarPowerUp:
-                        var starpowerup = powerUpFactory.StarGetInstance(30000,new Vector2(0, 0));
-                        starpowerup.Layer = layer;
-                        starpowerup.Position = p.Item2;
-                        starpowerup.OnExplosion += (sender, args) =>
+                        var starPowerUp = powerUpFactory.StarGetInstance(30000,new Vector2(0, 0));
+                        starPowerUp.Layer = layer;
+                        starPowerUp.Position = p.Item2;
+                        starPowerUp.OnExplosion += (sender, args) =>
                         {
                             if (!(args is LevelEventArgs e)) return;
                             OnLevelEvent(e);
                         };
-                        _components.Add(starpowerup);
+                        _components.Add(starPowerUp);
                         break;
 
                     case PowerUpType.WeaponPowerUp:
-                        var weaponpowerup = powerUpFactory.RocketGetInstance(new Vector2(0, 0));
-                        weaponpowerup.Layer = layer;
-                        weaponpowerup.Position = p.Item2;
-                        weaponpowerup.OnExplosion += (sender, args) =>
+                        var weaponPowerUp = powerUpFactory.RocketGetInstance(new Vector2(0, 0));
+                        weaponPowerUp.Layer = layer;
+                        weaponPowerUp.Position = p.Item2;
+                        weaponPowerUp.OnExplosion += (sender, args) =>
                         {
                             if (!(args is LevelEventArgs e)) return;
                             OnLevelEvent(e);
                         };
-                        _components.Add(weaponpowerup);
+                        _components.Add(weaponPowerUp);
                         break;
                 }
             }

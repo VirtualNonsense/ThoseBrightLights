@@ -107,17 +107,30 @@ namespace SE_Praktikum.Services.Factories
             return lp;
         }
 
-        public AmmoPowerUp AmmoGetInstance(int ammo, Vector2? position = null, float layer = 0)
+        public InfAmmoPowerUp InfAmmoGetInstance(int ammo, Vector2? position = null, float layer = 0)
         {
             var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\infammoanimation.json", 0);
             var animationSettings = new AnimationSettings(20,50,layer,isLooping:true);
-            var ra = new AmmoPowerUp(_animationHandlerFactory.GetAnimationHandler(tileSet, animationSettings), ammo, 
+            var ra = new InfAmmoPowerUp(_animationHandlerFactory.GetAnimationHandler(tileSet, animationSettings), ammo, 
                 soundEffect: _soundHandler.Get(ImpactSounds.Ammo))
             {
                 Layer = layer, 
                 Position = position ?? new Vector2(0, 0)
             };
             return ra;
+        }
+
+        public BonusClipPowerUp BonusClipGetInstance(int clips, Vector2? position = null, float layer = 0)
+        {
+            var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\ammoplus_21_30_16.json", 0);
+            var animationSettings = new AnimationSettings(16,50,layer,isLooping:true);
+            var pa = new BonusClipPowerUp(_animationHandlerFactory.GetAnimationHandler(tileSet, animationSettings), clips, 
+                soundEffect: _soundHandler.Get(ImpactSounds.Ammo))
+            {
+                Layer = layer, 
+                Position = position ?? new Vector2(0, 0)
+            };
+            return pa;
         }
 
         public StarPowerUp StarGetInstance(float duration,Vector2? position = null, float layer = 0)

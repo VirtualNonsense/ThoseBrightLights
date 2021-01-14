@@ -50,5 +50,6 @@ namespace SE_Praktikum.Services.Factories
             return new ExplosionsParticle(_factory.GetAnimationHandler(explosionTileSet, animationSettings), _screen);
         }
         
+        
     }
 }

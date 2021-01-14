@@ -81,7 +81,7 @@ namespace SE_Praktikum.Services.Factories
 
         public Boss GetBoss()
         {
-            SoundEffect impactSound = _contentManager.Load<SoundEffect>("Audio/Sound_Effects/Collusion/ClinkBell");
+            SoundEffect impactSound = _contentManager.Load<SoundEffect>("Audio/Sound_Effects/Collusion/ey");
             var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\boss.json", 0);
             var animationSettings = new AnimationSettings(1,isPlaying:false);
             var b = new Boss(_animationHandlerFactory.GetAnimationHandler(tileSet, animationSettings),
@@ -90,8 +90,8 @@ namespace SE_Praktikum.Services.Factories
                     new List<Vector2>
                     {
                         new Vector2(0, 0),
-                        new Vector2(1000, -300),
-                        new Vector2(1000, 300),
+                        new Vector2(100, -300),
+                        new Vector2(100, 300),
                     }),
                 impactSound: impactSound)
             {
