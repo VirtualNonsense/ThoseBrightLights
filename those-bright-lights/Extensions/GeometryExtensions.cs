@@ -20,6 +20,15 @@ namespace SE_Praktikum.Extensions
             var y = (float) (Math.Sin(rad) * vector.X + Math.Cos(rad) * vector.Y);
             return new Vector3(x, y, vector.Z);
         }
+
+        public static Vector2 RotateAroundPoint(this Vector2 vector, float rad, Vector2 rotationPoint)
+        {
+            var temp = vector;
+            temp -= rotationPoint;
+            temp.Rotate(rad);
+            temp += rotationPoint;
+            return temp;
+        }
         
         /// <summary>
         /// Converts Monogame rectangle into a Polygon
