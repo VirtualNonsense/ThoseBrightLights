@@ -27,6 +27,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
         protected Polygon _impactPolygon;
         private int _componentIndex;
         private readonly Dictionary<string, CastTimeAbility> _statusChangeResetTimer;
+        private List<Weapon> _currentWeapons;
 
         // #############################################################################################################
         // Constructor
@@ -49,6 +50,8 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
             MaxRotationSpeed = maxRotationSpeed;
             Components = new List<SpaceshipAddOn>();
             _statusChangeResetTimer = new Dictionary<string, CastTimeAbility>();
+            AllWeapons = new List<Weapon>();
+            _currentWeapons = new List<Weapon>();
         }
         
         // #############################################################################################################
@@ -65,8 +68,10 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
         // #############################################################################################################
         
 
-        protected List<Weapon> AllWeaponsList => Components.OfType<Weapon>().ToList();
-        protected List<Weapon> CurrentWeapons => (from w in AllWeaponsList where w.NameTag == AllWeaponsList[IndexOfWeaponsOfTheSameType].NameTag select w).ToList(); 
+        protected List<Weapon> AllWeapons { get; set; }
+
+        protected List<Weapon> CurrentWeapons { get; set; } 
+            
 
         public int ComponentIndex 
         {
@@ -80,9 +85,9 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
                     return;
                 }
 
-                if (value >= AllWeaponsList.Count)
+                if (value >= AllWeapons.Count)
                 {
-                    _componentIndex = AllWeaponsList.Count - 1;
+                    _componentIndex = AllWeapons.Count - 1;
                     InvokeOnWeaponChanged();
                     return;
                 }
@@ -117,7 +122,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
         // #############################################################################################################
         public override void Update(GameTime gameTime)
         {
-            foreach (var weapon in AllWeaponsList)
+            foreach (var weapon in AllWeapons)
             {
                 weapon.Update(gameTime);
             }
@@ -136,17 +141,17 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
                     i++;
             }
 
-            for (var i = 0; i < AllWeaponsList.Count;)
+            for (var i = 0; i < AllWeapons.Count;)
             {
-                var w = AllWeaponsList[i];
+                var w = AllWeapons[i];
                 if (!w.IsRemoveAble)
                 {
                     i++;
                     continue;
                 }
                 Components.Remove(w);
-                if (ComponentIndex >= AllWeaponsList.Count)
-                    ComponentIndex = AllWeaponsList.Count - 1;
+                if (ComponentIndex >= AllWeapons.Count)
+                    ComponentIndex = AllWeapons.Count - 1;
             }
 
             base.Update(gameTime);
@@ -177,14 +182,23 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
                     ssw.OnWeaponEmpty += (sender, args) => _logger.Debug("weapon empty!");
                     break;
             }
+
+            AllWeapons = Components.OfType<Weapon>().ToList();
+            CurrentWeapons =
+                (from w in AllWeapons where w.NameTag == AllWeapons[^1].NameTag select w)
+                .ToList();
         }
 
         public virtual void RemoveWeapon(Weapon weapon)
         {
-            if (!AllWeaponsList.Contains(weapon)) return;
+            if (!AllWeapons.Contains(weapon)) return;
             weapon.OnEmitBullet -= EmitBulletToOnShot;
-            // Weapons.Remove(weapon);
-            weapon.IsRemoveAble = true;
+            Components.Remove(weapon);
+            ComponentIndex = ComponentIndex;
+            AllWeapons = Components.OfType<Weapon>().ToList();
+            CurrentWeapons =
+                (from w in AllWeapons where w.NameTag == AllWeapons[^1].NameTag select w)
+                .ToList();
         }
 
         // #############################################################################################################
@@ -192,7 +206,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
         // #############################################################################################################
         protected virtual void ShootCurrentWeapon()
         {
-            if (AllWeaponsList.Count == 0) return;
+            if (AllWeapons.Count == 0) return;
             var previousWeapon = ((IndexOfWeaponsOfTheSameType - 1) +CurrentWeapons.Count)% CurrentWeapons.Count;
             if (!CurrentWeapons[previousWeapon].CanShoot) return;
             CurrentWeapons[IndexOfWeaponsOfTheSameType].Fire();
@@ -201,8 +215,8 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
         
         protected virtual void ShootAllWeapons()
         {
-            if (AllWeaponsList.Count == 0) return;
-            foreach (var weapon in AllWeaponsList)
+            if (AllWeapons.Count == 0) return;
+            foreach (var weapon in AllWeapons)
                 weapon.Fire();
         }
         
@@ -334,5 +348,6 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
                     
             }
         }
+        
     }
 }

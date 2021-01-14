@@ -80,7 +80,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
             return base.InteractAble(other);
         }
 
-        protected virtual void Rotate(Actor target, GameTime gameTime)
+        protected override void Rotate(Actor target, GameTime gameTime)
         {
             if (!RotateWeapon)
             {
