@@ -433,6 +433,18 @@
 /processorParam:TextureFormat=Color
 /build:Artwork/missing_texture.jpg
 
+#begin Artwork/Powerups/ammoplus_21_30_16.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Artwork/Powerups/ammoplus_21_30_16.png
+
 #begin Artwork/Powerups/health.png
 /importer:TextureImporter
 /processor:TextureProcessor
