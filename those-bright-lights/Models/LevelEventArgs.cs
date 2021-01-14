@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Text;
 using SE_Praktikum.Components;
 using SE_Praktikum.Components.Sprites.Actors;
@@ -22,6 +23,20 @@ namespace SE_Praktikum.Models
 
         public class ActorDiedEventArgs : LevelEventArgs
         {
+            /// <summary>
+            /// Actor that died
+            /// </summary>
+            public Actor Victim;
+            /// <summary>
+            /// Murderer
+            /// </summary>
+            public Actor Aggressor;
+            /// <summary>
+            /// Actor that was used to commit the deed
+            /// (can be equal to aggressor)
+            /// </summary>
+            public Actor Tool;
+
         }
         public class PlayerDiedEventArgs : ActorDiedEventArgs 
         {

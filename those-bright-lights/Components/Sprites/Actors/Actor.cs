@@ -11,7 +11,8 @@ namespace SE_Praktikum.Components.Sprites.Actors
 {
     public abstract class Actor : Sprite
     {
-
+        protected Actor _lastAggressor;
+        protected Actor _tool;
         protected bool _indestructible;
         protected Particle Explosion;
         private float _health;
@@ -205,7 +206,11 @@ namespace SE_Praktikum.Components.Sprites.Actors
 
         protected virtual void InvokeDeath()
         {
-            OnDeath?.Invoke(this, GetOnDeadEventArgs());
+            var e = GetOnDeadEventArgs();
+            e.Aggressor = _lastAggressor;
+            e.Tool = _tool;
+            e.Victim = this;
+            OnDeath?.Invoke(this, e);
         }
 
         protected abstract LevelEventArgs.ActorDiedEventArgs GetOnDeadEventArgs();
