@@ -38,7 +38,7 @@ namespace SE_Praktikum.Services.Abilities
         {
             if (!AbilityAvailable) return;
             _elapsedTime = 0;
-            _ability();
+            Ability();
         }
 
     }

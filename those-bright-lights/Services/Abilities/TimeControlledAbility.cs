@@ -18,12 +18,12 @@ namespace SE_Praktikum.Services
         protected int _targetTime;
         
         
-        protected readonly Action _ability;
+        public Action Ability;
 
         protected TimeControlledAbility(int targetTime, Action ability)
         {
             _targetTime = targetTime;
-            _ability = ability;
+            Ability = ability;
         }
         // #############################################################################################################
         // Events

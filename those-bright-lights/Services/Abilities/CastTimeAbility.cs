@@ -31,7 +31,7 @@ namespace SE_Praktikum.Services.Abilities
             if (!TargetTimeReached) return;
             _castingInProgress = false;
             _elapsedTime = 0;
-            _ability();
+            Ability();
         }
     }
 }
