@@ -17,17 +17,19 @@ namespace SE_Praktikum.Services.Factories
         private readonly AnimationHandlerFactory _animationHandlerFactory;
         private readonly WeaponFactory _weaponFactory;
         private readonly TileSetFactory _tileSetFactory;
+        private readonly ContentManager _contentManager;
 
-        public EnemyFactory(AnimationHandlerFactory animationHandlerFactory, WeaponFactory weaponFactory, TileSetFactory tileSetFactory)
+        public EnemyFactory(AnimationHandlerFactory animationHandlerFactory, WeaponFactory weaponFactory, TileSetFactory tileSetFactory, ContentManager contentManager)
         {
             _animationHandlerFactory = animationHandlerFactory;
             _weaponFactory = weaponFactory;
             _tileSetFactory = tileSetFactory;
+            _contentManager = contentManager;
         }
 
-         public Alienship GetAlienship(ContentManager contentManager)
+         public Alienship GetAlienship()
          {
-             SoundEffect impactSound = contentManager.Load<SoundEffect>("Audio/Sound_Effects/Collusion/ClinkBell");
+             SoundEffect impactSound = _contentManager.Load<SoundEffect>("Audio/Sound_Effects/Collusion/ClinkBell");
              var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\alien_ship_65_65_4.json",0);
              var animationSettings = new AnimationSettings(4, isPlaying: true, duration: 200f, isLooping: true);
              var propulsionTileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\alienshippropulsion_35_9_6.json",0);
@@ -37,16 +39,15 @@ namespace SE_Praktikum.Services.Factories
                   viewBox:new Polygon(Vector2.Zero, Vector2.Zero, 0,
                       new List<Vector2> { new Vector2(0, 0), new Vector2(300, -100), new Vector2(300, 100), }), impactSound: impactSound, propulsion: propulsionHandler)
              {
-                 Position = new Vector2(100, 50),
              };
              e.AddWeapon(_weaponFactory.GetEnemyLaserGun(e));
         
              return e;
          }
 
-        public Turret GetTurret(ContentManager contentManager)
+        public Turret GetTurret()
         {
-            SoundEffect impactSound = contentManager.Load<SoundEffect>("Audio/Sound_Effects/Collusion/ClinkBell");
+            SoundEffect impactSound = _contentManager.Load<SoundEffect>("Audio/Sound_Effects/Collusion/ClinkBell");
             var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\turret_16_21.json", 0);
             var animationSettings = new AnimationSettings(1, isPlaying: false);
             var e = new Turret(_animationHandlerFactory.GetAnimationHandler(tileSet, animationSettings),
@@ -54,16 +55,15 @@ namespace SE_Praktikum.Services.Factories
                 viewbox: new Polygon(Vector2.Zero, Vector2.Zero, 0,
                     new List<Vector2> { new Vector2(0, 0), new Vector2(300, -100), new Vector2(300, 100), }))
             {
-                Position = new Vector2(100, 50),
                 Scale = 2
             };
             e.AddWeapon(_weaponFactory.GetTurretLaserGun(e));
 
             return e;
         }
-        public Turret GetMines(ContentManager contentManager)
+        public Turret GetMines()
         {
-            SoundEffect impactSound = contentManager.Load<SoundEffect>("Audio/Sound_Effects/Collusion/ClinkBell");
+            SoundEffect impactSound = _contentManager.Load<SoundEffect>("Audio/Sound_Effects/Collusion/ClinkBell");
             var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\turret_16_21.json", 0);         //add mines stuff
             var animationSettings = new AnimationSettings(1, isPlaying: false);
             var m = new Turret(_animationHandlerFactory.GetAnimationHandler(tileSet, animationSettings),
@@ -71,7 +71,6 @@ namespace SE_Praktikum.Services.Factories
                 viewbox: new Polygon(Vector2.Zero, Vector2.Zero, 0,
                     new List<Vector2> { new Vector2(0, 0), new Vector2(300, -100), new Vector2(300, 100), }))
             {
-                Position = new Vector2(100, 50),
                 Scale = 2
             };
             m.AddWeapon(_weaponFactory.GetEnemyLaserGun(m));        //add mines stuff
@@ -80,16 +79,22 @@ namespace SE_Praktikum.Services.Factories
         }
 
 
-        public Boss GetBoss(ContentManager contentManager)
+        public Boss GetBoss()
         {
-            SoundEffect impactSound = contentManager.Load<SoundEffect>("Audio/Sound_Effects/Collusion/ClinkBell");
+            SoundEffect impactSound = _contentManager.Load<SoundEffect>("Audio/Sound_Effects/Collusion/ClinkBell");
             var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\boss.json", 0);
             var animationSettings = new AnimationSettings(1,isPlaying:false);
             var b = new Boss(_animationHandlerFactory.GetAnimationHandler(tileSet, animationSettings),
-               viewBox: new Polygon(Vector2.Zero, Vector2.Zero, 0,
-                    new List<Vector2> {new Vector2(0, 0), new Vector2(100, -300), new Vector2(100, 300),}))
+                viewBox: new Polygon(Vector2.Zero,
+                    Vector2.Zero, 0,
+                    new List<Vector2>
+                    {
+                        new Vector2(0, 0),
+                        new Vector2(1000, -300),
+                        new Vector2(1000, 300),
+                    }),
+                impactSound: impactSound)
             {
-                Position = new Vector2(100, 50),
                 Scale = 2
             };
             b.AddWeapon(_weaponFactory.GetUpperBossLaserGun(b));
@@ -97,7 +102,7 @@ namespace SE_Praktikum.Services.Factories
             return b;
         }
         
-        public Kamikaze GetKamikaze(ContentManager contentManager)
+        public Kamikaze GetKamikaze()
         {
             SoundEffect impactSound;
             var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\kamikazeIdle_40_25_6.json", 0);
@@ -106,7 +111,6 @@ namespace SE_Praktikum.Services.Factories
                 new Polygon(Vector2.Zero, Vector2.Zero, 0,
                     new List<Vector2> {new Vector2(0, 0), new Vector2(400, -150), new Vector2(400, 150),}))
             {
-                Position = new Vector2(100, 50),
                 Scale = 2
             };
             b.AddWeapon(_weaponFactory.GetEnemyLaserGun(b));
