@@ -171,5 +171,10 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
             }
             base.ExecuteInteraction(other);
         }
+
+        protected override LevelEventArgs.ActorDiedEventArgs GetOnDeadEventArgs()
+        {
+            return new LevelEventArgs.PlayerDiedEventArgs();
+        }
     }
 }

@@ -6,6 +6,7 @@ using NLog;
 using SE_Praktikum.Components.Sprites.Actors.Bullets;
 using SE_Praktikum.Components.Sprites.Actors.Spaceships;
 using SE_Praktikum.Extensions;
+using SE_Praktikum.Models;
 using SE_Praktikum.Services;
 using SE_Praktikum.Services.Abilities;
 
@@ -162,8 +163,11 @@ namespace SE_Praktikum.Components.Sprites.Actors.Weapons
         {
             public Bullet Bullet { get; set; }
         }
-        
-        
+
+        protected override LevelEventArgs.ActorDiedEventArgs GetOnDeadEventArgs()
+        {
+            return new LevelEventArgs.WeaponDiedEventArgs();
+        }
 
     }
 }

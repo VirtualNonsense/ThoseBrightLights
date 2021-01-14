@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Audio;
 using NLog;
 using SE_Praktikum.Components.Sprites.Actors.Spaceships;
+using SE_Praktikum.Models;
 using SE_Praktikum.Services;
 
 namespace SE_Praktikum.Components.Sprites.Actors
@@ -36,6 +37,11 @@ namespace SE_Praktikum.Components.Sprites.Actors
                     _impactSound?.Play();
                     break;
             }
+        }
+
+        protected override LevelEventArgs.ActorDiedEventArgs GetOnDeadEventArgs()
+        {
+            return new LevelEventArgs.PowerUpDieEventArgs();
         }
     }
 

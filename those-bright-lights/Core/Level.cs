@@ -146,9 +146,6 @@ namespace SE_Praktikum.Core
             }
             _screen.Camera.Update(gameTime);
         }
-        
-        
-
         public void PostUpdate()
         {
             CheckForCollisions();
@@ -175,12 +172,12 @@ namespace SE_Praktikum.Core
             player.Layer = _collisionLayer;
             player.OnShoot += (sender, args) =>
             {
-                if (!(args is LevelEvent e)) return;
+                if (!(args is LevelEventArgs e)) return;
                 OnLevelEvent(e);
             };
             player.OnExplosion += (sender, args) =>
             {
-                if (!(args is LevelEvent e)) return;
+                if (!(args is LevelEventArgs e)) return;
                 OnLevelEvent(e);
             };
             var hud = hUDFactory.GetInstance(player);
@@ -222,20 +219,20 @@ namespace SE_Praktikum.Core
         }
 
 
-        private void OnLevelEvent(LevelEvent levelEvent)
+        private void OnLevelEvent(LevelEventArgs levelEventArgs)
         {
-            switch (levelEvent)
+            switch (levelEventArgs)
             {
                 //if player or enemy shoots the ShootBullet event triggers
-                case LevelEvent.ShootBullet t:
+                case LevelEventArgs.ShotBulletEventArgs t:
                     _components.Add(t.Bullet);
                     t.Bullet.OnExplosion += (sender, args) =>
                     {
-                        if (!(args is LevelEvent e)) return;
+                        if (!(args is LevelEventArgs e)) return;
                         OnLevelEvent(e);
                     };
                     return;
-                case LevelEvent.Explosion s:
+                case LevelEventArgs.ExplosionEventArgs s:
                     if (s.Particle is null) return;
                     _components.Add(s.Particle);
                     _logger.Info("Added Particle");
@@ -261,7 +258,7 @@ namespace SE_Praktikum.Core
                         healthpowerup.Position = p.Item2;
                         healthpowerup.OnExplosion += (sender, args) =>
                         {
-                            if (!(args is LevelEvent e)) return;
+                            if (!(args is LevelEventArgs e)) return;
                             OnLevelEvent(e);
                         };
                         _components.Add(healthpowerup);
@@ -273,7 +270,7 @@ namespace SE_Praktikum.Core
                         instadeathpowerup.Position = p.Item2;
                         instadeathpowerup.OnExplosion += (sender, args) =>
                         {
-                            if (!(args is LevelEvent e)) return;
+                            if (!(args is LevelEventArgs e)) return;
                             OnLevelEvent(e);
                         };
                         _components.Add(instadeathpowerup);
@@ -285,7 +282,7 @@ namespace SE_Praktikum.Core
                         fullhealthpowerup.Position = p.Item2;
                         fullhealthpowerup.OnExplosion += (sender, args) =>
                         {
-                            if (!(args is LevelEvent e)) return;
+                            if (!(args is LevelEventArgs e)) return;
                             OnLevelEvent(e);
                         };
                         _components.Add(fullhealthpowerup);
@@ -297,7 +294,7 @@ namespace SE_Praktikum.Core
                         scorebonuspowerup.Position = p.Item2;
                         scorebonuspowerup.OnExplosion += (sender, args) =>
                         {
-                            if (!(args is LevelEvent e)) return;
+                            if (!(args is LevelEventArgs e)) return;
                             OnLevelEvent(e);
                         };
                         _components.Add(scorebonuspowerup);
@@ -309,7 +306,7 @@ namespace SE_Praktikum.Core
                         ammopowerup.Position = p.Item2;
                         ammopowerup.OnExplosion += (sender, args) =>
                         {
-                            if (!(args is LevelEvent e)) return;
+                            if (!(args is LevelEventArgs e)) return;
                             OnLevelEvent(e);
                         };
                         _components.Add(ammopowerup);
@@ -321,7 +318,7 @@ namespace SE_Praktikum.Core
                         starpowerup.Position = p.Item2;
                         starpowerup.OnExplosion += (sender, args) =>
                         {
-                            if (!(args is LevelEvent e)) return;
+                            if (!(args is LevelEventArgs e)) return;
                             OnLevelEvent(e);
                         };
                         _components.Add(starpowerup);
@@ -333,7 +330,7 @@ namespace SE_Praktikum.Core
                         weaponpowerup.Position = p.Item2;
                         weaponpowerup.OnExplosion += (sender, args) =>
                         {
-                            if (!(args is LevelEvent e)) return;
+                            if (!(args is LevelEventArgs e)) return;
                             OnLevelEvent(e);
                         };
                         _components.Add(weaponpowerup);
@@ -355,13 +352,13 @@ namespace SE_Praktikum.Core
                         turret.Rotation = (float)Math.PI;
                         turret.OnShoot += (sender, args) =>
                         {
-                            if (!(args is LevelEvent e)) return;
+                            if (!(args is LevelEventArgs e)) return;
                             OnLevelEvent(e);
                         };
                          
                         turret.OnExplosion += (sender, args) =>
                         {
-                            if (!(args is LevelEvent e)) return;
+                            if (!(args is LevelEventArgs e)) return;
                             OnLevelEvent(e);
                         };
                         _components.Add(turret);
@@ -373,13 +370,13 @@ namespace SE_Praktikum.Core
                          alienship.Rotation = (float)Math.PI;
                          alienship.OnShoot += (sender, args) =>
                          {
-                             if (!(args is LevelEvent e)) return;
+                             if (!(args is LevelEventArgs e)) return;
                              OnLevelEvent(e);
                          };
                         
                          alienship.OnExplosion += (sender, args) =>
                          {
-                             if (!(args is LevelEvent e)) return;
+                             if (!(args is LevelEventArgs e)) return;
                              OnLevelEvent(e);
                          };
                          _components.Add(alienship);
@@ -391,12 +388,12 @@ namespace SE_Praktikum.Core
                         boss.Rotation = (float)Math.PI;
                         boss.OnShoot += (sender, args) =>
                         {
-                            if (!(args is LevelEvent e)) return;
+                            if (!(args is LevelEventArgs e)) return;
                             OnLevelEvent(e);
                         };
                         boss.OnExplosion += (sender, args) =>
                         {
-                            if (!(args is LevelEvent e)) return;
+                            if (!(args is LevelEventArgs e)) return;
                             OnLevelEvent(e);
                         };
                         boss.OnDeath += (sender, args) => InvokeOnLevelComplete();
@@ -409,13 +406,13 @@ namespace SE_Praktikum.Core
                         mines.Rotation = (float)Math.PI;
                         mines.OnShoot += (sender, args) =>
                         {
-                            if (!(args is LevelEvent e)) return;
+                            if (!(args is LevelEventArgs e)) return;
                             OnLevelEvent(e);
                         };
 
                         mines.OnExplosion += (sender, args) =>
                         {
-                            if (!(args is LevelEvent e)) return;
+                            if (!(args is LevelEventArgs e)) return;
                             OnLevelEvent(e);
                         };
                         _components.Add(mines);
