@@ -813,6 +813,18 @@
                  "width":0,
                  "x":297,
                  "y":3922
+                }, 
+                {
+                 "height":0,
+                 "id":66,
+                 "name":"KamikazeSpawn",
+                 "point":true,
+                 "rotation":0,
+                 "type":"KamikazeSpawn",
+                 "visible":true,
+                 "width":0,
+                 "x":837,
+                 "y":3897
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -833,7 +845,7 @@
          "y":0
         }],
  "nextlayerid":25,
- "nextobjectid":66,
+ "nextobjectid":67,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.4.2",

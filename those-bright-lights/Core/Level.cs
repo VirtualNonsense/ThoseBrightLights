@@ -429,6 +429,25 @@ namespace SE_Praktikum.Core
                         };
                         _components.Add(mines);
                         break;
+
+                    case EnemyType.Kamikaze:
+                        var kamikaze = _enemyFactory.GetKamikaze();
+                        kamikaze.Layer = layer;
+                        kamikaze.Position = enemySpawnPoint.Item2;
+                        kamikaze.Rotation = (float)Math.PI;
+                        kamikaze.OnShoot += (sender, args) =>
+                        {
+                            if (!(args is LevelEventArgs e)) return;
+                            OnLevelEvent(e);
+                        };
+
+                        kamikaze.OnExplosion += (sender, args) =>
+                        {
+                            if (!(args is LevelEventArgs e)) return;
+                            OnLevelEvent(e);
+                        };
+                        _components.Add(kamikaze);
+                        break;
                 }
             }
         }

@@ -112,6 +112,12 @@ namespace SE_Praktikum.Services.Factories
                             case "BossSpawn":
                                 EnemySpawnpoints.Add((EnemyType.Boss, ConvertObjectToPolygon(obj).Center));
                                 break;
+                            case "KamikazeSpawn":
+                                EnemySpawnpoints.Add((EnemyType.Kamikaze, ConvertObjectToPolygon(obj).Center));
+                                break;
+                            case "MineSpawn":
+                                EnemySpawnpoints.Add((EnemyType.Mines, ConvertObjectToPolygon(obj).Center));
+                                break;
                             case "HealthPowerUpSpawn":
                                 PowerUpSpawnpoints.Add((PowerUpType.HealthPowerUp, ConvertObjectToPolygon(obj).Center));
                                 break;
