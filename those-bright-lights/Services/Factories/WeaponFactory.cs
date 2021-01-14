@@ -329,7 +329,7 @@ namespace SE_Praktikum.Services.Factories
             int shotCooldown = 500,
             int reloadTime = 2000,
             float damage = 5,
-            string nameTag = "Boss Lasergun",
+            string nameTag = "Shotgun",
             float health = 1,
             float maxHealth = 1)
         {
@@ -389,7 +389,9 @@ namespace SE_Praktikum.Services.Factories
         //    }
         //}
 
-        /// <summary>
+        #region BossWeapon
+
+         /// <summary>
         /// Boss Weapon p2
         /// </summary>
         /// <param name="owner"></param>
@@ -419,9 +421,9 @@ namespace SE_Praktikum.Services.Factories
                 _animationHandlerFactory.GetAnimationHandler(tileSet,
                     new AnimationSettings(4,200f, isPlaying: false)),
                 owner,
-                new Vector2(45, 20),
+                new Vector2(60, -10),
                 0,
-                new Vector2(20, -2),
+                new Vector2(22, 5),
                 null,
                 null,
                 nameTag,
@@ -456,7 +458,7 @@ namespace SE_Praktikum.Services.Factories
             int shotCooldown = 500,
             int reloadTime = 2000,
             float damage = 5,
-            string nameTag = "Minigun",
+            string nameTag = "Boss Lasergun",
             float health = 1,
             float maxHealth = 1)
         {
@@ -467,9 +469,9 @@ namespace SE_Praktikum.Services.Factories
                 _animationHandlerFactory.GetAnimationHandler(tileSet,
                     new AnimationSettings(4,200f, isPlaying: false)),
                 owner,
-                new Vector2(45, 20),
+                new Vector2(50, 15),
                 0,
-                new Vector2(20, -2),
+                new Vector2(22, 5),
                 null,
                 null,
                 nameTag,
@@ -486,5 +488,7 @@ namespace SE_Praktikum.Services.Factories
             m.Scale = 1.8f;
             return m;
         } 
+
+        #endregion
     }
 }

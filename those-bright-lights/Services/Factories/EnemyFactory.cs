@@ -98,6 +98,7 @@ namespace SE_Praktikum.Services.Factories
                 Scale = 2
             };
             b.AddWeapon(_weaponFactory.GetUpperBossLaserGun(b));
+            b.AddWeapon(_weaponFactory.GetLowerBossLaserGun(b));
 
             return b;
         }
