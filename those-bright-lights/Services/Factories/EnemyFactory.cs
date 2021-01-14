@@ -64,8 +64,8 @@ namespace SE_Praktikum.Services.Factories
         public Turret GetMines()
         {
             SoundEffect impactSound = _contentManager.Load<SoundEffect>("Audio/Sound_Effects/Collusion/ClinkBell");
-            var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\turret_16_21.json", 0);         //add mines stuff
-            var animationSettings = new AnimationSettings(1, isPlaying: false);
+            var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\mine_29_29.json", 0);         
+            var animationSettings = new AnimationSettings(1, isPlaying:false);
             var m = new Turret(_animationHandlerFactory.GetAnimationHandler(tileSet, animationSettings),
                 impactSound: impactSound,
                 viewbox: new Polygon(Vector2.Zero, Vector2.Zero, 0,
@@ -107,14 +107,14 @@ namespace SE_Praktikum.Services.Factories
         {
             SoundEffect impactSound;
             var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\kamikazeIdle_40_25_6.json", 0);
-            var animationSettings = new AnimationSettings(6,isPlaying:true);
+            var animationSettings = new AnimationSettings(6, 50, isPlaying:true, isLooping:true);
             var b = new Kamikaze(_animationHandlerFactory.GetAnimationHandler(tileSet, animationSettings),
                 new Polygon(Vector2.Zero, Vector2.Zero, 0,
                     new List<Vector2> {new Vector2(0, 0), new Vector2(400, -150), new Vector2(400, 150),}))
             {
                 Scale = 2
             };
-            b.AddWeapon(_weaponFactory.GetEnemyLaserGun(b));
+            
 
             return b;
         }
