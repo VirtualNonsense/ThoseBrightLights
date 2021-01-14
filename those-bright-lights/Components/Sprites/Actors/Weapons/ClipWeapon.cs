@@ -12,6 +12,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Weapons
     {
         private int _clips;
         private int _ammunitionInClip;
+        private bool _ammoUsage;
         private readonly int _clipSize;
         private readonly CastTimeAbility _reloadDownTime;
         private readonly SoundEffect _clipEmptySound;
@@ -52,6 +53,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Weapons
                              SoundEffect reloadSoundEffect,
                              int clipSize,
                              int clips,
+                             bool ammoUsage,
                              int reloadTime = 1000,
                              int? initialBulletsInClip = null)
             : base(animationHandler,parent, relativePosition, relativeRotation,bulletSpawnPoint,shotSoundEffect, impactSound,nameTag, health, maxHealth)
@@ -64,6 +66,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Weapons
             _clipEmptySound = clipEmptySound;
             _weaponEmptySound = weaponEmptySound;
             _reloadSoundEffect = reloadSoundEffect;
+            _ammoUsage = ammoUsage;
         }
         // #############################################################################################################
         // Events
@@ -95,6 +98,11 @@ namespace SE_Praktikum.Components.Sprites.Actors.Weapons
             add => _reloadDownTime.OnCoolAbilityAvailable += value;
             remove => _reloadDownTime.OnCoolAbilityAvailable -= value;
         }
+
+        /// <summary>
+        /// Fires when someone sets the ammoUsageProperty
+        /// </summary>
+        public event EventHandler OnAmmoUsageChanged;
         
         // #############################################################################################################
         // Properties
@@ -110,6 +118,8 @@ namespace SE_Praktikum.Components.Sprites.Actors.Weapons
             get => _ammunitionInClip;
             set
             {
+                // when ammoUsage is disabled the ammunition is not decrementable
+                if (!_ammoUsage && value < _ammunitionInClip) return;
                 value = value < 0 ? 0 : value;
                 value = value > _clipSize ? _clipSize : value;
                 _ammunitionInClip = value;
@@ -126,6 +136,16 @@ namespace SE_Praktikum.Components.Sprites.Actors.Weapons
         {
             _reloadDownTime.Update(gameTime);
             base.Update(gameTime);
+        }
+
+        public bool AmmoUsage
+        {
+            get => _ammoUsage;
+            set
+            {
+                _ammoUsage = value;
+                OnOnAmmoUsageChanged();
+            }
         }
 
         // #############################################################################################################
@@ -193,6 +213,11 @@ namespace SE_Praktikum.Components.Sprites.Actors.Weapons
         {
             _weaponEmptySound?.Play();
             OnWeaponEmpty?.Invoke(this, EventArgs.Empty);
+        }
+
+        protected virtual void OnOnAmmoUsageChanged()
+        {
+            OnAmmoUsageChanged?.Invoke(this, EventArgs.Empty);
         }
     }
 }

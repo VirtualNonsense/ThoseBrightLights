@@ -18,6 +18,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Weapons
         /// <param name="animationHandler"></param>
         /// <param name="parent">the owner of the gun. it will be assigned to each bullet as well</param>
         /// <param name="relativeRotation"></param>
+        /// <param name="bulletSpawnPoint"></param>
         /// <param name="shotSoundEffect"></param>
         /// <param name="impactSound"></param>
         /// <param name="health"></param>
@@ -32,6 +33,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Weapons
         /// <param name="shotCoolDown">in milliseconds</param>
         /// <param name="reloadTime">in milliseconds</param>
         /// <param name="relativePosition"></param>
+        /// <param name="ammoUsage">Determines whether the ammo decrements ammo when shooting</param>
         public SingleShotWeapon(AnimationHandler animationHandler,
                                 Actor parent,
                                 Vector2 relativePosition,
@@ -49,7 +51,8 @@ namespace SE_Praktikum.Components.Sprites.Actors.Weapons
                                 int clips,
                                 Func<Bullet> constructPreconfiguredBullet,
                                 int shotCoolDown = 10,
-                                int reloadTime = 1000) 
+                                int reloadTime = 1000,
+                                bool ammoUsage = true) 
                             : base(animationHandler,
                                 parent,
                                 relativePosition,
@@ -65,6 +68,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Weapons
                                 reloadSound,
                                 clipSize,
                                 clips,
+                                ammoUsage,
                                 shotCoolDown,
                                 reloadTime)
         {
