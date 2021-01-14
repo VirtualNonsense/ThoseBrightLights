@@ -188,177 +188,8 @@ namespace SE_Praktikum.Core
             _screen.Camera.Follow(player);
             _screen.Camera.Position += new Vector3(0, 0, player.Layer);
             _components.Add(player);
-            foreach(var p in _map.PowerUpSpawnpoints)
-            {
-                switch(p.Item1)
-                {
-                    case PowerUpType.HealthPowerUp:
-                        var healthpowerup = powerUpFactory.HealthGetInstance(10, new Vector2(0,0));
-                        healthpowerup.Layer = player.Layer;
-                        healthpowerup.Position = p.Item2;
-                        healthpowerup.OnExplosion += (sender, args) =>
-                        {
-                            if (!(args is LevelEvent e)) return;
-                            OnLevelEvent(e);
-                        };
-                        _components.Add(healthpowerup);
-                        break;
-
-                    case PowerUpType.InstaDeathPowerUp:
-                        var instadeathpowerup = powerUpFactory.DeathGetInstance(new Vector2(0,0));
-                        instadeathpowerup.Layer = player.Layer;
-                        instadeathpowerup.Position = p.Item2;
-                        instadeathpowerup.OnExplosion += (sender, args) =>
-                        {
-                            if (!(args is LevelEvent e)) return;
-                            OnLevelEvent(e);
-                        };
-                        _components.Add(instadeathpowerup);
-                        break;
-
-                    case PowerUpType.FullHealthPowerUp:
-                        var fullhealthpowerup = powerUpFactory.FullHealthGetInstance(100, new Vector2(0,0));
-                        fullhealthpowerup.Layer = player.Layer;
-                        fullhealthpowerup.Position = p.Item2;
-                        fullhealthpowerup.OnExplosion += (sender, args) =>
-                        {
-                            if (!(args is LevelEvent e)) return;
-                            OnLevelEvent(e);
-                        };
-                        _components.Add(fullhealthpowerup);
-                        break;
-
-                    case PowerUpType.ScoreBonusPowerUp:
-                        var scorebonuspowerup = powerUpFactory.ScoreBonusGetInstance(50, new Vector2(0,0));
-                        scorebonuspowerup.Layer = player.Layer;
-                        scorebonuspowerup.Position = p.Item2;
-                        scorebonuspowerup.OnExplosion += (sender, args) =>
-                        {
-                            if (!(args is LevelEvent e)) return;
-                            OnLevelEvent(e);
-                        };
-                        _components.Add(scorebonuspowerup);
-                        break;
-
-                    case PowerUpType.AmmoPowerUp:
-                        var ammopowerup = powerUpFactory.AmmoGetInstance(200, new Vector2(0,0));
-                        ammopowerup.Layer = player.Layer;
-                        ammopowerup.Position = p.Item2;
-                        ammopowerup.OnExplosion += (sender, args) =>
-                        {
-                            if (!(args is LevelEvent e)) return;
-                            OnLevelEvent(e);
-                        };
-                        _components.Add(ammopowerup);
-                        break;
-
-                    case PowerUpType.StarPowerUp:
-                        var starpowerup = powerUpFactory.StarGetInstance(200,new Vector2(0, 0));
-                        starpowerup.Layer = player.Layer;
-                        starpowerup.Position = p.Item2;
-                        starpowerup.OnExplosion += (sender, args) =>
-                        {
-                            if (!(args is LevelEvent e)) return;
-                            OnLevelEvent(e);
-                        };
-                        _components.Add(starpowerup);
-                        break;
-
-                    case PowerUpType.WeaponPowerUp:
-                        var weaponpowerup = powerUpFactory.RocketGetInstance(new Vector2(0, 0));
-                        weaponpowerup.Layer = player.Layer;
-                        weaponpowerup.Position = p.Item2;
-                        weaponpowerup.OnExplosion += (sender, args) =>
-                        {
-                            if (!(args is LevelEvent e)) return;
-                            OnLevelEvent(e);
-                        };
-                        _components.Add(weaponpowerup);
-                        break;
-
-
-
-                }
-            }
-            foreach(var e in _map.EnemySpawnpoints)
-            {
-                switch(e.Item1)
-                {
-                    case EnemyType.Turret:
-                        var turret = _enemyFactory.GetTurret();
-                        turret.Layer = player.Layer;
-                        turret.Position = e.Item2;
-                        turret.Rotation = (float)Math.PI;
-                        turret.OnShoot += (sender, args) =>
-                        {
-                            if (!(args is LevelEvent e)) return;
-                            OnLevelEvent(e);
-                        };
-                         
-                        turret.OnExplosion += (sender, args) =>
-                        {
-                            if (!(args is LevelEvent e)) return;
-                            OnLevelEvent(e);
-                        };
-                        _components.Add(turret);
-                        break;
-                    case EnemyType.Alienship:
-                        var alienship = _enemyFactory.GetAlienship(); 
-                         alienship.Layer = player.Layer;
-                         alienship.Position = e.Item2;
-                         alienship.Rotation = (float)Math.PI;
-                         alienship.OnShoot += (sender, args) =>
-                         {
-                             if (!(args is LevelEvent e)) return;
-                             OnLevelEvent(e);
-                         };
-                        
-                         alienship.OnExplosion += (sender, args) =>
-                         {
-                             if (!(args is LevelEvent e)) return;
-                             OnLevelEvent(e);
-                         };
-                         _components.Add(alienship);
-                        break;
-                    case EnemyType.Boss:
-                        var boss = _enemyFactory.GetBoss();
-                        boss.Layer = player.Layer;
-                        boss.Position = e.Item2;
-                        boss.Rotation = (float)Math.PI;
-                        boss.OnShoot += (sender, args) =>
-                        {
-                            if (!(args is LevelEvent e)) return;
-                            OnLevelEvent(e);
-                        };
-                        boss.OnExplosion += (sender, args) =>
-                        {
-                            if (!(args is LevelEvent e)) return;
-                            OnLevelEvent(e);
-                        };
-                        boss.OnDeath += (sender, args) => InvokeOnLevelComplete();
-                        _components.Add(boss);
-                        break;
-                    case EnemyType.Mines:
-                        var mines = _enemyFactory.GetMines();
-                        mines.Layer = player.Layer;
-                        mines.Position = e.Item2;
-                        mines.Rotation = (float)Math.PI;
-                        mines.OnShoot += (sender, args) =>
-                        {
-                            if (!(args is LevelEvent e)) return;
-                            OnLevelEvent(e);
-                        };
-
-                        mines.OnExplosion += (sender, args) =>
-                        {
-                            if (!(args is LevelEvent e)) return;
-                            OnLevelEvent(e);
-                        };
-                        _components.Add(mines);
-                        break;
-                        
-                }
-            }
+            SpawnPowerUps(player.Layer);
+            
         }
 
         public void Unload()
@@ -415,6 +246,181 @@ namespace SE_Praktikum.Core
         {
             _logger.Debug("LEVEL COMPLETE!");
             OnLevelComplete?.Invoke(this, EventArgs.Empty);
+        }
+
+        private void SpawnPowerUps(float layer)
+        {
+            foreach(var p in _map.PowerUpSpawnpoints)
+            {
+                switch(p.Item1)
+                {
+                    case PowerUpType.HealthPowerUp:
+                        var healthpowerup = powerUpFactory.HealthGetInstance(10, new Vector2(0,0));
+                        healthpowerup.Layer = layer;
+                        healthpowerup.Position = p.Item2;
+                        healthpowerup.OnExplosion += (sender, args) =>
+                        {
+                            if (!(args is LevelEvent e)) return;
+                            OnLevelEvent(e);
+                        };
+                        _components.Add(healthpowerup);
+                        break;
+
+                    case PowerUpType.InstaDeathPowerUp:
+                        var instadeathpowerup = powerUpFactory.DeathGetInstance(new Vector2(0,0));
+                        instadeathpowerup.Layer = layer;
+                        instadeathpowerup.Position = p.Item2;
+                        instadeathpowerup.OnExplosion += (sender, args) =>
+                        {
+                            if (!(args is LevelEvent e)) return;
+                            OnLevelEvent(e);
+                        };
+                        _components.Add(instadeathpowerup);
+                        break;
+
+                    case PowerUpType.FullHealthPowerUp:
+                        var fullhealthpowerup = powerUpFactory.FullHealthGetInstance(100, new Vector2(0,0));
+                        fullhealthpowerup.Layer = layer;
+                        fullhealthpowerup.Position = p.Item2;
+                        fullhealthpowerup.OnExplosion += (sender, args) =>
+                        {
+                            if (!(args is LevelEvent e)) return;
+                            OnLevelEvent(e);
+                        };
+                        _components.Add(fullhealthpowerup);
+                        break;
+
+                    case PowerUpType.ScoreBonusPowerUp:
+                        var scorebonuspowerup = powerUpFactory.ScoreBonusGetInstance(50, new Vector2(0,0));
+                        scorebonuspowerup.Layer = layer;
+                        scorebonuspowerup.Position = p.Item2;
+                        scorebonuspowerup.OnExplosion += (sender, args) =>
+                        {
+                            if (!(args is LevelEvent e)) return;
+                            OnLevelEvent(e);
+                        };
+                        _components.Add(scorebonuspowerup);
+                        break;
+
+                    case PowerUpType.AmmoPowerUp:
+                        var ammopowerup = powerUpFactory.AmmoGetInstance(200, new Vector2(0,0));
+                        ammopowerup.Layer = layer;
+                        ammopowerup.Position = p.Item2;
+                        ammopowerup.OnExplosion += (sender, args) =>
+                        {
+                            if (!(args is LevelEvent e)) return;
+                            OnLevelEvent(e);
+                        };
+                        _components.Add(ammopowerup);
+                        break;
+
+                    case PowerUpType.StarPowerUp:
+                        var starpowerup = powerUpFactory.StarGetInstance(200,new Vector2(0, 0));
+                        starpowerup.Layer = layer;
+                        starpowerup.Position = p.Item2;
+                        starpowerup.OnExplosion += (sender, args) =>
+                        {
+                            if (!(args is LevelEvent e)) return;
+                            OnLevelEvent(e);
+                        };
+                        _components.Add(starpowerup);
+                        break;
+
+                    case PowerUpType.WeaponPowerUp:
+                        var weaponpowerup = powerUpFactory.RocketGetInstance(new Vector2(0, 0));
+                        weaponpowerup.Layer = layer;
+                        weaponpowerup.Position = p.Item2;
+                        weaponpowerup.OnExplosion += (sender, args) =>
+                        {
+                            if (!(args is LevelEvent e)) return;
+                            OnLevelEvent(e);
+                        };
+                        _components.Add(weaponpowerup);
+                        break;
+                }
+            }
+        }
+
+        private void SpawnEnemies(float layer)
+        {
+            foreach(var enemySpawnPoint in _map.EnemySpawnpoints)
+            {
+                switch(enemySpawnPoint.Item1)
+                {
+                    case EnemyType.Turret:
+                        var turret = _enemyFactory.GetTurret();
+                        turret.Layer = layer;
+                        turret.Position = enemySpawnPoint.Item2;
+                        turret.Rotation = (float)Math.PI;
+                        turret.OnShoot += (sender, args) =>
+                        {
+                            if (!(args is LevelEvent e)) return;
+                            OnLevelEvent(e);
+                        };
+                         
+                        turret.OnExplosion += (sender, args) =>
+                        {
+                            if (!(args is LevelEvent e)) return;
+                            OnLevelEvent(e);
+                        };
+                        _components.Add(turret);
+                        break;
+                    case EnemyType.Alienship:
+                        var alienship = _enemyFactory.GetAlienship(); 
+                         alienship.Layer = layer;
+                         alienship.Position = enemySpawnPoint.Item2;
+                         alienship.Rotation = (float)Math.PI;
+                         alienship.OnShoot += (sender, args) =>
+                         {
+                             if (!(args is LevelEvent e)) return;
+                             OnLevelEvent(e);
+                         };
+                        
+                         alienship.OnExplosion += (sender, args) =>
+                         {
+                             if (!(args is LevelEvent e)) return;
+                             OnLevelEvent(e);
+                         };
+                         _components.Add(alienship);
+                        break;
+                    case EnemyType.Boss:
+                        var boss = _enemyFactory.GetBoss();
+                        boss.Layer = layer;
+                        boss.Position = enemySpawnPoint.Item2;
+                        boss.Rotation = (float)Math.PI;
+                        boss.OnShoot += (sender, args) =>
+                        {
+                            if (!(args is LevelEvent e)) return;
+                            OnLevelEvent(e);
+                        };
+                        boss.OnExplosion += (sender, args) =>
+                        {
+                            if (!(args is LevelEvent e)) return;
+                            OnLevelEvent(e);
+                        };
+                        boss.OnDeath += (sender, args) => InvokeOnLevelComplete();
+                        _components.Add(boss);
+                        break;
+                    case EnemyType.Mines:
+                        var mines = _enemyFactory.GetMines();
+                        mines.Layer = layer;
+                        mines.Position = enemySpawnPoint.Item2;
+                        mines.Rotation = (float)Math.PI;
+                        mines.OnShoot += (sender, args) =>
+                        {
+                            if (!(args is LevelEvent e)) return;
+                            OnLevelEvent(e);
+                        };
+
+                        mines.OnExplosion += (sender, args) =>
+                        {
+                            if (!(args is LevelEvent e)) return;
+                            OnLevelEvent(e);
+                        };
+                        _components.Add(mines);
+                        break;
+                }
+            }
         }
     }
 }
