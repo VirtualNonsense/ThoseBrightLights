@@ -157,12 +157,14 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            foreach (var comp in Components)
+            foreach (var comp in Components.Where(comp => !(comp is Weapon)))
             {
-                if(!(comp is Weapon))
-                    comp.Draw(spriteBatch);
-                foreach(var weapon in CurrentWeapons)
-                    weapon.Draw(spriteBatch);
+                comp.Draw(spriteBatch);
+            }
+
+            foreach (var weapon in CurrentWeapons)
+            {
+                weapon.Draw(spriteBatch);
             }
             base.Draw(spriteBatch);
         }
