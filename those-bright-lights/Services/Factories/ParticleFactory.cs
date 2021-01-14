@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using SE_Praktikum.Components.Actors;
+using SE_Praktikum.Components.Sprites;
 using SE_Praktikum.Models;
 
 namespace SE_Praktikum.Services.Factories
@@ -49,7 +50,13 @@ namespace SE_Praktikum.Services.Factories
             var explosionTileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\minigunexplosions_8_10_5.json", 0);
             return new ExplosionsParticle(_factory.GetAnimationHandler(explosionTileSet, animationSettings), _screen);
         }
-        
-        
+
+        public StatusEffectParticle BuildStarEffectParticle(int onScreenTime)
+        {
+            var animationSettings = new AnimationSettings(10, 50, isLooping: true);
+            var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\star_21_21_10.json", 0);
+            return new StatusEffectParticle(_factory.GetAnimationHandler(tileSet, animationSettings), _screen,
+                onScreenTime);
+        }
     }
 }
