@@ -73,9 +73,9 @@ namespace SE_Praktikum.Models
             
         }
 
-        public class EmmitParticleEffectEventArgs : LevelEventArgs
+        public class InvincibilityChangedEventArgs : LevelEventArgs
         {
-            
+            public Actor Target;
         }
     }
 }

@@ -57,7 +57,7 @@ namespace SE_Praktikum.Components.Sprites.Actors
         public event EventHandler OnHealthChanged;
         public event EventHandler OnMaxHealthChanged;
         public event EventHandler OnFlippedChange;
-        public event EventHandler OnInvincibilityChanged; 
+        public event EventHandler<LevelEventArgs.InvincibilityChangedEventArgs> OnInvincibilityChanged; 
         
         #endregion
         // #############################################################################################################
@@ -234,7 +234,7 @@ namespace SE_Praktikum.Components.Sprites.Actors
 
         protected virtual void InvokeOnInvincibilityChanged()
         {
-            OnInvincibilityChanged?.Invoke(this, EventArgs.Empty);
+            OnInvincibilityChanged?.Invoke(this, new LevelEventArgs.InvincibilityChangedEventArgs(){Target = this});
         }
     }
 }

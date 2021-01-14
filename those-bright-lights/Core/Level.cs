@@ -17,6 +17,8 @@ using SE_Praktikum.Services.Factories;
 using SE_Praktikum.Extensions;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using NLog.Targets;
+using SE_Praktikum.Services.ParticleEmitter;
 
 namespace SE_Praktikum.Core
 {
@@ -39,6 +41,8 @@ namespace SE_Praktikum.Core
         private Map _map;
         private MouseState _previousMousestate;
         private MouseState _mouseState;
+
+        private ParticleEmitter _emitter;
         // #############################################################################################################
         // Constructor
         // #############################################################################################################
@@ -55,6 +59,7 @@ namespace SE_Praktikum.Core
                      Song song = null
                      )
         {
+            _logger = LogManager.GetCurrentClassLogger();
             _mapPath = mapPath;
             this.LevelNumber = levelNumber;
             _mapFactory = mapFactory;
@@ -67,7 +72,7 @@ namespace SE_Praktikum.Core
             this.hUDFactory = hUDFactory;
             this.song = song;
             _components = new List<IComponent>();
-            _logger = LogManager.GetCurrentClassLogger();
+            _emitter = new StarEmitter(300, 700, _particleFactory);
         }
 
         // #############################################################################################################
@@ -113,6 +118,7 @@ namespace SE_Praktikum.Core
             if(_map.WinningZone != null)
                 _gameEngine.Render(_map.WinningZone.Polygons);
             _gameEngine.Render(_components);
+            _gameEngine.Render(_emitter);
         }
 
         public void Update(GameTime gameTime)
@@ -147,6 +153,7 @@ namespace SE_Praktikum.Core
                 }
             }
             _screen.Camera.Update(gameTime);
+            _emitter.Update(gameTime);
         }
         public void PostUpdate()
         {
@@ -173,6 +180,7 @@ namespace SE_Praktikum.Core
 
             player.Position = _map.PlayerSpawnPoint?.Center ?? new Vector2(0, 0);
             player.Layer = _collisionLayer;
+            player.OnInvincibilityChanged += (sender, args) => ProcessLevelEvent(args);
             player.OnDeath += (sender, args) => ProcessLevelEvent(args);
             player.OnShoot += (sender, args) =>
             {
@@ -241,6 +249,18 @@ namespace SE_Praktikum.Core
                     _components.Add(s.Particle);
                     return;
                 
+                case LevelEventArgs.InvincibilityChangedEventArgs i:
+                    if (i.Target.Indestructible)
+                    {
+                        if(_emitter.TargetZones.Contains(i.Target))
+                            return;
+                        _emitter.TargetZones.Add(i.Target);
+                        return;
+                    }
+                    if(!_emitter.TargetZones.Contains(i.Target))
+                        return;
+                    _emitter.TargetZones.Remove(i.Target);
+                    break;
                 case LevelEventArgs.BossDiedEventArgs s:
                     if (s.Aggressor is Player p1)
                     {

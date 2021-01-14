@@ -709,6 +709,18 @@
                  "width":0,
                  "x":6328,
                  "y":1940
+                }, 
+                {
+                 "height":0,
+                 "id":50,
+                 "name":"StarPowerUpSpawn",
+                 "point":true,
+                 "rotation":0,
+                 "type":"StarPowerUpSpawn",
+                 "visible":true,
+                 "width":0,
+                 "x":388,
+                 "y":1990
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -729,7 +741,7 @@
          "y":0
         }],
  "nextlayerid":27,
- "nextobjectid":50,
+ "nextobjectid":51,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.4.2",
