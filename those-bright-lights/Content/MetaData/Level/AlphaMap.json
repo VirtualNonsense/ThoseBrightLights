@@ -816,15 +816,15 @@
                 }, 
                 {
                  "height":0,
-                 "id":66,
-                 "name":"KamikazeSpawn",
+                 "id":67,
+                 "name":"WeaponPowerUpSpawn",
                  "point":true,
                  "rotation":0,
-                 "type":"KamikazeSpawn",
+                 "type":"WeaponPowerUpSpawn",
                  "visible":true,
                  "width":0,
-                 "x":837,
-                 "y":3897
+                 "x":808,
+                 "y":3882
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -845,7 +845,7 @@
          "y":0
         }],
  "nextlayerid":25,
- "nextobjectid":67,
+ "nextobjectid":68,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.4.2",

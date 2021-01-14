@@ -308,7 +308,10 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
                     break;
                 
                 case WeaponPowerUp r:
-                    AddWeapon(r.Weapon);
+                    foreach(var e in r.Weaponlist)
+                    {
+                        Components.Add(e);
+                    }
                     break;
                 case StarPowerUp s:
                     var key = "starpowerup";

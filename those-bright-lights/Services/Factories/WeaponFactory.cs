@@ -370,29 +370,39 @@ namespace SE_Praktikum.Services.Factories
                 reloadTime: reloadTime);
             m.Scale = 1.8f;
             return m;
-        } 
+        }
 
-        //public Weapon GetRandomWeapon(Actor owner)
-        //{
-        //    var i = _random.Next(3);
-        //    switch(i)
-        //    {
-        //        case 0:
-        //            return GetMinigun(owner);
-        //        case 1:
-        //            return GetMissileLauncher(owner);
+        public List<Weapon> GetRandomWeapon(Actor owner)
+        {
+            var i = _random.Next(3);
+            List<Weapon> weaponlist = new List<Weapon>();
+            switch (i)
+            {
+                case 0:
+                     weaponlist.Add(GetMissileLauncher(owner));
+                    break;
                     
-        //        case 2:
-        //            return GetShotgun(owner);
+                case 1:
+                    weaponlist.Add(GetShotgun(owner));
+                    break;
 
-        //        default:
-        //            throw new NotImplementedException();
-        //    }
-        //}
+                case 2:
+                    weaponlist.Add(GetMinigun(owner));
+                    break;
+                case 3:
+                    weaponlist.Add(GetLowerLaserGun(owner));
+                    weaponlist.Add(GetUpperLaserGun(owner));
+                    break;
+                default:
+                    throw new NotImplementedException();
+
+            }
+            return weaponlist;
+        }
 
         #region BossWeapon
 
-         /// <summary>
+        /// <summary>
         /// Boss Weapon p2
         /// </summary>
         /// <param name="owner"></param>

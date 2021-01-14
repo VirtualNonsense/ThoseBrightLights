@@ -337,7 +337,7 @@ namespace SE_Praktikum.Core
                         break;
 
                     case PowerUpType.WeaponPowerUp:
-                        var weaponPowerUp = powerUpFactory.RocketGetInstance(new Vector2(0, 0));
+                        var weaponPowerUp = powerUpFactory.GetRandomInstance(new Vector2(0, 0));
                         weaponPowerUp.Layer = layer;
                         weaponPowerUp.Position = p.Item2;
                         weaponPowerUp.OnExplosion += (sender, args) =>
