@@ -29,14 +29,14 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
                       float maxSpeed = 30,
                       float rotationAcceleration = .2f,
                       float maxRotationSpeed = 10,
-                      int health=100,
+                      float health = 100,
+                      float? maxHealth = null,
+                      float impactDamage = 5,
                       SoundEffect impactSound = null) 
-            : base(animationHandler, maxSpeed, acceleration, rotationAcceleration, maxRotationSpeed,health, impactSound)
+            : base(animationHandler, maxSpeed, acceleration, rotationAcceleration, maxRotationSpeed, health, maxHealth: maxHealth,  impactSound: impactSound, impactDamage: impactDamage)
         {
             Score = 0;
             _input = input;
-            Health = health;
-            MaxSpeed = maxSpeed;
             _logger = LogManager.GetCurrentClassLogger();
             Components.Add(
                 new Propulsion(
@@ -92,20 +92,20 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
             {
                 omega += 0.5f * RotationAcceleration * t * t;
             }
-            else
-            {
-                if (Math.Abs(Rotation) >= MathExtensions.DegToRad(2))
-                {
-                    var p = 0;
-                    // first quadrant
-                    if (Rotation >= 4.72124f || Rotation <= 1.5708f)
-                        p = Rotation > Math.PI ? 1 : -1;
-                    else
-                        p = Rotation < Math.PI ? 1 : -1;
-                    
-                    omega += p * 0.25f * RotationAcceleration * t * t;
-                }
-            }
+            // else
+            // {
+            //     if (Math.Abs(Rotation) >= MathExtensions.DegToRad(2))
+            //     {
+            //         var p = 0;
+            //         // first quadrant
+            //         if (Rotation >= 4.72124f || Rotation <= 1.5708f)
+            //             p = Rotation > Math.PI ? 1 : -1;
+            //         else
+            //             p = Rotation < Math.PI ? 1 : -1;
+            //         
+            //         omega += p * 0.25f * RotationAcceleration * t * t;
+            //     }
+            // }
 
             omega *= 0.85f * (1 - Math.Abs(omega / MaxRotationSpeed));
             DeltaRotation = MathExtensions.DegToRad(omega*t);

@@ -48,7 +48,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Weapons
                 SoundEffect impactSound,
                 string nameTag, 
                 float health,
-                float maxHealth)
+                float? maxHealth)
                 : base(animationHandler, parent,relativePosition, relativeRotation, impactSound,health,maxHealth)
         {
             _logger = LogManager.GetCurrentClassLogger();

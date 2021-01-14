@@ -63,8 +63,11 @@ namespace SE_Praktikum.Components.Sprites.Actors.Bullets
                          Particle explosion,
                          SoundEffect midAirSound,
                          SoundEffect impactSound,
-                         float damage) 
-            : base(animationHandler, impactSound)
+                         float damage,
+                         float health,
+                         float? maxHealth,
+                         bool indestructible) 
+            : base(animationHandler, impactSound, health: health, maxHealth: maxHealth, indestructible: indestructible)
         {
             Parent = parent;
             Explosion = explosion;
@@ -73,6 +76,17 @@ namespace SE_Praktikum.Components.Sprites.Actors.Bullets
             MidAirSound = midAirSound;
             _logger = LogManager.GetCurrentClassLogger();
             Damage = damage;
+        }
+
+        public override bool IsRemoveAble
+        {
+            get=>base.IsRemoveAble;
+            set
+            {
+                base.IsRemoveAble = value;
+                if(base.IsRemoveAble)
+                    InvokeExplosion();
+            }
         }
 
         protected Vector2 Movement(Vector2 spaceshipVelocity, float elapsedTime)
@@ -99,8 +113,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Bullets
             {
                 default:
                     if (Parent == other) return;
-                    IsRemoveAble = true;
-                    InvokeExplosion();
+                    Health -= other.Damage;
                     break;
             }
         }

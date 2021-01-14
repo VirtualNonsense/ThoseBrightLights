@@ -30,12 +30,21 @@ namespace SE_Praktikum.Components.Sprites.Actors
         /// <param name="impactSound"></param>
         /// <param name="health"></param>
         /// <param name="maxHealth"></param>
-        public Actor(AnimationHandler animationHandler, SoundEffect impactSound, float health = 100, float maxHealth = 100) : base(animationHandler)
+        /// <param name="impactDamage"></param>
+        /// <param name="indestructible"></param>
+        public Actor(AnimationHandler animationHandler,
+                     SoundEffect impactSound,
+                     float health = 100,
+                     float? maxHealth = 100,
+                     float impactDamage = 5, 
+                     bool indestructible = false) : base(animationHandler)
         {
-            MaxHealth = maxHealth;
+            MaxHealth = maxHealth ?? health;
             Health = health;
             _logger = LogManager.GetCurrentClassLogger();
             _impactSound = impactSound;
+            _indestructible = indestructible;
+            Damage = impactDamage;
         }
         
         // #############################################################################################################
