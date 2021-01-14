@@ -25,7 +25,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
         protected float DeltaRotation;
         private Logger _logger;
         protected Polygon _impactPolygon;
-        private int _currentWeapon;
+        private int _componentIndex;
         private readonly Dictionary<string, CastTimeAbility> _statusChangeResetTimer;
 
         // #############################################################################################################
@@ -68,25 +68,25 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
         protected List<Weapon> AllWeaponsList => Components.OfType<Weapon>().ToList();
         protected List<Weapon> CurrentWeapons => (from w in AllWeaponsList where w.NameTag == AllWeaponsList[IndexOfWeaponsOfTheSameType].NameTag select w).ToList(); 
 
-        public int CurrentWeapon 
+        public int ComponentIndex 
         {
-            get => _currentWeapon;
+            get => _componentIndex;
             set
             {
                 if (value < 0)
                 {
-                    _currentWeapon = 0;
+                    _componentIndex = 0;
                     InvokeOnWeaponChanged();
                     return;
                 }
 
                 if (value >= AllWeaponsList.Count)
                 {
-                    _currentWeapon = AllWeaponsList.Count - 1;
+                    _componentIndex = AllWeaponsList.Count - 1;
                     InvokeOnWeaponChanged();
                     return;
                 }
-                _currentWeapon = value;
+                _componentIndex = value;
                 InvokeOnWeaponChanged();
             }
         }
@@ -145,8 +145,8 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
                     continue;
                 }
                 Components.Remove(w);
-                if (CurrentWeapon >= AllWeaponsList.Count)
-                    CurrentWeapon = AllWeaponsList.Count - 1;
+                if (ComponentIndex >= AllWeaponsList.Count)
+                    ComponentIndex = AllWeaponsList.Count - 1;
             }
 
             base.Update(gameTime);
@@ -165,7 +165,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
         {
             weapon.Parent = this;
             Components.Add(weapon);
-            CurrentWeapon = Components.Count - 1;
+            ComponentIndex = Components.Count - 1;
             weapon.OnEmitBullet += EmitBulletToOnShot;
             switch (weapon)
             {
