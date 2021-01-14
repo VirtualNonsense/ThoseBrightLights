@@ -38,7 +38,6 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
             if (I == InterAction.InView && Target != null)
                 Shoot.Fire();
             base.Update(gameTime);
-            base.Update(gameTime);
         }
     }
 }

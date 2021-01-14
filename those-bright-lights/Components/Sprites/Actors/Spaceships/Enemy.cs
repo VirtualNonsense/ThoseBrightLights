@@ -86,8 +86,6 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
         
         public override void Update(GameTime gameTime)
         {
-            if(RotateAndShoot)
-                Rotate(Target, gameTime);
 
             base.Update(gameTime);
         }
@@ -140,7 +138,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
             return new LevelEventArgs.EnemyDiedEventArgs();
         }
 
-        protected void Rotate(Actor target, GameTime gameTime)
+        protected virtual void Rotate(Actor target, GameTime gameTime)
         {
             if (Target != null && I == InterAction.InView)
             {

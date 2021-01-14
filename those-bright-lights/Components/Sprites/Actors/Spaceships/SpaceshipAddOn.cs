@@ -13,11 +13,12 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
 {
     public abstract class SpaceshipAddOn : Actor
     {
+        private readonly Vector2 _rotationPoint;
         private float _relativeRotation;
         private Vector2 _relativePosition;
         private Logger _logger;
         private float _absoluteRotation;
-        private float _maxRelativeRotation;
+        public float MaxRelativeRotation;
 
         // #############################################################################################################
         // Constructor
@@ -29,7 +30,9 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
             float relativeRotation, 
             SoundEffect impactSound, 
             float health = 100, 
-            float? maxHealth = null) 
+            float? maxHealth = null,
+            Vector2? rotationPoint = null,
+            float? maxRelativeRotation = null) 
             : base(
                 animationHandler, 
                 impactSound, 
@@ -39,6 +42,8 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
             Parent = parent;
             RelativePosition = relativePosition;
             RelativeRotation = relativeRotation;
+            _rotationPoint = rotationPoint ?? Vector2.Zero;
+            MaxRelativeRotation = maxRelativeRotation ?? MathExtensions.DegToRad(30);
             _logger = LogManager.GetCurrentClassLogger();
         }
         
@@ -81,9 +86,13 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
             get => _relativeRotation;
             set
             {
-                if (Parent == null) return;
+                if (Parent == null || value == _relativeRotation) return;
+                if (Math.Abs(value) > MaxRelativeRotation)
+                    value = MaxRelativeRotation * Math.Sign(value);
                 Rotation = Parent.Rotation + value;
                 _relativeRotation = value;
+                RelativePosition.RotateAroundPoint(value, _rotationPoint);
+                UpdateBasePosition();
             }
         }
 
