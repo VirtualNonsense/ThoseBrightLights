@@ -1261,6 +1261,12 @@
 /processorParam:Quality=Best
 /build:Audio/Sound_Effects/Collusion/Clonk.wav
 
+#begin Audio/Sound_Effects/Collusion/ey.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound_Effects/Collusion/ey.wav
+
 #begin Audio/Sound_Effects/Collusion/Small_Explo.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
