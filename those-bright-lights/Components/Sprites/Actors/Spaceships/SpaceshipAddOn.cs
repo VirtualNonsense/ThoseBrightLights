@@ -65,6 +65,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
                 }
 
                 base.Parent = value;
+                Layer = Parent.Layer;
                 base.Parent.OnPositionChanged += ParentOnOnPositionChanged;
                 base.Parent.OnRotationChanged += ParentOnOnRotationChanged;
                 base.Parent.OnLayerChanged += ParentOnOnLayerChanged;
