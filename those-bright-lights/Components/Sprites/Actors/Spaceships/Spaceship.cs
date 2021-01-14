@@ -214,7 +214,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
         {
             if (b is null)
                 return;
-            var e = new LevelEvent.ShootBullet {Bullet = b};
+            var e = new LevelEventArgs.ShotBulletEventArgs {Bullet = b};
             b.Layer = Layer;
             OnShoot?.Invoke(this,e);
         }

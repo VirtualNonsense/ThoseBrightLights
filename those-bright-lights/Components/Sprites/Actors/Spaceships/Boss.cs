@@ -28,5 +28,10 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
                 Shoot.Fire();
             base.Update(gameTime);
         }
+
+        protected override LevelEventArgs.ActorDiedEventArgs GetOnDeadEventArgs()
+        {
+            return new LevelEventArgs.BossDiedEventArgs();
+        }
     }
 }

@@ -8,6 +8,7 @@ using SE_Praktikum.Components;
 using NLog;
 using NLog.LayoutRenderers;
 using SE_Praktikum.Components.Sprites.Actors.Spaceships;
+using SE_Praktikum.Models;
 
 namespace SE_Praktikum.Components.Sprites.Actors
 {
@@ -36,6 +37,10 @@ namespace SE_Praktikum.Components.Sprites.Actors
         {
             throw new System.NotImplementedException();
         }
-        
+
+        protected override LevelEventArgs.ActorDiedEventArgs GetOnDeadEventArgs()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

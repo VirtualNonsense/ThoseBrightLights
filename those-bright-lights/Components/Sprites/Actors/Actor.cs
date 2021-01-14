@@ -42,8 +42,8 @@ namespace SE_Praktikum.Components.Sprites.Actors
         // Events
         // #############################################################################################################
         #region Events
-        public event EventHandler<EventArgs> OnExplosion;
-        public event EventHandler<EventArgs> OnDeath;
+        public event EventHandler<LevelEventArgs.ExplosionEventArgs> OnExplosion;
+        public event EventHandler<LevelEventArgs.ActorDiedEventArgs> OnDeath;
         public event EventHandler OnHealthChanged;
         public event EventHandler OnMaxHealthChanged;
         public event EventHandler OnFlippedChange;
@@ -190,14 +190,16 @@ namespace SE_Praktikum.Components.Sprites.Actors
 
         protected virtual void InvokeExplosion()
         {
-            var explosionArgs = new LevelEvent.Explosion {Particle = Explosion};
+            var explosionArgs = new LevelEventArgs.ExplosionEventArgs {Particle = Explosion};
             OnExplosion?.Invoke(this, explosionArgs);
         }
 
         protected virtual void InvokeDeath()
         {
-            OnDeath?.Invoke(this, EventArgs.Empty);
+            OnDeath?.Invoke(this, GetOnDeadEventArgs());
         }
+
+        protected abstract LevelEventArgs.ActorDiedEventArgs GetOnDeadEventArgs();
 
         protected virtual void InvokeOnHealthChanged()
         {

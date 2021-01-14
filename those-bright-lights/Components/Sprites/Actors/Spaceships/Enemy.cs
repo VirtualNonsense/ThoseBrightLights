@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using NLog;
 using SE_Praktikum.Extensions;
+using SE_Praktikum.Models;
 using SE_Praktikum.Services;
 using SE_Praktikum.Services.Abilities;
 using Vector2 = Microsoft.Xna.Framework.Vector2;
@@ -130,6 +131,11 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
                     _impactSound?.Play();
                     break;
             }
+        }
+
+        protected override LevelEventArgs.ActorDiedEventArgs GetOnDeadEventArgs()
+        {
+            return new LevelEventArgs.EnemyDiedEventArgs();
         }
 
         protected void Rotate(Actor target, GameTime gameTime)

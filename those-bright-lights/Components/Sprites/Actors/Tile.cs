@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 using NLog;
 using SE_Praktikum.Components.Sprites.Actors.Bullets;
 using SE_Praktikum.Components.Sprites.Actors.Spaceships;
+using SE_Praktikum.Models;
 using SE_Praktikum.Services;
 
 namespace SE_Praktikum.Components.Sprites.Actors
@@ -81,6 +82,12 @@ namespace SE_Praktikum.Components.Sprites.Actors
 
 
 
+        }
+        
+
+        protected override LevelEventArgs.ActorDiedEventArgs GetOnDeadEventArgs()
+        {
+            return new LevelEventArgs.TileDiedEventArgs();
         }
     }
     
