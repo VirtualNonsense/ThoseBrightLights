@@ -31,18 +31,19 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
 
 
         protected EnemyWithViewbox(AnimationHandler animationHandler,
-                                   Polygon viewBox,
-                                   float maxSpeed = 3,
-                                   float acceleration =5,
-                                   float rotationAcceleration = .1f,
-                                   float maxRotationSpeed = 10,
-                                   float health = 50,
-                                   float? maxHealth = null,
-                                   float impactDamage = 5,
-                                   SoundEffect impactSound = null) : base(animationHandler, maxSpeed, acceleration,rotationAcceleration, maxRotationSpeed, health, maxHealth, impactDamage, impactSound: impactSound)
+            Polygon viewBox,
+            float maxSpeed = 3,
+            float acceleration = 5,
+            float rotationAcceleration = .1f,
+            float maxRotationSpeed = 10,
+            float health = 50,
+            float? maxHealth = null,
+            float impactDamage = 5,
+            SoundEffect impactSound = null) : base(animationHandler, maxSpeed, acceleration, rotationAcceleration,
+            maxRotationSpeed, health, maxHealth, impactDamage, impactSound: impactSound)
         {
             ViewBox = viewBox;
-            RotateAndShoot = true;
+            RotateWeapon = true;
         }
 
 

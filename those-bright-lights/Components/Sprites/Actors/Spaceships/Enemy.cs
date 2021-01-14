@@ -17,7 +17,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
         protected Actor Target;
         protected CooldownAbility ForgetTarget;
         protected CooldownAbility Shoot;
-        public bool RotateAndShoot = false;
+        public bool RotateWeapon = false;
         protected float RotateVelocity;
         /// <summary>
         /// Defines the angle in which the enemy doesn't rotate anymore -> it's close enough

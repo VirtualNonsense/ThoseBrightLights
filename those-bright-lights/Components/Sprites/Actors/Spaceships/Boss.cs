@@ -20,7 +20,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
                     SoundEffect impactSound = null) : base(animationHandler, viewBox, maxSpeed, acceleration,rotationAcceleration, maxRotationSpeed, health, maxHealth, impactDamage, impactSound)
         {
             Shoot = new CooldownAbility(500, _shootTarget);
-            RotateAndShoot = true;
+            RotateWeapon = true;
         }
 
         public override void Update(GameTime gameTime)
