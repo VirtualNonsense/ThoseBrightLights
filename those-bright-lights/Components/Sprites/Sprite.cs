@@ -47,8 +47,9 @@ namespace SE_Praktikum.Components
     }
 
     public readonly Color[] TextureData;
+    private bool _isRemoveAble;
 
-    
+
     public virtual Vector2 Position 
     { 
       get => _animationHandler.Position;
@@ -117,7 +118,12 @@ namespace SE_Praktikum.Components
       }
     }
 
-    public bool IsRemoveAble { get; set; }
+    public virtual bool IsRemoveAble
+    {
+      get => _isRemoveAble;
+      set => _isRemoveAble = value;
+    }
+
     public Vector2 Velocity { get; set; }
     
     public Vector2 DeltaPosition { get; set; }
