@@ -77,7 +77,8 @@ namespace SE_Praktikum.Components
     {
         HealthPowerUp,
         FullHealthPowerUp,
-        AmmoPowerUp,
+        InfAmmoPowerUp,
+        BonusClipPowerUp,
         InstaDeathPowerUp,
         ScoreBonusPowerUp,
         StarPowerUp,
