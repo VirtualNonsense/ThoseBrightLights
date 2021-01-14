@@ -122,15 +122,13 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
         // #############################################################################################################
         public override void Update(GameTime gameTime)
         {
-            foreach (var weapon in AllWeapons)
+            foreach (var weapon in CurrentWeapons)
             {
                 weapon.Update(gameTime);
             }
 
             foreach (var component in Components)
-            {
                 component.Update(gameTime);
-            }
 
             for (int i = 0; i < _statusChangeResetTimer.Count;)
             {
@@ -161,7 +159,10 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
         {
             foreach (var comp in Components)
             {
-                comp.Draw(spriteBatch);
+                if(!(comp is Weapon))
+                    comp.Draw(spriteBatch);
+                foreach(var weapon in CurrentWeapons)
+                    weapon.Draw(spriteBatch);
             }
             base.Draw(spriteBatch);
         }
@@ -212,7 +213,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
             var previousWeapon = ((IndexOfWeaponsOfTheSameType - 1) +CurrentWeapons.Count)% CurrentWeapons.Count;
             if (!CurrentWeapons[previousWeapon].CanShoot) return;
             CurrentWeapons[IndexOfWeaponsOfTheSameType].Fire();
-            //IndexOfWeaponsOfTheSameType = (IndexOfWeaponsOfTheSameType +1) % CurrentWeapons.Count;
+            IndexOfWeaponsOfTheSameType = (IndexOfWeaponsOfTheSameType +1) % CurrentWeapons.Count;
         }
         
         protected virtual void ShootAllWeapons()
