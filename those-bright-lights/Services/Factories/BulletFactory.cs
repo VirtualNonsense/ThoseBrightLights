@@ -26,7 +26,7 @@ namespace SE_Praktikum.Services.Factories
             _particleFactory = particleFactory;
         }
         
-        public Bullet GetMissile(Actor owner, float damage)
+        public Bullet GetMissile(Actor owner, float damage, float bulletHealth)
         {
             var missileTiles =  _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\missile.json",0);
             var propulsionTiles =  _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\missile_propulsion_15_15.json", 0);
@@ -46,10 +46,11 @@ namespace SE_Praktikum.Services.Factories
                 owner,
                 null,
                 null,
+                health: bulletHealth,
                 damage: damage);
         }
 
-        public Bullet GetLaser(Actor owner, float damage)
+        public Bullet GetLaser(Actor owner, float damage,float bulletHealth)
         {
             var laserTileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\laser.json", 0);
             var laserTileAnimation =
@@ -63,11 +64,12 @@ namespace SE_Praktikum.Services.Factories
                 owner, 
                 flightEffect,
                 impactSound,
+                health: bulletHealth,
                 damage: damage);
 
         }
         // Todo: only the laser color is different. make laser color a enum and use method above
-        public Bullet GetEnemyLaser(Actor owner, float damage)
+        public Bullet GetEnemyLaser(Actor owner, float damage, float bulletHealth)
         {
             var laserTileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\enemylaser.json", 0);
             var laserTileAnimation =
@@ -81,11 +83,12 @@ namespace SE_Praktikum.Services.Factories
                 owner, 
                 flightEffect,
                 impactSound, 
+                health: bulletHealth,
                 damage: damage);
 
         }
         
-        public Bullet GetProjectile(Actor owner, float damage)
+        public Bullet GetProjectile(Actor owner, float damage, float bulletHealth)
         {
             var projectileTileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\projectile_3_4.json", 0);
             var projectileTileAnimation =
@@ -99,11 +102,12 @@ namespace SE_Praktikum.Services.Factories
                 owner, 
                 flightEffect,
                 impactSound,
+                health: bulletHealth,
                 damage: damage);
 
         }
         
-        public Bullet GetPallet(Actor owner, float damage)
+        public Bullet GetPallet(Actor owner, float damage, float bulletHealth)
         {
             var projectileTileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\shotgunpallet.json", 0);
             var projectileTileAnimation =
@@ -117,6 +121,7 @@ namespace SE_Praktikum.Services.Factories
                 owner, 
                 flightEffect,
                 impactSound,
+                health: bulletHealth,
                 damage: damage);
 
         }

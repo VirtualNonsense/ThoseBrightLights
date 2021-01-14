@@ -76,7 +76,7 @@ namespace SE_Praktikum.Services.Factories
                 null,
                 clipSize,
                 clips,
-                () => _bulletFactory.GetMissile(owner, damage),
+                () => _bulletFactory.GetMissile(owner, damage, 1),
                 shotCoolDown: shotCooldown,
                 reloadTime: reloadTime);
             return m;
@@ -123,7 +123,7 @@ namespace SE_Praktikum.Services.Factories
                 null,
                 clipSize,
                 clips,
-                () => _bulletFactory.GetLaser(owner, damage),
+                () => _bulletFactory.GetLaser(owner, damage, 1),
                 shotCoolDown: shotCooldown,
                 reloadTime: reloadTime);
             m.Scale = 1.5f;
@@ -157,7 +157,7 @@ namespace SE_Praktikum.Services.Factories
                 null,
                 clipSize,
                 clips,
-                () => _bulletFactory.GetLaser(owner, damage),
+                () => _bulletFactory.GetLaser(owner, damage, 1),
                 shotCoolDown: shotCooldown,
                 reloadTime: reloadTime);
             m.Scale = 1.5f;
@@ -207,7 +207,7 @@ namespace SE_Praktikum.Services.Factories
                 null,
                 clipSize,
                 clips,
-                () => _bulletFactory.GetEnemyLaser(owner, damage),
+                () => _bulletFactory.GetEnemyLaser(owner, damage, 1),
                 shotCoolDown: shotCooldown,
                 reloadTime: reloadTime);
             m.Scale = 1.4f;
@@ -256,7 +256,7 @@ namespace SE_Praktikum.Services.Factories
                 null,
                 clipSize,
                 clips,
-                () => _bulletFactory.GetEnemyLaser(owner, damage),
+                () => _bulletFactory.GetEnemyLaser(owner, damage, 1),
                 shotCoolDown: shotCooldown,
                 reloadTime: reloadTime);
             m.Scale = 1.8f;
@@ -264,7 +264,7 @@ namespace SE_Praktikum.Services.Factories
         }
         
         /// <summary>
-        /// Minigun
+        /// Minigun. ta ta ta ta ta ta
         /// </summary>
         /// <param name="owner"></param>
         /// <param name="clipSize"></param>
@@ -304,7 +304,7 @@ namespace SE_Praktikum.Services.Factories
                 null,
                 clipSize,
                 clips,
-                () => _bulletFactory.GetProjectile(owner, damage),
+                () => _bulletFactory.GetProjectile(owner, damage, 1),
                 shotCoolDown: shotCooldown,
                 reloadTime: reloadTime);
             m.Scale = 1.5f;
@@ -365,7 +365,7 @@ namespace SE_Praktikum.Services.Factories
                 null,
                 clipSize,
                 clips,
-                () => _bulletFactory.GetPallet(owner, damage),
+                () => _bulletFactory.GetPallet(owner, damage, 1),
                 shotCoolDown: shotCooldown,
                 reloadTime: reloadTime);
             m.Scale = 1.8f;
@@ -435,7 +435,7 @@ namespace SE_Praktikum.Services.Factories
                 null,
                 clipSize,
                 clips,
-                () => _bulletFactory.GetEnemyLaser(owner, damage),
+                () => _bulletFactory.GetEnemyLaser(owner, damage, 1),
                 shotCoolDown: shotCooldown,
                 reloadTime: reloadTime);
             m.Scale = 1.8f;
@@ -483,7 +483,7 @@ namespace SE_Praktikum.Services.Factories
                 null,
                 clipSize,
                 clips,
-                () => _bulletFactory.GetEnemyLaser(owner, damage),
+                () => _bulletFactory.GetEnemyLaser(owner, damage, 1),
                 shotCoolDown: shotCooldown,
                 reloadTime: reloadTime);
             m.Scale = 1.8f;
