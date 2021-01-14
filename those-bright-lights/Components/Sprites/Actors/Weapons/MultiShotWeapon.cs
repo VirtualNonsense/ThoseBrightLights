@@ -14,7 +14,44 @@ namespace SE_Praktikum.Components.Sprites.Actors.Weapons
         private Random _random;
         private float _spreadAngle;
         private float _speedVariation;
-        public MultiShotWeapon(AnimationHandler animationHandler, Actor parent, Vector2 relativePosition, float relativeRotation, Vector2 bulletSpawnPoint, SoundEffect shotSoundEffect, SoundEffect impactSound, string nameTag, float health, float maxHealth, SoundEffect clipEmptySound, SoundEffect weaponEmptySound, SoundEffect reloadSound, int clipSize, int clips, Func<Bullet> constructPreconfiguredBullet, int shotCoolDown = 10, int reloadTime = 1000, int bulletsPerShot = 8, float? spreadAngle = null) : base(animationHandler, parent, relativePosition, relativeRotation, bulletSpawnPoint, shotSoundEffect, impactSound, nameTag, health, maxHealth, clipEmptySound, weaponEmptySound, reloadSound, clipSize, clips, constructPreconfiguredBullet, shotCoolDown, reloadTime)
+        public MultiShotWeapon(AnimationHandler animationHandler,
+                               Actor parent,
+                               Vector2 relativePosition,
+                               float relativeRotation,
+                               Vector2 bulletSpawnPoint,
+                               SoundEffect shotSoundEffect,
+                               SoundEffect impactSound,
+                               string nameTag,
+                               float health,
+                               float? maxHealth,
+                               SoundEffect clipEmptySound,
+                               SoundEffect weaponEmptySound,
+                               SoundEffect reloadSound,
+                               int clipSize,
+                               int clips,
+                               Func<Bullet> constructPreconfiguredBullet,
+                               int shotCoolDown = 10,
+                               int reloadTime = 1000,
+                               int bulletsPerShot = 8,
+                               float? spreadAngle = null)
+            : base(animationHandler,
+                   parent,
+                   relativePosition,
+                   relativeRotation,
+                   bulletSpawnPoint,
+                   shotSoundEffect,
+                   impactSound,
+                   nameTag,
+                   health,
+                   maxHealth,
+                   clipEmptySound,
+                   weaponEmptySound,
+                   reloadSound,
+                   clipSize,
+                   clips,
+                   constructPreconfiguredBullet,
+                   shotCoolDown,
+                   reloadTime)
         {
             _bulletsPerShot = bulletsPerShot;
             _random = new Random();

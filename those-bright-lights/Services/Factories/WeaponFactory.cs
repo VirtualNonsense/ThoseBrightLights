@@ -56,7 +56,7 @@ namespace SE_Praktikum.Services.Factories
                                                    float damage = 20,
                                                    string nameTag = "Missile Launcher",
                                                    float health = 1,
-                                                   float maxHealth = 1)
+                                                   float? maxHealth = null)
         {
             // TODO: create and load missing sound effects
             var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\lasergunFire_30_13_7.json", 0);
@@ -103,7 +103,7 @@ namespace SE_Praktikum.Services.Factories
                                             float damage = 5,
                                             string nameTag = "Laser gun",
                                             float health = 1,
-                                            float maxHealth = 1)
+                                            float? maxHealth = null)
         {
             // TODO: create and load missing sound effects
             var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\lasergunFire_30_13_7.json", 0);
@@ -137,7 +137,7 @@ namespace SE_Praktikum.Services.Factories
                                             float damage = 5,
                                             string nameTag = "Laser gun",
                                             float health = 1,
-                                            float maxHealth = 1)
+                                            float? maxHealth = null)
         {
             // TODO: create and load missing sound effects
             var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\lasergunFire_30_13_7.json", 0);
@@ -186,7 +186,7 @@ namespace SE_Praktikum.Services.Factories
                                                  float damage = 5,
                                                  string nameTag = "Enemy laser gun",
                                                  float health = 1,
-                                                 float maxHealth = 1)
+                                                 float? maxHealth = null)
         {
             // TODO: create and load missing sound effects
             var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\enemylasergun_18_10_3.json", 0);
@@ -235,7 +235,7 @@ namespace SE_Praktikum.Services.Factories
                                                  float damage = 5,
                                                  string nameTag = "Enemy laser gun",
                                                  float health = 1,
-                                                 float maxHealth = 1)
+                                                 float? maxHealth = null)
         {
             // TODO: create and load missing sound effects
             var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\turretlaser_41_40_6.json", 0);
@@ -284,7 +284,7 @@ namespace SE_Praktikum.Services.Factories
             float damage = 2,
             string nameTag = "Minigun",
             float health = 1,
-            float maxHealth = 1)
+            float? maxHealth = null)
         {
             // TODO: create and load missing sound effects
             var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\minigunFire_50_20_4.json", 0);
@@ -332,7 +332,7 @@ namespace SE_Praktikum.Services.Factories
             float damage = 5,
             string nameTag = "Shotgun",
             float health = 1,
-            float maxHealth = 1)
+            float? maxHealth = null)
         {
             // TODO: create and load missing sound effects
             var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\shotgunFire_28_13_9.json", 0);
@@ -413,7 +413,7 @@ namespace SE_Praktikum.Services.Factories
             float damage = 5,
             string nameTag = "Boss Lasergun",
             float health = 1,
-            float maxHealth = 1)
+            float? maxHealth = null)
         {
 
             // TODO: create and load missing sound effects
@@ -461,7 +461,7 @@ namespace SE_Praktikum.Services.Factories
             float damage = 5,
             string nameTag = "Boss Lasergun",
             float health = 1,
-            float maxHealth = 1)
+            float? maxHealth = null)
         {
 
             // TODO: create and load missing sound effects

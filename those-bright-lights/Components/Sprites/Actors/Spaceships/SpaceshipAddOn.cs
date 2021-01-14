@@ -28,7 +28,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
             float relativeRotation, 
             SoundEffect impactSound, 
             float health = 100, 
-            float maxHealth = 100) 
+            float? maxHealth = null) 
             : base(
                 animationHandler, 
                 impactSound, 
