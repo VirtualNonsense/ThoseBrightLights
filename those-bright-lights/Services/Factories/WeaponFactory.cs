@@ -55,7 +55,7 @@ namespace SE_Praktikum.Services.Factories
                                                    int reloadTime = 1000,
                                                    float damage = 20,
                                                    string nameTag = "Missile Launcher",
-                                                   float health = 1,
+                                                   float health = 10,
                                                    float? maxHealth = null)
         {
             // TODO: create and load missing sound effects
@@ -102,7 +102,7 @@ namespace SE_Praktikum.Services.Factories
                                             int reloadTime = 1000,
                                             float damage = 5,
                                             string nameTag = "Laser gun",
-                                            float health = 1,
+                                            float health = 10,
                                             float? maxHealth = null)
         {
             // TODO: create and load missing sound effects
@@ -234,7 +234,7 @@ namespace SE_Praktikum.Services.Factories
                                                  int reloadTime = 100,
                                                  float damage = 5,
                                                  string nameTag = "Enemy laser gun",
-                                                 float health = 1,
+                                                 float health = 10,
                                                  float? maxHealth = null)
         {
             // TODO: create and load missing sound effects
@@ -283,7 +283,7 @@ namespace SE_Praktikum.Services.Factories
             int reloadTime = 5000,
             float damage = 2,
             string nameTag = "Minigun",
-            float health = 1,
+            float health = 10,
             float? maxHealth = null)
         {
             // TODO: create and load missing sound effects
@@ -331,7 +331,7 @@ namespace SE_Praktikum.Services.Factories
             int reloadTime = 2000,
             float damage = 5,
             string nameTag = "Shotgun",
-            float health = 1,
+            float health = 10,
             float? maxHealth = null)
         {
             // TODO: create and load missing sound effects
@@ -412,7 +412,7 @@ namespace SE_Praktikum.Services.Factories
             int reloadTime = 2000,
             float damage = 5,
             string nameTag = "Boss Lasergun",
-            float health = 1,
+            float health = 10,
             float? maxHealth = null)
         {
 
@@ -460,7 +460,7 @@ namespace SE_Praktikum.Services.Factories
             int reloadTime = 2000,
             float damage = 5,
             string nameTag = "Boss Lasergun",
-            float health = 1,
+            float health = 10,
             float? maxHealth = null)
         {
 
