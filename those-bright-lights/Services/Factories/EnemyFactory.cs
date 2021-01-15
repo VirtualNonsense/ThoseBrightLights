@@ -81,8 +81,8 @@ namespace SE_Praktikum.Services.Factories
         public Boss GetBoss()
         {
             SoundEffect impactSound = _contentManager.Load<SoundEffect>("Audio/Sound_Effects/Collusion/ey");
-            var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\boss.json", 0);
-            var animationSettings = new AnimationSettings(1,isPlaying:false);
+            var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\boss_64_110_8.json", 0);
+            var animationSettings = new AnimationSettings(8,isLooping:true);
             var b = new Boss(_animationHandlerFactory.GetAnimationHandler(tileSet, animationSettings),
                 viewBox: new Polygon(Vector2.Zero,
                     Vector2.Zero, 0,

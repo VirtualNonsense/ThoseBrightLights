@@ -49,6 +49,18 @@
 /processorParam:TextureFormat=Color
 /build:Artwork/Actors/boss.png
 
+#begin Artwork/Actors/boss_64_110_8.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Artwork/Actors/boss_64_110_8.png
+
 #begin Artwork/Actors/flyingEngineOnly.png
 /importer:TextureImporter
 /processor:TextureProcessor
