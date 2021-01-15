@@ -17,6 +17,8 @@ using SE_Praktikum.Services.Factories;
 using SE_Praktikum.Extensions;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using NLog.Targets;
+using SE_Praktikum.Services.ParticleEmitter;
 
 namespace SE_Praktikum.Core
 {
@@ -39,6 +41,8 @@ namespace SE_Praktikum.Core
         private Map _map;
         private MouseState _previousMousestate;
         private MouseState _mouseState;
+
+        private ParticleEmitter _emitter;
         // #############################################################################################################
         // Constructor
         // #############################################################################################################
@@ -55,6 +59,7 @@ namespace SE_Praktikum.Core
                      Song song = null
                      )
         {
+            _logger = LogManager.GetCurrentClassLogger();
             _mapPath = mapPath;
             this.LevelNumber = levelNumber;
             _mapFactory = mapFactory;
@@ -67,7 +72,7 @@ namespace SE_Praktikum.Core
             this.hUDFactory = hUDFactory;
             this.song = song;
             _components = new List<IComponent>();
-            _logger = LogManager.GetCurrentClassLogger();
+            _emitter = new StarEmitter(5, 700, _particleFactory);
         }
 
         // #############################################################################################################
@@ -75,6 +80,8 @@ namespace SE_Praktikum.Core
         // #############################################################################################################
         private event EventHandler OnExplosion;
         public event EventHandler OnLevelComplete;
+
+        public event EventHandler OnPlayerDead;
         // #############################################################################################################
         // public methods
         // #############################################################################################################
@@ -111,6 +118,7 @@ namespace SE_Praktikum.Core
             if(_map.WinningZone != null)
                 _gameEngine.Render(_map.WinningZone.Polygons);
             _gameEngine.Render(_components);
+            _gameEngine.Render(_emitter);
         }
 
         public void Update(GameTime gameTime)
@@ -145,6 +153,7 @@ namespace SE_Praktikum.Core
                 }
             }
             _screen.Camera.Update(gameTime);
+            _emitter.Update(gameTime);
         }
         public void PostUpdate()
         {
@@ -168,17 +177,20 @@ namespace SE_Praktikum.Core
             _collisionLayer = _map.TopLayer;
             
             var player = _playerFactory.GetInstance(contentManager);
+
             player.Position = _map.PlayerSpawnPoint?.Center ?? new Vector2(0, 0);
             player.Layer = _collisionLayer;
+            player.OnInvincibilityChanged += (sender, args) => ProcessLevelEvent(args);
+            player.OnDeath += (sender, args) => ProcessLevelEvent(args);
             player.OnShoot += (sender, args) =>
             {
                 if (!(args is LevelEventArgs e)) return;
-                OnLevelEvent(e);
+                ProcessLevelEvent(e);
             };
             player.OnExplosion += (sender, args) =>
             {
                 if (!(args is LevelEventArgs e)) return;
-                OnLevelEvent(e);
+                ProcessLevelEvent(e);
             };
             var hud = hUDFactory.GetInstance(player);
             _components.Add(hud);
@@ -219,7 +231,7 @@ namespace SE_Praktikum.Core
         }
 
 
-        private void OnLevelEvent(LevelEventArgs levelEventArgs)
+        private void ProcessLevelEvent(LevelEventArgs levelEventArgs)
         {
             switch (levelEventArgs)
             {
@@ -229,14 +241,48 @@ namespace SE_Praktikum.Core
                     t.Bullet.OnExplosion += (sender, args) =>
                     {
                         if (!(args is LevelEventArgs e)) return;
-                        OnLevelEvent(e);
+                        ProcessLevelEvent(e);
                     };
                     return;
                 case LevelEventArgs.ExplosionEventArgs s:
                     if (s.Particle is null) return;
                     _components.Add(s.Particle);
-                    _logger.Info("Added Particle");
                     return;
+                
+                case LevelEventArgs.InvincibilityChangedEventArgs i:
+                    if (i.Target.Indestructible)
+                    {
+                        if(_emitter.TargetZones.Contains(i.Target))
+                            return;
+                        _emitter.TargetZones.Add(i.Target);
+                        return;
+                    }
+                    if(!_emitter.TargetZones.Contains(i.Target))
+                        return;
+                    _emitter.TargetZones.Remove(i.Target);
+                    break;
+                case LevelEventArgs.BossDiedEventArgs s:
+                    if (s.Aggressor is Player p1)
+                    {
+                        p1.Score += (int)s.Victim.MaxHealth;
+                    }
+                    InvokeOnLevelComplete();
+                    break;
+                
+                case LevelEventArgs.EnemyDiedEventArgs enemyDiedEventArgs:
+                    if (enemyDiedEventArgs.Aggressor is Player p2)
+                    {
+                        p2.Score += (int) enemyDiedEventArgs.Victim.MaxHealth;
+                    }
+                    break;
+                case LevelEventArgs.PlayerDiedEventArgs playerDiedEventArgs:
+                    InvokeOnPlayerDead();
+                    break;
+                case LevelEventArgs.ActorDiedEventArgs a:
+                    var info = a.Tool == a.Aggressor ? $"{a.Aggressor}" : $"{a.Aggressor} with {a.Tool}";
+                    _logger.Info($"{a.Victim} was killed by {info}");
+                    
+                    break;
             }
         }
 
@@ -256,10 +302,11 @@ namespace SE_Praktikum.Core
                         var healthPowerUp = powerUpFactory.HealthGetInstance(10, new Vector2(0,0));
                         healthPowerUp.Layer = layer;
                         healthPowerUp.Position = p.Item2;
+                        healthPowerUp.OnDeath += (sender, args) => ProcessLevelEvent(args);
                         healthPowerUp.OnExplosion += (sender, args) =>
                         {
                             if (!(args is LevelEventArgs e)) return;
-                            OnLevelEvent(e);
+                            ProcessLevelEvent(e);
                         };
                         _components.Add(healthPowerUp);
                         break;
@@ -268,10 +315,11 @@ namespace SE_Praktikum.Core
                         var instaDeathPowerUp = powerUpFactory.DeathGetInstance(new Vector2(0,0));
                         instaDeathPowerUp.Layer = layer;
                         instaDeathPowerUp.Position = p.Item2;
+                        instaDeathPowerUp.OnDeath += (sender, args) => ProcessLevelEvent(args);
                         instaDeathPowerUp.OnExplosion += (sender, args) =>
                         {
                             if (!(args is LevelEventArgs e)) return;
-                            OnLevelEvent(e);
+                            ProcessLevelEvent(e);
                         };
                         _components.Add(instaDeathPowerUp);
                         break;
@@ -280,10 +328,11 @@ namespace SE_Praktikum.Core
                         var fullHealthPowerUp = powerUpFactory.FullHealthGetInstance(100, new Vector2(0,0));
                         fullHealthPowerUp.Layer = layer;
                         fullHealthPowerUp.Position = p.Item2;
+                        fullHealthPowerUp.OnDeath += (sender, args) => ProcessLevelEvent(args);
                         fullHealthPowerUp.OnExplosion += (sender, args) =>
                         {
                             if (!(args is LevelEventArgs e)) return;
-                            OnLevelEvent(e);
+                            ProcessLevelEvent(e);
                         };
                         _components.Add(fullHealthPowerUp);
                         break;
@@ -292,10 +341,11 @@ namespace SE_Praktikum.Core
                         var scoreBonusPowerUp = powerUpFactory.ScoreBonusGetInstance(50, new Vector2(0,0));
                         scoreBonusPowerUp.Layer = layer;
                         scoreBonusPowerUp.Position = p.Item2;
+                        scoreBonusPowerUp.OnDeath += (sender, args) => ProcessLevelEvent(args);
                         scoreBonusPowerUp.OnExplosion += (sender, args) =>
                         {
                             if (!(args is LevelEventArgs e)) return;
-                            OnLevelEvent(e);
+                            ProcessLevelEvent(e);
                         };
                         _components.Add(scoreBonusPowerUp);
                         break;
@@ -304,10 +354,11 @@ namespace SE_Praktikum.Core
                         var infAmmoPowerUp = powerUpFactory.InfAmmoGetInstance(200, new Vector2(0,0));
                         infAmmoPowerUp.Layer = layer;
                         infAmmoPowerUp.Position = p.Item2;
+                        infAmmoPowerUp.OnDeath += (sender, args) => ProcessLevelEvent(args);
                         infAmmoPowerUp.OnExplosion += (sender, args) =>
                         {
                             if (!(args is LevelEventArgs e)) return;
-                            OnLevelEvent(e);
+                            ProcessLevelEvent(e);
                         };
                         _components.Add(infAmmoPowerUp);
                         break;
@@ -316,10 +367,11 @@ namespace SE_Praktikum.Core
                         var bonusClipPowerUp = powerUpFactory.BonusClipGetInstance(2, new Vector2(0, 0));
                         bonusClipPowerUp.Layer = layer;
                         bonusClipPowerUp.Position = p.Item2;
+                        bonusClipPowerUp.OnDeath += (sender, args) => ProcessLevelEvent(args);
                         bonusClipPowerUp.OnExplosion += (sender, args) =>
                         {
                             if (!(args is LevelEventArgs e)) return;
-                            OnLevelEvent(e);
+                            ProcessLevelEvent(e);
                         };
                         _components.Add(bonusClipPowerUp);
                         break;
@@ -328,10 +380,11 @@ namespace SE_Praktikum.Core
                         var starPowerUp = powerUpFactory.StarGetInstance(30000,new Vector2(0, 0));
                         starPowerUp.Layer = layer;
                         starPowerUp.Position = p.Item2;
+                        starPowerUp.OnDeath += (sender, args) => ProcessLevelEvent(args);
                         starPowerUp.OnExplosion += (sender, args) =>
                         {
                             if (!(args is LevelEventArgs e)) return;
-                            OnLevelEvent(e);
+                            ProcessLevelEvent(e);
                         };
                         _components.Add(starPowerUp);
                         break;
@@ -340,10 +393,11 @@ namespace SE_Praktikum.Core
                         var weaponPowerUp = powerUpFactory.GetRandomInstance(new Vector2(0, 0));
                         weaponPowerUp.Layer = layer;
                         weaponPowerUp.Position = p.Item2;
+                        weaponPowerUp.OnDeath += (sender, args) => ProcessLevelEvent(args);
                         weaponPowerUp.OnExplosion += (sender, args) =>
                         {
                             if (!(args is LevelEventArgs e)) return;
-                            OnLevelEvent(e);
+                            ProcessLevelEvent(e);
                         };
                         _components.Add(weaponPowerUp);
                         break;
@@ -362,51 +416,55 @@ namespace SE_Praktikum.Core
                         turret.Layer = layer;
                         turret.Position = enemySpawnPoint.Item2;
                         turret.Rotation = (float)Math.PI;
+                        turret.OnDeath += (sender, args) => ProcessLevelEvent(args);
                         turret.OnShoot += (sender, args) =>
                         {
                             if (!(args is LevelEventArgs e)) return;
-                            OnLevelEvent(e);
+                            ProcessLevelEvent(e);
                         };
                          
                         turret.OnExplosion += (sender, args) =>
                         {
                             if (!(args is LevelEventArgs e)) return;
-                            OnLevelEvent(e);
+                            ProcessLevelEvent(e);
                         };
                         _components.Add(turret);
                         break;
                     case EnemyType.Alienship:
                         var alienship = _enemyFactory.GetAlienship(); 
-                         alienship.Layer = layer;
-                         alienship.Position = enemySpawnPoint.Item2;
-                         alienship.Rotation = (float)Math.PI;
-                         alienship.OnShoot += (sender, args) =>
-                         {
-                             if (!(args is LevelEventArgs e)) return;
-                             OnLevelEvent(e);
-                         };
-                        
-                         alienship.OnExplosion += (sender, args) =>
-                         {
-                             if (!(args is LevelEventArgs e)) return;
-                             OnLevelEvent(e);
-                         };
-                         _components.Add(alienship);
+                        alienship.Layer = layer;
+                        alienship.Position = enemySpawnPoint.Item2;
+                        alienship.Rotation = (float)Math.PI;
+                        alienship.OnDeath += (sender, args) => ProcessLevelEvent(args);
+                        alienship.OnShoot += (sender, args) =>
+                        {
+                            if (!(args is LevelEventArgs e)) return;
+                            ProcessLevelEvent(e);
+                        };
+
+                        alienship.OnExplosion += (sender, args) =>
+                        {
+                            if (!(args is LevelEventArgs e)) return;
+                            ProcessLevelEvent(e);
+                        };
+                        alienship.OnDeath += (sender, args) => ProcessLevelEvent(args);
+                        _components.Add(alienship);
                         break;
                     case EnemyType.Boss:
                         var boss = _enemyFactory.GetBoss();
                         boss.Layer = layer;
                         boss.Position = enemySpawnPoint.Item2;
                         boss.Rotation = (float)Math.PI;
+                        boss.OnDeath += (sender, args) => ProcessLevelEvent(args);
                         boss.OnShoot += (sender, args) =>
                         {
                             if (!(args is LevelEventArgs e)) return;
-                            OnLevelEvent(e);
+                            ProcessLevelEvent(e);
                         };
                         boss.OnExplosion += (sender, args) =>
                         {
                             if (!(args is LevelEventArgs e)) return;
-                            OnLevelEvent(e);
+                            ProcessLevelEvent(e);
                         };
                         boss.OnDeath += (sender, args) => InvokeOnLevelComplete();
                         _components.Add(boss);
@@ -416,16 +474,17 @@ namespace SE_Praktikum.Core
                         mines.Layer = layer;
                         mines.Position = enemySpawnPoint.Item2;
                         mines.Rotation = (float)Math.PI;
+                        mines.OnDeath += (sender, args) => ProcessLevelEvent(args);
                         mines.OnShoot += (sender, args) =>
                         {
                             if (!(args is LevelEventArgs e)) return;
-                            OnLevelEvent(e);
+                            ProcessLevelEvent(e);
                         };
 
                         mines.OnExplosion += (sender, args) =>
                         {
                             if (!(args is LevelEventArgs e)) return;
-                            OnLevelEvent(e);
+                            ProcessLevelEvent(e);
                         };
                         _components.Add(mines);
                         break;
@@ -450,6 +509,11 @@ namespace SE_Praktikum.Core
                         break;
                 }
             }
+        }
+
+        protected virtual void InvokeOnPlayerDead()
+        {
+            OnPlayerDead?.Invoke(this, EventArgs.Empty);
         }
     }
 }

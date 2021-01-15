@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using NLog;
+using SE_Praktikum.Components.Sprites.Actors.Bullets;
 using SE_Praktikum.Extensions;
 using SE_Praktikum.Models;
 using SE_Praktikum.Services;

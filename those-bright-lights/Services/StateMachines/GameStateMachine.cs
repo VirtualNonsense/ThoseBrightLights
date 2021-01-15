@@ -57,7 +57,7 @@ namespace SE_Praktikum.Services.StateMachines
             
             _machine.Configure(State.InGame).OnEntry(onEntry)
                 .Permit(GameStateMachineTrigger.SaveAndQuit, State.Quit)
-                .Permit(GameStateMachineTrigger.SaveAndBackToMenu, State.LevelSelect);
+                .Permit(GameStateMachineTrigger.Back, State.LevelSelect);
             
             _machine.Configure(State.Quit).OnEntry(onComplete);
 
