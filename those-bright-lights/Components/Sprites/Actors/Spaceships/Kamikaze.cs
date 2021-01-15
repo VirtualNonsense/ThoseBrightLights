@@ -14,12 +14,12 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
         public Kamikaze(AnimationHandler animationHandler,
                         Polygon viewBox,
                         float acceleration = .1f,
-                        float maxSpeed = 20,
+                        float maxSpeed = 10,
                         float rotationAcceleration = .1f,
                         float maxRotationSpeed = 10,
                         float health = 1,
                         float? maxHealth = null,
-                        float impactDamage = 100,
+                        float impactDamage = 60,
                         SoundEffect impactSound = null) : base(animationHandler, viewBox, maxSpeed, acceleration, rotationAcceleration, maxRotationSpeed, health, maxHealth, impactDamage, impactSound)
         {
             _logger = LogManager.GetCurrentClassLogger();
