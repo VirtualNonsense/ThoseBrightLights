@@ -114,21 +114,21 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
                     switch (I)
                     {
                         case InterAction.BodyCollision:
-                            Health -= p.Damage;
+                            base.ExecuteInteraction(other);
                             break;
                         case InterAction.None:
                             break;
                         case InterAction.InView:
+                            break;
+                        case InterAction.InViewAndBodyCollision:
+                            base.ExecuteInteraction(other);
                             break;
                         default:
                             throw new ArgumentOutOfRangeException();
                     }
                     break;
                 default:
-                    if (other.Parent == this) return;
-                    Health -= other.Damage;
-                    _logger.Debug($"health {Health}");
-                    _impactSound?.Play();
+                    base.ExecuteInteraction(other);
                     break;
             }
         }
@@ -181,6 +181,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
     {
         None,
         InView,
-        BodyCollision
+        BodyCollision,
+        InViewAndBodyCollision
     }
 }

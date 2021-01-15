@@ -71,10 +71,27 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
                     if (p.HitBox.Any(polygon => ViewBox.Overlap(polygon)))
                     {
                         I = InterAction.InView;
+                    }
+
+                    bool c = Collide(other);
+                    if (I == InterAction.InView && c)
+                    {
+                        I = InterAction.InViewAndBodyCollision;
                         return true;
                     }
 
-                    break;
+                    if (I == InterAction.InView)
+                        return true;
+
+                    if (c)
+                    {
+                        I = InterAction.BodyCollision;
+                        return true;
+                    }
+
+                    I = InterAction.None;
+                    return false;
+                    
             }
 
             return base.InteractAble(other);
