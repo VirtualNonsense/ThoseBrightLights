@@ -628,18 +628,6 @@
                 }, 
                 {
                  "height":0,
-                 "id":34,
-                 "name":"AlienSpawn",
-                 "point":true,
-                 "rotation":0,
-                 "type":"AlienSpawn",
-                 "visible":true,
-                 "width":0,
-                 "x":1714,
-                 "y":1614
-                }, 
-                {
-                 "height":0,
                  "id":35,
                  "name":"AlienSpawn",
                  "point":true,
@@ -688,18 +676,6 @@
                 }, 
                 {
                  "height":0,
-                 "id":39,
-                 "name":"AlienSpawn",
-                 "point":true,
-                 "rotation":0,
-                 "type":"AlienSpawn",
-                 "visible":true,
-                 "width":0,
-                 "x":7770,
-                 "y":1548
-                }, 
-                {
-                 "height":0,
                  "id":40,
                  "name":"AlienSpawn",
                  "point":true,
@@ -709,18 +685,6 @@
                  "width":0,
                  "x":7916,
                  "y":2391.33333333333
-                }, 
-                {
-                 "height":0,
-                 "id":41,
-                 "name":"AlienSpawn",
-                 "point":true,
-                 "rotation":0,
-                 "type":"AlienSpawn",
-                 "visible":true,
-                 "width":0,
-                 "x":7720,
-                 "y":2422
                 }, 
                 {
                  "height":0,
@@ -772,18 +736,6 @@
                 }, 
                 {
                  "height":0,
-                 "id":47,
-                 "name":"TurretSpawn",
-                 "point":true,
-                 "rotation":0,
-                 "type":"TurretSpawn",
-                 "visible":true,
-                 "width":0,
-                 "x":6321.33333333333,
-                 "y":3566
-                }, 
-                {
-                 "height":0,
                  "id":48,
                  "name":"TurretSpawn",
                  "point":true,
@@ -793,42 +745,6 @@
                  "width":0,
                  "x":6419.66666666667,
                  "y":3566.33333333333
-                }, 
-                {
-                 "height":0,
-                 "id":49,
-                 "name":"TurretSpawn",
-                 "point":true,
-                 "rotation":0,
-                 "type":"TurretSpawn",
-                 "visible":true,
-                 "width":0,
-                 "x":6536.66666666667,
-                 "y":3569.66666666667
-                }, 
-                {
-                 "height":0,
-                 "id":50,
-                 "name":"TurretSpawn",
-                 "point":true,
-                 "rotation":0,
-                 "type":"TurretSpawn",
-                 "visible":true,
-                 "width":0,
-                 "x":6679.33333333333,
-                 "y":3567.5
-                }, 
-                {
-                 "height":0,
-                 "id":51,
-                 "name":"TurretSpawn",
-                 "point":true,
-                 "rotation":0,
-                 "type":"TurretSpawn",
-                 "visible":true,
-                 "width":0,
-                 "x":6806.66666666667,
-                 "y":3565.33333333333
                 }, 
                 {
                  "height":0,
@@ -868,18 +784,6 @@
                 }, 
                 {
                  "height":0,
-                 "id":55,
-                 "name":"TurretSpawn",
-                 "point":true,
-                 "rotation":0,
-                 "type":"TurretSpawn",
-                 "visible":true,
-                 "width":0,
-                 "x":5536,
-                 "y":2606.66666666667
-                }, 
-                {
-                 "height":0,
                  "id":56,
                  "name":"TurretSpawn",
                  "point":true,
@@ -889,18 +793,6 @@
                  "width":0,
                  "x":5199.33333333333,
                  "y":2606
-                }, 
-                {
-                 "height":0,
-                 "id":57,
-                 "name":"TurretSpawn",
-                 "point":true,
-                 "rotation":0,
-                 "type":"TurretSpawn",
-                 "visible":true,
-                 "width":0,
-                 "x":4832.66666666667,
-                 "y":2608
                 }, 
                 {
                  "height":0,
@@ -928,30 +820,6 @@
                 }, 
                 {
                  "height":0,
-                 "id":60,
-                 "name":"TurretSpawn",
-                 "point":true,
-                 "rotation":0,
-                 "type":"TurretSpawn",
-                 "visible":true,
-                 "width":0,
-                 "x":7826.66666666667,
-                 "y":2578.66666666667
-                }, 
-                {
-                 "height":0,
-                 "id":61,
-                 "name":"TurretSpawn",
-                 "point":true,
-                 "rotation":0,
-                 "type":"TurretSpawn",
-                 "visible":true,
-                 "width":0,
-                 "x":8095.33333333333,
-                 "y":2578
-                }, 
-                {
-                 "height":0,
                  "id":62,
                  "name":"TurretSpawn",
                  "point":true,
@@ -961,30 +829,6 @@
                  "width":0,
                  "x":7520,
                  "y":2578
-                }, 
-                {
-                 "height":0,
-                 "id":63,
-                 "name":"TurretSpawn",
-                 "point":true,
-                 "rotation":0,
-                 "type":"TurretSpawn",
-                 "visible":true,
-                 "width":0,
-                 "x":6240.66666666667,
-                 "y":3119.33333333333
-                }, 
-                {
-                 "height":0,
-                 "id":64,
-                 "name":"TurretSpawn",
-                 "point":true,
-                 "rotation":0,
-                 "type":"TurretSpawn",
-                 "visible":true,
-                 "width":0,
-                 "x":6336,
-                 "y":3120
                 }, 
                 {
                  "height":0,
@@ -1045,18 +889,6 @@
                  "width":0,
                  "x":2272.16666666667,
                  "y":1969
-                }, 
-                {
-                 "height":0,
-                 "id":70,
-                 "name":"TurretSpawn",
-                 "point":true,
-                 "rotation":0,
-                 "type":"TurretSpawn",
-                 "visible":true,
-                 "width":0,
-                 "x":1472,
-                 "y":1684
                 }, 
                 {
                  "height":0,
@@ -1132,18 +964,6 @@
                 }, 
                 {
                  "height":0,
-                 "id":77,
-                 "name":"ScoreBonusPowerUp",
-                 "point":true,
-                 "rotation":0,
-                 "type":"ScoreBonusPowerUp",
-                 "visible":true,
-                 "width":0,
-                 "x":6217.75,
-                 "y":3338.75
-                }, 
-                {
-                 "height":0,
                  "id":78,
                  "name":"ScoreBonusPowerUp",
                  "point":true,
@@ -1216,30 +1036,6 @@
                 }, 
                 {
                  "height":0,
-                 "id":84,
-                 "name":"ScoreBonusPowerUp",
-                 "point":true,
-                 "rotation":0,
-                 "type":"ScoreBonusPowerUp",
-                 "visible":true,
-                 "width":0,
-                 "x":6268.66666666667,
-                 "y":3037.5
-                }, 
-                {
-                 "height":0,
-                 "id":85,
-                 "name":"ScoreBonusPowerUp",
-                 "point":true,
-                 "rotation":0,
-                 "type":"ScoreBonusPowerUp",
-                 "visible":true,
-                 "width":0,
-                 "x":6250.25,
-                 "y":3303.25
-                }, 
-                {
-                 "height":0,
                  "id":86,
                  "name":"ScoreBonusPowerUp",
                  "point":true,
@@ -1249,18 +1045,6 @@
                  "width":0,
                  "x":6249.75,
                  "y":3380.75
-                }, 
-                {
-                 "height":0,
-                 "id":87,
-                 "name":"ScoreBonusPowerUp",
-                 "point":true,
-                 "rotation":0,
-                 "type":"ScoreBonusPowerUp",
-                 "visible":true,
-                 "width":0,
-                 "x":885.75,
-                 "y":1360
                 }, 
                 {
                  "height":0,
@@ -1276,30 +1060,6 @@
                 }, 
                 {
                  "height":0,
-                 "id":89,
-                 "name":"ScoreBonusPowerUp",
-                 "point":true,
-                 "rotation":0,
-                 "type":"ScoreBonusPowerUp",
-                 "visible":true,
-                 "width":0,
-                 "x":5554.66666666667,
-                 "y":1544
-                }, 
-                {
-                 "height":0,
-                 "id":90,
-                 "name":"ScoreBonusPowerUp",
-                 "point":true,
-                 "rotation":0,
-                 "type":"ScoreBonusPowerUp",
-                 "visible":true,
-                 "width":0,
-                 "x":7964.5,
-                 "y":1483
-                }, 
-                {
-                 "height":0,
                  "id":91,
                  "name":"ScoreBonusPowerUp",
                  "point":true,
@@ -1309,42 +1069,6 @@
                  "width":0,
                  "x":7964.5,
                  "y":1548
-                }, 
-                {
-                 "height":0,
-                 "id":92,
-                 "name":"ScoreBonusPowerUp",
-                 "point":true,
-                 "rotation":0,
-                 "type":"ScoreBonusPowerUp",
-                 "visible":true,
-                 "width":0,
-                 "x":7965.5,
-                 "y":1614.5
-                }, 
-                {
-                 "height":0,
-                 "id":93,
-                 "name":"ScoreBonusPowerUp",
-                 "point":true,
-                 "rotation":0,
-                 "type":"ScoreBonusPowerUp",
-                 "visible":true,
-                 "width":0,
-                 "x":7836,
-                 "y":2294
-                }, 
-                {
-                 "height":0,
-                 "id":94,
-                 "name":"ScoreBonusPowerUp",
-                 "point":true,
-                 "rotation":0,
-                 "type":"ScoreBonusPowerUp",
-                 "visible":true,
-                 "width":0,
-                 "x":8060,
-                 "y":2290
                 }, 
                 {
                  "height":0,
@@ -1369,18 +1093,6 @@
                  "width":0,
                  "x":3884,
                  "y":2308
-                }, 
-                {
-                 "height":0,
-                 "id":97,
-                 "name":"ScoreBonusPowerUp",
-                 "point":true,
-                 "rotation":0,
-                 "type":"ScoreBonusPowerUp",
-                 "visible":true,
-                 "width":0,
-                 "x":8062.16666666667,
-                 "y":2461.83333333333
                 }, 
                 {
                  "height":0,
@@ -1465,6 +1177,126 @@
                  "width":0,
                  "x":334,
                  "y":1182.66666666667
+                }, 
+                {
+                 "height":0,
+                 "id":106,
+                 "name":"KamikazeSpawn",
+                 "point":true,
+                 "rotation":0,
+                 "type":"KamikazeSpawn",
+                 "visible":true,
+                 "width":0,
+                 "x":1424,
+                 "y":1444
+                }, 
+                {
+                 "height":0,
+                 "id":108,
+                 "name":"KamikazeSpawn",
+                 "point":true,
+                 "rotation":0,
+                 "type":"KamikazeSpawn",
+                 "visible":true,
+                 "width":0,
+                 "x":5440,
+                 "y":2328
+                }, 
+                {
+                 "height":0,
+                 "id":109,
+                 "name":"KamikazeSpawn",
+                 "point":true,
+                 "rotation":0,
+                 "type":"KamikazeSpawn",
+                 "visible":true,
+                 "width":0,
+                 "x":7330,
+                 "y":1542
+                }, 
+                {
+                 "height":0,
+                 "id":110,
+                 "name":"MineSpawn",
+                 "point":true,
+                 "rotation":0,
+                 "type":"MineSpawn",
+                 "visible":true,
+                 "width":0,
+                 "x":6978,
+                 "y":3136
+                }, 
+                {
+                 "height":0,
+                 "id":111,
+                 "name":"MineSpawn",
+                 "point":true,
+                 "rotation":0,
+                 "type":"MineSpawn",
+                 "visible":true,
+                 "width":0,
+                 "x":3478.78787878788,
+                 "y":2145.45454545455
+                }, 
+                {
+                 "height":0,
+                 "id":112,
+                 "name":"MineSpawn",
+                 "point":true,
+                 "rotation":0,
+                 "type":"MineSpawn",
+                 "visible":true,
+                 "width":0,
+                 "x":2051.51515151515,
+                 "y":1696.9696969697
+                }, 
+                {
+                 "height":0,
+                 "id":113,
+                 "name":"MineSpawn",
+                 "point":true,
+                 "rotation":0,
+                 "type":"MineSpawn",
+                 "visible":true,
+                 "width":0,
+                 "x":5978.78787878788,
+                 "y":1642.42424242424
+                }, 
+                {
+                 "height":0,
+                 "id":115,
+                 "name":"MineSpawn",
+                 "point":true,
+                 "rotation":0,
+                 "type":"MineSpawn",
+                 "visible":true,
+                 "width":0,
+                 "x":7780,
+                 "y":1599.33333333333
+                }, 
+                {
+                 "height":0,
+                 "id":116,
+                 "name":"FullHealthPowerUpSpawn",
+                 "point":true,
+                 "rotation":0,
+                 "type":"FullHealthPowerUpSpawn",
+                 "visible":true,
+                 "width":0,
+                 "x":8077.33333333333,
+                 "y":2494.66666666667
+                }, 
+                {
+                 "height":0,
+                 "id":117,
+                 "name":"TurretSpawn",
+                 "point":true,
+                 "rotation":0,
+                 "type":"TurretSpawn",
+                 "visible":true,
+                 "width":0,
+                 "x":3087.33333333333,
+                 "y":2027.33333333333
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -1485,7 +1317,7 @@
          "y":0
         }],
  "nextlayerid":32,
- "nextobjectid":106,
+ "nextobjectid":118,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.4.2",

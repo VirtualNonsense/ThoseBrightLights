@@ -40,6 +40,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
                          float health = 100,
                          float? maxHealth = null,
                          float impactDamage = 5,
+                         
                          SoundEffect impactSound = null) : base(
             animationHandler, impactSound, health: health, maxHealth: maxHealth, impactDamage: impactDamage)
         {
@@ -52,6 +53,8 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
             _statusChangeResetTimer = new Dictionary<string, CastTimeAbility>();
             AllWeapons = new List<Weapon>();
             _currentWeapons = new List<Weapon>();
+            CurrentWeapons = new List<Weapon>();
+            
         }
         
         // #############################################################################################################
