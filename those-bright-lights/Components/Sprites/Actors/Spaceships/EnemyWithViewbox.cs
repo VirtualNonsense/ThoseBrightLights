@@ -82,7 +82,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
 
         protected override void Rotate(Actor target, GameTime gameTime)
         {
-            if (!RotateWeapon)
+            if (!RotateWeapon || CurrentWeapons.Count == 0)
             {
                 base.Rotate(target, gameTime);
                 return;
