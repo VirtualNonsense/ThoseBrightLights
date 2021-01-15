@@ -304,18 +304,6 @@
                 }, 
                 {
                  "height":0,
-                 "id":3,
-                 "name":"BossSpawn",
-                 "point":true,
-                 "rotation":0,
-                 "type":"BossSpawn",
-                 "visible":false,
-                 "width":0,
-                 "x":7930.66666666667,
-                 "y":2010.66666666667
-                }, 
-                {
-                 "height":0,
                  "id":4,
                  "name":"TurretSpawn",
                  "point":true,
@@ -637,6 +625,18 @@
                  "width":0,
                  "x":2085.33333333333,
                  "y":2059.33333333333
+                }, 
+                {
+                 "height":0,
+                 "id":61,
+                 "name":"BossSpawn",
+                 "point":true,
+                 "rotation":0,
+                 "type":"BossSpawn",
+                 "visible":true,
+                 "width":0,
+                 "x":7894.66666666667,
+                 "y":1956
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -657,7 +657,7 @@
          "y":0
         }],
  "nextlayerid":27,
- "nextobjectid":60,
+ "nextobjectid":62,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.4.2",

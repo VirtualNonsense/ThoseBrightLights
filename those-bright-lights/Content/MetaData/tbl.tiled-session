@@ -37,11 +37,11 @@
             }
         },
         "Level/GammaMap.json": {
-            "scale": 0.1024169921875,
-            "selectedLayer": 0,
+            "scale": 0.0625,
+            "selectedLayer": 23,
             "viewCenter": {
-                "x": 4095.9999999999995,
-                "y": 2304.3051251489865
+                "x": 6608,
+                "y": 6960
             }
         },
         "Level/TestLevel.json": {
@@ -351,9 +351,9 @@
     "project": "tbl.tiled-project",
     "property.type": "bool",
     "recentFiles": [
+        "Level/GammaMap.json",
         "Level/AlphaMap.json",
         "Level/TestLevel.json",
-        "Level/GammaMap.json",
         "Level/BetaMap.json",
         "TileSets/PowerUpTry1.json",
         "TileSets/Blocks_32_32.json",
