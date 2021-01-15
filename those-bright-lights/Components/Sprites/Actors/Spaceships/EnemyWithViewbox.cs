@@ -54,7 +54,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
             ViewBox.Layer = Layer;
             Rotate(Target, gameTime);
             Shoot.Update(gameTime);
-            if (I == InterAction.InView && Target != null)
+            if (InterAction == InterAction.InView && Target != null)
                 Shoot.Fire();
 
             base.Update(gameTime);
@@ -70,26 +70,26 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
                 case Player p:
                     if (p.HitBox.Any(polygon => ViewBox.Overlap(polygon)))
                     {
-                        I = InterAction.InView;
+                        InterAction = InterAction.InView;
                     }
 
                     bool c = Collide(other);
-                    if (I == InterAction.InView && c)
+                    if (InterAction == InterAction.InView && c)
                     {
-                        I = InterAction.InViewAndBodyCollision;
+                        InterAction = InterAction.InViewAndBodyCollision;
                         return true;
                     }
 
-                    if (I == InterAction.InView)
+                    if (InterAction == InterAction.InView)
                         return true;
 
                     if (c)
                     {
-                        I = InterAction.BodyCollision;
+                        InterAction = InterAction.BodyCollision;
                         return true;
                     }
 
-                    I = InterAction.None;
+                    InterAction = InterAction.None;
                     return false;
                     
             }
@@ -104,7 +104,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
                 base.Rotate(target, gameTime);
                 return;
             }
-            if (Target == null || I != InterAction.InView) return;
+            if (Target == null || InterAction != InterAction.InView) return;
             var weapon = CurrentWeapons[^1];
             if (weapon == null) return;
             var desiredRotation = MathExtensions.RotationToTarget(target, this);

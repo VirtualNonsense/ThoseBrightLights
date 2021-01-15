@@ -293,7 +293,8 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
                     _lastAggressor = s;
                     _tool = s;
                     Health -= s.Damage;
-                    ApproachDestination(other, 100);
+                    if(this is Enemy && !(this is Boss))
+                        ApproachDestination(other, 100);
                     _impactSound?.Play();
                     break;
 

@@ -23,14 +23,13 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
                         SoundEffect impactSound = null) : base(animationHandler, viewBox, maxSpeed, acceleration, rotationAcceleration, maxRotationSpeed, health, maxHealth, impactDamage, impactSound)
         {
             _logger = LogManager.GetCurrentClassLogger();
-            _logger.Debug($"{health}");
             Shoot = new CooldownAbility(500, _shootTarget);
         }
 
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-            if (I != InterAction.InView || Target == null)
+            if (InterAction != InterAction.InView || Target == null)
             {
                 return;
             }

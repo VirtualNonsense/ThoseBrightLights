@@ -26,7 +26,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
         public override void Update(GameTime gameTime)
         {
             Shoot.Update(gameTime);
-            if (I == InterAction.InView && Target != null)
+            if (InterAction == InterAction.InView && Target != null)
                 Shoot.Fire();
             base.Update(gameTime);
         }

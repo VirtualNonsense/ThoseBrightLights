@@ -14,7 +14,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
     public class Enemy : Spaceship
     {
         private Logger _logger;
-        protected InterAction I;
+        public InterAction InterAction;
         protected Actor Target;
         protected CooldownAbility ForgetTarget;
         protected CooldownAbility Shoot;
@@ -60,12 +60,12 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
         {
             _logger = LogManager.GetCurrentClassLogger();
             Shoot = new CooldownAbility(2000, _shootTarget);
-            I = InterAction.None;
+            InterAction = InterAction.None;
         }
 
         protected virtual void _shootTarget()
         {
-            if (I != InterAction.InView || Target == null) return;
+            if (InterAction != InterAction.InView || Target == null) return;
             var rotation = Rotation;
 
             var directVector = Target.Position - Position;
@@ -95,14 +95,9 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
 
         protected override bool InteractAble(Actor other)
         {
-            switch (other)
-            {
-                case Player p:
-                    break;
-            }
             var t = base.InteractAble(other);
             if (t)
-                I = InterAction.BodyCollision;
+                InterAction = InterAction.BodyCollision;
             return t;
         }
 
@@ -112,7 +107,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
             {
                 case Player p:
                     Target = p;
-                    switch (I)
+                    switch (InterAction)
                     {
                         case InterAction.BodyCollision:
                             base.ExecuteInteraction(other);
@@ -141,7 +136,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
 
         protected virtual void Rotate(Actor target, GameTime gameTime)
         {
-            if (Target != null && I == InterAction.InView)
+            if (Target != null && InterAction == InterAction.InView)
             {
                 var desiredRotation = MathExtensions.RotationToTarget(target, this);
                 if (Math.Abs(desiredRotation - Rotation) > RotationThreshold)

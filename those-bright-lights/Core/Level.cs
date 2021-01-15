@@ -172,7 +172,7 @@ namespace SE_Praktikum.Core
                 _map.WinningZone.OnZoneEntered +=
                     (sender, args) => _logger.Debug($"Player{args.Player} entered WinningZone");
                 _map.WinningZone.OnZoneEntered +=
-                    (sender, args) => InvokeOnLevelComplete();
+                    (sender, args) => ProcessLevelEvent(new LevelEventArgs.WinningZoneReachedEventArgs());
             }
             _collisionLayer = _map.TopLayer;
             
@@ -233,8 +233,13 @@ namespace SE_Praktikum.Core
 
         private void ProcessLevelEvent(LevelEventArgs levelEventArgs)
         {
-            switch (levelEventArgs)
+            string info;
+             switch (levelEventArgs)
             {
+                case LevelEventArgs.WinningZoneReachedEventArgs _:
+                    InvokeOnLevelComplete();
+                    return;
+                
                 //if player or enemy shoots the ShootBullet event triggers
                 case LevelEventArgs.ShotBulletEventArgs t:
                     _components.Add(t.Bullet);
@@ -276,13 +281,14 @@ namespace SE_Praktikum.Core
                     }
                     break;
                 case LevelEventArgs.PlayerDiedEventArgs playerDiedEventArgs:
-                    InvokeOnPlayerDead();
+                    InvokeOnPlayerDead();                    
                     break;
-                case LevelEventArgs.ActorDiedEventArgs a:
-                    var info = a.Tool == a.Aggressor ? $"{a.Aggressor}" : $"{a.Aggressor} with {a.Tool}";
-                    _logger.Info($"{a.Victim} was killed by {info}");
-                    
-                    break;
+            }
+
+            if (levelEventArgs is LevelEventArgs.ActorDiedEventArgs asdf)
+            {
+                info = asdf.Tool == asdf.Aggressor ? $"{asdf.Aggressor}" : $"{asdf.Aggressor} with {asdf.Tool}";
+                _logger.Info($"{asdf.Victim} was killed by {info}");
             }
         }
 

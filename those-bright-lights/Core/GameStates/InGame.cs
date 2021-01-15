@@ -67,7 +67,7 @@ namespace SE_Praktikum.Core.GameStates
                         saveGameHandler.SaveGame.clearedStage++;
                         saveGameHandler.Save();
                     }
-                    _subject.OnNext(GameStateMachine.GameStateMachineTrigger.SaveAndBackToMenu);
+                    _subject.OnNext(GameStateMachine.GameStateMachineTrigger.Back);
                 };
             _levelContainer.SelectedLevel.OnPlayerDead += (sender, args) =>
             {
