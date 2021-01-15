@@ -623,8 +623,8 @@
                  "type":"AlienSpawn",
                  "visible":true,
                  "width":0,
-                 "x":2718,
-                 "y":1988
+                 "x":2791.33333333333,
+                 "y":1904
                 }, 
                 {
                  "height":0,
@@ -635,8 +635,8 @@
                  "type":"AlienSpawn",
                  "visible":true,
                  "width":0,
-                 "x":1090,
-                 "y":1332
+                 "x":1176,
+                 "y":1386
                 }, 
                 {
                  "height":0,
@@ -659,20 +659,8 @@
                  "type":"AlienSpawn",
                  "visible":true,
                  "width":0,
-                 "x":5328,
-                 "y":1524
-                }, 
-                {
-                 "height":0,
-                 "id":38,
-                 "name":"AlienSpawn",
-                 "point":true,
-                 "rotation":0,
-                 "type":"AlienSpawn",
-                 "visible":true,
-                 "width":0,
-                 "x":6818,
-                 "y":1526
+                 "x":5352,
+                 "y":1537.33333333333
                 }, 
                 {
                  "height":0,
@@ -683,20 +671,8 @@
                  "type":"AlienSpawn",
                  "visible":true,
                  "width":0,
-                 "x":7916,
-                 "y":2391.33333333333
-                }, 
-                {
-                 "height":0,
-                 "id":43,
-                 "name":"AlienSpawn",
-                 "point":true,
-                 "rotation":0,
-                 "type":"AlienSpawn",
-                 "visible":true,
-                 "width":0,
-                 "x":7412,
-                 "y":2314
+                 "x":7668,
+                 "y":2371.33333333333
                 }, 
                 {
                  "height":0,
@@ -731,8 +707,8 @@
                  "type":"AlienSpawn",
                  "visible":true,
                  "width":0,
-                 "x":6950,
-                 "y":3422
+                 "x":6992,
+                 "y":3344
                 }, 
                 {
                  "height":0,
@@ -745,30 +721,6 @@
                  "width":0,
                  "x":6419.66666666667,
                  "y":3566.33333333333
-                }, 
-                {
-                 "height":0,
-                 "id":52,
-                 "name":"TurretSpawn",
-                 "point":true,
-                 "rotation":0,
-                 "type":"TurretSpawn",
-                 "visible":true,
-                 "width":0,
-                 "x":6219.66666666667,
-                 "y":3569
-                }, 
-                {
-                 "height":0,
-                 "id":53,
-                 "name":"TurretSpawn",
-                 "point":true,
-                 "rotation":0,
-                 "type":"TurretSpawn",
-                 "visible":true,
-                 "width":0,
-                 "x":6945,
-                 "y":3565.66666666667
                 }, 
                 {
                  "height":0,
@@ -796,18 +748,6 @@
                 }, 
                 {
                  "height":0,
-                 "id":58,
-                 "name":"TurretSpawn",
-                 "point":true,
-                 "rotation":0,
-                 "type":"TurretSpawn",
-                 "visible":true,
-                 "width":0,
-                 "x":4432.66666666667,
-                 "y":2608.66666666667
-                }, 
-                {
-                 "height":0,
                  "id":59,
                  "name":"TurretSpawn",
                  "point":true,
@@ -817,18 +757,6 @@
                  "width":0,
                  "x":4097.33333333333,
                  "y":2547.33333333333
-                }, 
-                {
-                 "height":0,
-                 "id":62,
-                 "name":"TurretSpawn",
-                 "point":true,
-                 "rotation":0,
-                 "type":"TurretSpawn",
-                 "visible":true,
-                 "width":0,
-                 "x":7520,
-                 "y":2578
                 }, 
                 {
                  "height":0,
@@ -853,42 +781,6 @@
                  "width":0,
                  "x":4928,
                  "y":1710.33333333333
-                }, 
-                {
-                 "height":0,
-                 "id":67,
-                 "name":"TurretSpawn",
-                 "point":true,
-                 "rotation":0,
-                 "type":"TurretSpawn",
-                 "visible":true,
-                 "width":0,
-                 "x":6080,
-                 "y":1838
-                }, 
-                {
-                 "height":0,
-                 "id":68,
-                 "name":"TurretSpawn",
-                 "point":true,
-                 "rotation":0,
-                 "type":"TurretSpawn",
-                 "visible":true,
-                 "width":0,
-                 "x":7967,
-                 "y":1714
-                }, 
-                {
-                 "height":0,
-                 "id":69,
-                 "name":"TurretSpawn",
-                 "point":true,
-                 "rotation":0,
-                 "type":"TurretSpawn",
-                 "visible":true,
-                 "width":0,
-                 "x":2272.16666666667,
-                 "y":1969
                 }, 
                 {
                  "height":0,
@@ -935,8 +827,8 @@
                  "type":"InstaDeathPowerUpSpawn",
                  "visible":true,
                  "width":0,
-                 "x":6490,
-                 "y":1478
+                 "x":6473,
+                 "y":1506
                 }, 
                 {
                  "height":0,
@@ -1012,18 +904,6 @@
                 }, 
                 {
                  "height":0,
-                 "id":82,
-                 "name":"ScoreBonusPowerUp",
-                 "point":true,
-                 "rotation":0,
-                 "type":"ScoreBonusPowerUp",
-                 "visible":true,
-                 "width":0,
-                 "x":6266.66666666667,
-                 "y":2968.5
-                }, 
-                {
-                 "height":0,
                  "id":83,
                  "name":"ScoreBonusPowerUp",
                  "point":true,
@@ -1033,18 +913,6 @@
                  "width":0,
                  "x":6301.08333333333,
                  "y":3001.91666666667
-                }, 
-                {
-                 "height":0,
-                 "id":86,
-                 "name":"ScoreBonusPowerUp",
-                 "point":true,
-                 "rotation":0,
-                 "type":"ScoreBonusPowerUp",
-                 "visible":true,
-                 "width":0,
-                 "x":6249.75,
-                 "y":3380.75
                 }, 
                 {
                  "height":0,
@@ -1132,42 +1000,6 @@
                 }, 
                 {
                  "height":0,
-                 "id":101,
-                 "name":"HealthPowerUpSpawn",
-                 "point":true,
-                 "rotation":0,
-                 "type":"HealthPowerUpSpawn",
-                 "visible":true,
-                 "width":0,
-                 "x":6332,
-                 "y":1542
-                }, 
-                {
-                 "height":0,
-                 "id":102,
-                 "name":"HealthPowerUpSpawn",
-                 "point":true,
-                 "rotation":0,
-                 "type":"HealthPowerUpSpawn",
-                 "visible":true,
-                 "width":0,
-                 "x":6978.66666666667,
-                 "y":2902.66666666667
-                }, 
-                {
-                 "height":0,
-                 "id":103,
-                 "name":"HealthPowerUpSpawn",
-                 "point":true,
-                 "rotation":0,
-                 "type":"HealthPowerUpSpawn",
-                 "visible":true,
-                 "width":0,
-                 "x":3982.66666666667,
-                 "y":2337.33333333333
-                }, 
-                {
-                 "height":0,
                  "id":104,
                  "name":"HealthPowerUpSpawn",
                  "point":true,
@@ -1187,8 +1019,8 @@
                  "type":"KamikazeSpawn",
                  "visible":true,
                  "width":0,
-                 "x":1424,
-                 "y":1444
+                 "x":1580,
+                 "y":1534
                 }, 
                 {
                  "height":0,
@@ -1211,8 +1043,8 @@
                  "type":"KamikazeSpawn",
                  "visible":true,
                  "width":0,
-                 "x":7330,
-                 "y":1542
+                 "x":7164,
+                 "y":1547
                 }, 
                 {
                  "height":0,
@@ -1285,18 +1117,6 @@
                  "width":0,
                  "x":8077.33333333333,
                  "y":2494.66666666667
-                }, 
-                {
-                 "height":0,
-                 "id":117,
-                 "name":"TurretSpawn",
-                 "point":true,
-                 "rotation":0,
-                 "type":"TurretSpawn",
-                 "visible":true,
-                 "width":0,
-                 "x":3087.33333333333,
-                 "y":2027.33333333333
                 }],
          "opacity":1,
          "type":"objectgroup",
