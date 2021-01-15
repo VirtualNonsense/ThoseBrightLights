@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
@@ -81,30 +82,55 @@ namespace SE_Praktikum.Services.Factories
             return ikp;
         }
 
-        public WeaponPowerUp RocketGetInstance(Vector2? position = null, float layer = 0)
-        {
-            var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\missile.json", 0);
-            var animationSettings = new AnimationSettings(1);
-            var rp = new WeaponPowerUp(_animationHandlerFactory.GetAnimationHandler(tileSet, animationSettings),
-                _weaponFactory.GetMissileLauncher(null), soundEffect: _soundHandler.Get(ImpactSounds.Weapon))
-            {
-                Layer = layer,
-                Position = position ?? new Vector2(0, 0)
-            };
-            return rp;
-        }
+        //public WeaponPowerUp RocketGetInstance(Vector2? position = null, float layer = 0)
+        //{
+        //    var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\missile.json", 0);
+        //    var animationSettings = new AnimationSettings(1);
+        //    var rp = new WeaponPowerUp(_animationHandlerFactory.GetAnimationHandler(tileSet, animationSettings),
+        //        _weaponFactory.GetMissileLauncher(null), soundEffect: _soundHandler.Get(ImpactSounds.Weapon))
+        //    {
+        //        Layer = layer,
+        //        Position = position ?? new Vector2(0, 0)
+        //    };
+        //    return rp;
+        //}
 
-        public WeaponPowerUp LaserGetInstance(Vector2? position = null, float layer = 0)
+        //public WeaponPowerUp LaserGetInstance(Vector2? position = null, float layer = 0)
+        //{
+        //    var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\laser.json", 0);
+        //    var animationSettings = new AnimationSettings(1);
+        //    var lp = new WeaponPowerUp(_animationHandlerFactory.GetAnimationHandler(tileSet, animationSettings),
+        //        _weaponFactory.GetEnemyLaserGun(null), soundEffect: _soundHandler.Get(ImpactSounds.Weapon))
+        //    {
+        //        Layer = layer,
+        //        Position = position ?? new Vector2(0, 0)
+        //    };
+        //    return lp;
+        //}
+
+        public WeaponPowerUp GetRandomInstance(Vector2? position = null,float layer = 0)
         {
-            var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\laser.json", 0);
-            var animationSettings = new AnimationSettings(1);
-            var lp = new WeaponPowerUp(_animationHandlerFactory.GetAnimationHandler(tileSet, animationSettings),
-                _weaponFactory.GetEnemyLaserGun(null), soundEffect: _soundHandler.Get(ImpactSounds.Weapon))
+            var t = _weaponFactory.GetRandomWeapon(null);
+            var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\allweapons_32_32.json",0);
+            var animationSettings = t[0].NameTag switch
+            {
+                "Minigun" => new AnimationSettings(new List<(int, float)> {(2, 100)}),
+                "Shotgun" => new AnimationSettings(new List<(int, float)> {(1, 100)}),
+                "Missile Launcher" => new AnimationSettings(new List<(int, float)> {(4, 100)}),
+                "Laser gun" => new AnimationSettings(new List<(int, float)> {(0, 100)}),
+                _ => throw new NotImplementedException()
+            };
+            animationSettings.IsPlaying = false;
+            animationSettings.Scale = 2;
+            var rw = new WeaponPowerUp(_animationHandlerFactory.GetAnimationHandler(tileSet, animationSettings),
+                    t, soundEffect: _soundHandler.Get(ImpactSounds.Weapon))
             {
                 Layer = layer,
                 Position = position ?? new Vector2(0, 0)
             };
-            return lp;
+            return rw;
+
+            
         }
 
         public InfAmmoPowerUp InfAmmoGetInstance(int ammo, Vector2? position = null, float layer = 0)

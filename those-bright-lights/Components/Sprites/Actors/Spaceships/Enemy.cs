@@ -17,7 +17,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
         protected Actor Target;
         protected CooldownAbility ForgetTarget;
         protected CooldownAbility Shoot;
-        public bool RotateAndShoot = false;
+        public bool RotateWeapon = false;
         protected float RotateVelocity;
         /// <summary>
         /// Defines the angle in which the enemy doesn't rotate anymore -> it's close enough
@@ -86,8 +86,6 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
         
         public override void Update(GameTime gameTime)
         {
-            if(RotateAndShoot)
-                Rotate(Target, gameTime);
 
             base.Update(gameTime);
         }
@@ -116,21 +114,21 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
                     switch (I)
                     {
                         case InterAction.BodyCollision:
-                            Health -= p.Damage;
+                            base.ExecuteInteraction(other);
                             break;
                         case InterAction.None:
                             break;
                         case InterAction.InView:
+                            break;
+                        case InterAction.InViewAndBodyCollision:
+                            base.ExecuteInteraction(other);
                             break;
                         default:
                             throw new ArgumentOutOfRangeException();
                     }
                     break;
                 default:
-                    if (other.Parent == this) return;
-                    Health -= other.Damage;
-                    _logger.Debug($"health {Health}");
-                    _impactSound?.Play();
+                    base.ExecuteInteraction(other);
                     break;
             }
         }
@@ -140,7 +138,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
             return new LevelEventArgs.EnemyDiedEventArgs();
         }
 
-        protected void Rotate(Actor target, GameTime gameTime)
+        protected virtual void Rotate(Actor target, GameTime gameTime)
         {
             if (Target != null && I == InterAction.InView)
             {
@@ -183,6 +181,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
     {
         None,
         InView,
-        BodyCollision
+        BodyCollision,
+        InViewAndBodyCollision
     }
 }

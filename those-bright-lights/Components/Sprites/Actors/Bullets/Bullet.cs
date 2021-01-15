@@ -89,6 +89,12 @@ namespace SE_Praktikum.Components.Sprites.Actors.Bullets
             }
         }
 
+        protected override bool InteractAble(Actor other)
+        {
+            if (Parent == other || Parent == other.Parent) return false;
+            return base.InteractAble(other);
+        }
+
         protected Vector2 Movement(Vector2 spaceshipVelocity, float elapsedTime)
         {
             var position = spaceshipVelocity +

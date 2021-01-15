@@ -59,7 +59,7 @@ namespace SE_Praktikum.Services.Factories
                                                    float? maxHealth = null)
         {
             // TODO: create and load missing sound effects
-            var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\lasergunFire_30_13_7.json", 0);
+            var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\missilelauncher_4_12.json", 0);
             var m = new SingleShotWeapon(
                 _animationHandlerFactory.GetAnimationHandler(tileSet,new AnimationSettings(1,2000f)),
                 owner,
@@ -112,7 +112,7 @@ namespace SE_Praktikum.Services.Factories
                 owner,
                 new Vector2(28, -38),
                 0,
-                new Vector2(13,0),
+                new Vector2(16,0),
                 null, 
                 null, 
                 nameTag,
@@ -146,7 +146,7 @@ namespace SE_Praktikum.Services.Factories
                 owner,
                 new Vector2(28, 36),
                 0,
-                new Vector2(13,0),
+                new Vector2(16,0),
                 null, 
                 null, 
                 nameTag,
@@ -370,29 +370,39 @@ namespace SE_Praktikum.Services.Factories
                 reloadTime: reloadTime);
             m.Scale = 1.8f;
             return m;
-        } 
+        }
 
-        //public Weapon GetRandomWeapon(Actor owner)
-        //{
-        //    var i = _random.Next(3);
-        //    switch(i)
-        //    {
-        //        case 0:
-        //            return GetMinigun(owner);
-        //        case 1:
-        //            return GetMissileLauncher(owner);
+        public List<Weapon> GetRandomWeapon(Actor owner)
+        {
+            var i = _random.Next(4);
+            var weaponList = new List<Weapon>();
+            switch (i)
+            {
+                case 0:
+                     weaponList.Add(GetMissileLauncher(owner));
+                    break;
                     
-        //        case 2:
-        //            return GetShotgun(owner);
+                case 1:
+                    weaponList.Add(GetShotgun(owner));
+                    break;
 
-        //        default:
-        //            throw new NotImplementedException();
-        //    }
-        //}
+                case 2:
+                    weaponList.Add(GetMinigun(owner));
+                    break;
+                case 3:
+                    weaponList.Add(GetLowerLaserGun(owner));
+                    weaponList.Add(GetUpperLaserGun(owner));
+                    break;
+                default:
+                    throw new NotImplementedException();
+
+            }
+            return weaponList;
+        }
 
         #region BossWeapon
 
-         /// <summary>
+        /// <summary>
         /// Boss Weapon p2
         /// </summary>
         /// <param name="owner"></param>
