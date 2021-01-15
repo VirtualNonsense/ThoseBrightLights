@@ -55,7 +55,7 @@ namespace SE_Praktikum.Components.Sprites.Actors
         public event EventHandler<LevelEventArgs.ActorDiedEventArgs> OnDeath;
         public event EventHandler OnHealthChanged;
         public event EventHandler OnMaxHealthChanged;
-        public event EventHandler OnFlippedChange;
+        public event EventHandler OnFlippedChanged;
         public event EventHandler OnInvincibilityChanged; 
         
         #endregion
@@ -222,7 +222,7 @@ namespace SE_Praktikum.Components.Sprites.Actors
         
         protected virtual void InvokeOnFlippedChange()
         {
-            OnFlippedChange?.Invoke(this, EventArgs.Empty);
+            OnFlippedChanged?.Invoke(this, EventArgs.Empty);
         }
 
         #endregion
