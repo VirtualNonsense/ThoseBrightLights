@@ -72,7 +72,7 @@ namespace SE_Praktikum.Services.Factories
             {
                 Scale = 2
             };
-            //m.AddWeapon(_weaponFactory.GetEnemyLaserGun(m));        //add mines stuff
+            
 
             return m;
         }
