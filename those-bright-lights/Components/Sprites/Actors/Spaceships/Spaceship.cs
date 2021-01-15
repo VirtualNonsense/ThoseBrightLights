@@ -8,6 +8,7 @@ using NLog;
 using SE_Praktikum.Components.Sprites.Actors.Bullets;
 using SE_Praktikum.Components.Sprites.Actors.PowerUps;
 using SE_Praktikum.Components.Sprites.Actors.Weapons;
+using SE_Praktikum.Extensions;
 using SE_Praktikum.Models;
 using SE_Praktikum.Services;
 using SE_Praktikum.Services.Abilities;
@@ -27,7 +28,6 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
         protected Polygon _impactPolygon;
         private int _componentIndex;
         private readonly Dictionary<string, CastTimeAbility> _statusChangeResetTimer;
-        private List<Weapon> _currentWeapons;
 
         // #############################################################################################################
         // Constructor
@@ -52,9 +52,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
             Components = new List<SpaceshipAddOn>();
             _statusChangeResetTimer = new Dictionary<string, CastTimeAbility>();
             AllWeapons = new List<Weapon>();
-            _currentWeapons = new List<Weapon>();
             CurrentWeapons = new List<Weapon>();
-            
         }
         
         // #############################################################################################################
@@ -162,10 +160,12 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
         {
             foreach (var comp in Components)
             {
-                if(!(comp is Weapon))
-                    comp.Draw(spriteBatch);
-                foreach(var weapon in CurrentWeapons)
-                    weapon.Draw(spriteBatch);
+                comp.Draw(spriteBatch);
+            }
+
+            foreach (var weapon in CurrentWeapons)
+            {
+                weapon.Draw(spriteBatch);
             }
             base.Draw(spriteBatch);
         }
@@ -173,8 +173,6 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
         public virtual void AddWeapon(Weapon weapon)
         {
             weapon.Parent = this;
-            Components.Add(weapon);
-            ComponentIndex = Components.Count - 1;
             weapon.OnEmitBullet += EmitBulletToOnShot;
             switch (weapon)
             {
@@ -187,7 +185,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
                     break;
             }
 
-            AllWeapons = Components.OfType<Weapon>().ToList();
+            AllWeapons.Add(weapon);
             CurrentWeapons =
                 (from w in AllWeapons where w.NameTag == AllWeapons[^1].NameTag select w)
                 .ToList();
@@ -198,9 +196,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
         {
             if (!AllWeapons.Contains(weapon)) return;
             weapon.OnEmitBullet -= EmitBulletToOnShot;
-            Components.Remove(weapon);
-            ComponentIndex = ComponentIndex;
-            AllWeapons = Components.OfType<Weapon>().ToList();
+            AllWeapons.Remove(weapon);
             CurrentWeapons =
                 (from w in AllWeapons where w.NameTag == AllWeapons[^1].NameTag select w)
                 .ToList();
@@ -304,6 +300,11 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
             for (int i = 0; i < Components.Count; i++)
             {
                 Components[i].InterAct(other);
+            }
+
+            for (int i = 0; i < CurrentWeapons.Count; i++)
+            {
+                CurrentWeapons[i].InterAct(other);
             }
         }
         

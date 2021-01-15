@@ -61,15 +61,18 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
                     base.Parent.OnPositionChanged -= ParentOnOnPositionChanged;
                     base.Parent.OnRotationChanged -= ParentOnOnRotationChanged;
                     base.Parent.OnLayerChanged -= ParentOnOnLayerChanged;
-                    base.Parent.OnFlippedChange -= ParentOnOnFlippedChange;
+                    base.Parent.OnFlippedChanged -= ParentOnOnFlippedChanged;
                 }
 
                 base.Parent = value;
-                Layer = Parent.Layer;
                 base.Parent.OnPositionChanged += ParentOnOnPositionChanged;
                 base.Parent.OnRotationChanged += ParentOnOnRotationChanged;
                 base.Parent.OnLayerChanged += ParentOnOnLayerChanged;
-                base.Parent.OnFlippedChange += ParentOnOnFlippedChange;
+                base.Parent.OnFlippedChanged += ParentOnOnFlippedChanged;
+                Layer = Parent.Layer;
+                if (Parent.FlippedHorizontal)
+                    RelativePosition = new Vector2(RelativePosition.X, -RelativePosition.Y);
+                UpdateBasePosition();
             } 
         }
         public Vector2 RelativePosition
@@ -193,7 +196,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
             base.Position = Parent.Position + RelativePosition.Rotate(Parent.Rotation);
         }
         
-        private void ParentOnOnFlippedChange(object sender, EventArgs e)
+        private void ParentOnOnFlippedChanged(object sender, EventArgs e)
         {
             RelativePosition = new Vector2(_relativePosition.X,-_relativePosition.Y);
         }
