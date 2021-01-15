@@ -494,16 +494,17 @@ namespace SE_Praktikum.Core
                         kamikaze.Layer = layer;
                         kamikaze.Position = enemySpawnPoint.Item2;
                         kamikaze.Rotation = (float)Math.PI;
+                        kamikaze.OnDeath += (sender, args) => ProcessLevelEvent(args);
                         kamikaze.OnShoot += (sender, args) =>
                         {
                             if (!(args is LevelEventArgs e)) return;
-                            OnLevelEvent(e);
+                            ProcessLevelEvent(e);
                         };
 
                         kamikaze.OnExplosion += (sender, args) =>
                         {
                             if (!(args is LevelEventArgs e)) return;
-                            OnLevelEvent(e);
+                            ProcessLevelEvent(e);
                         };
                         _components.Add(kamikaze);
                         break;
