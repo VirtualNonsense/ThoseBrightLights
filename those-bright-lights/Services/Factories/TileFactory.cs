@@ -33,8 +33,10 @@ namespace SE_Praktikum.Services.Factories
                 var tileInfo = tileset.GetInfo((int)index);
                 if (tileInfo != null)
                     indestructable = !tileInfo.Destructable;
-                var settings = new AnimationSettings(new List<(int, float)>{((int)index, 1f)}, isPlaying:false, opacity: opacity, layer: layer);
-                var handler = _factory.GetAnimationHandler(tileset, settings, origin: Vector2.Zero);
+                var settings = new AnimationSettings(new List<(int, float)> {((int) index, 1f)}, isPlaying: false,
+                    opacity: opacity, layer: layer);
+                var handler = _factory.GetAnimationHandler(tileset, new List<AnimationSettings>(new[] {settings}),
+                    origin: Vector2.Zero);
                 handler.Position = position;
                 return new Tile(handler, t.Item1){Indestructible = indestructable, MaxHealth = 20, Health = 20};
                 
@@ -46,7 +48,15 @@ namespace SE_Praktikum.Services.Factories
             throw new ArgumentOutOfRangeException();
         }
 
-        public QuadTree<Tile> GenerateTiles(List<uint> indices, float layer, List<TileSet> tilelist, int tilewidth, int tileheight, int rows, int columns, float layerOpacity, Rectangle area)
+        public QuadTree<Tile> GenerateTiles(List<uint> indices,
+            float layer,
+            List<TileSet> tilelist,
+            int tilewidth,
+            int tileheight,
+            int rows,
+            int columns,
+            float layerOpacity,
+            Rectangle area)
         {
 
             if (indices.Count > rows * columns)

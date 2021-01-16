@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using NLog;
@@ -13,8 +14,8 @@ namespace SE_Praktikum.Services
         private Vector2 _origin;
         private Vector2 _offset;
 
-        public TileSet Tileset;
-        private AnimationSettings _settings;
+        public TileSet TileSet;
+        public AnimationSettings Settings;
 
         private float _timer;
 
@@ -30,19 +31,19 @@ namespace SE_Praktikum.Services
                 if (_currentIndex == value) return;
                 if (value < 0)
                     _currentIndex = 0;
-                else if (value >= _settings.UpdateList.Count)
-                    _currentIndex = _settings.UpdateList.Count - 1;
+                else if (value >= Settings.UpdateList.Count)
+                    _currentIndex = Settings.UpdateList.Count - 1;
                 else
                     _currentIndex = value;
 
-                CurrentHitBox = Tileset.GetHitBox(_settings.UpdateList[_currentIndex].Item1);
+                CurrentHitBox = TileSet.GetHitBox(Settings.UpdateList[_currentIndex].Item1);
                 HitBoxTransition();
                 HitBoxUpdate();
             }
         }
 
         //TODO: find better name, frame is for rectangle
-        public (int, float) CurrentFrame => _settings.UpdateList[_currentIndex];
+        public (int, float) CurrentFrame => Settings.UpdateList[_currentIndex];
 
         public Polygon[] CurrentHitBox
         {
@@ -52,9 +53,9 @@ namespace SE_Praktikum.Services
 
         private ILogger _logger;
         
-        public int FrameWidth => Tileset.TileDimX;
+        public int FrameWidth => TileSet.TileDimX;
 
-        public int FrameHeight => Tileset.TileDimY;
+        public int FrameHeight => TileSet.TileDimY;
 
         public Vector2 Position
         {
@@ -72,57 +73,57 @@ namespace SE_Praktikum.Services
 
         public float Rotation
         {
-            get => _settings.Rotation;
+            get => Settings.Rotation;
             set
             {
-                if (Math.Abs(value - _settings.Rotation) < float.Epsilon) return;
-                    _settings.Rotation = value > 0? 
+                if (Math.Abs(value - Settings.Rotation) < float.Epsilon) return;
+                    Settings.Rotation = value > 0? 
                         (float) (value  % (2 * Math.PI)) : 
                         (float)(2 * Math.PI + value % (2 * Math.PI));
                     if (CurrentHitBox==null) return;
                 foreach (var polygon in CurrentHitBox)
                 {
-                    polygon.Rotation = _settings.Rotation;
+                    polygon.Rotation = Settings.Rotation;
                 }
             }
         }
 
         public bool IsPlaying
         {
-            get => _settings.IsPlaying;
-            set => _settings.IsPlaying = value;
+            get => Settings.IsPlaying;
+            set => Settings.IsPlaying = value;
         }
 
         public SpriteEffects SpriteEffects
         {
-            get=>_settings.SpriteEffects;
+            get=>Settings.SpriteEffects;
             set
             {
                 if (value == SpriteEffects) return;
                 if (SpriteEffects != SpriteEffects.None)
                 {
                     // resetting HitBox to make transition easier
-                    CurrentHitBox = Tileset.GetHitBox(_settings.UpdateList[_currentIndex].Item1);
+                    CurrentHitBox = TileSet.GetHitBox(Settings.UpdateList[_currentIndex].Item1);
                     HitBoxTransition();
                 }
-                _settings.SpriteEffects = value;
+                Settings.SpriteEffects = value;
                 HitBoxUpdate();
             }
         }
 
         public Color Color
         {
-            get=>_settings.Color;
-            set=>_settings.Color=value;
+            get=>Settings.Color;
+            set=>Settings.Color=value;
         }
         
 
         public float Scale
         {
-            get => _settings.Scale;
+            get => Settings.Scale;
             set
             {
-                _settings.Scale = value;
+                Settings.Scale = value;
                 if (CurrentHitBox == null) return;
                 foreach (var polygon in CurrentHitBox)
                 {
@@ -163,41 +164,41 @@ namespace SE_Praktikum.Services
 
         public float Opacity
         {
-            get => _settings.Opacity;
-            set => _settings.Opacity = value;
+            get => Settings.Opacity;
+            set => Settings.Opacity = value;
         }
 
         public float Layer
         {
             
-            get => _settings.Layer;
+            get => Settings.Layer;
             set
             {
-                _settings.Layer = value;
+                Settings.Layer = value;
                 if (CurrentHitBox==null) return;
                 foreach (var polygon in CurrentHitBox)
                 {
-                    polygon.Layer = _settings.Layer;
+                    polygon.Layer = Settings.Layer;
                 }
             }
         }
         
 
-        public Rectangle Frame => Tileset.GetFrame((uint)_settings.UpdateList[_currentIndex].Item1);
+        public Rectangle Frame => TileSet.GetFrame((uint)Settings.UpdateList[_currentIndex].Item1);
 
         public event EventHandler OnAnimationComplete;
         public event EventHandler<AnimationProgressArgs> OnAnimationProgressUpdate;
 
-        public AnimationHandler(TileSet tileset, AnimationSettings settings, Vector2? position = null, Vector2? origin = null)
+        public AnimationHandler(TileSet tileSet, List<AnimationSettings> settings, Vector2? position = null, Vector2? origin = null)
         {
             _logger = LogManager.GetCurrentClassLogger();
-            Tileset = tileset;
-            _settings = settings;
+            TileSet = tileSet;
+            Settings = settings[0];
             _position = position ?? new Vector2(0,0);
             _origin = origin ?? new Vector2(0,0);
             _offset = Vector2.Zero;
             PointOfRotation = Vector2.Zero;
-            CurrentHitBox = Tileset.GetHitBox(_settings.UpdateList[_currentIndex].Item1);
+            CurrentHitBox = TileSet.GetHitBox(Settings.UpdateList[_currentIndex].Item1);
             HitBoxTransition();
             HitBoxUpdate();
         }
@@ -213,15 +214,15 @@ namespace SE_Praktikum.Services
             _updated = false;
 
             spriteBatch.Draw(
-                Tileset.Texture,
+                TileSet.Texture,
                 Position + Offset + PointOfRotation,
                 Frame,
-                _settings.Color * _settings.Opacity,
-                _settings.Rotation,
+                Settings.Color * Settings.Opacity,
+                Settings.Rotation,
                 Origin + PointOfRotation,
-                _settings.Scale,
-                _settings.SpriteEffects,
-                _settings.Layer
+                Settings.Scale,
+                Settings.SpriteEffects,
+                Settings.Layer
                 );
         }
 
@@ -229,23 +230,23 @@ namespace SE_Praktikum.Services
         public void Update(GameTime gameTime)
         {
             _updated = true;
-            if (!_settings.IsPlaying) return;
+            if (!Settings.IsPlaying) return;
             
             _timer += gameTime.ElapsedGameTime.Milliseconds;
-            if (_timer > _settings.UpdateList[CurrentIndex].Item2)
+            if (_timer > Settings.UpdateList[CurrentIndex].Item2)
             {
                 _timer = 0f;
-                if(CurrentIndex < _settings.UpdateList.Count-1)
+                if(CurrentIndex < Settings.UpdateList.Count-1)
                     CurrentIndex++;
                 else
                 {
                     CurrentIndex = 0;
-                    if (_settings.IsLooping)
+                    if (Settings.IsLooping)
                     {
                         return;
                     }
                     InvokeOnAnimationComplete();
-                    _settings.IsPlaying = false;
+                    Settings.IsPlaying = false;
                 }
             }
         }
@@ -263,7 +264,7 @@ namespace SE_Praktikum.Services
         [Obsolete]
         public Byte[] GetDataOfFrame()
         {
-            return Tileset.GetDataOfFrame(CurrentFrame.Item1);
+            return TileSet.GetDataOfFrame(CurrentFrame.Item1);
         }
 
         private void HitBoxTransition()
@@ -307,7 +308,7 @@ namespace SE_Praktikum.Services
 
         protected virtual void InvokeOnAnimationProgressUpdate()
         {
-            OnAnimationProgressUpdate?.Invoke(this, new AnimationProgressArgs{Progress = (float)_currentIndex/_settings.UpdateList.Count});
+            OnAnimationProgressUpdate?.Invoke(this, new AnimationProgressArgs{Progress = (float)_currentIndex/Settings.UpdateList.Count});
         }
 
         public class AnimationProgressArgs : EventArgs

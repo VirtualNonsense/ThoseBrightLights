@@ -47,7 +47,9 @@ namespace SE_Praktikum.Services.Factories
         {
             var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\health.json", 0);
             var animationSettings = new AnimationSettings(8, 200,layer, isLooping:true);
-            var hp = new HealthPowerUp(_animationHandlerFactory.GetAnimationHandler(tileSet, animationSettings),
+            var hp = new HealthPowerUp(
+                _animationHandlerFactory.GetAnimationHandler(tileSet,
+                    new List<AnimationSettings>(new[] {animationSettings})),
                 healthbonus: health, soundEffect : _soundHandler.Get(ImpactSounds.Health))
             {
                 Layer = layer,
@@ -60,7 +62,9 @@ namespace SE_Praktikum.Services.Factories
         {
             var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\health.json", 0);
             var animationSettings = new AnimationSettings(8, 30,isLooping:true);
-            var fhp = new FullHealthPowerUp(_animationHandlerFactory.GetAnimationHandler(tileSet, animationSettings),
+            var fhp = new FullHealthPowerUp(
+                _animationHandlerFactory.GetAnimationHandler(tileSet,
+                    new List<AnimationSettings>(new[] {animationSettings})),
                 healthbonus: health, soundEffect: _soundHandler.Get(ImpactSounds.FullHealth))
             {
                 Layer = layer,
@@ -73,7 +77,9 @@ namespace SE_Praktikum.Services.Factories
         {
             var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\skullanimation_19_24_9.json", 0);
             var animationSettings = new AnimationSettings(9, 50, layer, isLooping:true);
-            var ikp = new InstaDeathPowerUp(_animationHandlerFactory.GetAnimationHandler(tileSet, animationSettings), 
+            var ikp = new InstaDeathPowerUp(
+                _animationHandlerFactory.GetAnimationHandler(tileSet,
+                    new List<AnimationSettings>(new[] {animationSettings})), 
                 soundEffect: _soundHandler.Get(ImpactSounds.InstaDeath))
             {
                 Layer = layer,
@@ -81,32 +87,7 @@ namespace SE_Praktikum.Services.Factories
             };
             return ikp;
         }
-
-        //public WeaponPowerUp RocketGetInstance(Vector2? position = null, float layer = 0)
-        //{
-        //    var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\missile.json", 0);
-        //    var animationSettings = new AnimationSettings(1);
-        //    var rp = new WeaponPowerUp(_animationHandlerFactory.GetAnimationHandler(tileSet, animationSettings),
-        //        _weaponFactory.GetMissileLauncher(null), soundEffect: _soundHandler.Get(ImpactSounds.Weapon))
-        //    {
-        //        Layer = layer,
-        //        Position = position ?? new Vector2(0, 0)
-        //    };
-        //    return rp;
-        //}
-
-        //public WeaponPowerUp LaserGetInstance(Vector2? position = null, float layer = 0)
-        //{
-        //    var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\laser.json", 0);
-        //    var animationSettings = new AnimationSettings(1);
-        //    var lp = new WeaponPowerUp(_animationHandlerFactory.GetAnimationHandler(tileSet, animationSettings),
-        //        _weaponFactory.GetEnemyLaserGun(null), soundEffect: _soundHandler.Get(ImpactSounds.Weapon))
-        //    {
-        //        Layer = layer,
-        //        Position = position ?? new Vector2(0, 0)
-        //    };
-        //    return lp;
-        //}
+        
 
         public WeaponPowerUp GetRandomInstance(Vector2? position = null,float layer = 0)
         {
@@ -122,7 +103,9 @@ namespace SE_Praktikum.Services.Factories
             };
             animationSettings.IsPlaying = false;
             animationSettings.Scale = 2;
-            var rw = new WeaponPowerUp(_animationHandlerFactory.GetAnimationHandler(tileSet, animationSettings),
+            var rw = new WeaponPowerUp(
+                _animationHandlerFactory.GetAnimationHandler(tileSet,
+                    new List<AnimationSettings>(new[] {animationSettings})),
                     t, soundEffect: _soundHandler.Get(ImpactSounds.Weapon))
             {
                 Layer = layer,
@@ -137,7 +120,9 @@ namespace SE_Praktikum.Services.Factories
         {
             var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\infammoanimation.json", 0);
             var animationSettings = new AnimationSettings(20,50,layer,isLooping:true);
-            var ra = new InfAmmoPowerUp(_animationHandlerFactory.GetAnimationHandler(tileSet, animationSettings), ammo, 
+            var ra = new InfAmmoPowerUp(
+                _animationHandlerFactory.GetAnimationHandler(tileSet,
+                    new List<AnimationSettings>(new[] {animationSettings})), ammo, 
                 soundEffect: _soundHandler.Get(ImpactSounds.Ammo))
             {
                 Layer = layer, 
@@ -150,7 +135,9 @@ namespace SE_Praktikum.Services.Factories
         {
             var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\ammoplus_21_30_16.json", 0);
             var animationSettings = new AnimationSettings(16,50,layer,isLooping:true);
-            var pa = new BonusClipPowerUp(_animationHandlerFactory.GetAnimationHandler(tileSet, animationSettings), clips, 
+            var pa = new BonusClipPowerUp(
+                _animationHandlerFactory.GetAnimationHandler(tileSet,
+                    new List<AnimationSettings>(new[] {animationSettings})), clips, 
                 soundEffect: _soundHandler.Get(ImpactSounds.Ammo))
             {
                 Layer = layer, 
@@ -163,7 +150,9 @@ namespace SE_Praktikum.Services.Factories
         {
             var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\star_21_21_10.json", 0);
             var animationSettings = new AnimationSettings(8, 50, layer, isLooping:true);
-            var s = new StarPowerUp(_animationHandlerFactory.GetAnimationHandler(tileSet, animationSettings),duration,
+            var s = new StarPowerUp(
+                _animationHandlerFactory.GetAnimationHandler(tileSet,
+                    new List<AnimationSettings>(new[] {animationSettings})), duration,
                 soundEffect: _soundHandler.Get(ImpactSounds.Star))
             {
 
@@ -177,7 +166,9 @@ namespace SE_Praktikum.Services.Factories
         {
             var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\moneymoneymoney_20_20_9.json", 0);
             var animationSettings = new AnimationSettings(9, 50, layer, isLooping: true, isPlaying: true) ;
-            var sc = new ScoreBonusPowerUp(_animationHandlerFactory.GetAnimationHandler(tileSet, animationSettings),bonusscore,
+            var sc = new ScoreBonusPowerUp(
+                _animationHandlerFactory.GetAnimationHandler(tileSet,
+                    new List<AnimationSettings>(new[] {animationSettings})), bonusscore,
                 soundEffect: _soundHandler.Get(ImpactSounds.ScoreBoni))
             {
                 Layer = layer,
@@ -189,13 +180,20 @@ namespace SE_Praktikum.Services.Factories
 
         public void LoadSoundEffects()
         {
-            _soundHandler.Add(ImpactSounds.Health, _contentManager.Load<SoundEffect>("Audio/Sound_Effects/PowerUps/Clip_Empty"));
-            _soundHandler.Add(ImpactSounds.FullHealth, _contentManager.Load<SoundEffect>("Audio/Sound_Effects/PowerUps/Secret_Bell"));
-            _soundHandler.Add(ImpactSounds.InstaDeath, _contentManager.Load<SoundEffect>("Audio/Sound_Effects/PowerUps/Doh_bassoon"));
-            _soundHandler.Add(ImpactSounds.Weapon, _contentManager.Load<SoundEffect>("Audio/Sound_Effects/PowerUps/West"));
-            _soundHandler.Add(ImpactSounds.ScoreBoni, _contentManager.Load<SoundEffect>("Audio/Sound_Effects/PowerUps/Wrong"));
-            _soundHandler.Add(ImpactSounds.Ammo, _contentManager.Load<SoundEffect>("Audio/Sound_Effects/PowerUps/CautionOverheat"));
-            _soundHandler.Add(ImpactSounds.Star, _contentManager.Load<SoundEffect>("Audio/Sound_Effects/PowerUps/Jungle"));
+            _soundHandler.Add(ImpactSounds.Health,
+                _contentManager.Load<SoundEffect>("Audio/Sound_Effects/PowerUps/Clip_Empty"));
+            _soundHandler.Add(ImpactSounds.FullHealth,
+                _contentManager.Load<SoundEffect>("Audio/Sound_Effects/PowerUps/Secret_Bell"));
+            _soundHandler.Add(ImpactSounds.InstaDeath,
+                _contentManager.Load<SoundEffect>("Audio/Sound_Effects/PowerUps/Doh_bassoon"));
+            _soundHandler.Add(ImpactSounds.Weapon,
+                _contentManager.Load<SoundEffect>("Audio/Sound_Effects/PowerUps/West"));
+            _soundHandler.Add(ImpactSounds.ScoreBoni,
+                _contentManager.Load<SoundEffect>("Audio/Sound_Effects/PowerUps/Wrong"));
+            _soundHandler.Add(ImpactSounds.Ammo,
+                _contentManager.Load<SoundEffect>("Audio/Sound_Effects/PowerUps/CautionOverheat"));
+            _soundHandler.Add(ImpactSounds.Star,
+                _contentManager.Load<SoundEffect>("Audio/Sound_Effects/PowerUps/Jungle"));
         }
     }
 }

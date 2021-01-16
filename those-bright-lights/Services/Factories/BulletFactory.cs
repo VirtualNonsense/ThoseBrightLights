@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using SE_Praktikum.Components.Actors;
@@ -32,8 +33,10 @@ namespace SE_Praktikum.Services.Factories
             var propulsionTiles =  _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\missile_propulsion_15_15.json", 0);
             var particle = _particleFactory.BuildExplosionParticle();
 
-            var missileAnimationHandler = _animationHandlerFactory.GetAnimationHandler(missileTiles, new AnimationSettings(1, isPlaying:false));
-            var propulsionAnimationHandler = _animationHandlerFactory.GetAnimationHandler(propulsionTiles, new AnimationSettings(6, isPlaying:true, isLooping:true));
+            var missileAnimationHandler = _animationHandlerFactory.GetAnimationHandler(missileTiles,
+                new List<AnimationSettings>(new[] {new AnimationSettings(1, isPlaying: false)}));
+            var propulsionAnimationHandler = _animationHandlerFactory.GetAnimationHandler(propulsionTiles,
+                new List<AnimationSettings>(new[] {new AnimationSettings(6, isPlaying: true, isLooping: true)}));
             
             // var flightEffect = contentManager.Load<SoundEffect>("Audio/Sound_Effects/Airborne/Flight_plane_c");
             // var impactSound = contentManager.Load<SoundEffect>("Audio/Sound_Effects/Collusion/Big_Explo");
@@ -54,7 +57,8 @@ namespace SE_Praktikum.Services.Factories
         {
             var laserTileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\laser.json", 0);
             var laserTileAnimation =
-                _animationHandlerFactory.GetAnimationHandler(laserTileSet, new AnimationSettings(1, isPlaying: false));
+                _animationHandlerFactory.GetAnimationHandler(laserTileSet,
+                    new List<AnimationSettings>(new[] {new AnimationSettings(1, isPlaying: false)}));
             var flightEffect = _contentManager.Load<SoundEffect>("Audio/Sound_Effects/Airborne/Wobble_test");
             var impactSound = _contentManager.Load<SoundEffect>("Audio/Sound_Effects/Collusion/Clink");
             return new Laser(laserTileAnimation, 
@@ -73,7 +77,8 @@ namespace SE_Praktikum.Services.Factories
         {
             var laserTileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\enemylaser.json", 0);
             var laserTileAnimation =
-                _animationHandlerFactory.GetAnimationHandler(laserTileSet, new AnimationSettings(1, isPlaying: false));
+                _animationHandlerFactory.GetAnimationHandler(laserTileSet,
+                    new List<AnimationSettings>(new[] {new AnimationSettings(1, isPlaying: false)}));
             var flightEffect = _contentManager.Load<SoundEffect>("Audio/Sound_Effects/Airborne/Wobble_test");
             var impactSound = _contentManager.Load<SoundEffect>("Audio/Sound_Effects/Collusion/Clink");
             return new Laser(laserTileAnimation, 
@@ -92,7 +97,8 @@ namespace SE_Praktikum.Services.Factories
         {
             var projectileTileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\projectile_3_4.json", 0);
             var projectileTileAnimation =
-                _animationHandlerFactory.GetAnimationHandler(projectileTileSet, new AnimationSettings(1, isPlaying: false));
+                _animationHandlerFactory.GetAnimationHandler(projectileTileSet,
+                    new List<AnimationSettings>(new[] {new AnimationSettings(1, isPlaying: false)}));
             var flightEffect = _contentManager.Load<SoundEffect>("Audio/Sound_Effects/Airborne/Wobble_test");
             var impactSound = _contentManager.Load<SoundEffect>("Audio/Sound_Effects/Collusion/Clink");
             return new Projectile(projectileTileAnimation, 
@@ -111,7 +117,8 @@ namespace SE_Praktikum.Services.Factories
         {
             var projectileTileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\shotgunpallet.json", 0);
             var projectileTileAnimation =
-                _animationHandlerFactory.GetAnimationHandler(projectileTileSet, new AnimationSettings(1, isPlaying: false));
+                _animationHandlerFactory.GetAnimationHandler(projectileTileSet,
+                    new List<AnimationSettings>(new[] {new AnimationSettings(1, isPlaying: false)}));
             var flightEffect = _contentManager.Load<SoundEffect>("Audio/Sound_Effects/Airborne/Wobble_test");
             var impactSound = _contentManager.Load<SoundEffect>("Audio/Sound_Effects/Collusion/Clink");
             return new Pallet(projectileTileAnimation, 
