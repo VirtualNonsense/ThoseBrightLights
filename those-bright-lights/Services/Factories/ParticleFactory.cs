@@ -76,5 +76,25 @@ namespace SE_Praktikum.Services.Factories
                 _screen,
                 onScreenTime);
         }
+
+        public ExplosionsParticle BuildMineExplosionsParticle(AnimationSettings settings = null)
+        {
+            var animationSettings = settings ?? new AnimationSettings(updateList: new List<(int, float)>
+            {
+                (8, 50f),
+                (9, 50f),
+                (10, 50f),
+                (11, 50f),
+                (12, 50f),
+                (13, 50f),
+                (14, 50f),
+                (15, 50f),
+            },scale:2);
+            var explosionTileSet = 
+                _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\mine_35_35_8_2x.json", 0);
+            return new ExplosionsParticle(
+                _factory.GetAnimationHandler(explosionTileSet,
+                    settings: new List<AnimationSettings>(new[] {animationSettings})), _screen);
+        }
     }
 }

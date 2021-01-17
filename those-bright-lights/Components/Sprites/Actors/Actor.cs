@@ -200,6 +200,8 @@ namespace SE_Praktikum.Components.Sprites.Actors
 
         protected virtual void InvokeExplosion()
         {
+            Explosion.Position = Position;
+            Explosion.Layer = Layer;
             var explosionArgs = new LevelEventArgs.ExplosionEventArgs {Particle = Explosion};
             OnExplosion?.Invoke(this, explosionArgs);
         }

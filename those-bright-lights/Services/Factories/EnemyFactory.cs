@@ -18,13 +18,16 @@ namespace SE_Praktikum.Services.Factories
         private readonly WeaponFactory _weaponFactory;
         private readonly TileSetFactory _tileSetFactory;
         private readonly ContentManager _contentManager;
+        private readonly ParticleFactory _particleFactory;
 
-        public EnemyFactory(AnimationHandlerFactory animationHandlerFactory, WeaponFactory weaponFactory, TileSetFactory tileSetFactory, ContentManager contentManager)
+        public EnemyFactory(AnimationHandlerFactory animationHandlerFactory, WeaponFactory weaponFactory,
+            TileSetFactory tileSetFactory, ParticleFactory particleFactory, ContentManager contentManager)
         {
             _animationHandlerFactory = animationHandlerFactory;
             _weaponFactory = weaponFactory;
             _tileSetFactory = tileSetFactory;
             _contentManager = contentManager;
+            _particleFactory = particleFactory;
         }
 
          public Alienship GetAlienship()
@@ -92,19 +95,20 @@ namespace SE_Praktikum.Services.Factories
                 (6,100f),
                 (7,100f),
             }, isLooping:true);
-            var explodingAnimationSettings = new AnimationSettings(updateList: new List<(int, float)>
-            {
-                (8, 100f),
-                (9, 100f),
-                (10, 100f),
-                (11, 100f),
-                (12, 100f),
-                (13, 100f),
-                (14, 100f),
-                (15, 100f),
-            });
-            var animationSettings = new List<AnimationSettings> {idleAnimationSettings, explodingAnimationSettings};
-            var m = new Enemy(_animationHandlerFactory.GetAnimationHandler(tileSet, animationSettings),
+            // var explodingAnimationSettings = new AnimationSettings(updateList: new List<(int, float)>
+            // {
+            //     (8, 100f),
+            //     (9, 100f),
+            //     (10, 100f),
+            //     (11, 100f),
+            //     (12, 100f),
+            //     (13, 100f),
+            //     (14, 100f),
+            //     (15, 100f),
+            // });
+            var explosion = _particleFactory.BuildMineExplosionsParticle();
+            var animationSettings = new List<AnimationSettings> {idleAnimationSettings};
+            var m = new Mine(_animationHandlerFactory.GetAnimationHandler(tileSet, animationSettings),explosion,
                 impactSound: impactSound
               )
             {
