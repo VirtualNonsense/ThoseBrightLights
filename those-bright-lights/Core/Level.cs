@@ -234,7 +234,7 @@ namespace SE_Praktikum.Core
         private void ProcessLevelEvent(LevelEventArgs levelEventArgs)
         {
             string info;
-             switch (levelEventArgs)
+            switch (levelEventArgs)
             {
                 case LevelEventArgs.WinningZoneReachedEventArgs _:
                     InvokeOnLevelComplete();
