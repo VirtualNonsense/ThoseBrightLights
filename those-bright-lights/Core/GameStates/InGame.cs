@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -58,13 +59,9 @@ namespace SE_Praktikum.Core.GameStates
         public override void LoadContent()
         {
             _pause = false;
-            _levelContainer.SelectedLevel?.LoadContent(_contentManager);
-            _levelContainer.SelectedLevel.OnLevelComplete +=
-                (sender, args) => SaveAndQuit();
-            _levelContainer.SelectedLevel.OnPlayerDead += (sender, args) =>
-            {
-                _subject.OnNext(GameStateMachine.GameStateMachineTrigger.Back);
-            };
+            _levelContainer.SelectedLevel.LoadContent(_contentManager);
+            _levelContainer.SelectedLevel.OnLevelComplete += SaveAndQuit;
+            _levelContainer.SelectedLevel.OnPlayerDead += PlayerDied;
 
                 // creating pause menu
             _components = new ComponentGrid(new Vector2(0,0), 
@@ -92,6 +89,9 @@ namespace SE_Praktikum.Core.GameStates
         public override void UnloadContent()
         {
             _logger.Debug("unloading content");
+            _levelContainer.SelectedLevel.OnLevelComplete -=  SaveAndQuit;
+            _levelContainer.SelectedLevel.OnPlayerDead -= PlayerDied;
+
             _levelContainer.SelectedLevel?.Unload();
             _screen.Camera.StopFollowing();
         }
@@ -129,7 +129,7 @@ namespace SE_Praktikum.Core.GameStates
             }
         }
 
-        private void SaveAndQuit()
+        private void SaveAndQuit(object sender, EventArgs args)
         {
             if (_levelContainer.SelectedLevel.LevelNumber >= saveGameHandler.SaveGame.clearedStage)
             {
@@ -137,6 +137,12 @@ namespace SE_Praktikum.Core.GameStates
                 saveGameHandler.Save();
             }
             _subject.OnNext(GameStateMachine.GameStateMachineTrigger.Back);
+        }
+
+        private void PlayerDied(object sender, EventArgs args)
+        {
+            _subject.OnNext(GameStateMachine.GameStateMachineTrigger.Back);
+            
         }
     }
 }
