@@ -60,15 +60,7 @@ namespace SE_Praktikum.Core.GameStates
             _pause = false;
             _levelContainer.SelectedLevel?.LoadContent(_contentManager);
             _levelContainer.SelectedLevel.OnLevelComplete +=
-                (sender, args) =>
-                {
-                    if (_levelContainer.SelectedLevel.LevelNumber >= saveGameHandler.SaveGame.clearedStage)
-                    {
-                        saveGameHandler.SaveGame.clearedStage++;
-                        saveGameHandler.Save();
-                    }
-                    _subject.OnNext(GameStateMachine.GameStateMachineTrigger.Back);
-                };
+                (sender, args) => SaveAndQuit();
             _levelContainer.SelectedLevel.OnPlayerDead += (sender, args) =>
             {
                 _subject.OnNext(GameStateMachine.GameStateMachineTrigger.Back);
@@ -135,6 +127,16 @@ namespace SE_Praktikum.Core.GameStates
             {
                 _engine.Render(_components);
             }
+        }
+
+        private void SaveAndQuit()
+        {
+            if (_levelContainer.SelectedLevel.LevelNumber >= saveGameHandler.SaveGame.clearedStage)
+            {
+                saveGameHandler.SaveGame.clearedStage++;
+                saveGameHandler.Save();
+            }
+            _subject.OnNext(GameStateMachine.GameStateMachineTrigger.Back);
         }
     }
 }
