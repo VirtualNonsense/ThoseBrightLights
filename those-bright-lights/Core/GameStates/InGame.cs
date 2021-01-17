@@ -84,7 +84,6 @@ namespace SE_Praktikum.Core.GameStates
             backButton.Click += (sender, args) =>
             {
                 _logger.Debug("Back to main menu");
-                _screen.Camera.StopFollowing();
                 _subject.OnNext(GameStateMachine.GameStateMachineTrigger.Back);
             };
             _components.Add(backButton);
@@ -94,6 +93,7 @@ namespace SE_Praktikum.Core.GameStates
         {
             _logger.Debug("unloading content");
             _levelContainer.SelectedLevel?.Unload();
+            _screen.Camera.StopFollowing();
         }
 
         public override void Update(GameTime gameTime)
