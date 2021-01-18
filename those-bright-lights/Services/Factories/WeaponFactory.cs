@@ -228,8 +228,8 @@ namespace SE_Praktikum.Services.Factories
         /// <param name="maxHealth"></param>
         /// <returns></returns>
         public SingleShotWeapon GetTurretLaserGun(Actor owner,
-                                                 int clipSize = 20,
-                                                 int clips = 3,
+                                                 int clipSize = 2,
+                                                 int clips = 1,
                                                  int shotCooldown = 1000,
                                                  int reloadTime = 100,
                                                  float damage = 5,
@@ -251,8 +251,8 @@ namespace SE_Praktikum.Services.Factories
                 nameTag,
                 health,
                 maxHealth,
-                null,
-                null,
+                _contentManager.Load<SoundEffect>("Audio/Sound_Effects/weapon_specific_stuff/turret_gun_clip_empty"),
+                _contentManager.Load<SoundEffect>("Audio/Sound_Effects/weapon_specific_stuff/turret_gun_empty"),
                 _contentManager.Load<SoundEffect>("Audio/Sound_Effects/weapon_specific_stuff/turret_reloading"),
                 clipSize,
                 clips,

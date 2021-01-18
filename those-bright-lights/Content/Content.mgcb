@@ -1501,6 +1501,18 @@
 /processorParam:Quality=Best
 /build:Audio/Sound_Effects/Shot2.wav
 
+#begin Audio/Sound_Effects/weapon_specific_stuff/turret_gun_clip_empty.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound_Effects/weapon_specific_stuff/turret_gun_clip_empty.wav
+
+#begin Audio/Sound_Effects/weapon_specific_stuff/turret_gun_empty.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound_Effects/weapon_specific_stuff/turret_gun_empty.wav
+
 #begin Audio/Sound_Effects/weapon_specific_stuff/turret_reloading.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
