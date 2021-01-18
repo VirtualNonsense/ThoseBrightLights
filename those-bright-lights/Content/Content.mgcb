@@ -1495,6 +1495,12 @@
 /processorParam:Quality=Best
 /build:Audio/Sound_Effects/Shot/tav2.wav
 
+#begin Audio/Sound_Effects/Shot/turret_gun_shot.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound_Effects/Shot/turret_gun_shot.wav
+
 #begin Audio/Sound_Effects/Shot2.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

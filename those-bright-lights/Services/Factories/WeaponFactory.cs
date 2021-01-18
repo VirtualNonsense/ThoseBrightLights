@@ -246,7 +246,7 @@ namespace SE_Praktikum.Services.Factories
                 new Vector2(-28,-4),
                 0,
                 new Vector2(30,-4),
-                _contentManager.Load<SoundEffect>("Audio/Sound_Effects/Shot/laser_shot"), 
+                _contentManager.Load<SoundEffect>("Audio/Sound_Effects/Shot/turret_gun_shot"), 
                 _contentManager.Load<SoundEffect>("Audio/Sound_Effects/Collusion/turret_gun_impact"), 
                 nameTag,
                 health,
