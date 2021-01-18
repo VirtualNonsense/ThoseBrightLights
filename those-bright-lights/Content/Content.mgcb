@@ -1507,6 +1507,12 @@
 /processorParam:Quality=Best
 /build:Audio/Sound_Effects/Shot2.wav
 
+#begin Audio/Sound_Effects/weapon_specific_stuff/laser_reload.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound_Effects/weapon_specific_stuff/laser_reload.wav
+
 #begin Audio/Sound_Effects/weapon_specific_stuff/minigun_reload.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
