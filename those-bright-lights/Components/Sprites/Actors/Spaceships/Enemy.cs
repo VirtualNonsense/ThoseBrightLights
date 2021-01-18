@@ -136,39 +136,16 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
 
         protected virtual void Rotate(Actor target, GameTime gameTime)
         {
-            if (Target != null && InterAction == InterAction.InView)
-            {
-                var desiredRotation = MathExtensions.RotationToTarget(target, this);
-                if (Math.Abs(desiredRotation - Rotation) > RotationThreshold)
-                {
-                    float rotationPortion =
-                        (float) ((gameTime.ElapsedGameTime.TotalMilliseconds / RotationSpeed) * (2 * Math.PI));
-                    //turn clock or anticlockwise
-                    var angleToRotate = MathExtensions.Modulo2PiAlsoNegative(desiredRotation - Rotation);
-                    if (Math.Abs(angleToRotate) > Math.PI)
-                    {
-                        if (angleToRotate < 0)
-                        {
-                            Rotation += rotationPortion;
-                        }
-                        else
-                        {
-                            Rotation -= rotationPortion;
-                        }
-                    }
-                    else
-                    {
-                        if (angleToRotate < 0)
-                        {
-                            Rotation -= rotationPortion;
-                        }
-                        else
-                        {
-                            Rotation += rotationPortion;
-                        }
-                    }
-                }
-            }
+            //only rotate when enemy has target in view
+            if (Target == null || InterAction != InterAction.InView) return;
+            var desiredRotation = MathExtensions.RotationToTarget(target, this);
+            //stop wiggling
+            if (!(Math.Abs(desiredRotation - Rotation) > RotationThreshold)) return;
+            var rotationPortion =
+                (float) ((gameTime.ElapsedGameTime.TotalMilliseconds / RotationSpeed) * (2 * Math.PI));
+            //turn clock or anticlockwise
+            var angleToRotate = MathExtensions.Modulo2PiAlsoNegative(desiredRotation - Rotation);
+            Rotation += Math.Sign(Math.Abs(angleToRotate-Math.PI)) * Math.Sign(angleToRotate) * rotationPortion;
         }
 
     }
