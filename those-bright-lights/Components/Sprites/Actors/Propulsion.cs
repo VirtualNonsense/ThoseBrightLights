@@ -21,7 +21,8 @@ namespace SE_Praktikum.Components.Sprites.Actors
             float relativeRotation,
             SoundEffect impactSound,
             float health = 100,
-            float maxHealth = 100)
+            float maxHealth = 100,
+            float? scale = null)
             : base(animationHandler,
                 parent,
                 relativePosition,
@@ -30,7 +31,7 @@ namespace SE_Praktikum.Components.Sprites.Actors
                 health,
                 maxHealth)
         {
-            Scale = 1.2f;
+            Scale = scale ?? 1.2f;
         }
 
         protected override void ExecuteInteraction(Actor other)

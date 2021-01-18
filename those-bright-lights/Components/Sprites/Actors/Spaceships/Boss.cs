@@ -10,6 +10,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
     {
         public Boss(AnimationHandler animationHandler, 
                     Polygon viewBox,
+                    AnimationHandler propulsion,
                     float maxSpeed = 3,
                     float acceleration = 4,
                     float rotationAcceleration = .1f,
@@ -21,6 +22,14 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
         {
             Shoot = new CooldownAbility(500, _shootTarget);
             RotateWeapon = true;
+            Components.Add(
+                new Propulsion(
+                    propulsion,
+                    this,
+                    new Vector2(-55,64),
+                    0,
+                    null,
+                    scale: Scale*1.8f));
         }
 
         public override void Update(GameTime gameTime)

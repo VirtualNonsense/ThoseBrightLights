@@ -83,6 +83,10 @@ namespace SE_Praktikum.Services.Factories
             SoundEffect impactSound = _contentManager.Load<SoundEffect>("Audio/Sound_Effects/Collusion/ey");
             var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\boss_64_110_8.json", 0);
             var animationSettings = new AnimationSettings(8,isLooping:true);
+            var propulsionTileSet =
+                _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\bosspropulsion_11_9_6.json", 0);
+            var propulsionSettings = new AnimationSettings(6, isLooping: true, duration: 30f);
+            var propulsionHandler = _animationHandlerFactory.GetAnimationHandler(propulsionTileSet, propulsionSettings);
             var b = new Boss(_animationHandlerFactory.GetAnimationHandler(tileSet, animationSettings),
                 viewBox: new Polygon(Vector2.Zero,
                     Vector2.Zero, 0,
@@ -92,6 +96,7 @@ namespace SE_Praktikum.Services.Factories
                         new Vector2(100, -300),
                         new Vector2(100, 300),
                     }),
+                propulsionHandler,
                 impactSound: impactSound)
             {
                 Scale = 2

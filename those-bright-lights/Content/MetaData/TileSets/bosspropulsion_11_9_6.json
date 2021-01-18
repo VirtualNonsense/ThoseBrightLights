@@ -1,14 +1,14 @@
-{ "columns":1,
- "image":"..\/..\/..\/..\/..\/Artwork\/Enemies\/bosspropulsion_11_9_6.png",
+{ "columns":6,
+ "image":"..\/..\/Artwork\/Effects\/bosspropulsion_11_9_6.png",
  "imageheight":9,
  "imagewidth":66,
  "margin":0,
  "name":"bosspropulsion_11_9_6",
  "spacing":0,
- "tilecount":1,
+ "tilecount":6,
  "tiledversion":"1.4.3",
  "tileheight":9,
- "tilewidth":66,
+ "tilewidth":11,
  "type":"tileset",
  "version":1.4
 }

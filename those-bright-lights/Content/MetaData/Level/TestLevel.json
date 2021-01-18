@@ -29,14 +29,14 @@
                 {
                  "height":0,
                  "id":18,
-                 "name":"WeaponPowerUpSpawn ",
+                 "name":"BossSpawn",
                  "point":true,
                  "rotation":0,
-                 "type":"WeaponPowerUpSpawn",
+                 "type":"BossSpawn",
                  "visible":true,
                  "width":0,
-                 "x":243.019402595709,
-                 "y":100.954460966543
+                 "x":369.019402595709,
+                 "y":73.6211276332097
                 }],
          "offsetx":1.33333333333334,
          "offsety":-1,
