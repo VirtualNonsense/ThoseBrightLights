@@ -66,7 +66,7 @@ namespace SE_Praktikum.Services.Factories
                 new Vector2(0,10),
                 0,
                 new Vector2(0,0),
-                null, 
+                _contentManager.Load<SoundEffect>("Audio/Sound_Effects/Shot/missile_w_ignition"), 
                 null,
                 nameTag,
                 health,
@@ -113,7 +113,7 @@ namespace SE_Praktikum.Services.Factories
                 new Vector2(28, -38),
                 0,
                 new Vector2(16,0),
-                null, 
+                _contentManager.Load<SoundEffect>("Audio/Sound_Effects/Shot/laser_shot"), 
                 null, 
                 nameTag,
                 health,
@@ -147,7 +147,7 @@ namespace SE_Praktikum.Services.Factories
                 new Vector2(28, 36),
                 0,
                 new Vector2(16,0),
-                null, 
+                _contentManager.Load<SoundEffect>("Audio/Sound_Effects/Shot/laser_shot"), 
                 null, 
                 nameTag,
                 health,
@@ -197,7 +197,7 @@ namespace SE_Praktikum.Services.Factories
                 new Vector2(30,15),
                 0,
                 new Vector2(0,0),
-                null, 
+                _contentManager.Load<SoundEffect>("Audio/Sound_Effects/Shot/laser_shot"), 
                 null, 
                 nameTag,
                 health,
@@ -246,7 +246,7 @@ namespace SE_Praktikum.Services.Factories
                 new Vector2(-28,-4),
                 0,
                 new Vector2(30,-4),
-                null, 
+                _contentManager.Load<SoundEffect>("Audio/Sound_Effects/Shot/laser_shot"), 
                 null, 
                 nameTag,
                 health,
@@ -286,7 +286,6 @@ namespace SE_Praktikum.Services.Factories
             float health = 10,
             float? maxHealth = null)
         {
-            // TODO: create and load missing sound effects
             var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\minigunFire_50_20_4.json", 0);
             var m = new SingleShotWeapon(
                 _animationHandlerFactory.GetAnimationHandler(tileSet,new AnimationSettings(4,isPlaying:false,duration:50f)),
@@ -355,7 +354,7 @@ namespace SE_Praktikum.Services.Factories
                 new Vector2(45, 20),
                 0,
                 new Vector2(20,-2),
-                null, 
+                _contentManager.Load<SoundEffect>("Audio/Sound_Effects/Shot/shotgun_shot_w_reload"), 
                 null, 
                 nameTag,
                 health,
