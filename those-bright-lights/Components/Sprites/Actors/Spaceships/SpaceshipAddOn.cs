@@ -16,9 +16,9 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
         private readonly Vector2 _rotationPoint;
         private float _relativeRotation;
         private Vector2 _relativePosition;
-        private Logger _logger;
+        private readonly Logger _logger;
         private float _absoluteRotation;
-        public float MaxRelativeRotation;
+        public readonly float MaxRelativeRotation;
 
         // #############################################################################################################
         // Constructor
@@ -56,6 +56,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
             set
             {
                 if (value == null) return;
+                //subscribe to all events of parent
                 if (base.Parent != null)
                 {
                     base.Parent.OnPositionChanged -= ParentOnOnPositionChanged;
@@ -75,7 +76,8 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
                 UpdateBasePosition();
             } 
         }
-        public Vector2 RelativePosition
+
+        private Vector2 RelativePosition
         {
             get => _relativePosition;
             set
@@ -90,11 +92,13 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
             get => _relativeRotation;
             set
             {
-                if (Parent == null || value == _relativeRotation) return;
+                if (Parent == null || Math.Abs(value - _relativeRotation) < float.Epsilon) return;
+                //only turn to certain angle
                 if (Math.Abs(value) > MaxRelativeRotation)
                     value = MaxRelativeRotation * Math.Sign(value);
                 Rotation = Parent.Rotation + value;
                 _relativeRotation = value;
+                //recalculate new relative position and update it
                 RelativePosition.RotateAroundPoint(value, _rotationPoint);
                 UpdateBasePosition();
             }
@@ -190,7 +194,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
             ApproachDestination(other, maxIteration, iteration);
         }
 
-        protected void UpdateBasePosition()
+        private void UpdateBasePosition()
         {
             if (Parent == null) return;
             base.Position = Parent.Position + RelativePosition.Rotate(Parent.Rotation);

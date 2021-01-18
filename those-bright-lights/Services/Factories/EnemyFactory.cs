@@ -63,7 +63,7 @@ namespace SE_Praktikum.Services.Factories
         }
         public Enemy GetMines()
         {
-            SoundEffect impactSound = _contentManager.Load<SoundEffect>("Audio/Sound_Effects/Collusion/ClinkBell");
+            var impactSound = _contentManager.Load<SoundEffect>("Audio/Sound_Effects/Collusion/ClinkBell");
             var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\mine_29_29_8.json", 0);         
             var animationSettings = new AnimationSettings(8, isLooping:true);
             var m = new Enemy(_animationHandlerFactory.GetAnimationHandler(tileSet, animationSettings),
@@ -80,7 +80,7 @@ namespace SE_Praktikum.Services.Factories
 
         public Boss GetBoss()
         {
-            SoundEffect impactSound = _contentManager.Load<SoundEffect>("Audio/Sound_Effects/Collusion/ey");
+            var impactSound = _contentManager.Load<SoundEffect>("Audio/Sound_Effects/Collusion/ey");
             var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\boss_64_110_8.json", 0);
             var animationSettings = new AnimationSettings(8,isLooping:true);
             var propulsionTileSet =

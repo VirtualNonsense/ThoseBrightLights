@@ -73,15 +73,15 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
                         InterAction = InterAction.InView;
                     }
 
-                    bool c = Collide(other);
-                    if (InterAction == InterAction.InView && c)
+                    var c = Collide(other);
+                    switch (InterAction)
                     {
-                        InterAction = InterAction.InViewAndBodyCollision;
-                        return true;
+                        case InterAction.InView when c:
+                            InterAction = InterAction.InViewAndBodyCollision;
+                            return true;
+                        case InterAction.InView:
+                            return true;
                     }
-
-                    if (InterAction == InterAction.InView)
-                        return true;
 
                     if (c)
                     {
@@ -99,12 +99,14 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
 
         protected override void Rotate(Actor target, GameTime gameTime)
         {
+            //only use this method, if enemy has weapon, otherwise use method of enemy
             if (!RotateWeapon || CurrentWeapons.Count == 0)
             {
                 base.Rotate(target, gameTime);
                 return;
             }
             if (Target == null || InterAction != InterAction.InView) return;
+            //get last element in weapons
             var weapon = CurrentWeapons[^1];
             if (weapon == null) return;
             var desiredRotation = MathExtensions.RotationToTarget(target, this);
@@ -118,7 +120,6 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
             if (Math.Abs(angleToRotate) < RotationThreshold) return;
             weapon.RelativeRotation +=
                 Math.Sign(Math.PI - Math.Abs(angleToRotate)) * Math.Sign(angleToRotate) * rotationPortion;
-            //TODO: balancing
             if(Math.Abs(desiredRotation - Rotation) > weapon.MaxRelativeRotation*2/3)
                 Rotation +=  Math.Sign(Math.PI - Math.Abs(angleToRotate)) * Math.Sign(angleToRotate) * rotationPortion;
         }

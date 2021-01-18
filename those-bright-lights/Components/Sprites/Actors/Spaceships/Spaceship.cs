@@ -18,21 +18,21 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
     public abstract class Spaceship : Actor
     {
         public List<SpaceshipAddOn> Components;
-        protected int IndexOfWeaponsOfTheSameType;
-        protected float MaxSpeed;
+        private int _indexOfWeaponsOfTheSameType;
+        protected readonly float MaxSpeed;
         protected readonly float Acceleration;
         protected readonly float RotationAcceleration;
         protected readonly float MaxRotationSpeed;
         protected float DeltaRotation;
-        private Logger _logger;
-        protected Polygon _impactPolygon;
+        private readonly Logger _logger;
+        private Polygon _impactPolygon;
         private int _componentIndex;
         private readonly Dictionary<string, CastTimeAbility> _statusChangeResetTimer;
 
         // #############################################################################################################
         // Constructor
         // #############################################################################################################
-        public Spaceship(AnimationHandler animationHandler,
+        protected Spaceship(AnimationHandler animationHandler,
                          float maxSpeed = 3,
                          float acceleration = 5,
                          float rotationAcceleration = .1f,
@@ -71,10 +71,10 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
 
         protected List<Weapon> AllWeapons { get; set; }
 
-        protected List<Weapon> CurrentWeapons { get; set; } 
-            
+        protected List<Weapon> CurrentWeapons { get; set; }
 
-        public int ComponentIndex 
+
+        private int ComponentIndex 
         {
             get => _componentIndex;
             set
@@ -103,6 +103,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
             {
                 base.Rotation = value;
                 InvokeOnRotationChanged();
+                //decide if spaceship has to be flipped
                 if (Rotation < 3 * Math.PI/2 && Rotation > Math.PI/2)
                 {
                     if (FlippedHorizontal) return;
@@ -131,7 +132,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
             foreach (var component in Components)
                 component.Update(gameTime);
 
-            for (int i = 0; i < _statusChangeResetTimer.Count;)
+            for (var i = 0; i < _statusChangeResetTimer.Count;)
             {
                 var timer = _statusChangeResetTimer.ElementAt(i).Value;
                 var c = _statusChangeResetTimer.Count;
@@ -158,11 +159,13 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
 
         public override void Draw(SpriteBatch spriteBatch)
         {
+            //draw all components (all non weapons)
             foreach (var comp in Components)
             {
                 comp.Draw(spriteBatch);
             }
-
+            
+            //only draw current weapon
             foreach (var weapon in CurrentWeapons)
             {
                 weapon.Draw(spriteBatch);
@@ -189,18 +192,19 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
             CurrentWeapons =
                 (from w in AllWeapons where w.NameTag == AllWeapons[^1].NameTag select w)
                 .ToList();
-            IndexOfWeaponsOfTheSameType = CurrentWeapons.Count - 1;
+            _indexOfWeaponsOfTheSameType = CurrentWeapons.Count - 1;
         }
 
-        public virtual void RemoveWeapon(Weapon weapon)
+        protected virtual void RemoveWeapon(Weapon weapon)
         {
             if (!AllWeapons.Contains(weapon)) return;
             weapon.OnEmitBullet -= EmitBulletToOnShot;
             AllWeapons.Remove(weapon);
+            //recalculate current weapon
             CurrentWeapons =
                 (from w in AllWeapons where w.NameTag == AllWeapons[^1].NameTag select w)
                 .ToList();
-            IndexOfWeaponsOfTheSameType =  CurrentWeapons.Count - 1;
+            _indexOfWeaponsOfTheSameType =  CurrentWeapons.Count - 1;
         }
 
         // #############################################################################################################
@@ -209,12 +213,15 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
         protected virtual void ShootCurrentWeapon()
         {
             if (AllWeapons.Count == 0) return;
-            var previousWeapon = ((IndexOfWeaponsOfTheSameType - 1) +CurrentWeapons.Count)% CurrentWeapons.Count;
+            var previousWeapon = ((_indexOfWeaponsOfTheSameType - 1) +CurrentWeapons.Count)% CurrentWeapons.Count;
+            //only fire if the previous weapon has finished it's firing animation
             if (!CurrentWeapons[previousWeapon].CanShoot) return;
-            CurrentWeapons[IndexOfWeaponsOfTheSameType].Fire();
-            IndexOfWeaponsOfTheSameType = (IndexOfWeaponsOfTheSameType +1) % CurrentWeapons.Count;
+            CurrentWeapons[_indexOfWeaponsOfTheSameType].Fire();
+            //increase index -> weapons fire alternating
+            _indexOfWeaponsOfTheSameType = (_indexOfWeaponsOfTheSameType +1) % CurrentWeapons.Count;
         }
         
+        //may not use this
         protected virtual void ShootAllWeapons()
         {
             if (AllWeapons.Count == 0) return;
@@ -306,12 +313,13 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
         public override void InterAct(Actor other)
         {
             base.InterAct(other);
-            for (int i = 0; i < Components.Count; i++)
+            //has to be for loop, foreach breaks, some components get removed
+            for (var i = 0; i < Components.Count; i++)
             {
                 Components[i].InterAct(other);
             }
 
-            for (int i = 0; i < CurrentWeapons.Count; i++)
+            for (var i = 0; i < CurrentWeapons.Count; i++)
             {
                 CurrentWeapons[i].InterAct(other);
             }
