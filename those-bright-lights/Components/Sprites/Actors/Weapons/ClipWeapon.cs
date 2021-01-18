@@ -173,7 +173,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Weapons
         /// </summary>
         public virtual void Reload()
         {
-            if (WeaponEmpty) return;
+            if (_reloadDownTime.TargetTimeReached) return;
             _reloadSoundEffect?.Play();
             _reloadDownTime.Fire();
         }
