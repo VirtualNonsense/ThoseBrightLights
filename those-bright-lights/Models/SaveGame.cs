@@ -4,6 +4,7 @@ using System.Text;
 
 namespace SE_Praktikum.Models
 {
+    // All desired fields which need to be saved
     public class SaveGame
     {
         public int clearedStage;
