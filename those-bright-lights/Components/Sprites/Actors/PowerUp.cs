@@ -8,13 +8,17 @@ using SE_Praktikum.Services;
 
 namespace SE_Praktikum.Components.Sprites.Actors
 {
+    /// <summary>
+    /// Whenever a power up is needed
+    /// </summary>
     public abstract class PowerUp : Actor 
     {
+        //fields
         private Logger logger;
         protected List<PowerUp> Powerups;
         
         
-
+        //Constructor
         public PowerUp(AnimationHandler animationHandler, float health = 0.01f, SoundEffect soundEffect = null) : base(
             animationHandler, soundEffect)
         {
@@ -22,13 +26,8 @@ namespace SE_Praktikum.Components.Sprites.Actors
             Powerups = new List<PowerUp>();
             
         }
-            
-
-        public void Effect(PowerUp Powerups)
-        {
-
-        }
-
+       
+        // Bullets and the player can interact with powerups
         protected override void ExecuteInteraction(Actor other)
         {
             switch(other)
