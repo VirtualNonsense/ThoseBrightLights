@@ -5,12 +5,15 @@ using System.Text;
 
 namespace SE_Praktikum.Core
 {
+    // Enum for determining which slot to use
     public enum SaveSlot
     {
         Slot1,
         Slot2,
         Slot3
     }
+
+    // Interface with all the desired components
     public interface ISaveGameHandler
     {
         void Save();
