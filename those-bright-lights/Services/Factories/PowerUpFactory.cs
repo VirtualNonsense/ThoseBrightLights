@@ -11,6 +11,7 @@ using SE_Praktikum.Components.Sprites.Actors.PowerUps;
 
 namespace SE_Praktikum.Services.Factories
 {
+    // Enumeration for impact sounds
     public enum ImpactSounds
     {
         Health,
@@ -21,8 +22,12 @@ namespace SE_Praktikum.Services.Factories
         ScoreBoni,
         Star
     }
+    /// <summary>
+    /// Create this field to use powerUps
+    /// </summary>
     public class PowerUpFactory
     {
+        //fields
         public Logger _logger;
         private AnimationHandlerFactory _animationHandlerFactory;
         private readonly WeaponFactory _weaponFactory;
@@ -31,7 +36,7 @@ namespace SE_Praktikum.Services.Factories
         private readonly ContentManager _contentManager;
         private SoundHandler<ImpactSounds> _soundHandler;
         
-
+        // Constructor
         public PowerUpFactory(AnimationHandlerFactory animationHandlerFactory,WeaponFactory weaponFactory, ParticleFactory particleFactory, TileSetFactory tileSetFactory, ContentManager contentManager)
         {
             _animationHandlerFactory = animationHandlerFactory;
@@ -42,7 +47,7 @@ namespace SE_Praktikum.Services.Factories
             _soundHandler = new SoundHandler<ImpactSounds>();
             LoadSoundEffects();
         }
-
+        // Create powerup objects
         public HealthPowerUp HealthGetInstance(float health, Vector2? position = null, float layer = 0)
         {
             var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\health.json", 0);
@@ -82,32 +87,7 @@ namespace SE_Praktikum.Services.Factories
             return ikp;
         }
 
-        //public WeaponPowerUp RocketGetInstance(Vector2? position = null, float layer = 0)
-        //{
-        //    var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\missile.json", 0);
-        //    var animationSettings = new AnimationSettings(1);
-        //    var rp = new WeaponPowerUp(_animationHandlerFactory.GetAnimationHandler(tileSet, animationSettings),
-        //        _weaponFactory.GetMissileLauncher(null), soundEffect: _soundHandler.Get(ImpactSounds.Weapon))
-        //    {
-        //        Layer = layer,
-        //        Position = position ?? new Vector2(0, 0)
-        //    };
-        //    return rp;
-        //}
-
-        //public WeaponPowerUp LaserGetInstance(Vector2? position = null, float layer = 0)
-        //{
-        //    var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\laser.json", 0);
-        //    var animationSettings = new AnimationSettings(1);
-        //    var lp = new WeaponPowerUp(_animationHandlerFactory.GetAnimationHandler(tileSet, animationSettings),
-        //        _weaponFactory.GetEnemyLaserGun(null), soundEffect: _soundHandler.Get(ImpactSounds.Weapon))
-        //    {
-        //        Layer = layer,
-        //        Position = position ?? new Vector2(0, 0)
-        //    };
-        //    return lp;
-        //}
-
+        // Random weapon creation for weapon power up spawnpoints
         public WeaponPowerUp GetRandomInstance(Vector2? position = null,float layer = 0)
         {
             var t = _weaponFactory.GetRandomWeapon(null);
@@ -129,8 +109,6 @@ namespace SE_Praktikum.Services.Factories
                 Position = position ?? new Vector2(0, 0)
             };
             return rw;
-
-            
         }
 
         public InfAmmoPowerUp InfAmmoGetInstance(int ammo, Vector2? position = null, float layer = 0)
@@ -186,7 +164,7 @@ namespace SE_Praktikum.Services.Factories
             };
             return sc;
         }
-
+        // Load sounds for each powerup
         public void LoadSoundEffects()
         {
             _soundHandler.Add(ImpactSounds.Health, _contentManager.Load<SoundEffect>("Audio/Sound_Effects/PowerUps/Clip_Empty"));

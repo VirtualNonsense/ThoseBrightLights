@@ -12,11 +12,13 @@ namespace SE_Praktikum.Services.Factories
 {
     public class PlayerFactory
     {
+        // Fields
         private readonly AnimationHandlerFactory _animationHandlerFactory;
         private readonly InputFactory _inputFactory;
         private readonly WeaponFactory _weaponFactory;
         private readonly TileSetFactory _tileSetFactory;
 
+        // Constructor
         public PlayerFactory(AnimationHandlerFactory animationHandlerFactory, InputFactory inputFactory, WeaponFactory weaponFactory, TileSetFactory tileSetFactory)
         {
             _animationHandlerFactory = animationHandlerFactory;
@@ -24,7 +26,7 @@ namespace SE_Praktikum.Services.Factories
             _weaponFactory = weaponFactory;
             _tileSetFactory = tileSetFactory;
         }
-
+        // Build a player ship via json with desired animation settings, startweapon and position
         public Player GetInstance(ContentManager contentManager)
         {
             var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\shipv3.json",0);

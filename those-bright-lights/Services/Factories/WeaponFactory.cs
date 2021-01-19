@@ -12,14 +12,18 @@ using SE_Praktikum.Components.Sprites.Actors.Spaceships;
 
 namespace SE_Praktikum.Services.Factories
 {
+    // Create this field to use a weapon
     public class WeaponFactory
     {
+        // Fields
         private readonly ContentManager _contentManager;
         private readonly AnimationHandlerFactory _animationHandlerFactory;
         private readonly ParticleFactory _particleFactory;
         private readonly TileSetFactory _tileSetFactory;
         private readonly BulletFactory _bulletFactory;
         private readonly Random _random;
+
+        // Constructor
         public WeaponFactory(ContentManager contentManager,
                              AnimationHandlerFactory animationHandlerFactory,
                              ParticleFactory particleFactory,
@@ -48,6 +52,8 @@ namespace SE_Praktikum.Services.Factories
         /// <param name="health"></param>
         /// <param name="maxHealth"></param>
         /// <returns></returns>
+        
+        // Create objects for all weapons used (all methods analogical)
         public SingleShotWeapon GetMissileLauncher(Actor owner,
                                                    int clipSize = 4,
                                                    int clips = 10,
@@ -58,7 +64,7 @@ namespace SE_Praktikum.Services.Factories
                                                    float health = 10,
                                                    float? maxHealth = null)
         {
-            // TODO: create and load missing sound effects
+            
             var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\missilelauncher_4_12.json", 0);
             var m = new SingleShotWeapon(
                 _animationHandlerFactory.GetAnimationHandler(tileSet,new AnimationSettings(1,2000f)),
@@ -105,7 +111,7 @@ namespace SE_Praktikum.Services.Factories
                                             float health = 10,
                                             float? maxHealth = null)
         {
-            // TODO: create and load missing sound effects
+           
             var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\lasergunFire_30_13_7.json", 0);
             var m = new SingleShotWeapon(
                 _animationHandlerFactory.GetAnimationHandler(tileSet,new AnimationSettings(7,isPlaying:false,duration:50f)),
@@ -130,6 +136,7 @@ namespace SE_Praktikum.Services.Factories
             m.Scale = 1.5f;
             return m;
         }
+
         public SingleShotWeapon GetLowerLaserGun(Actor owner, 
                                             int clipSize = 20,
                                             int clips = 10,
@@ -140,7 +147,7 @@ namespace SE_Praktikum.Services.Factories
                                             float health = 1,
                                             float? maxHealth = null)
         {
-            // TODO: create and load missing sound effects
+           
             var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\lasergunFire_30_13_7.json", 0);
             var m = new SingleShotWeapon(
                 _animationHandlerFactory.GetAnimationHandler(tileSet,new AnimationSettings(7,isPlaying:false,duration:50f)),
@@ -189,7 +196,7 @@ namespace SE_Praktikum.Services.Factories
                                                  float health = 1,
                                                  float? maxHealth = null)
         {
-            // TODO: create and load missing sound effects
+           
             var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\enemylasergun_18_10_3.json", 0);
             
             var m = new SingleShotWeapon(
@@ -238,7 +245,7 @@ namespace SE_Praktikum.Services.Factories
                                                  float health = 10,
                                                  float? maxHealth = null)
         {
-            // TODO: create and load missing sound effects
+           
             var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\turretlaser_41_40_6.json", 0);
             
             var m = new SingleShotWeapon(
@@ -334,7 +341,7 @@ namespace SE_Praktikum.Services.Factories
             float health = 10,
             float? maxHealth = null)
         {
-            // TODO: create and load missing sound effects
+            
             var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\shotgunFire_28_13_9.json", 0);
             var m = new MultiShotWeapon(
                 _animationHandlerFactory.GetAnimationHandler(tileSet,
