@@ -11,6 +11,7 @@ namespace SE_Praktikum.Core.GameStates
 {
     public class SaveSelect : GameState
     {
+        // Fields
         private readonly IGameEngine _engine;
         private readonly IScreen _screen;
         private readonly ControlElementFactory _factory;
@@ -18,6 +19,7 @@ namespace SE_Praktikum.Core.GameStates
         private ComponentGrid _components;
         private Logger _logger;
 
+        // Constructor
         public SaveSelect(IGameEngine engine, IScreen screen, ControlElementFactory factory, ISaveGameHandler saveGameHandler)
         {
             _logger = LogManager.GetCurrentClassLogger();
@@ -27,8 +29,10 @@ namespace SE_Praktikum.Core.GameStates
             _saveGameHandler = saveGameHandler;
         }
         
+        // In LoadContent are the 3 different states with the representative buttons
         public override void LoadContent()
         {
+            // Arrangement
             if (!(_components is null))
                 return;
             var center = new Vector2(0, 0);
@@ -42,6 +46,7 @@ namespace SE_Praktikum.Core.GameStates
 
             var slotExists = _saveGameHandler.SaveExists(SaveSlot.Slot1);
 
+            // Button "one" - the print also changes when complete new game or a "Slot 1" when saving has been done
             var slots1 = _factory.GetButton(bWidth, bHeight, Vector2.Zero, slotExists ? "Slot 1" : "New Game", _screen.Camera);
             slots1.Click += (sender, args) => 
             { 
@@ -63,6 +68,7 @@ namespace SE_Praktikum.Core.GameStates
 
             slotExists = _saveGameHandler.SaveExists(SaveSlot.Slot2);
 
+            // Button "two" - similiar idea to button "one"
             var slots2 = _factory.GetButton(bWidth, bHeight, Vector2.Zero, slotExists ? "Slot 2" : "New Game", _screen.Camera);
             slots2.Click += (sender, args) => 
             { 
@@ -82,6 +88,7 @@ namespace SE_Praktikum.Core.GameStates
 
             slotExists = _saveGameHandler.SaveExists(SaveSlot.Slot3);
 
+            // Button "three" - similiar idea to button "one"
             var slots3 = _factory.GetButton(bWidth, bHeight, Vector2.Zero, slotExists ? "Slot 3" : "New Game", _screen.Camera);
             slots3.Click += (sender, args) => 
             { 
@@ -105,6 +112,7 @@ namespace SE_Praktikum.Core.GameStates
 
         }
 
+        // Monogame functions
         public override void UnloadContent()
         {
             _components = null;
