@@ -18,11 +18,13 @@ namespace SE_Praktikum.Services.Factories
 {
     public class MapFactory
     {
+        // Fields 
         private readonly ILogger _logger;
         private readonly TileSetFactory _setFactory;
         private readonly TileFactory tileFactory;
         private readonly ContentManager _contentManager;
 
+        // Constructor
         public MapFactory(TileSetFactory _setFactory, TileFactory tileFactory, ContentManager contentManager)
         {
             _logger = LogManager.GetCurrentClassLogger();
@@ -32,11 +34,12 @@ namespace SE_Praktikum.Services.Factories
             _contentManager = contentManager;
 
         }
-
+        // Method to read json files
         public Map LoadMap(string path)
         {
             var absPath = Path.GetFullPath(path);
             LevelBlueprint blueprint = JsonConvert.DeserializeObject<LevelBlueprint>(File.ReadAllText(absPath));
+
             // Loading all necessary tile sets
             List<TileSet> tileSets = new List<TileSet>();
             foreach (var tileSet in blueprint.tilesets)
@@ -47,7 +50,7 @@ namespace SE_Praktikum.Services.Factories
                 try
                 {
                     var tileSetPath = Path.GetFullPath(
-                        @"..\/"+tileSet.Source, //first part is necessary to get rid of the file in absPath
+                        @"..\/"+tileSet.Source, // First part is necessary to get rid of the file in absPath
                         absPath);
                     tileSets.Add(_setFactory.GetInstance(tileSetPath, tileSet.FirstGId));
                 }
@@ -70,6 +73,8 @@ namespace SE_Praktikum.Services.Factories
             List<(PowerUpType, Vector2)> PowerUpSpawnpoints = new List<(PowerUpType, Vector2)>();
             var l = 0f;
             var area = new Rectangle(0, 0, blueprint.Width * blueprint.TileWidth, blueprint.Height * blueprint.TileHeight);
+
+            // Iterate over all layers used in map
             foreach(var layer in blueprint.Layers)
             {
                 if (layer.Data != null)
@@ -90,9 +95,10 @@ namespace SE_Praktikum.Services.Factories
                 }
                 if(layer.objects != null)
                 {
+                    // Iterate over all objects on each layer
                     foreach(var obj in layer.objects)
                     {
-
+                        // Use those case names in tiled in the type field to let them spawn via a point in object layers
                         switch(obj.type)
                         {
                             case "PlayerSpawnPoint":
@@ -152,6 +158,8 @@ namespace SE_Praktikum.Services.Factories
             }
             return new Map(tiles, area, winningZone: WinningZone, EnemySpawnpoints, PowerUpSpawnpoints) { PlayerSpawnPoint = SpawnPoint};
         }
+
+        // Convert objects from tiled into drawable polygons (with hitbox)
         private Polygon ConvertObjectToPolygon(ObjectBluePrint objectt)
         {
             Polygon polygon;

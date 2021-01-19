@@ -9,6 +9,7 @@ namespace SE_Praktikum.Components
 {
     public class Map
     {
+        //fields
         private Dictionary<float, QuadTree<Tile>> _tileContainer;
 
         public Rectangle Area { get; }
@@ -23,6 +24,7 @@ namespace SE_Praktikum.Components
 
         public EventZone WinningZone { get; set; }
 
+        //Constructor
         public Map (Dictionary<float, QuadTree<Tile>> tiles, Rectangle area, EventZone winningZone, List<(EnemyType, Vector2)> enemySpawnPoints, List<(PowerUpType, Vector2)> powerUpSpawnpoints)
         {
             _tileContainer = tiles;
@@ -36,7 +38,8 @@ namespace SE_Praktikum.Components
                 p.Layer = TopLayer;
             }
         }
-      
+        
+        // Get list of tiles
         public List<Tile> RetrieveItems(float layer, Rectangle rect)
         {
             if (_tileContainer.ContainsKey(layer))
@@ -66,6 +69,8 @@ namespace SE_Praktikum.Components
 
 
     }
+
+    // Enumerations for map placing via tiled
     public enum EnemyType
     {
         Turret, 
