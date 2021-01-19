@@ -10,15 +10,18 @@ namespace SE_Praktikum.Services.Factories
 {
     public class HUDFactory
     {
+        // Fields
         private readonly HUDItemFactory hUDItemFactory;
         private readonly IScreen screen;
 
+        // Constructor
         public HUDFactory(HUDItemFactory hUDItemFactory, IScreen screen)
         {
             this.hUDItemFactory = hUDItemFactory;
             this.screen = screen;
         }
 
+        // Builds instance of a HUD
         public HUD GetInstance(Player player)
         {
             var hud = new HUD(player);
