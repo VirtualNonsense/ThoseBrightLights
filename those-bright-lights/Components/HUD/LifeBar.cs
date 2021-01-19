@@ -9,13 +9,16 @@ using System.Text;
 
 namespace SE_Praktikum.Components.HUD
 {
-    public class LifeBar : HUDItem
+    public class LifeBar : HUDItem // Is a HUD-Element
     {
+        // Quantised damage in form of a half heart
         private readonly AnimationSettings animationSettingsLeftHeart;
         private readonly AnimationSettings animationSettingsRightHeart;
 
+        // Properties
         public int HealthPerHeart { get; set; }
 
+        // Constructor
         public LifeBar(HUD parent, AnimationHandlerFactory animationHandlerFactory, TileSet tileSet, AnimationSettings animationSettingsLeftHeart, AnimationSettings animationSettingsRightHeart) : base(parent, animationHandlerFactory, tileSet)
         {
             HealthPerHeart = 5;
@@ -26,16 +29,19 @@ namespace SE_Praktikum.Components.HUD
             UpdateAmountHearts(parent.Player.MaxHealth);
         }
 
+        // Event - for maximum health is changed (e.g. through powerup)
         private void Player_OnMaxHealthChanged(object sender, EventArgs e)
         {
             UpdateAmountHearts(_parent.Player.MaxHealth);
         }
 
+        // Event - for the "normal" health loss (e.g. enemy attack, collision) 
         private void Player_OnHealthChanged(object sender, EventArgs e)
         {
             UpdateHearts(_parent.Player.Health);
         }
 
+        // Monogame functions
         public override void Draw(SpriteBatch spriteBatch)
         {
             base.Draw(spriteBatch);
@@ -46,6 +52,7 @@ namespace SE_Praktikum.Components.HUD
             base.Update(gameTime);
         }
 
+        // Both functions keep track of hearts depending on the actual health
         private void UpdateAmountHearts(float newHealth)
         {
             var hearts = (int)(newHealth / HealthPerHeart);
@@ -94,6 +101,7 @@ namespace SE_Praktikum.Components.HUD
             }
         }
 
+        // A heart is build
         private AnimationHandler ConstructHeart(Vector2 position, AnimationSettings animationSettings)
         {
             return animationHandlerFactory.GetAnimationHandler(tileSet,animationSettings,position,Vector2.Zero);
