@@ -10,10 +10,15 @@ using SE_Praktikum.Services;
 
 namespace SE_Praktikum.Components.Sprites.Actors
 {
+    /// <summary>
+    /// Whenever a tile is needed
+    /// </summary>
     public class Tile: Actor
     {
+        //field
         private Logger _logger;
 
+        //Constructor
         public Tile(AnimationHandler animationHandler, TileModifier tileModifier = TileModifier.None, SoundEffect impactSound = null, float impactDamage = 5) : base(animationHandler, impactSound, impactDamage: impactDamage)
         {
             _logger = LogManager.GetCurrentClassLogger();
@@ -24,6 +29,7 @@ namespace SE_Praktikum.Components.Sprites.Actors
 
         }
 
+        // tile modifications 
         public void SetTileModifier(TileModifier tileModifier)
         {
             switch (tileModifier)
@@ -55,6 +61,7 @@ namespace SE_Praktikum.Components.Sprites.Actors
             }
         }
 
+        // Make tiles interactable with actors
         protected override bool InteractAble(Actor other)
         {
             if(Indestructible)
@@ -63,6 +70,7 @@ namespace SE_Praktikum.Components.Sprites.Actors
 
         }
         
+        // Interaction with bullets and the ship
         protected override void ExecuteInteraction(Actor other)
         {
             if (_indestructible) return;
@@ -93,7 +101,7 @@ namespace SE_Praktikum.Components.Sprites.Actors
     }
     
     
-
+    // Enumeration for tile modifications (binary)
     public enum TileModifier
     {
         None,                                 //0000
