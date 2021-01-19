@@ -5,7 +5,7 @@ using System.Text;
 
 namespace SE_Praktikum.Core
 {
-    // Enum for determining which slot to use
+    // Enum for determining which slot to use (instead of any int's)
     public enum SaveSlot
     {
         Slot1,
