@@ -32,9 +32,9 @@ namespace SE_Praktikum.Components.Controls
             set
             {
                 if (value > _max)
-                    value = _max;
+                    _value = _max;
                 else if (value < _min)
-                    value = _min;
+                    _value = _min;
                 else
                     _value = value;
                 _sliderBlade.Position = new Vector2(getPosition(_value), _position.Y);
