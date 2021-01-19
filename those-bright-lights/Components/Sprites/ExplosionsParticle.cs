@@ -3,16 +3,20 @@ using Microsoft.Xna.Framework;
 using SE_Praktikum.Models;
 using SE_Praktikum.Services;
 
+// TODO: Move namespace when everybody finished commenting
 namespace SE_Praktikum.Components.Actors
 {
     public class ExplosionsParticle : Particle
     {
-        private readonly IScreen _parent;
-
+        /// <summary>
+        /// Simple class that represent an explosion
+        /// It will remove itself when the animation finished playing
+        /// </summary>
+        /// <param name="animationHandler"></param>
+        /// <param name="Parent"></param>
         public ExplosionsParticle(AnimationHandler animationHandler, IScreen Parent) : base(animationHandler, Parent)
         {
             _animationHandler.OnAnimationComplete += AnimationHandlerOnOnAnimationComplete;
-            _parent = Parent;
         }
 
         private void AnimationHandlerOnOnAnimationComplete(object sender, EventArgs e)
@@ -28,7 +32,7 @@ namespace SE_Praktikum.Components.Actors
 
         public override Particle Clone()
         {
-            return this.MemberwiseClone() as Particle;
+            return MemberwiseClone() as Particle;
         }
     }
 }
