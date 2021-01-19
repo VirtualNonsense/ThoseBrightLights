@@ -394,7 +394,7 @@ namespace SE_Praktikum.Services.Factories
                 )
             };
             var soundEffect = _contentManager.Load<SoundEffect>("Audio/Sound_Effects/Button/Button_slider_block_single");
-            return new Slider(initialValue, min, max,  position, new Slider.SliderBlade(_sliderBladeHandler, camera), handlers, soundEffect, camera);
+            return new Slider(initialValue, min, max,  position, new Slider.SliderHandle(_sliderBladeHandler, camera), handlers, soundEffect, camera);
         }
     }
     
