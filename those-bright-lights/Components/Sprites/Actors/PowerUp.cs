@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework.Audio;
-using NLog;
 using SE_Praktikum.Components.Sprites.Actors.Bullets;
 using SE_Praktikum.Components.Sprites.Actors.Spaceships;
 using SE_Praktikum.Models;
@@ -10,10 +9,7 @@ namespace SE_Praktikum.Components.Sprites.Actors
 {
     public abstract class PowerUp : Actor 
     {
-        private Logger logger;
         protected List<PowerUp> Powerups;
-        
-        
 
         public PowerUp(AnimationHandler animationHandler, float health = 0.01f, SoundEffect soundEffect = null) : base(
             animationHandler, soundEffect)
