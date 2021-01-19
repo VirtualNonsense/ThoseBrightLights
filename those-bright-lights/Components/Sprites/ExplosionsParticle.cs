@@ -14,7 +14,7 @@ namespace SE_Praktikum.Components.Actors
         /// </summary>
         /// <param name="animationHandler"></param>
         /// <param name="Parent"></param>
-        public ExplosionsParticle(AnimationHandler animationHandler, IScreen Parent) : base(animationHandler, Parent)
+        public ExplosionsParticle(AnimationHandler animationHandler, IScreen Parent) : base(animationHandler)
         {
             _animationHandler.OnAnimationComplete += AnimationHandlerOnOnAnimationComplete;
         }

@@ -11,7 +11,7 @@ namespace SE_Praktikum.Components.Sprites
     {
         private Logger _logger;
         private CastTimeAbility _destructionTimer;
-        public StatusEffectParticle(AnimationHandler animationHandler, IScreen Parent, int destructionTime) : base(animationHandler, Parent)
+        public StatusEffectParticle(AnimationHandler animationHandler, IScreen Parent, int destructionTime) : base(animationHandler)
         {
             _logger = LogManager.GetCurrentClassLogger();
             _destructionTimer = new CastTimeAbility(destructionTime, () =>
