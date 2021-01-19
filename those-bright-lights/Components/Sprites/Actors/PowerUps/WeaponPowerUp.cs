@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 namespace SE_Praktikum.Components.Sprites.Actors.PowerUps
 {
+    // Weapon power up
     public class WeaponPowerUp : PowerUp
     {
         public List <Weapon> Weaponlist;
