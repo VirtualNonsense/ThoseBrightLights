@@ -5,6 +5,9 @@ using System.Text;
 
 namespace SE_Praktikum.Models.Tiled
 {
+    /// <summary>
+    /// Object fields 
+    /// </summary>
     public class ObjectBluePrint
     {
         public float height;

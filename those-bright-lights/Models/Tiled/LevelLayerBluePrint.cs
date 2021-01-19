@@ -2,6 +2,9 @@
 
 namespace SE_Praktikum.Models.Tiled
 {
+    /// <summary>
+    /// Layer fields
+    /// </summary>
     public class LevelLayerBluePrint
     {
         public List<uint> Data;
