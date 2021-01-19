@@ -1249,6 +1249,12 @@
 /processorParam:Quality=Best
 /build:Audio/Sound_Effects/Button/Savepoint_remaster.wav
 
+#begin Audio/Sound_Effects/Collusion/alien_impact.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound_Effects/Collusion/alien_impact.wav
+
 #begin Audio/Sound_Effects/Collusion/Big_Explo.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -1273,17 +1279,71 @@
 /processorParam:Quality=Best
 /build:Audio/Sound_Effects/Collusion/Clonk.wav
 
+#begin Audio/Sound_Effects/Collusion/DestroyableBlock_impact.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound_Effects/Collusion/DestroyableBlock_impact.wav
+
 #begin Audio/Sound_Effects/Collusion/ey.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Audio/Sound_Effects/Collusion/ey.wav
 
+#begin Audio/Sound_Effects/Collusion/kamikaze_impact.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound_Effects/Collusion/kamikaze_impact.wav
+
+#begin Audio/Sound_Effects/Collusion/laser_impact.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound_Effects/Collusion/laser_impact.wav
+
+#begin Audio/Sound_Effects/Collusion/MinigunProjectile_impact.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound_Effects/Collusion/MinigunProjectile_impact.wav
+
+#begin Audio/Sound_Effects/Collusion/missile_impact.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound_Effects/Collusion/missile_impact.wav
+
+#begin Audio/Sound_Effects/Collusion/player_impact.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound_Effects/Collusion/player_impact.wav
+
+#begin Audio/Sound_Effects/Collusion/shotgunpallet_impact.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound_Effects/Collusion/shotgunpallet_impact.wav
+
 #begin Audio/Sound_Effects/Collusion/Small_Explo.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Audio/Sound_Effects/Collusion/Small_Explo.wav
+
+#begin Audio/Sound_Effects/Collusion/turret_gun_impact.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound_Effects/Collusion/turret_gun_impact.wav
+
+#begin Audio/Sound_Effects/Collusion/turret_impact.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound_Effects/Collusion/turret_impact.wav
 
 #begin Audio/Sound_Effects/PowerUps/CautionOverheat.wav
 /importer:WavImporter
@@ -1399,11 +1459,29 @@
 /processorParam:Quality=Best
 /build:Audio/Sound_Effects/Shot/Laser_Short.wav
 
+#begin Audio/Sound_Effects/Shot/laser_shot.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound_Effects/Shot/laser_shot.wav
+
 #begin Audio/Sound_Effects/Shot/Laser_sizzle.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Audio/Sound_Effects/Shot/Laser_sizzle.wav
+
+#begin Audio/Sound_Effects/Shot/missile_w_ignition.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound_Effects/Shot/missile_w_ignition.wav
+
+#begin Audio/Sound_Effects/Shot/shotgun_shot_w_reload.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound_Effects/Shot/shotgun_shot_w_reload.wav
 
 #begin Audio/Sound_Effects/Shot/ta.wav
 /importer:WavImporter
@@ -1417,11 +1495,59 @@
 /processorParam:Quality=Best
 /build:Audio/Sound_Effects/Shot/tav2.wav
 
+#begin Audio/Sound_Effects/Shot/turret_gun_shot.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound_Effects/Shot/turret_gun_shot.wav
+
 #begin Audio/Sound_Effects/Shot2.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Audio/Sound_Effects/Shot2.wav
+
+#begin Audio/Sound_Effects/weapon_specific_stuff/laser_reload.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound_Effects/weapon_specific_stuff/laser_reload.wav
+
+#begin Audio/Sound_Effects/weapon_specific_stuff/minigun_reload.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound_Effects/weapon_specific_stuff/minigun_reload.wav
+
+#begin Audio/Sound_Effects/weapon_specific_stuff/missile_launcher_reload.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound_Effects/weapon_specific_stuff/missile_launcher_reload.wav
+
+#begin Audio/Sound_Effects/weapon_specific_stuff/shotgun_reload.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound_Effects/weapon_specific_stuff/shotgun_reload.wav
+
+#begin Audio/Sound_Effects/weapon_specific_stuff/turret_gun_clip_empty.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound_Effects/weapon_specific_stuff/turret_gun_clip_empty.wav
+
+#begin Audio/Sound_Effects/weapon_specific_stuff/turret_gun_empty.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound_Effects/weapon_specific_stuff/turret_gun_empty.wav
+
+#begin Audio/Sound_Effects/weapon_specific_stuff/turret_reloading.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Sound_Effects/weapon_specific_stuff/turret_reloading.wav
 
 #begin Font/Font.spritefont
 /importer:FontDescriptionImporter

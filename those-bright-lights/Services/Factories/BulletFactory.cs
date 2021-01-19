@@ -35,8 +35,6 @@ namespace SE_Praktikum.Services.Factories
             var missileAnimationHandler = _animationHandlerFactory.GetAnimationHandler(missileTiles, new AnimationSettings(1, isPlaying:false));
             var propulsionAnimationHandler = _animationHandlerFactory.GetAnimationHandler(propulsionTiles, new AnimationSettings(6, isPlaying:true, isLooping:true));
             
-            // var flightEffect = contentManager.Load<SoundEffect>("Audio/Sound_Effects/Airborne/Flight_plane_c");
-            // var impactSound = contentManager.Load<SoundEffect>("Audio/Sound_Effects/Collusion/Big_Explo");
 
             return new Missile(missileAnimationHandler,
                 Vector2.Zero, 
@@ -45,7 +43,7 @@ namespace SE_Praktikum.Services.Factories
                 _particleFactory.BuildExplosionParticle(),
                 owner,
                 null,
-                null,
+                _contentManager.Load<SoundEffect>("Audio/Sound_Effects/Collusion/Small_Explo"),
                 health: bulletHealth,
                 damage: damage);
         }
@@ -56,7 +54,7 @@ namespace SE_Praktikum.Services.Factories
             var laserTileAnimation =
                 _animationHandlerFactory.GetAnimationHandler(laserTileSet, new AnimationSettings(1, isPlaying: false));
             var flightEffect = _contentManager.Load<SoundEffect>("Audio/Sound_Effects/Airborne/Wobble_test");
-            var impactSound = _contentManager.Load<SoundEffect>("Audio/Sound_Effects/Collusion/Clink");
+            var impactSound = _contentManager.Load<SoundEffect>("Audio/Sound_Effects/Collusion/laser_impact");
             return new Laser(laserTileAnimation, 
                 Vector2.Zero,
                 0,
@@ -75,7 +73,7 @@ namespace SE_Praktikum.Services.Factories
             var laserTileAnimation =
                 _animationHandlerFactory.GetAnimationHandler(laserTileSet, new AnimationSettings(1, isPlaying: false));
             var flightEffect = _contentManager.Load<SoundEffect>("Audio/Sound_Effects/Airborne/Wobble_test");
-            var impactSound = _contentManager.Load<SoundEffect>("Audio/Sound_Effects/Collusion/Clink");
+            var impactSound = _contentManager.Load<SoundEffect>("Audio/Sound_Effects/Collusion/laser_impact");
             return new Laser(laserTileAnimation, 
                 Vector2.Zero,
                 0,
@@ -94,7 +92,7 @@ namespace SE_Praktikum.Services.Factories
             var projectileTileAnimation =
                 _animationHandlerFactory.GetAnimationHandler(projectileTileSet, new AnimationSettings(1, isPlaying: false));
             var flightEffect = _contentManager.Load<SoundEffect>("Audio/Sound_Effects/Airborne/Wobble_test");
-            var impactSound = _contentManager.Load<SoundEffect>("Audio/Sound_Effects/Collusion/Clink");
+            var impactSound = _contentManager.Load<SoundEffect>("Audio/Sound_Effects/Collusion/MinigunProjectile_impact");
             return new Projectile(projectileTileAnimation, 
                 Vector2.Zero,
                 0,
@@ -113,7 +111,7 @@ namespace SE_Praktikum.Services.Factories
             var projectileTileAnimation =
                 _animationHandlerFactory.GetAnimationHandler(projectileTileSet, new AnimationSettings(1, isPlaying: false));
             var flightEffect = _contentManager.Load<SoundEffect>("Audio/Sound_Effects/Airborne/Wobble_test");
-            var impactSound = _contentManager.Load<SoundEffect>("Audio/Sound_Effects/Collusion/Clink");
+            var impactSound = _contentManager.Load<SoundEffect>("Audio/Sound_Effects/Collusion/shotgunpallet_impact");
             return new Pallet(projectileTileAnimation, 
                 Vector2.Zero,
                 0,

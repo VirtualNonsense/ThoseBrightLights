@@ -12,6 +12,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
         private Logger _logger;
         public Turret(AnimationHandler animationHandler, Polygon viewbox, float maxSpeed = 3, float acceleration = 0,float health = 50, float maxHealth = 50, SoundEffect impactSound = null) : base(animationHandler, viewbox, maxSpeed, acceleration, health: health, maxHealth: maxHealth)
         {
+            _impactSound = impactSound;
             _logger = LogManager.GetCurrentClassLogger();
             RotateWeapon = true;
         }
