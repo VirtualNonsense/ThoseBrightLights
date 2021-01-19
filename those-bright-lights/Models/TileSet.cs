@@ -8,8 +8,12 @@ using System.Collections.Generic;
 
  namespace SE_Praktikum.Models
 {
+    /// <summary>
+    /// Whenever a tileset is needed
+    /// </summary>
     public class TileSet
     {
+        //fields
         public int TileDimX;
         public int TileDimY;
         public int Columns;
@@ -26,6 +30,7 @@ using System.Collections.Generic;
 
         public bool HasHitBox => _hitBoxDict != null;
 
+        //Constructor
         public TileSet(Texture2D texture, int tileDimX, int tileDimY, Dictionary<int, Polygon[]> hitBoxDict, int startEntry = 0, List<TileInfo> tileSettings = null)
         {
             _logger = LogManager.GetCurrentClassLogger();
@@ -49,6 +54,7 @@ using System.Collections.Generic;
             return info.ElementAt(0);
         }
 
+        //Constructor
         public TileSet(Texture2D texture, Polygon[] hitBox = null, int startEntry = 0)
         {
             _logger = LogManager.GetCurrentClassLogger();
@@ -65,6 +71,7 @@ using System.Collections.Generic;
             };
         }
 
+        //Get tile for animation handler
         internal Rectangle GetFrame(uint index)
         {
             var c = 0;
@@ -129,8 +136,6 @@ using System.Collections.Generic;
         {
             if (_hitBoxDict == null)
             {
-                // logging is quite slow
-                // _logger.Warn("Hitbox does not exist");
                 return null;
             }
 
