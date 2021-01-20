@@ -12,14 +12,23 @@ using SE_Praktikum.Services.StateMachines;
 
 namespace SE_Praktikum.NinjectModules
 {
+    /// <summary>
+    /// this module injects necessary but misc stuff
+    /// </summary>
     public class GameModule : NinjectModule
     {
         public override void Load()
         {
+            // bind game instance to each layer of access 
             Bind<SE_Praktikum_Game, IScreen, IGameEngine, ISaveGameHandler>().To<SE_Praktikum_Game>().InSingletonScope();
+            
+            // MonoGameClass  necessary for loading stuff
             Bind<ContentManager>().ToMethod(c => c.Kernel.Get<SE_Praktikum_Game>().Content);
+            
+            // handles every state transition on a macro level
             Bind<IObservable<GameState>>().To<GameStateMachine>();
-            Bind<ExplosionEmitter>().ToSelf();
+            
+            // injects class that's responsible for save file handling
             Bind<SaveHandler>().ToSelf().InSingletonScope();
 
         }
