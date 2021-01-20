@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using NLog;
 using SE_Praktikum.Components.Sprites.Actors.Bullets;
+using SE_Praktikum.Components.Sprites.Actors.Spaceships;
 using SE_Praktikum.Components.Sprites.Actors.PowerUps;
 using SE_Praktikum.Components.Sprites.Actors.Weapons;
 using SE_Praktikum.Extensions;
@@ -288,6 +289,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
                     _lastAggressor = t;
                     _tool = t;
                     ApproachDestination(t, 100);
+                    Velocity = Vector2.Zero;
                     Health -= Velocity.Length()/MaxSpeed * t.Damage;
                     _impactSound?.Play();
                     break;
@@ -300,6 +302,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
                     _lastAggressor = s;
                     _tool = s;
                     Health -= s.Damage;
+                    Velocity = Vector2.Zero;
                     if(this is Enemy && !(this is Boss))
                         ApproachDestination(other, 100);
                     _impactSound?.Play();
