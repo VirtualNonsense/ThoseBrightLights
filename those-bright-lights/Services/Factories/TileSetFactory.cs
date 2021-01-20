@@ -11,13 +11,17 @@ using Microsoft.Xna.Framework;
 
 namespace SE_Praktikum.Services.Factories
 {
+    /// <summary>
+    /// Create this field to work with tilesets
+    /// </summary>
     public class TileSetFactory
     {
+        // Fields
         private AnimationHandlerFactory _animationHandlerFactory;
         private ContentManager _contentManager;
         private Logger _logger;
 
-
+        // Constructor
         public TileSetFactory(AnimationHandlerFactory animationHandlerFactory, ContentManager contentManager)
         {
             _animationHandlerFactory = animationHandlerFactory;
@@ -25,6 +29,7 @@ namespace SE_Praktikum.Services.Factories
             _logger = LogManager.GetCurrentClassLogger();
         }
 
+        // Make tilesets from Tiled ready to use 
         public TileSet GetInstance(string jsonpath, int startindex)
         {
             var TileSet = JsonConvert.DeserializeObject<TileSetBlueprint>(File.ReadAllText(jsonpath));
@@ -39,6 +44,8 @@ namespace SE_Praktikum.Services.Factories
                 
                 var count = 0;
                 var index = tile.id + startindex;
+
+                // Case for destructable tiles
                 if(tile.type == "DestructableTile")
                 { 
                     List.Add(new TileInfo {Destructable = true, ID = index});
@@ -46,6 +53,7 @@ namespace SE_Praktikum.Services.Factories
                 }
                 if (tile.objectgroup != null)
                 {
+                    // Give tiles a polygon hitbox
                     foreach (var objectt in tile.objectgroup.objects)
                     {
                         Polygon polygon;

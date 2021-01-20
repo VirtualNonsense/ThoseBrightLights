@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Reflection.Metadata;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using SE_Praktikum.Components.Actors;
@@ -12,21 +13,34 @@ namespace SE_Praktikum.Services.Factories
 {
     public class PlayerFactory
     {
+        // Fields
         private readonly AnimationHandlerFactory _animationHandlerFactory;
         private readonly InputFactory _inputFactory;
         private readonly WeaponFactory _weaponFactory;
         private readonly TileSetFactory _tileSetFactory;
-
-        public PlayerFactory(AnimationHandlerFactory animationHandlerFactory, InputFactory inputFactory, WeaponFactory weaponFactory, TileSetFactory tileSetFactory)
+        private readonly ContentManager _contentManager;
+        // #############################################################################################################
+        // Constructor
+        // #############################################################################################################
+        public PlayerFactory(AnimationHandlerFactory animationHandlerFactory,
+                             InputFactory inputFactory,
+                             WeaponFactory weaponFactory, 
+                             TileSetFactory tileSetFactory,
+                             ContentManager contentManager)
         {
             _animationHandlerFactory = animationHandlerFactory;
             _inputFactory = inputFactory;
             _weaponFactory = weaponFactory;
             _tileSetFactory = tileSetFactory;
+            _contentManager = contentManager;
         }
-
-        public Player GetInstance(ContentManager contentManager)
+        /// <summary>
+        /// Build a player ship via json with desired animation settings, startweapon and position
+        /// </summary>
+        /// <returns></returns>
+        public Player GetInstance()
         {
+            SoundEffect impactSound = _contentManager.Load<SoundEffect>("Audio/Sound_Effects/Collusion/player_impact");
             var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\shipv3.json",0);
             var animationSettings = new AnimationSettings(1,isPlaying:false);
             var input = _inputFactory.GetInstance();

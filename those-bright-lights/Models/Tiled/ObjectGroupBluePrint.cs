@@ -4,6 +4,9 @@ using System.Text;
 
 namespace SE_Praktikum.Models.Tiled
 {
+    /// <summary>
+    /// Objectgroup fields
+    /// </summary>
     public class ObjectGroupBluePrint
     {
         public string draworder;

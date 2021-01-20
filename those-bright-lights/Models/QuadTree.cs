@@ -9,17 +9,17 @@ namespace SE_Praktikum.Models
     public class QuadTree<T>
     {
         // NOTICE: All Tests for this class are in a separate project - "CheckTrees"
-        // TODO: Is -1 necessary
+        // Fields
         List<(Rectangle, T)> objects; // changed from T to (Rectangle, T)
         int level;
         Rectangle boundary;
         QuadTree<T>[] nodes;
 
-        // Deleted maxLevel, cuz the tile must be added no matter what (maybe other idea someday)
-        // TODO: maxObjects must scale with "stuff" from the whole screen
+        // Deleted maxLevel, cuz the tile must be added no matter what
         int maxObjects = 150;
         bool wasDivided = false;
 
+        // Constructor
         public QuadTree(Rectangle boundary, int level = 0)
         {
             this.level = level;
@@ -28,7 +28,7 @@ namespace SE_Praktikum.Models
             nodes = new QuadTree<T>[4];
         }
 
-        // TODO: If one branch is completely empty, should be cleared.
+        // Clear all
         public void Clearing()
         {
             objects.Clear();
@@ -39,6 +39,7 @@ namespace SE_Praktikum.Models
             }
         }
 
+        // The dividing process (e.g. too much items in a branch)
         public void Divide()
         {
             int x = boundary.X;
@@ -52,10 +53,9 @@ namespace SE_Praktikum.Models
             nodes[3] = new QuadTree<T>(new Rectangle(x + newWidth, y + newHeight, newWidth, newHeight), level + 1);
         }
 
+        // Getting the index - helper class
         public int GetIndex(Rectangle actual)
         {
-            //// If it is not completely in a node then index must be -1
-            //// Check if it is useless
             int index = -1;
 
             // Boundary
@@ -65,8 +65,8 @@ namespace SE_Praktikum.Models
             // Actual rectangle
             double actualMiddleX = actual.X + actual.Width / 2;
             double actualMiddleY = actual.Y + actual.Height / 2;
-
-            // Could be more beautiful with switch-case... and declare a variable for rect.Something (after checking utility) 
+            
+            // Checks where the items belongs to
             bool top = actualMiddleY <= boundMiddleY;
             bool bottom = actualMiddleY > boundMiddleY;
             bool left = actualMiddleX < boundMiddleX;
@@ -97,6 +97,7 @@ namespace SE_Praktikum.Models
             return index;
         }
 
+        // Remove one object
         public void Remove(T obj)
         {
             for (int i = 0; i < objects.Count; i++)
@@ -105,9 +106,7 @@ namespace SE_Praktikum.Models
                 { 
                     objects.RemoveAt(i); 
                     return; 
-                }
-                
-                
+                }             
             }
             
             if (wasDivided)
@@ -118,9 +117,10 @@ namespace SE_Praktikum.Models
                     node.Remove(obj);
                     
                 }
-            }
-            
+            }           
         }
+
+        // Insert one object
         public void Insert(Rectangle rect, T payload)
         {
             if (wasDivided == false)

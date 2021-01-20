@@ -69,7 +69,6 @@ namespace SE_Praktikum.Components.Sprites.Actors.Weapons
                                 clipSize,
                                 clips,
                                 ammoUsage,
-                                shotCoolDown,
                                 reloadTime)
         {
             _constructPreconfiguredBullet = constructPreconfiguredBullet;

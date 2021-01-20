@@ -9,6 +9,7 @@ namespace SE_Praktikum.Services
 {
     public class SaveHandler
     {
+        // Mapping
         Dictionary<SaveSlot, string> _saveSlot = new Dictionary<SaveSlot, string>()
         {
             { SaveSlot.Slot1,"Save/Savestate_1.txt" },
@@ -16,6 +17,7 @@ namespace SE_Praktikum.Services
             { SaveSlot.Slot3,"Save/Savestate_3.txt" },
         };
 
+        // Save function: Writes a savefile
         public void Save(SaveGame saveGame, SaveSlot slot)
         {
             var dir = _saveSlot[slot].Split("/")[0];
@@ -37,6 +39,7 @@ namespace SE_Praktikum.Services
             }
         }
 
+        // Getting the datas of a savefile
         public SaveGame Load(SaveSlot slot)
         {
             SaveGame saveGame = new SaveGame();
@@ -47,6 +50,7 @@ namespace SE_Praktikum.Services
                 string s = sr.ReadToEnd().Trim();
                 foreach (var a in s.Split("\r\n"))
                 {
+                    // Checks the value of all possible fields
                     var keyValuePair = a.Split(':');
                     switch (keyValuePair[0])
                     {
@@ -83,6 +87,7 @@ namespace SE_Praktikum.Services
             return saveGame;
         }
 
+        // Check if there is one already existing
         public bool SaveExists(SaveSlot saveSlot)
         {
             return File.Exists(_saveSlot[saveSlot]);

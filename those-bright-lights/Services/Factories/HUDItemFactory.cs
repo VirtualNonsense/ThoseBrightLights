@@ -8,15 +8,18 @@ namespace SE_Praktikum.Services.Factories
 {
     public class HUDItemFactory
     {
+        // Fields
         private readonly TileSetFactory tileSetFactory;
         private readonly AnimationHandlerFactory animationHandlerFactory;
 
+        // Constructor
         public HUDItemFactory(TileSetFactory tileSetFactory, AnimationHandlerFactory animationHandlerFactory)
         {
             this.tileSetFactory = tileSetFactory;
             this.animationHandlerFactory = animationHandlerFactory;
         }
 
+        // Builds instance for the lifebar in a HUD
         public HUDItem GetLifeBar(HUD hUD)
         {
             var tileSet = tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\heart_11_17.json",0);
@@ -32,6 +35,7 @@ namespace SE_Praktikum.Services.Factories
             return new LifeBar(hUD,animationHandlerFactory,tileSet,animationSettingsLeftHeart,animationSettingsRightHeart);
         }
 
+        // Builds instance for score integers in a HUD
         public HUDItem GetScoreBar(HUD hUD)
         {
             var tileSet = tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\numbers_8_12.json", 0);

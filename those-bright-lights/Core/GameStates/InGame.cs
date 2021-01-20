@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -58,21 +59,9 @@ namespace SE_Praktikum.Core.GameStates
         public override void LoadContent()
         {
             _pause = false;
-            _levelContainer.SelectedLevel?.LoadContent(_contentManager);
-            _levelContainer.SelectedLevel.OnLevelComplete +=
-                (sender, args) =>
-                {
-                    if (_levelContainer.SelectedLevel.LevelNumber >= saveGameHandler.SaveGame.clearedStage)
-                    {
-                        saveGameHandler.SaveGame.clearedStage++;
-                        saveGameHandler.Save();
-                    }
-                    _subject.OnNext(GameStateMachine.GameStateMachineTrigger.Back);
-                };
-            _levelContainer.SelectedLevel.OnPlayerDead += (sender, args) =>
-            {
-                _subject.OnNext(GameStateMachine.GameStateMachineTrigger.Back);
-            };
+            _levelContainer.SelectedLevel.LoadContent(_contentManager);
+            _levelContainer.SelectedLevel.OnLevelComplete += SaveAndQuit;
+            _levelContainer.SelectedLevel.OnPlayerDead += PlayerDied;
 
                 // creating pause menu
             _components = new ComponentGrid(new Vector2(0,0), 
@@ -92,7 +81,6 @@ namespace SE_Praktikum.Core.GameStates
             backButton.Click += (sender, args) =>
             {
                 _logger.Debug("Back to main menu");
-                _screen.Camera.StopFollowing();
                 _subject.OnNext(GameStateMachine.GameStateMachineTrigger.Back);
             };
             _components.Add(backButton);
@@ -101,7 +89,11 @@ namespace SE_Praktikum.Core.GameStates
         public override void UnloadContent()
         {
             _logger.Debug("unloading content");
+            _levelContainer.SelectedLevel.OnLevelComplete -=  SaveAndQuit;
+            _levelContainer.SelectedLevel.OnPlayerDead -= PlayerDied;
+
             _levelContainer.SelectedLevel?.Unload();
+            _screen.Camera.StopFollowing();
         }
 
         public override void Update(GameTime gameTime)
@@ -135,6 +127,22 @@ namespace SE_Praktikum.Core.GameStates
             {
                 _engine.Render(_components);
             }
+        }
+
+        private void SaveAndQuit(object sender, EventArgs args)
+        {
+            if (_levelContainer.SelectedLevel.LevelNumber >= saveGameHandler.SaveGame.clearedStage)
+            {
+                saveGameHandler.SaveGame.clearedStage++;
+                saveGameHandler.Save();
+            }
+            _subject.OnNext(GameStateMachine.GameStateMachineTrigger.Back);
+        }
+
+        private void PlayerDied(object sender, EventArgs args)
+        {
+            _subject.OnNext(GameStateMachine.GameStateMachineTrigger.Back);
+            
         }
     }
 }

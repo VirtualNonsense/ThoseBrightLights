@@ -11,16 +11,23 @@ using SE_Praktikum.Extensions;
 
 namespace SE_Praktikum.Services.Factories
 {
+    /// <summary>
+    /// created this field because I need to build tiles from tiled
+    /// </summary>
     public class TileFactory
     {
+        // Fields
         private ILogger _logger;
         private readonly AnimationHandlerFactory _factory;
 
+        // Constructor
         public TileFactory(AnimationHandlerFactory factory)
         {
             _factory = factory;
             _logger = LogManager.GetCurrentClassLogger();
         }
+
+        // Build a tile from desired tilesets
         public Tile GenerateTile(uint index, Vector2 position, float layer, List<TileSet> tilesets, float opacity, int width, int height)
         {
             var t = DecodeIndex(index);
@@ -40,14 +47,14 @@ namespace SE_Praktikum.Services.Factories
                 handler.Position = position;
                 return new Tile(handler, t.Item1){Indestructible = indestructable, MaxHealth = 20, Health = 20};
                 
-                // return new Tile(tileset.Texture, tileset.GetFrame(index), position, layer, opacity, width, height, t.Item1);
+                
 
             }
 
             _logger.Warn("Tile not found!");
             throw new ArgumentOutOfRangeException();
         }
-
+        // Better performance for tile generation with quadtree
         public QuadTree<Tile> GenerateTiles(List<uint> indices,
             float layer,
             List<TileSet> tilelist,
@@ -102,6 +109,7 @@ namespace SE_Praktikum.Services.Factories
             throw new NotImplementedException();
         }
 
+        // Get the orientaion from tile indices (last numbers of 32 bit reprentation)
         private (TileModifier, uint) DecodeIndex(uint codedIndex)
         {
             var mbits = (codedIndex >> 28);

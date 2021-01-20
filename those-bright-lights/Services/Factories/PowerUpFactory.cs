@@ -11,6 +11,7 @@ using SE_Praktikum.Components.Sprites.Actors.PowerUps;
 
 namespace SE_Praktikum.Services.Factories
 {
+    // Enumeration for impact sounds
     public enum ImpactSounds
     {
         Health,
@@ -21,8 +22,12 @@ namespace SE_Praktikum.Services.Factories
         ScoreBoni,
         Star
     }
+    /// <summary>
+    /// Create this field to use powerUps
+    /// </summary>
     public class PowerUpFactory
     {
+        //fields
         public Logger _logger;
         private AnimationHandlerFactory _animationHandlerFactory;
         private readonly WeaponFactory _weaponFactory;
@@ -31,7 +36,7 @@ namespace SE_Praktikum.Services.Factories
         private readonly ContentManager _contentManager;
         private SoundHandler<ImpactSounds> _soundHandler;
         
-
+        // Constructor
         public PowerUpFactory(AnimationHandlerFactory animationHandlerFactory,WeaponFactory weaponFactory, ParticleFactory particleFactory, TileSetFactory tileSetFactory, ContentManager contentManager)
         {
             _animationHandlerFactory = animationHandlerFactory;
@@ -42,7 +47,7 @@ namespace SE_Praktikum.Services.Factories
             _soundHandler = new SoundHandler<ImpactSounds>();
             LoadSoundEffects();
         }
-
+        // Create powerup objects
         public HealthPowerUp HealthGetInstance(float health, Vector2? position = null, float layer = 0)
         {
             var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\health.json", 0);
@@ -89,6 +94,8 @@ namespace SE_Praktikum.Services.Factories
         }
         
 
+
+        // Random weapon creation for weapon power up spawnpoints
         public WeaponPowerUp GetRandomInstance(Vector2? position = null,float layer = 0)
         {
             var t = _weaponFactory.GetRandomWeapon(null);
@@ -112,8 +119,6 @@ namespace SE_Praktikum.Services.Factories
                 Position = position ?? new Vector2(0, 0)
             };
             return rw;
-
-            
         }
 
         public InfAmmoPowerUp InfAmmoGetInstance(int ammo, Vector2? position = null, float layer = 0)
@@ -177,7 +182,7 @@ namespace SE_Praktikum.Services.Factories
             };
             return sc;
         }
-
+        // Load sounds for each powerup
         public void LoadSoundEffects()
         {
             _soundHandler.Add(ImpactSounds.Health,

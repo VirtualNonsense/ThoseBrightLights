@@ -9,11 +9,13 @@ using System.Text;
 
 namespace SE_Praktikum.Components.HUD
 {
-    public class ScoreBar : HUDItem
+    public class ScoreBar : HUDItem // Is a HUD-Element
     {
+        // Fields
         private readonly AnimationSettings numberAnimationSettings;
         private const int margin = 5;
 
+        // Constructor
         public ScoreBar(HUD parent, AnimationHandlerFactory animationHandlerFactory, TileSet tileSet, AnimationSettings numberAnimationSettings) : base(parent, animationHandlerFactory, tileSet)
         {
             parent.Player.OnScoreChanged += Player_OnScoreChanged;
@@ -22,12 +24,14 @@ namespace SE_Praktikum.Components.HUD
             UpdateDigits(_parent.Player.Score);
         }
 
+        // Event - for Score changed
         private void Player_OnScoreChanged(object sender, EventArgs e)
         {
             UpdateAmountDigits(_parent.Player.Score);
             UpdateDigits(_parent.Player.Score);
         }
 
+        // Monogame functions
         public override void Draw(SpriteBatch spriteBatch)
         {
             base.Draw(spriteBatch);
@@ -38,6 +42,7 @@ namespace SE_Praktikum.Components.HUD
             base.Update(gameTime);
         }
 
+        // Both functions keep track of the score
         public void UpdateAmountDigits(int newScore)
         {
             var digits = newScore == 0 ? 1 : Math.Floor(Math.Log10(newScore)+1);
@@ -71,6 +76,7 @@ namespace SE_Praktikum.Components.HUD
             }
         }
 
+        // The seperate digits of the score were built
         public AnimationHandler ConstructDigit(Vector2 position)
         {
             return animationHandlerFactory.GetAnimationHandler(tileSet,

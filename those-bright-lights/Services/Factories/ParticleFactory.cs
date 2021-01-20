@@ -9,11 +9,13 @@ namespace SE_Praktikum.Services.Factories
 {
     public class ParticleFactory
     {
+        // Fields
         private readonly IScreen _screen;
         private readonly AnimationHandlerFactory _factory;
         private readonly ContentManager _contentManager;
         private readonly TileSetFactory _tileSetFactory;
 
+        // Constructor
         public ParticleFactory(IScreen screen, AnimationHandlerFactory factory, ContentManager contentManager, TileSetFactory tileSetFactory)
         {
             _screen = screen;
@@ -21,7 +23,8 @@ namespace SE_Praktikum.Services.Factories
             _contentManager = contentManager;
            _tileSetFactory = tileSetFactory;
         }
-
+        
+        // Build each particle animation with desired animation settings and json file
         public ExplosionsParticle BuildExplosionParticle(AnimationSettings settings = null)
         {
             var animationSettings = settings ?? new AnimationSettings(7, 50f, 1);

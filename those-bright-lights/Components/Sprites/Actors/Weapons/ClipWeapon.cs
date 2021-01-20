@@ -173,7 +173,8 @@ namespace SE_Praktikum.Components.Sprites.Actors.Weapons
         /// </summary>
         public virtual void Reload()
         {
-            if (WeaponEmpty) return;
+            if (_reloadDownTime.CastingInProgress) return;
+            _reloadSoundEffect?.Play();
             _reloadDownTime.Fire();
         }
 
@@ -198,7 +199,6 @@ namespace SE_Praktikum.Components.Sprites.Actors.Weapons
         private void ExecuteReload()
         {
             _logger.Trace($"Reloading {NameTag} bullets in clips: {AmmunitionInClip} clips: {_clips}");
-            _reloadSoundEffect?.Play();
             AmmunitionInClip = _clipSize;
             Clips--;
         }

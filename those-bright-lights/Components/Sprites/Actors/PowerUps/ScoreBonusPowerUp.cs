@@ -3,6 +3,7 @@ using SE_Praktikum.Services;
 
 namespace SE_Praktikum.Components.Sprites.Actors.PowerUps
 {
+    // Score bonus powerup
     public class ScoreBonusPowerUp : PowerUp
     {
         public readonly int BonusScore;

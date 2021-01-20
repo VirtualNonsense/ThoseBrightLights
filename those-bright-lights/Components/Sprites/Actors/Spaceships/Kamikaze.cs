@@ -16,7 +16,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
                         float acceleration = .1f,
                         float maxSpeed = 10,
                         float rotationAcceleration = .1f,
-                        float maxRotationSpeed = 10,
+                        float maxRotationSpeed = 1000,
                         float health = 1,
                         float? maxHealth = null,
                         float impactDamage = 60,

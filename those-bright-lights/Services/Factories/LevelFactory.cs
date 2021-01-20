@@ -16,6 +16,9 @@ namespace SE_Praktikum.Services.Factories
         private readonly IGameEngine _gameEngine;
         private readonly HUDFactory _hUdFactory;
 
+        // #############################################################################################################
+        // constructor
+        // #############################################################################################################
         public LevelFactory(
             MapFactory mapFactory,
             PlayerFactory playerFactory,
@@ -35,6 +38,16 @@ namespace SE_Praktikum.Services.Factories
             _gameEngine = gameEngine;
             _hUdFactory = hUDFactory;
         }
+        // #############################################################################################################
+        // public methods
+        // #############################################################################################################
+        /// <summary>
+        /// returns the level of a given path
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="levelNumber"></param>
+        /// <param name="song"></param>
+        /// <returns></returns>
         public Level GetInstance(string path, int levelNumber, Song song = null)
         {
             return new Level(path,

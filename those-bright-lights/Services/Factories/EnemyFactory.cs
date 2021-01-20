@@ -32,7 +32,7 @@ namespace SE_Praktikum.Services.Factories
 
          public Alienship GetAlienship()
          {
-             SoundEffect impactSound = _contentManager.Load<SoundEffect>("Audio/Sound_Effects/Collusion/ClinkBell");
+             SoundEffect impactSound = _contentManager.Load<SoundEffect>("Audio/Sound_Effects/Collusion/alien_impact");
              var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\alien_ship_65_65_4.json",0);
              var animationSettings = new List<AnimationSettings>(new[]
                  {new AnimationSettings(4, isPlaying: true, duration: 200f, isLooping: true)});
@@ -65,7 +65,7 @@ namespace SE_Praktikum.Services.Factories
 
         public Turret GetTurret()
         {
-            var impactSound = _contentManager.Load<SoundEffect>("Audio/Sound_Effects/Collusion/ClinkBell");
+            SoundEffect impactSound = _contentManager.Load<SoundEffect>("Audio/Sound_Effects/Collusion/turret_impact");
             var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\turret_16_21.json", 0);
             var animationSettings = new List<AnimationSettings>();
             animationSettings.Add(new AnimationSettings(1, isPlaying: false));
@@ -122,10 +122,15 @@ namespace SE_Praktikum.Services.Factories
 
         public Boss GetBoss()
         {
-            SoundEffect impactSound = _contentManager.Load<SoundEffect>("Audio/Sound_Effects/Collusion/ey");
+            var impactSound = _contentManager.Load<SoundEffect>("Audio/Sound_Effects/Collusion/ey");
             var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\boss_64_110_8.json", 0);
             var animationSettings = 
                 new List<AnimationSettings>(new []{new AnimationSettings(8,isLooping:true)});
+            var animationSettings = new AnimationSettings(8,isLooping:true);
+            var propulsionTileSet =
+                _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\bosspropulsion_11_9_6.json", 0);
+            var propulsionSettings = new AnimationSettings(6, isLooping: true, duration: 30f);
+            var propulsionHandler = _animationHandlerFactory.GetAnimationHandler(propulsionTileSet, propulsionSettings);
             var b = new Boss(_animationHandlerFactory.GetAnimationHandler(tileSet, animationSettings),
                 viewBox: new Polygon(Vector2.Zero,
                     Vector2.Zero, 0,
@@ -135,6 +140,7 @@ namespace SE_Praktikum.Services.Factories
                         new Vector2(100, -300),
                         new Vector2(100, 300),
                     }),
+                propulsionHandler,
                 impactSound: impactSound)
             {
                 Scale = 2
@@ -147,7 +153,7 @@ namespace SE_Praktikum.Services.Factories
         
         public Kamikaze GetKamikaze()
         {
-            SoundEffect impactSound = _contentManager.Load<SoundEffect>("Audio/Sound_Effects/Collusion/ClinkBell");
+            SoundEffect impactSound = _contentManager.Load<SoundEffect>("Audio/Sound_Effects/Collusion/kamikaze_impact");
             var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\kamikazeIdle_40_25_6.json", 0);
             var animationSettings = new List<AnimationSettings>(new[]
                 {new AnimationSettings(6, 50, isPlaying: true, isLooping: true)});

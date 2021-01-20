@@ -15,7 +15,6 @@ using SE_Praktikum.Models.Tiled;
 using SE_Praktikum.Services;
 using SE_Praktikum.Services.Factories;
 using SE_Praktikum.Extensions;
-using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using NLog.Targets;
 using SE_Praktikum.Services.ParticleEmitter;
@@ -39,8 +38,6 @@ namespace SE_Praktikum.Core
         private readonly Logger _logger;
         private float _collisionLayer;
         private Map _map;
-        private MouseState _previousMousestate;
-        private MouseState _mouseState;
 
         private ParticleEmitter _emitter;
         // #############################################################################################################
@@ -78,7 +75,6 @@ namespace SE_Praktikum.Core
         // #############################################################################################################
         // Events
         // #############################################################################################################
-        private event EventHandler OnExplosion;
         public event EventHandler OnLevelComplete;
 
         public event EventHandler OnPlayerDead;
@@ -234,7 +230,7 @@ namespace SE_Praktikum.Core
         private void ProcessLevelEvent(LevelEventArgs levelEventArgs)
         {
             string info;
-             switch (levelEventArgs)
+            switch (levelEventArgs)
             {
                 case LevelEventArgs.WinningZoneReachedEventArgs _:
                     InvokeOnLevelComplete();

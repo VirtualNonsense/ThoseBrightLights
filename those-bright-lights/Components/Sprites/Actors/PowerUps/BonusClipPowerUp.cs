@@ -3,6 +3,7 @@ using SE_Praktikum.Services;
 
 namespace SE_Praktikum.Components.Sprites.Actors.PowerUps
 {
+    // Bonusclip powerup
     public class BonusClipPowerUp : PowerUp
     {
         private int _bonusClips;

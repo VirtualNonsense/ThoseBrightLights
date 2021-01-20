@@ -9,13 +9,16 @@ namespace SE_Praktikum.Components.HUD
 {
     public class HUD : IComponent
     {
+        // Fields
         public Player Player;
         private readonly List<HUDItem> _hUDItems;
         public float Layer;
 
+        // Properties
         public Vector2 Position { get; set; }
         public bool IsRemoveAble { get; set; }
 
+        // Constructor
         public HUD(Player player)
         {
             Layer = player.Layer + 1;
@@ -24,11 +27,13 @@ namespace SE_Praktikum.Components.HUD
             Player.OnPositionChanged += _player_OnPositionChanged;
         }
 
+        // Event when Player changed its position
         private void _player_OnPositionChanged(object sender, EventArgs e)
         {
             Position = Player.Position;
         }
 
+        // Monogame functions
         public void Draw(SpriteBatch spriteBatch)
         {
             foreach (var item in _hUDItems)
@@ -41,6 +46,7 @@ namespace SE_Praktikum.Components.HUD
         {
         }
 
+        // Adds any Hud-Item
         public void AddHUDItem(HUDItem hUDItem)
         {
             _hUDItems.Add(hUDItem);

@@ -3,6 +3,7 @@ using SE_Praktikum.Services;
 
 namespace SE_Praktikum.Components.Sprites.Actors.PowerUps
 {
+    // Infinite ammo powerup
     public class InfAmmoPowerUp : PowerUp
     {
         public readonly float Duration;

@@ -23,20 +23,32 @@ namespace SE_Praktikum.Services.Factories
         private const int _tileHeight = 32;
         private Logger _logger;
 
+        
+        // #############################################################################################################
+        // constructor
+        // #############################################################################################################
         public ControlElementFactory(AnimationHandlerFactory animationHandlerFactory, ContentManager contentManager)
         {
             _animationHandlerFactory = animationHandlerFactory;
             _contentManager = contentManager;
             _logger = LogManager.GetCurrentClassLogger();
         }
+        // #############################################################################################################
+        // public methods
+        // #############################################################################################################
 
-        private void loadAssetsIfNecessary()
-        {
-            _buttonsAndSwitches ??= new TileSet(_contentManager.Load<Texture2D>("Artwork/Tilemaps/ButtonsAndSwitches"), _tileWidth,
-                _tileHeight, null);
-            _font ??= _contentManager.Load<SpriteFont>("Font/Font2");
-        }
 
+        /// <summary>
+        /// constructs a textbox with tilesX times tilesY tiles
+        /// </summary>
+        /// <param name="tilesX"></param>
+        /// <param name="tilesY"></param>
+        /// <param name="position"></param>
+        /// <param name="color"></param>
+        /// <param name="text"></param>
+        /// <param name="camera"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
         public TextBox GetTextBoxByTiles(uint tilesX, uint tilesY, Vector2 position, Color color, string text = "",  Camera camera = null)
         {
             List<AnimationHandler> handlers = new List<AnimationHandler>();
@@ -148,7 +160,16 @@ namespace SE_Praktikum.Services.Factories
 
             return new TextBox(handlers, _font, position, color, camera, text);
         }
-
+        
+        /// <summary>
+        /// constructs a button with approximately the given dimension  
+        /// </summary>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
+        /// <param name="position"></param>
+        /// <param name="text"></param>
+        /// <param name="camera"></param>
+        /// <returns></returns>
         public MenuButton GetButton(uint width, uint height, Vector2 position,
             string text = "", Camera camera = null)
         {
@@ -157,6 +178,16 @@ namespace SE_Praktikum.Services.Factories
             uint tilesY = (uint) (height / _buttonsAndSwitches.TileDimY);
             return GetButtonByTiles(tilesX, tilesY, position, text, camera);
         }
+        /// <summary>
+        /// constructs a button with tilesX times tilesY tiles
+        /// </summary>
+        /// <param name="tilesX"></param>
+        /// <param name="tilesY"></param>
+        /// <param name="position"></param>
+        /// <param name="text"></param>
+        /// <param name="camera"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         public MenuButton GetButtonByTiles(uint tilesX, uint tilesY, Vector2 position, string text = "",  Camera camera = null)
         {
             List<AnimationHandler> handlers = new List<AnimationHandler>();
@@ -313,7 +344,17 @@ namespace SE_Praktikum.Services.Factories
             var soundEffect = _contentManager.Load<SoundEffect>("Audio/Sound_Effects/Button/Button_dry");
             return new MenuButton(handlers, _font, soundEffect, text: text, position: position, camera: camera, textOffSetWhenPressed: 3);;
         }
-
+        /// <summary>
+        /// Creates slider with approximately the given dimensions 
+        /// </summary>
+        /// <param name="initialValue"></param>
+        /// <param name="min"></param>
+        /// <param name="max"></param>
+        /// <param name="position"></param>
+        /// <param name="width"></param>
+        /// <param name="camera"></param>
+        /// <param name="layer"></param>
+        /// <returns></returns>
         public Slider GetSlider(
             float initialValue,
             float min,
@@ -327,6 +368,17 @@ namespace SE_Praktikum.Services.Factories
             uint tilesX = (uint) (width / _buttonsAndSwitches.TileDimX);
             return GetSliderByTiles(initialValue, min, max, position, tilesX, camera);
         }
+        /// <summary>
+        /// creates a slider with the given tilewidth
+        /// </summary>
+        /// <param name="initialValue"></param>
+        /// <param name="min"></param>
+        /// <param name="max"></param>
+        /// <param name="position"></param>
+        /// <param name="tilesX"></param>
+        /// <param name="camera"></param>
+        /// <param name="layer"></param>
+        /// <returns></returns>
         public Slider GetSliderByTiles(
             float initialValue,
             float min,
@@ -394,10 +446,17 @@ namespace SE_Praktikum.Services.Factories
                 )
             };
             var soundEffect = _contentManager.Load<SoundEffect>("Audio/Sound_Effects/Button/Button_slider_block_single");
-            return new Slider(initialValue, min, max,  position, new Slider.SliderBlade(_sliderBladeHandler, camera), handlers, soundEffect, camera);
+            return new Slider(initialValue, min, max,  position, new Slider.SliderHandle(_sliderBladeHandler, camera), handlers, soundEffect, camera);
+        }
+        
+        // #############################################################################################################
+        // private methods
+        // #############################################################################################################
+        private void loadAssetsIfNecessary()
+        {
+            _buttonsAndSwitches ??= new TileSet(_contentManager.Load<Texture2D>("Artwork/Tilemaps/ButtonsAndSwitches"), _tileWidth,
+                _tileHeight, null);
+            _font ??= _contentManager.Load<SpriteFont>("Font/Font2");
         }
     }
-    
-    
-    
 }

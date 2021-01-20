@@ -3,6 +3,7 @@ using SE_Praktikum.Services;
 
 namespace SE_Praktikum.Components.Sprites.Actors.PowerUps
 {
+    // Fullhealth powerup 
     public class FullHealthPowerUp : PowerUp
     {
         public readonly float HealthBonus;

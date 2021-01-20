@@ -4,6 +4,9 @@ using System.Text;
 
 namespace SE_Praktikum.Models
 {
+    /// <summary>
+    /// Used for destructable tiles
+    /// </summary>
     public class TileInfo
     {
         public int ID;

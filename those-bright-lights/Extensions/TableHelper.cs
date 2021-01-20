@@ -2,11 +2,16 @@
 {
     public static class TableHelper
     {
+        /// <summary>
+        /// returns the table position when given the dimensions and position in a table
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="xMax"></param>
+        /// <param name="yMax"></param>
+        /// <returns></returns>
         public static TablePosition GetTablePos(int x, int y, uint xMax, uint yMax)
         {
-            
-            
-            
             // Top left
             if (x == 0 && y == 0)
             {

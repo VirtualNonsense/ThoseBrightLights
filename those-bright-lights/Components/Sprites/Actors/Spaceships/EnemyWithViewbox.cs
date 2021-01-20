@@ -35,7 +35,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
             float maxSpeed = 3,
             float acceleration = 5,
             float rotationAcceleration = .1f,
-            float maxRotationSpeed = 10,
+            float maxRotationSpeed = 1000,
             float health = 50,
             float? maxHealth = null,
             float impactDamage = 5,
@@ -73,15 +73,15 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
                         InterAction = InterAction.InView;
                     }
 
-                    bool c = Collide(other);
-                    if (InterAction == InterAction.InView && c)
+                    var c = Collide(other);
+                    switch (InterAction)
                     {
-                        InterAction = InterAction.InViewAndBodyCollision;
-                        return true;
+                        case InterAction.InView when c:
+                            InterAction = InterAction.InViewAndBodyCollision;
+                            return true;
+                        case InterAction.InView:
+                            return true;
                     }
-
-                    if (InterAction == InterAction.InView)
-                        return true;
 
                     if (c)
                     {
@@ -99,18 +99,20 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
 
         protected override void Rotate(Actor target, GameTime gameTime)
         {
+            //only use this method, if enemy has weapon, otherwise use method of enemy
             if (!RotateWeapon || CurrentWeapons.Count == 0)
             {
                 base.Rotate(target, gameTime);
                 return;
             }
             if (Target == null || InterAction != InterAction.InView) return;
+            //get last element in weapons
             var weapon = CurrentWeapons[^1];
             if (weapon == null) return;
             var desiredRotation = MathExtensions.RotationToTarget(target, this);
             if (!(Math.Abs(desiredRotation - weapon.RelativeRotation) > RotationThreshold)) return;
             var rotationPortion =
-                (float) ((gameTime.ElapsedGameTime.TotalMilliseconds / RotationSpeed) * (2 * Math.PI));
+                (float) ((gameTime.ElapsedGameTime.TotalMilliseconds / MaxRotationSpeed) * (2 * Math.PI));
             //turn clock or anticlockwise
             var angleToRotate = MathExtensions.Modulo2PiAlsoNegative(desiredRotation - weapon.Rotation);
             //from back to front: rotate counter or clockwise
@@ -118,7 +120,6 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
             if (Math.Abs(angleToRotate) < RotationThreshold) return;
             weapon.RelativeRotation +=
                 Math.Sign(Math.PI - Math.Abs(angleToRotate)) * Math.Sign(angleToRotate) * rotationPortion;
-            //TODO: balancing
             if(Math.Abs(desiredRotation - Rotation) > weapon.MaxRelativeRotation*2/3)
                 Rotation +=  Math.Sign(Math.PI - Math.Abs(angleToRotate)) * Math.Sign(angleToRotate) * rotationPortion;
         }

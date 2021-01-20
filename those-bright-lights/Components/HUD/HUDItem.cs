@@ -20,15 +20,18 @@ namespace SE_Praktikum.Components.HUD
         public Vector2 Offset => Position-Origin;
         public Vector2 Origin => new Vector2(0,0);
 
+        // Sets width and height of an item
         public float ElementWidth => _handler.Count * tileSet.TileDimX;
 
         public float ElementHeight => tileSet.TileDimY;
 
+        // Fields
         protected List<AnimationHandler> _handler;
         protected HUD _parent;
         protected readonly AnimationHandlerFactory animationHandlerFactory;
         protected readonly TileSet tileSet;
 
+        // Constructor
         public HUDItem(HUD parent, AnimationHandlerFactory animationHandlerFactory, TileSet tileSet)
         {
             _handler = new List<AnimationHandler>();
@@ -37,6 +40,7 @@ namespace SE_Praktikum.Components.HUD
             this.tileSet = tileSet;
         }
 
+        // Monogame functions
         public virtual void Draw(SpriteBatch spriteBatch)
         {
             foreach (var item in _handler)

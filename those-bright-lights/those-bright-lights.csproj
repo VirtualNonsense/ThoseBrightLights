@@ -304,6 +304,9 @@
         <None Update="Content\MetaData\TileSets\boss_64_110_8.json">
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
+        <None Update="Content\MetaData\TileSets\bosspropulsion_11_9_6.json">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
         <None Update="Content\MetaData\TileSets\mine_35_35_8_2x.json">
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>

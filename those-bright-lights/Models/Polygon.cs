@@ -39,7 +39,7 @@ namespace SE_Praktikum.Models
                        float rotation = 0,
                        float scale = 1,
                        Color? color = null,
-                       bool drawAble = true)
+                       bool drawAble = false)
         {
             _vertices = vertices;
             _position = position;
@@ -54,7 +54,11 @@ namespace SE_Praktikum.Models
             VertexDrawingOrder = GetIndexMeshInts();
             DrawAbleVertices = GetDrawAbleVertices();
         }
-
+        
+        /// <summary>
+        /// Determines whether the update methods necessary for plotting will be updated
+        /// set to false for slight performance boost
+        /// </summary>
         public bool DrawAble
         {
             get => _drawAble;
@@ -69,7 +73,9 @@ namespace SE_Praktikum.Models
             }
         }
 
-
+        /// <summary>
+        /// Rotate the vertices around origin point
+        /// </summary>
         public float Rotation
         {
             
@@ -85,6 +91,9 @@ namespace SE_Praktikum.Models
             }
         }
 
+        /// <summary>
+        /// Position of origin point in world space
+        /// </summary>
         public Vector2 Position
         {
             get => _position;
@@ -101,7 +110,10 @@ namespace SE_Praktikum.Models
         }
         
         
-
+        /// <summary>
+        /// Enlarge or shrink the polygon
+        /// default is 1
+        /// </summary>
         public float Scale
         {
             get => _scale;
@@ -116,7 +128,10 @@ namespace SE_Praktikum.Models
                 DrawAbleVertices = GetDrawAbleVertices();
             }
         }
-
+        
+        /// <summary>
+        /// Set the color of the current polygon
+        /// </summary>
         public Color Color
         {
             get => _color;
@@ -128,7 +143,10 @@ namespace SE_Praktikum.Models
                 DrawAbleVertices = GetDrawAbleVertices();
             }
         }
-
+        
+        /// <summary>
+        /// Offset of the zero point in body coordinates
+        /// </summary>
         public Vector2 Origin
         {
             
@@ -145,7 +163,7 @@ namespace SE_Praktikum.Models
         }
         
         /// <summary>
-        /// accesses to vertices in body space
+        /// accesses vertices in body space
         /// </summary>
         public List<Vector2> Vertices
         {
@@ -178,20 +196,37 @@ namespace SE_Praktikum.Models
             get;
             private set;
         }
-
+        
+        /// <summary>
+        /// returns the all vertices.
+        /// useful for drawing only
+        /// this won't be updated when DrawAble is false
+        /// </summary>
         public VertexPositionColor[] DrawAbleVertices
         {
             get;
             private set;
         }
-
+        
+        /// <summary>
+        /// Amount of Triangles of the current polygon
+        /// this won't be updated when DrawAble is false 
+        /// </summary>
         public int TriangleCount => VertexDrawingOrder.Count()/ 3;
+        
+        /// <summary>
+        /// VertexOrder for plotting
+        /// this won't be updated when DrawAble is false
+        /// </summary>
         public int[] VertexDrawingOrder
         {
             get;
             private set;
         }
 
+        /// <summary>
+        /// Position of body zero point in world space
+        /// </summary>
         public Vector2 Center => Position - Origin;
 
         public float Layer
@@ -309,7 +344,11 @@ namespace SE_Praktikum.Models
             }
             return minMax;
         }
-
+        
+        /// <summary>
+        /// Projects the points from body into 2d world space
+        /// </summary>
+        /// <returns></returns>
         private Vector2[] GetVector2InWorldSpace()
         {
             Vector2[] v = new Vector2[_vertices.Count];
@@ -322,6 +361,10 @@ namespace SE_Praktikum.Models
             return v;
         }
 
+        /// <summary>
+        /// Projects the points from body into 3d world space
+        /// </summary>
+        /// <returns></returns>
         private Vector3[] GetVector3InWorldSpace()
         {
             if (!_drawAble) return null;
@@ -333,6 +376,11 @@ namespace SE_Praktikum.Models
             return v3;
         }
 
+        
+        /// <summary>
+        /// Returns the vector indices in drawing order  
+        /// </summary>
+        /// <returns></returns>
         private int[] GetIndexMeshInts()
         {
             if (!_drawAble) return null;
@@ -347,7 +395,12 @@ namespace SE_Praktikum.Models
             }
             return ind;
         }
-
+        
+        /// <summary>
+        /// generates the drawable vertices
+        /// only necessary for plotting
+        /// </summary>
+        /// <returns></returns>
         private VertexPositionColor[] GetDrawAbleVertices()
         {
             if (!_drawAble) return null;

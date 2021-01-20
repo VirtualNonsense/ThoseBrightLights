@@ -2,6 +2,9 @@
 
 namespace SE_Praktikum.Models.Tiled
 {
+    /// <summary>
+    /// Level fields
+    /// </summary>
     public class LevelBlueprint
     {
         public int CompressionLevel;

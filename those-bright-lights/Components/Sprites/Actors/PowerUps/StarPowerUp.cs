@@ -4,6 +4,7 @@ using SE_Praktikum.Services;
 
 namespace SE_Praktikum.Components.Sprites.Actors.PowerUps
 {
+    // Star powerup
     public class StarPowerUp : PowerUp
     {
         /// <summary>

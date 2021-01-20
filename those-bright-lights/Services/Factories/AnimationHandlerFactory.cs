@@ -11,7 +11,7 @@ namespace SE_Praktikum.Services.Factories
         {
         }
         /// <summary>
-        /// 
+        /// Returns an instance of the animationshandler
         /// </summary>
         /// <param name="animation"></param>
         /// <param name="settings"></param>

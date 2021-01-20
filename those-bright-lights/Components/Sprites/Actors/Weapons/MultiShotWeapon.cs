@@ -13,7 +13,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Weapons
         private int _bulletsPerShot;
         private Random _random;
         private float _spreadAngle;
-        private float _speedVariation;
+
         public MultiShotWeapon(AnimationHandler animationHandler,
                                Actor parent,
                                Vector2 relativePosition,
