@@ -6,6 +6,19 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
 {
     public class Mine : Enemy
     {
+        // #############################################################################################################
+        // Constructor
+        // #############################################################################################################
+        /// <summary>
+        /// Mine that explodes when something touches it
+        /// </summary>
+        /// <param name="animationHandler"></param>
+        /// <param name="explosion"></param>
+        /// <param name="impactSound"></param>
+        /// <param name="health"></param>
+        /// <param name="maxHealth"></param>
+        /// <param name="impactDamage"></param>
+        /// <param name="indestructible"></param>
         public Mine(AnimationHandler animationHandler,
             Particle explosion,
             SoundEffect impactSound,
@@ -17,6 +30,9 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
             Explosion = explosion;
         }
 
+        // #############################################################################################################
+        // protected/private Methods
+        // #############################################################################################################
         protected override void InvokeDeath()
         {
             base.InvokeDeath();
@@ -27,6 +43,5 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
         {
             return new LevelEventArgs.EnemyDiedEventArgs();
         }
-        
     }
 }
