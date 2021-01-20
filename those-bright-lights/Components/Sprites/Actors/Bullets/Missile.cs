@@ -11,7 +11,6 @@ namespace SE_Praktikum.Components.Sprites.Actors.Bullets
         private readonly AnimationHandler _propulsionAnimationHandler;
         private readonly Vector2 _offSet;
         private float _elapsedTime = 0;
-
         
         // #################################################################################################################
         // Constructor
@@ -71,6 +70,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Bullets
                 _propulsionAnimationHandler.Position = base.Position;
             }    
         }
+        
         public override float Rotation
         {
             get => base.Rotation;
