@@ -20,10 +20,10 @@ namespace SE_Praktikum.NinjectModules
         public override void Load()
         {
             // bind game instance to each layer of access 
-            Bind<SE_Praktikum_Game, IScreen, IGameEngine, ISaveGameHandler>().To<SE_Praktikum_Game>().InSingletonScope();
+            Bind<ThoseBrightLights, IScreen, IGameEngine, ISaveGameHandler>().To<ThoseBrightLights>().InSingletonScope();
             
             // MonoGameClass  necessary for loading stuff
-            Bind<ContentManager>().ToMethod(c => c.Kernel.Get<SE_Praktikum_Game>().Content);
+            Bind<ContentManager>().ToMethod(c => c.Kernel.Get<ThoseBrightLights>().Content);
             
             // handles every state transition on a macro level
             Bind<IObservable<GameState>>().To<GameStateMachine>();

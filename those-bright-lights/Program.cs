@@ -15,7 +15,7 @@ namespace SE_Praktikum
                 new FactoryModule(),
                 new GameStateModule()
             ).BuildReadonlyKernel();
-            using var game = kernel.Get<SE_Praktikum_Game>();
+            using var game = kernel.Get<ThoseBrightLights>();
             // Stupid but the only way i found.....
             game.StatePublisherTicket = kernel.Get<IObservable<GameState>>().Subscribe(game);
             game.Run();

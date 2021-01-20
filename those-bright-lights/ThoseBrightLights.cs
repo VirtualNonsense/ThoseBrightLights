@@ -14,7 +14,7 @@ using SE_Praktikum.Services;
 
 namespace SE_Praktikum
 {
-    public class SE_Praktikum_Game : Game, IGameEngine, IScreen, IObserver<GameState>, ISaveGameHandler
+    public class ThoseBrightLights : Game, IGameEngine, IScreen, IObserver<GameState>, ISaveGameHandler
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
@@ -23,7 +23,7 @@ namespace SE_Praktikum
         private GameState _nextState;
         private SaveHandler _saveHandler;
 
-        public SE_Praktikum_Game(SaveHandler saveHandler)
+        public ThoseBrightLights(SaveHandler saveHandler)
         {
             // init logger
             _logger = LogManager.GetCurrentClassLogger();
