@@ -219,6 +219,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
             if (!CurrentWeapons[previousWeapon].CanShoot) return;
             CurrentWeapons[_indexOfWeaponsOfTheSameType].Fire();
             //increase index -> weapons fire alternating
+            if (CurrentWeapons.Count < 1) return;
             _indexOfWeaponsOfTheSameType = (_indexOfWeaponsOfTheSameType +1) % CurrentWeapons.Count;
         }
         
