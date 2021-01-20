@@ -259,12 +259,6 @@ namespace SE_Praktikum.Services
         {
             OnAnimationComplete?.Invoke(this, EventArgs.Empty);
         }
-        
-        [Obsolete]
-        public Byte[] GetDataOfFrame()
-        {
-            return Tileset.GetDataOfFrame(CurrentFrame.Item1);
-        }
 
         private void HitBoxTransition()
         {
