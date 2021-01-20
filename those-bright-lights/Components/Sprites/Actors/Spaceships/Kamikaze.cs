@@ -31,8 +31,11 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
             base.Update(gameTime);
             if (InterAction != InterAction.InView || Target == null)
             {
+                _animationHandler.Settings = _animationHandler.AllSettings[0];
                 return;
             }
+
+            _animationHandler.Settings = _animationHandler.AllSettings[1];
             var t = gameTime.ElapsedGameTime.Milliseconds/10f;
             var direction = Target.Position - Position;
             var velocity = Velocity;

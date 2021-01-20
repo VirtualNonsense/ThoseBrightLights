@@ -95,17 +95,6 @@ namespace SE_Praktikum.Services.Factories
                 (6,100f),
                 (7,100f),
             }, isLooping:true);
-            // var explodingAnimationSettings = new AnimationSettings(updateList: new List<(int, float)>
-            // {
-            //     (8, 100f),
-            //     (9, 100f),
-            //     (10, 100f),
-            //     (11, 100f),
-            //     (12, 100f),
-            //     (13, 100f),
-            //     (14, 100f),
-            //     (15, 100f),
-            // });
             var explosion = _particleFactory.BuildMineExplosionsParticle();
             var animationSettings = new List<AnimationSettings> {idleAnimationSettings};
             var m = new Mine(_animationHandlerFactory.GetAnimationHandler(tileSet, animationSettings),explosion,
@@ -153,10 +142,27 @@ namespace SE_Praktikum.Services.Factories
         
         public Kamikaze GetKamikaze()
         {
-            SoundEffect impactSound = _contentManager.Load<SoundEffect>("Audio/Sound_Effects/Collusion/kamikaze_impact");
-            var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\kamikazeIdle_40_25_6.json", 0);
-            var animationSettings = new List<AnimationSettings>(new[]
-                {new AnimationSettings(6, 50, isPlaying: true, isLooping: true)});
+            var impactSound = _contentManager.Load<SoundEffect>("Audio/Sound_Effects/Collusion/kamikaze_impact");
+            var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\kamikaze_40_25_6_2x.json", 0);
+            var idleSettings = new AnimationSettings(updateList: new List<(int, float)>
+                {
+                    (0, 100f),
+                    (1, 100f),
+                    (2, 100f),
+                    (3, 100f),
+                    (4, 100f),
+                    (5, 100f),
+                } , 50, isPlaying: true, isLooping: true);
+            var engageSettings = new AnimationSettings(updateList: new List<(int, float)>
+            {
+                (6, 100f),
+                (7, 100f),
+                (8, 100f),
+                (9, 100f),
+                (10, 100f),
+                (11, 100f),
+            },50, isPlaying: true, isLooping: true);
+            var animationSettings = new List<AnimationSettings>(new[] {idleSettings, engageSettings});
             var b = new Kamikaze(_animationHandlerFactory.GetAnimationHandler(tileSet, animationSettings),
                 new Polygon(Vector2.Zero, Vector2.Zero, 0,
                     new List<Vector2>

@@ -15,6 +15,7 @@ namespace SE_Praktikum.Services
         private Vector2 _offset;
 
         public TileSet TileSet;
+        public List<AnimationSettings> AllSettings;
         public AnimationSettings Settings;
 
         private float _timer;
@@ -80,6 +81,10 @@ namespace SE_Praktikum.Services
                     Settings.Rotation = value > 0? 
                         (float) (value  % (2 * Math.PI)) : 
                         (float)(2 * Math.PI + value % (2 * Math.PI));
+                    foreach (var setting in AllSettings)
+                    {
+                        setting.Rotation = Settings.Rotation;
+                    }
                     if (CurrentHitBox==null) return;
                 foreach (var polygon in CurrentHitBox)
                 {
@@ -106,6 +111,11 @@ namespace SE_Praktikum.Services
                     CurrentHitBox = TileSet.GetHitBox(Settings.UpdateList[_currentIndex].Item1);
                     HitBoxTransition();
                 }
+
+                foreach (var setting in AllSettings)
+                {
+                    setting.SpriteEffects = value;
+                }
                 Settings.SpriteEffects = value;
                 HitBoxUpdate();
             }
@@ -123,6 +133,10 @@ namespace SE_Praktikum.Services
             get => Settings.Scale;
             set
             {
+                foreach (var setting in AllSettings)
+                {
+                    setting.Scale = value;
+                }
                 Settings.Scale = value;
                 if (CurrentHitBox == null) return;
                 foreach (var polygon in CurrentHitBox)
@@ -165,7 +179,14 @@ namespace SE_Praktikum.Services
         public float Opacity
         {
             get => Settings.Opacity;
-            set => Settings.Opacity = value;
+            set
+            {
+                foreach (var setting in AllSettings)
+                {
+                    setting.Opacity = value;
+                }
+                Settings.Opacity = value;
+            }
         }
 
         public float Layer
@@ -174,6 +195,8 @@ namespace SE_Praktikum.Services
             get => Settings.Layer;
             set
             {
+                foreach (var setting in AllSettings)
+                    setting.Layer = value;
                 Settings.Layer = value;
                 if (CurrentHitBox==null) return;
                 foreach (var polygon in CurrentHitBox)
@@ -193,6 +216,7 @@ namespace SE_Praktikum.Services
         {
             _logger = LogManager.GetCurrentClassLogger();
             TileSet = tileSet;
+            AllSettings = settings;
             Settings = settings[0];
             _position = position ?? new Vector2(0,0);
             _origin = origin ?? new Vector2(0,0);
