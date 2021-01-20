@@ -87,7 +87,7 @@ namespace SE_Praktikum.Core.GameStates
                 new Vector2(0, 0),
                 "Back to saveselection",
                 _screen.Camera);
-            b.Click += (sender, args) => { _logger.Debug("Back to save selection"); _subject.OnNext(GameStateMachine.GameStateMachineTrigger.BackToSaveSlotSelection); };
+            b.Click += (sender, args) => { _logger.Debug("Back to save selection"); _subject.OnNext(GameStateMachine.GameStateMachineTrigger.Back); };
             _buttons.Add(b);
 
             b = _factory.GetButton(
