@@ -10,7 +10,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
 {
     public class Kamikaze : EnemyWithViewbox
     {
-        private Logger _logger;
+        private readonly Logger _logger;
         
         // #############################################################################################################
         // Constructor
@@ -24,23 +24,14 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
                         float health = 1,
                         float? maxHealth = null,
                         float impactDamage = 60,
-                        SoundEffect impactSound = null) : base(animationHandler, viewBox, maxSpeed, acceleration, rotationAcceleration, maxRotationSpeed, health, maxHealth, impactDamage, impactSound)
+                        SoundEffect impactSound = null) 
+            : base(animationHandler, viewBox, maxSpeed, acceleration, rotationAcceleration, maxRotationSpeed, health,
+                maxHealth, impactDamage, impactSound)
         {
             _logger = LogManager.GetCurrentClassLogger();
             Shoot = new CooldownAbility(500, _shootTarget);
         }
         
-        // #############################################################################################################
-        // Events
-        // #############################################################################################################
-        private event EventHandler OnSeePlayer;
-        
-        // #############################################################################################################
-        // Properties
-        // #############################################################################################################
-
-       
-
         // #############################################################################################################
         // public Methods
         // #############################################################################################################
