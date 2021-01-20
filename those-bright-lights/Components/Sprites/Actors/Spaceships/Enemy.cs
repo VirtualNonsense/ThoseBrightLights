@@ -11,24 +11,54 @@ using Vector2 = Microsoft.Xna.Framework.Vector2;
 
 namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
 {
-    public class Enemy : Spaceship
+    public abstract class Enemy : Spaceship
     {
         private Logger _logger;
-        public InterAction InterAction;
+        protected InterAction InterAction;
         protected Actor Target;
         protected CooldownAbility ForgetTarget;
         protected CooldownAbility Shoot;
-        public bool RotateWeapon = false;
+        protected bool RotateWeapon = false;
         protected float RotateVelocity;
         /// <summary>
         /// Defines the angle in which the enemy doesn't rotate anymore -> it's close enough
         /// </summary>
-        protected float RotationThreshold = MathExtensions.DegToRad(5);
-
-        // TODO: consider enforcing the HitboxFlipped in the setter
-        // this way you don't have to check/set it every couple of lines
-        // and you can be sure the bool does not lie
+        protected readonly float RotationThreshold = MathExtensions.DegToRad(5);
         protected bool HitBoxFlipped = false;
+        
+        // #############################################################################################################
+        // Constructor
+        // #############################################################################################################
+        /// <summary>
+        /// base class for all enemies
+        /// </summary>
+        /// <param name="animationHandler"></param>
+        /// <param name="maxSpeed"></param>
+        /// <param name="acceleration"></param>
+        /// <param name="rotationAcceleration"></param>
+        /// <param name="maxRotationSpeed"></param>
+        /// <param name="health"></param>
+        /// <param name="maxHealth"></param>
+        /// <param name="impactDamage"></param>
+        /// <param name="impactSound"></param>
+        protected Enemy(AnimationHandler animationHandler, 
+            float maxSpeed = 3,
+            float acceleration = 3,
+            float rotationAcceleration = .1f,
+            float maxRotationSpeed = 1000,
+            float health = 50,
+            float? maxHealth = null,
+            float impactDamage = 5,
+            SoundEffect impactSound = null) : base(animationHandler, maxSpeed, acceleration, rotationAcceleration, maxRotationSpeed, health, maxHealth, impactDamage,  impactSound:impactSound)
+        {
+            _logger = LogManager.GetCurrentClassLogger();
+            Shoot = new CooldownAbility(2000, _shootTarget);
+            InterAction = InterAction.None;
+        }
+        
+        // #############################################################################################################
+        // public Methods
+        // #############################################################################################################
         public override float Rotation
         {
             get => base.Rotation;
@@ -47,22 +77,9 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
             }
         }
 
-
-        public Enemy(AnimationHandler animationHandler, 
-                     float maxSpeed = 3,
-                     float acceleration = 3,
-                     float rotationAcceleration = .1f,
-                     float maxRotationSpeed = 1000,
-                     float health = 50,
-                     float? maxHealth = null,
-                     float impactDamage = 5,
-                     SoundEffect impactSound = null) : base(animationHandler, maxSpeed, acceleration, rotationAcceleration, maxRotationSpeed, health, maxHealth, impactDamage,  impactSound:impactSound)
-        {
-            _logger = LogManager.GetCurrentClassLogger();
-            Shoot = new CooldownAbility(2000, _shootTarget);
-            InterAction = InterAction.None;
-        }
-
+        // #############################################################################################################
+        // protected/private Methods
+        // #############################################################################################################
         protected virtual void _shootTarget()
         {
             if (InterAction != InterAction.InView || Target == null) return;
@@ -83,15 +100,6 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
             ShootCurrentWeapon();
             Target = null;
         }
-        
-        
-        public override void Update(GameTime gameTime)
-        {
-
-            base.Update(gameTime);
-        }
-        
-        
 
         protected override bool InteractAble(Actor other)
         {
