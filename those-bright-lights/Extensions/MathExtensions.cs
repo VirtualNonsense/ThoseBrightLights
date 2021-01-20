@@ -9,8 +9,20 @@ namespace SE_Praktikum.Extensions
 {
     public static class MathExtensions
     {
+        
+        /// <summary>
+        /// remaps a given value from an old interval to a new one
+        /// <example>50, 0 100 -> 25, 0 50</example>
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="oldLower"></param>
+        /// <param name="oldHigher"></param>
+        /// <param name="newLower"></param>
+        /// <param name="newHigher"></param>
+        /// <returns></returns>
         public static float Remap(float value, float oldLower, float oldHigher, float newLower, float newHigher)
         {
+            // correct false usage
             if (oldLower > oldHigher) return Remap( value, oldHigher,  oldLower,  newLower,  newHigher);
             if (newLower > newHigher) return Remap( value,  oldLower,  oldHigher,   newHigher, newLower);
             if (value > oldHigher)
@@ -20,22 +32,32 @@ namespace SE_Praktikum.Extensions
             return (value - oldLower) / (oldHigher - oldLower) * (newHigher - newLower) + newLower;
         }
 
+        /// <summary>
+        /// Converts degree to rad
+        /// </summary>
+        /// <param name="deg"></param>
+        /// <returns></returns>
         public static float DegToRad(float deg)
         {
             return (float) (deg * Math.PI / 180);
         }
-
+        
+        /// <summary>
+        /// Converts rad to rad degree
+        /// </summary>
+        /// <param name="deg"></param>
+        /// <returns></returns>
         public static float RadToDeg(float rad)
         {
             return (float) (rad * 180 / Math.PI);
         }
-
+        
         public static float RotationToTarget(Actor target, Actor self)
         {
             var vector = target.Position - self.Position;
             return GetVectorRotation(vector);
         }
-
+        
         public static float RotationToVector(Vector2 other, Vector2 self)
         {
             return GetVectorRotation(other - self);
