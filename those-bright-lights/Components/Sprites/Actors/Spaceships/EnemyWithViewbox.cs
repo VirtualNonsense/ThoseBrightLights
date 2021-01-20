@@ -65,13 +65,11 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
 
         protected override bool InteractAble(Actor other)
         {
+            
             switch (other)
             {
                 case Player p:
-                    if (p.HitBox.Any(polygon => ViewBox.Overlap(polygon)))
-                    {
-                        InterAction = InterAction.InView;
-                    }
+                    InterAction = p.HitBox.Any(polygon => ViewBox.Overlap(polygon)) ? InterAction.InView : InterAction.None;
 
                     var c = Collide(other);
                     switch (InterAction)

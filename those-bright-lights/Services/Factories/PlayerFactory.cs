@@ -51,7 +51,7 @@ namespace SE_Praktikum.Services.Factories
             
             var p = new Player(
                 _animationHandlerFactory.GetAnimationHandler(tileSet,
-                    new List<AnimationSettings>(new[] {animationSettings})), propulsionHandler, input);
+                    new List<AnimationSettings>(new[] {animationSettings})), propulsionHandler, input, impactSound: impactSound);
             p.Position = new Vector2(-50,50);
             p.AddWeapon(_weaponFactory.GetMinigun(p));
             return p;

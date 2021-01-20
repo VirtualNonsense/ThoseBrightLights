@@ -11,6 +11,10 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
     public class Kamikaze : EnemyWithViewbox
     {
         private Logger _logger;
+        
+        // #############################################################################################################
+        // Constructor
+        // #############################################################################################################
         public Kamikaze(AnimationHandler animationHandler,
                         Polygon viewBox,
                         float acceleration = .1f,
@@ -25,6 +29,21 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
             _logger = LogManager.GetCurrentClassLogger();
             Shoot = new CooldownAbility(500, _shootTarget);
         }
+        
+        // #############################################################################################################
+        // Events
+        // #############################################################################################################
+        private event EventHandler OnSeePlayer;
+        
+        // #############################################################################################################
+        // Properties
+        // #############################################################################################################
+
+       
+
+        // #############################################################################################################
+        // public Methods
+        // #############################################################################################################
 
         public override void Update(GameTime gameTime)
         {
@@ -56,8 +75,6 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
             
             DeltaPosition = Velocity * t;
             Position += DeltaPosition;
-
-
         }
     }
 }

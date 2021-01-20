@@ -115,10 +115,10 @@ namespace SE_Praktikum.Services.Factories
             var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\boss_64_110_8.json", 0);
             var animationSettings = 
                 new List<AnimationSettings>(new []{new AnimationSettings(8,isLooping:true)});
-            var animationSettings = new AnimationSettings(8,isLooping:true);
             var propulsionTileSet =
                 _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\bosspropulsion_11_9_6.json", 0);
-            var propulsionSettings = new AnimationSettings(6, isLooping: true, duration: 30f);
+            var propulsionSettings =
+                new List<AnimationSettings>(new[] {new AnimationSettings(6, duration: 30f, isLooping: true)});
             var propulsionHandler = _animationHandlerFactory.GetAnimationHandler(propulsionTileSet, propulsionSettings);
             var b = new Boss(_animationHandlerFactory.GetAnimationHandler(tileSet, animationSettings),
                 viewBox: new Polygon(Vector2.Zero,
