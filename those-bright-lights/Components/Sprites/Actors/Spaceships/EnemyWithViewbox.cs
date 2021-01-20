@@ -11,6 +11,42 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
     public abstract class EnemyWithViewbox : Enemy
     {
         public Polygon ViewBox;
+        
+        // #############################################################################################################
+        // Constructor
+        // #############################################################################################################
+        /// <summary>
+        /// base class for all enemies with a viewbox
+        /// </summary>
+        /// <param name="animationHandler"></param>
+        /// <param name="viewBox"></param>
+        /// <param name="maxSpeed"></param>
+        /// <param name="acceleration"></param>
+        /// <param name="rotationAcceleration"></param>
+        /// <param name="maxRotationSpeed"></param>
+        /// <param name="health"></param>
+        /// <param name="maxHealth"></param>
+        /// <param name="impactDamage"></param>
+        /// <param name="impactSound"></param>
+        protected EnemyWithViewbox(AnimationHandler animationHandler,
+            Polygon viewBox,
+            float maxSpeed = 3,
+            float acceleration = 5,
+            float rotationAcceleration = .1f,
+            float maxRotationSpeed = 1000,
+            float health = 50,
+            float? maxHealth = null,
+            float impactDamage = 5,
+            SoundEffect impactSound = null) : base(animationHandler, maxSpeed, acceleration, rotationAcceleration,
+            maxRotationSpeed, health, maxHealth, impactDamage, impactSound: impactSound)
+        {
+            ViewBox = viewBox;
+            RotateWeapon = true;
+        }
+        
+        // #############################################################################################################
+        // Properties
+        // #############################################################################################################
         public override float Rotation
         {
             get => base.Rotation;
@@ -29,24 +65,9 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
             }
         }
 
-
-        protected EnemyWithViewbox(AnimationHandler animationHandler,
-            Polygon viewBox,
-            float maxSpeed = 3,
-            float acceleration = 5,
-            float rotationAcceleration = .1f,
-            float maxRotationSpeed = 1000,
-            float health = 50,
-            float? maxHealth = null,
-            float impactDamage = 5,
-            SoundEffect impactSound = null) : base(animationHandler, maxSpeed, acceleration, rotationAcceleration,
-            maxRotationSpeed, health, maxHealth, impactDamage, impactSound: impactSound)
-        {
-            ViewBox = viewBox;
-            RotateWeapon = true;
-        }
-
-
+        // #############################################################################################################
+        // public Methods
+        // #############################################################################################################
         public override void Update(GameTime gameTime)
         {
             ViewBox.Position = Position;
@@ -60,12 +81,11 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
             base.Update(gameTime);
         }
 
-        
-        
-
+        // #############################################################################################################
+        // protected/private Methods
+        // #############################################################################################################
         protected override bool InteractAble(Actor other)
         {
-            
             switch (other)
             {
                 case Player p:
@@ -79,6 +99,14 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
                             return true;
                         case InterAction.InView:
                             return true;
+                        case InterAction.None:
+                            break;
+                        case InterAction.BodyCollision:
+                            break;
+                        case InterAction.InViewAndBodyCollision:
+                            break;
+                        default:
+                            throw new ArgumentOutOfRangeException();
                     }
 
                     if (c)
@@ -86,12 +114,10 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
                         InterAction = InterAction.BodyCollision;
                         return true;
                     }
-
+                    
                     InterAction = InterAction.None;
                     return false;
-                    
             }
-
             return base.InteractAble(other);
         }
 
@@ -121,8 +147,5 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
             if(Math.Abs(desiredRotation - Rotation) > weapon.MaxRelativeRotation*2/3)
                 Rotation +=  Math.Sign(Math.PI - Math.Abs(angleToRotate)) * Math.Sign(angleToRotate) * rotationPortion;
         }
-
     }
-
-   
 }
