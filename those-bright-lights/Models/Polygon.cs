@@ -39,7 +39,7 @@ namespace SE_Praktikum.Models
                        float rotation = 0,
                        float scale = 1,
                        Color? color = null,
-                       bool drawAble = false)
+                       bool drawAble = true)
         {
             _vertices = vertices;
             _position = position;
