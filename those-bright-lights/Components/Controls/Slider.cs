@@ -18,36 +18,60 @@ namespace SE_Praktikum.Components.Controls
         private float _value;
         private readonly float _min;
         private readonly float _max;
-        private readonly SliderBlade _sliderBlade;
-        private MouseState _previousMouse;
+        private readonly SliderHandle _sliderHandle;
         private MouseState _currentMouse;
         private const float sliderWidth = 4;
-        private SoundEffect _soundEffect;
+        private readonly SoundEffect _soundEffect;
         private float _elapsedTime;
         
+        // #############################################################################################################
+        // constructor
+        // #############################################################################################################
+        public Slider(float initialValue, float min, float max, Vector2 position, SliderHandle sliderHandle, List<AnimationHandler> handler, SoundEffect soundEffect, Camera camera) : base(handler, camera)
+        {
+            _logger = LogManager.GetCurrentClassLogger();
+            _value = initialValue;
+            _min = min;
+            _max = max;
+            _sliderHandle = sliderHandle;
+            Position = position;
+            _sliderHandle.Position = Position;
+            _soundEffect = soundEffect;
+        }
+        // #############################################################################################################
+        // events
+        // #############################################################################################################
         public event EventHandler OnValueChanged;
+        
+        // #############################################################################################################
+        // properties
+        // #############################################################################################################
         public float Value
         {
             get => _value;
             set
             {
+                // making sure the value is in bounds
                 if (value > _max)
-                    value = _max;
+                    _value = _max;
                 else if (value < _min)
-                    value = _min;
+                    _value = _min;
                 else
                     _value = value;
-                _sliderBlade.Position = new Vector2(getPosition(_value), _position.Y);
+                
+                // updating position and making sure it's not outside the slider
+                _sliderHandle.Position = new Vector2(getPosition(_value), _position.Y);
             } 
         }
 
-        public sealed override Vector2 Position
+        public override Vector2 Position
         {
             get => base.Position;
             set
             {
                 base.Position = value;
-                _sliderBlade.Position = new Vector2(getPosition(_value), _position.Y);
+                // updating handle position
+                _sliderHandle.Position = new Vector2(getPosition(_value), _position.Y);
             }
         }
 
@@ -57,98 +81,112 @@ namespace SE_Praktikum.Components.Controls
             set
             {
                 base.Layer = value;
-                _sliderBlade.Layer = value + .1f;
+                _sliderHandle.Layer = value + .1f;
             }
         }
 
         private float UpperPos => _position.X + Frame.Width/2f - sliderWidth;
         private float LowerPos => _position.X - Frame.Width/2f + sliderWidth;
         
-        public Slider(float initialValue, float min, float max, Vector2 position, SliderBlade sliderBlade, List<AnimationHandler> handler, SoundEffect soundEffect, Camera camera) : base(handler, camera)
-        {
-            _logger = LogManager.GetCurrentClassLogger();
-            _value = initialValue;
-            _min = min;
-            _max = max;
-            _sliderBlade = sliderBlade;
-            Position = position;
-            _sliderBlade.Position = Position;
-            _soundEffect = soundEffect;
-        }
-         
-
+        // #############################################################################################################
+        // public methods
+        // #############################################################################################################
         public override void Draw(SpriteBatch spriteBatch)
         {
             foreach (var animationHandler in _handler)
             {
                 animationHandler.Draw(spriteBatch);
             }
-            _sliderBlade.Draw(spriteBatch);
+            _sliderHandle.Draw(spriteBatch);
         }
 
         public override void Update(GameTime gameTime)
         {
             _elapsedTime += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-            _previousMouse = _currentMouse;
+
+            // mouse position
             _currentMouse = Mouse.GetState();
-            var pos = _camera is null? new Vector2(_currentMouse.X, _currentMouse.Y) : 
-                _camera.ProjectScreenPosIntoWorld(_currentMouse.Position.ToVector2());
-
+            var pos = _camera?.ProjectScreenPosIntoWorld(_currentMouse.Position.ToVector2()) ?? new Vector2(_currentMouse.X, _currentMouse.Y);
             var mouseRectangle = new Rectangle((int) Math.Round(pos.X), (int) Math.Round(pos.Y), 1, 1);
-
-            if (mouseRectangle.Intersects(_sliderBlade.Frame) && _currentMouse.LeftButton == ButtonState.Pressed)
+            
+            // setting handle state
+            if (mouseRectangle.Intersects(_sliderHandle.Frame) && _currentMouse.LeftButton == ButtonState.Pressed)
             {
-                _sliderBlade.Drag = true;
+                _sliderHandle.Drag = true;
             }
-            else if (_sliderBlade.Drag && _currentMouse.LeftButton == ButtonState.Released)
+            else if (_sliderHandle.Drag && _currentMouse.LeftButton == ButtonState.Released)
             {
-                _sliderBlade.Drag = false;
+                _sliderHandle.Drag = false;
             }
-
-            if (_sliderBlade.Drag)
+            
+            // updating handle position 
+            if (_sliderHandle.Drag)
             {
                 var newValue = getValue(pos.X);
-                if (newValue != Value)
+                if (Math.Abs(newValue - Value) > float.Epsilon)
                 {
                     Value = newValue;
+                    // sound cooldown 
                     if (75 < _elapsedTime)
                     {
-                        _soundEffect.Play();
+                        _soundEffect?.Play();
                         _elapsedTime = 0;
                     }
-                    ValueChanged();
+                    InvokeOnValueChanged();
                 }
             }
-            _sliderBlade.Update(gameTime);
-            
+            _sliderHandle.Update(gameTime);
         }
-
+        // #############################################################################################################
+        // private methods
+        // #############################################################################################################
+        
+        /// <summary>
+        /// returns the current value by remapping the x position between the min and max values
+        /// </summary>
+        /// <param name="position"></param>
+        /// <returns></returns>
         private float getValue(float position)
         {
-
             return MathExtensions.Remap(position, LowerPos, UpperPos, _min, _max);
         }
         
+        /// <summary>
+        /// returns the current position by remapping the value between the outer limits
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         private float getPosition(float value)
         {
-
-             return MathExtensions.Remap(value, _min, _max, LowerPos, UpperPos);
+            return MathExtensions.Remap(value, _min, _max, LowerPos, UpperPos);
         }
-
-        protected virtual void ValueChanged()
+        
+        protected virtual void InvokeOnValueChanged()
         {
             OnValueChanged?.Invoke(this, EventArgs.Empty);
         }
+        
+        // #############################################################################################################
+        // subclasses
+        // #############################################################################################################
 
-
-        public class SliderBlade : MenuItem
+        public class SliderHandle : MenuItem
         {
             public bool Drag;
-            private Logger _logger;
-            public SliderBlade(List<AnimationHandler> handler, Camera camera) : base(handler, camera)
+            // #########################################################################################################
+            // constructor
+            // #########################################################################################################
+            /// <summary>
+            /// simple class that represents the handle of the slider
+            /// </summary>
+            /// <param name="handler"></param>
+            /// <param name="camera"></param>
+            public SliderHandle(List<AnimationHandler> handler, Camera camera) : base(handler, camera)
             {
-                _logger = LogManager.GetCurrentClassLogger();
             }
+            // #########################################################################################################
+            // public methods
+            // #########################################################################################################
 
             public override void Draw(SpriteBatch spriteBatch)
             {

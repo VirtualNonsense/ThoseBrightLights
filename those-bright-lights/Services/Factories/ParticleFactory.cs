@@ -56,7 +56,7 @@ namespace SE_Praktikum.Services.Factories
         {
             var animationSettings = new AnimationSettings(10, 50, isLooping: true);
             var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\star_21_21_10.json", 0);
-            return new StatusEffectParticle(_factory.GetAnimationHandler(tileSet, animationSettings), _screen,
+            return new StatusEffectParticle(_factory.GetAnimationHandler(tileSet, animationSettings),
                 onScreenTime);
         }
     }

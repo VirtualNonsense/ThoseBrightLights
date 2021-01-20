@@ -3,10 +3,15 @@ using SE_Praktikum.Services.Factories;
 
 namespace SE_Praktikum.NinjectModules
 {
+    /// <summary>
+    /// This module contains every factory
+    /// </summary>
     public class FactoryModule : Ninject.Modules.NinjectModule
     {
         public override void Load()
         {
+            // binding factories in singleton scope
+            // this way there will be only one instance
             Bind<ParticleFactory>().ToSelf().InSingletonScope();
             Bind<AnimationHandlerFactory>().ToSelf().InSingletonScope();
             Bind<MapFactory>().ToSelf().InSingletonScope();

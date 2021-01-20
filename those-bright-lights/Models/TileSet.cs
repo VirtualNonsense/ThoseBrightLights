@@ -1,36 +1,30 @@
-﻿﻿using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using NLog;
-using System;
-using System.Collections.Generic;
+ using System.Collections.Generic;
  using System.Linq;
 
  namespace SE_Praktikum.Models
 {
-    /// <summary>
-    /// Whenever a tileset is needed
-    /// </summary>
     public class TileSet
     {
-        //fields
+        public int Rows;
+        public int Columns;
         public int TileDimX;
         public int TileDimY;
-        public int Columns;
-        public int Rows;
+        public int StartEntry;
         public Texture2D Texture;
         public int Tiles => Columns * Rows;
-        public int StartEntry;
-        private readonly Dictionary<int, Polygon[]> _hitBoxDict;
+
         private ILogger _logger;
-        public int FrameCount => Columns * Rows;
-        public int TextureWidth => Texture.Width;
-        public int TextureHeight => Texture.Height;
-        private readonly List<TileInfo> tileSettings;
-
         public bool HasHitBox => _hitBoxDict != null;
+        private readonly List<TileInfo> tileSettings;
+        private readonly Dictionary<int, Polygon[]> _hitBoxDict;
 
-        //Constructor
+        // #############################################################################################################
+        // constructor
+        // #############################################################################################################
         public TileSet(Texture2D texture, int tileDimX, int tileDimY, Dictionary<int, Polygon[]> hitBoxDict, int startEntry = 0, List<TileInfo> tileSettings = null)
         {
             _logger = LogManager.GetCurrentClassLogger();
@@ -43,18 +37,6 @@ using System.Collections.Generic;
             _hitBoxDict = hitBoxDict;
             this.tileSettings = tileSettings;
         }
-
-        public TileInfo GetInfo(int index)
-        {
-            if (tileSettings == null)
-                return null;
-            var info = tileSettings.Where(t => t.ID == index);
-            if (info.Count() == 0)
-                return null;
-            return info.ElementAt(0);
-        }
-
-        //Constructor
         public TileSet(Texture2D texture, Polygon[] hitBox = null, int startEntry = 0)
         {
             _logger = LogManager.GetCurrentClassLogger();
@@ -70,8 +52,54 @@ using System.Collections.Generic;
                 {0, hitBox}
             };
         }
+        // #############################################################################################################
+        // Properties
+        // #############################################################################################################
+        public int FrameCount => Columns * Rows;
+        public int TextureWidth => Texture.Width;
+        public int TextureHeight => Texture.Height;
+        
+        // #############################################################################################################
+        // public methods 
+        // #############################################################################################################
+        public TileInfo GetInfo(int index)
+        {
+            if (tileSettings == null)
+                return null;
+            var info = tileSettings.Where(t => t.ID == index);
+            if (info.Count() == 0)
+                return null;
+            return info.ElementAt(0);
+        }
 
-        //Get tile for animation handler
+        /// <summary>
+        /// Returns the hitbox of a given frame if available otherwise null 
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public Polygon[] GetHitBox(int index)
+        {
+            if (_hitBoxDict == null)
+            {
+                // logging is quite slow
+                // _logger.Warn("Hitbox does not exist");
+                return null;
+            }
+            if (_hitBoxDict.ContainsKey(index))
+            {
+                return _hitBoxDict[index].Select(polygon => (Polygon) polygon.Clone()).ToArray();
+            }
+            _logger.Warn($"hitbox of {index} ({index}) not found");
+            return null;
+        }
+        // #############################################################################################################
+        // internal methods 
+        // #############################################################################################################
+        /// <summary>
+        /// generates a rectangle with tileDim and matches its position within the picture
+        /// </summary>
+        /// <param name="index">tile index</param>
+        /// <returns></returns>
         internal Rectangle GetFrame(uint index)
         {
             var c = 0;
@@ -85,67 +113,6 @@ using System.Collections.Generic;
                 }
             }
             return Rectangle.Empty;
-        }
-
-        public Vector2 GetFrameCenter()
-        {
-            return new Vector2(TileDimX/2f, TileDimY/2f);
-        }
-        
-        [Obsolete]
-        public Byte[] GetDataOfFrame(int tile)
-        {
-            tile -= StartEntry;
-            int rowOfTile = tile / Columns;
-            int columnOfTile = tile % Columns;
-
-
-            var tilewidth = TileDimX;
-            var tileheight = TileDimY;
-
-            //offset for all rows of all tiles above the tilerow we want
-            var rowOffsetForAllTilesAbove = TextureWidth * tileheight*rowOfTile ;
-            //offset for all pixels in one tile calculated with the columnnumber 
-            var pixelColumnOffset = columnOfTile * tilewidth;
-
-            //array for one tile to copy sth in 
-            Byte[] pixelArray = new Byte[TextureWidth * TextureHeight];
-            
-            //array filled with all tiles from tileset 
-            Color[] allTiles = new Color[TextureWidth * TextureHeight];
-            Texture.GetData(allTiles);
-
-
-            
-            //iterating over the tileheight in row steps
-            for(int row = 0; row < TileDimY; row++)
-            {
-                //offset for pixels in each row
-                var rowPixelOffset = row * TextureWidth;
-                //iterating over the tilewidth in column steps in one row step
-                for(int column = 0; column < TileDimX; column++)
-                {
-                    //summing up all offsets until the pixel we need 
-                    pixelArray[row * tilewidth + column] = allTiles[rowOffsetForAllTilesAbove + pixelColumnOffset + rowPixelOffset + column].A;
-                }
-            }
-            return pixelArray;
-        }
-
-        public Polygon[] GetHitBox(int index)
-        {
-            if (_hitBoxDict == null)
-            {
-                return null;
-            }
-
-            if (_hitBoxDict.ContainsKey(index))
-            {
-                return _hitBoxDict[index].Select(polygon => (Polygon) polygon.Clone()).ToArray();
-            }
-
-            _logger.Warn($"hitbox of {index} ({index}) not found");
-            return null;
         }
     }
 }

@@ -52,7 +52,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
                      float maxSpeed = 3,
                      float acceleration = 3,
                      float rotationAcceleration = .1f,
-                     float maxRotationSpeed = 10,
+                     float maxRotationSpeed = 1000,
                      float health = 50,
                      float? maxHealth = null,
                      float impactDamage = 5,
@@ -142,7 +142,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
             //stop wiggling
             if (!(Math.Abs(desiredRotation - Rotation) > RotationThreshold)) return;
             var rotationPortion =
-                (float) ((gameTime.ElapsedGameTime.TotalMilliseconds / RotationSpeed) * (2 * Math.PI));
+                (float) ((gameTime.ElapsedGameTime.TotalMilliseconds / MaxRotationSpeed) * (2 * Math.PI));
             //turn clock or anticlockwise
             var angleToRotate = MathExtensions.Modulo2PiAlsoNegative(desiredRotation - Rotation);
             Rotation += Math.Sign(Math.Abs(angleToRotate-Math.PI)) * Math.Sign(angleToRotate) * rotationPortion;

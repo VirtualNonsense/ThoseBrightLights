@@ -17,7 +17,6 @@ namespace SE_Praktikum.Components.Sprites.Actors.Weapons
         protected readonly SoundEffect ShotSoundEffect;
 
         //private readonly CooldownAbility _shotAbility;
-        private float _rotation;
         private Logger _logger;
 
         // #############################################################################################################
@@ -86,7 +85,6 @@ namespace SE_Praktikum.Components.Sprites.Actors.Weapons
         // #############################################################################################################
         // Properties
         // #############################################################################################################
-        public bool IsRemoveAble { get; set; }
 
         public Type BulletType { get; private set; }
         
@@ -97,14 +95,6 @@ namespace SE_Praktikum.Components.Sprites.Actors.Weapons
         public bool CanShoot => !_animationHandler.IsPlaying;
 
 
-        /// <summary>
-        /// Velocity of the moving system e.g. the spaceship
-        /// </summary>
-        public Vector2 Velocity
-        {
-            get;
-            set;
-        }
         
         /// <summary>
         /// Position is in space of Weapon, so relative position

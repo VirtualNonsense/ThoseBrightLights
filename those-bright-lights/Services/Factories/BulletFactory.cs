@@ -8,6 +8,9 @@ using SE_Praktikum.Models;
 
 namespace SE_Praktikum.Services.Factories
 {
+    /// <summary>
+    /// constructs and configures bullets
+    /// </summary>
     public class BulletFactory
     {
         private readonly ContentManager _contentManager;

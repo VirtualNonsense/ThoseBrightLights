@@ -1,15 +1,16 @@
-﻿using SE_Praktikum.Models;
-using SE_Praktikum.Services;
+﻿using SE_Praktikum.Services;
 
 namespace SE_Praktikum.Components
 {
     public abstract class Particle : Sprite
     {
-        private IScreen _parent;
-
-        public Particle(AnimationHandler animationHandler, IScreen Parent) : base(animationHandler)
+        /// <summary>
+        /// simple visual effect class
+        /// use this to draw e.g. explosion particle etc.
+        /// </summary>
+        /// <param name="animationHandler"></param>
+        public Particle(AnimationHandler animationHandler) : base(animationHandler)
         {
-            _parent = Parent;
         }
 
 

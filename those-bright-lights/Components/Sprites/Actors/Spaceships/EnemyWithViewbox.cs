@@ -35,7 +35,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
             float maxSpeed = 3,
             float acceleration = 5,
             float rotationAcceleration = .1f,
-            float maxRotationSpeed = 10,
+            float maxRotationSpeed = 1000,
             float health = 50,
             float? maxHealth = null,
             float impactDamage = 5,
@@ -112,7 +112,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
             var desiredRotation = MathExtensions.RotationToTarget(target, this);
             if (!(Math.Abs(desiredRotation - weapon.RelativeRotation) > RotationThreshold)) return;
             var rotationPortion =
-                (float) ((gameTime.ElapsedGameTime.TotalMilliseconds / RotationSpeed) * (2 * Math.PI));
+                (float) ((gameTime.ElapsedGameTime.TotalMilliseconds / MaxRotationSpeed) * (2 * Math.PI));
             //turn clock or anticlockwise
             var angleToRotate = MathExtensions.Modulo2PiAlsoNegative(desiredRotation - weapon.Rotation);
             //from back to front: rotate counter or clockwise

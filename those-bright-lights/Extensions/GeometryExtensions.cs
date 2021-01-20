@@ -8,19 +8,32 @@ namespace SE_Praktikum.Extensions
 {
     public static class GeometryExtensions
     {
+        /// <summary>
+        /// Turns a vector around Vector2.Zero by a defined angle
+        /// </summary>
+        /// <param name="vector"></param>
+        /// <param name="rad"></param>
+        /// <returns></returns>
         public static Vector2 Rotate(this Vector2 vector, float rad)
         {
             var x = (float) (Math.Cos(rad) * vector.X - Math.Sin(rad) * vector.Y);
             var y = (float) (Math.Sin(rad) * vector.X + Math.Cos(rad) * vector.Y);
             return new Vector2(x, y);
         }
+        
+        /// <summary>
+        /// Turns a vector around Vector3.Zero (z - axis) by a specified angle
+        /// </summary>
+        /// <param name="vector"></param>
+        /// <param name="rad"></param>
+        /// <returns></returns>
         public static Vector3 RotateZ(this Vector3 vector, float rad)
         {
             var x = (float) (Math.Cos(rad) * vector.X - Math.Sin(rad) * vector.Y);
             var y = (float) (Math.Sin(rad) * vector.X + Math.Cos(rad) * vector.Y);
             return new Vector3(x, y, vector.Z);
         }
-
+        
         public static Vector2 RotateAroundPoint(this Vector2 vector, float rad, Vector2 rotationPoint)
         {
             var temp = vector;
@@ -52,7 +65,7 @@ namespace SE_Praktikum.Extensions
         }
 
         /// <summary>
-        /// Returns the Minimal Rectangle
+        /// Returns the Minimal Rectangle that encloses a polygon
         /// </summary>
         /// <param name="polygon"></param>
         /// <returns></returns>
@@ -64,7 +77,12 @@ namespace SE_Praktikum.Extensions
             var maxY = polygon.Vertices2D.Max(vector2 => vector2.Y);
             return new Rectangle((int)minX, (int)minY, (int) (maxX-minX), (int) (maxY-minY));
         }
-
+        
+        /// <summary>
+        /// returns the minimal rectangle that fully encloses a group of rectangles
+        /// </summary>
+        /// <param name="polygon"></param>
+        /// <returns></returns>
         public static Rectangle GetBoundingRectangle(this Polygon[] polygon)
         {
             var t = polygon.Select(t => t.Vertices2D).ToArray();
