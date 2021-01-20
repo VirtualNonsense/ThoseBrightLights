@@ -7,7 +7,7 @@ using SE_Praktikum.Services;
 
 namespace SE_Praktikum.Components.Sprites.Actors.Bullets
 {
-    public class Bullet : Actor
+    public abstract class Bullet : Actor
     {
         private Vector2 Direction => new Vector2((float)Math.Cos(Rotation),(float)Math.Sin(Rotation));
         protected float Acceleration;
