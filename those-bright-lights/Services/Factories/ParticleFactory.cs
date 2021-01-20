@@ -75,9 +75,7 @@ namespace SE_Praktikum.Services.Factories
             var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\star_21_21_10.json", 0);
             return new StatusEffectParticle(
                 _factory.GetAnimationHandler(tileSet, 
-                    new List<AnimationSettings>(new[] {animationSettings})), 
-                _screen,
-                onScreenTime);
+                    new List<AnimationSettings>(new[] {animationSettings})), onScreenTime);
         }
 
         public ExplosionsParticle BuildMineExplosionsParticle(AnimationSettings settings = null)
