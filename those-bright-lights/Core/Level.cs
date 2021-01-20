@@ -172,7 +172,7 @@ namespace SE_Praktikum.Core
             }
             _collisionLayer = _map.TopLayer;
             
-            var player = _playerFactory.GetInstance(contentManager);
+            var player = _playerFactory.GetInstance();
 
             player.Position = _map.PlayerSpawnPoint?.Center ?? new Vector2(0, 0);
             player.Layer = _collisionLayer;
