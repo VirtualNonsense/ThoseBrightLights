@@ -10,6 +10,12 @@ namespace SE_Praktikum.Services.Abilities
         // #############################################################################################################
         // Constructor
         // ############################################################################################################# 
+        /// <summary>
+        /// after calling fire the ability is called and the timer started. the ability function won't be called again
+        /// until the time is
+        /// </summary>
+        /// <param name="targetTime"></param>
+        /// <param name="ability"></param>
         public CastTimeAbility(int targetTime, Action ability) : base(targetTime, ability)
         {
         }
