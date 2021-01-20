@@ -9,6 +9,9 @@ using SE_Praktikum.Core;
 
 namespace SE_Praktikum.Models
 {
+    /// <summary>
+    /// class / subclasses for eventprocessing
+    /// </summary>
     public class LevelEventArgs : EventArgs
     {
         public class ShotBulletEventArgs : LevelEventArgs
