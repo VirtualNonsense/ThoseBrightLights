@@ -15,6 +15,19 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
         // #############################################################################################################
         // Constructor
         // #############################################################################################################
+        /// <summary>
+        /// Enemy that flies towards player and explodes on contact
+        /// </summary>
+        /// <param name="animationHandler"></param>
+        /// <param name="viewBox"></param>
+        /// <param name="acceleration"></param>
+        /// <param name="maxSpeed"></param>
+        /// <param name="rotationAcceleration"></param>
+        /// <param name="maxRotationSpeed"></param>
+        /// <param name="health"></param>
+        /// <param name="maxHealth"></param>
+        /// <param name="impactDamage"></param>
+        /// <param name="impactSound"></param>
         public Kamikaze(AnimationHandler animationHandler,
                         Polygon viewBox,
                         float acceleration = .1f,
