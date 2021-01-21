@@ -23,6 +23,18 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
         // #############################################################################################################
         // Constructor
         // #############################################################################################################
+        /// <summary>
+        /// all thins that a spaceship can have and are calculated on it's own
+        /// </summary>
+        /// <param name="animationHandler"></param>
+        /// <param name="parent"></param>
+        /// <param name="relativePosition"></param>
+        /// <param name="relativeRotation"></param>
+        /// <param name="impactSound"></param>
+        /// <param name="health"></param>
+        /// <param name="maxHealth"></param>
+        /// <param name="rotationPoint"></param>
+        /// <param name="maxRelativeRotation"></param>
         protected SpaceshipAddOn(
             AnimationHandler animationHandler, 
             Actor parent, 

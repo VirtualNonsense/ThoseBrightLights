@@ -10,10 +10,33 @@ namespace SE_Praktikum.Components.Sprites.Actors.Weapons
 {
     public class MultiShotWeapon : SingleShotWeapon
     {
-        private int _bulletsPerShot;
-        private Random _random;
-        private float _spreadAngle;
+        private readonly int _bulletsPerShot;
+        private readonly Random _random;
+        private readonly float _spreadAngle;
 
+        /// <summary>
+        /// A weapon that fires multiple shots at once
+        /// </summary>
+        /// <param name="animationHandler"></param>
+        /// <param name="parent"></param>
+        /// <param name="relativePosition"></param>
+        /// <param name="relativeRotation"></param>
+        /// <param name="bulletSpawnPoint"></param>
+        /// <param name="shotSoundEffect"></param>
+        /// <param name="impactSound"></param>
+        /// <param name="nameTag"></param>
+        /// <param name="health"></param>
+        /// <param name="maxHealth"></param>
+        /// <param name="clipEmptySound"></param>
+        /// <param name="weaponEmptySound"></param>
+        /// <param name="reloadSound"></param>
+        /// <param name="clipSize"></param>
+        /// <param name="clips"></param>
+        /// <param name="constructPreconfiguredBullet"></param>
+        /// <param name="shotCoolDown"></param>
+        /// <param name="reloadTime"></param>
+        /// <param name="bulletsPerShot"></param>
+        /// <param name="spreadAngle"></param>
         public MultiShotWeapon(AnimationHandler animationHandler,
                                Actor parent,
                                Vector2 relativePosition,
@@ -60,7 +83,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Weapons
 
         protected override void FireAbility()
         {
-            for (int i = 0; i < _bulletsPerShot; i++)
+            for (var i = 0; i < _bulletsPerShot; i++)
             {
                 var e = new EmitBulletEventArgs() { Bullet = GetBullet()};
                 e.Bullet.Rotation += -_spreadAngle / 2 + (float)_random.NextDouble() * _spreadAngle;
@@ -70,7 +93,5 @@ namespace SE_Praktikum.Components.Sprites.Actors.Weapons
             ShotSoundEffect?.Play();
             AmmunitionInClip--;
         }
-        
-        
     }
 }

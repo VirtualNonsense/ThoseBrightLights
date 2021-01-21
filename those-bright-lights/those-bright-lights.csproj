@@ -196,6 +196,9 @@
         <None Update="Content\MetaData\TileSets\projectile_3_4.json">
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
+        <None Update="Content\MetaData\TileSets\bosspropulsion_11_9_6.json">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
         <None Update="Content\MetaData\TileSets\minigun_50_20.json">
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
@@ -302,6 +305,9 @@
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
         <None Update="Content\MetaData\TileSets\bosspropulsion_11_9_6.json">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Update="Content\MetaData\TileSets\mine_35_35_8_2x.json">
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
     </ItemGroup>

@@ -8,6 +8,23 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
 {
     public class Boss : EnemyWithViewbox
     {
+        // #############################################################################################################
+        // Constructor
+        // #############################################################################################################
+        /// <summary>
+        /// Boss
+        /// </summary>
+        /// <param name="animationHandler"></param>
+        /// <param name="viewBox"></param>
+        /// <param name="propulsion"></param>
+        /// <param name="maxSpeed"></param>
+        /// <param name="acceleration"></param>
+        /// <param name="rotationAcceleration"></param>
+        /// <param name="maxRotationSpeed"></param>
+        /// <param name="health"></param>
+        /// <param name="maxHealth"></param>
+        /// <param name="impactDamage"></param>
+        /// <param name="impactSound"></param>
         public Boss(AnimationHandler animationHandler, 
                     Polygon viewBox,
                     AnimationHandler propulsion,
@@ -18,7 +35,9 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
                     float health = 200,
                     float? maxHealth = null,
                     float impactDamage = 20,
-                    SoundEffect impactSound = null) : base(animationHandler, viewBox, maxSpeed, acceleration,rotationAcceleration, maxRotationSpeed, health, maxHealth, impactDamage, impactSound)
+                    SoundEffect impactSound = null) 
+            : base(animationHandler, viewBox, maxSpeed, acceleration, rotationAcceleration, maxRotationSpeed, health,
+                maxHealth, impactDamage, impactSound)
         {
             Shoot = new CooldownAbility(500, _shootTarget);
             RotateWeapon = true;
@@ -32,6 +51,9 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
                     scale: Scale*1.8f));
         }
 
+        // #############################################################################################################
+        // public Methods
+        // #############################################################################################################
         public override void Update(GameTime gameTime)
         {
             Shoot.Update(gameTime);
@@ -40,6 +62,9 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
             base.Update(gameTime);
         }
 
+        // #############################################################################################################
+        // protected/private Methods
+        // #############################################################################################################
         protected override LevelEventArgs.ActorDiedEventArgs GetOnDeadEventArgs()
         {
             return new LevelEventArgs.BossDiedEventArgs();

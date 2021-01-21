@@ -13,8 +13,8 @@ namespace SE_Praktikum.Components.Actors
         /// It will remove itself when the animation finished playing
         /// </summary>
         /// <param name="animationHandler"></param>
-        /// <param name="Parent"></param>
-        public ExplosionsParticle(AnimationHandler animationHandler, IScreen Parent) : base(animationHandler)
+        /// <param name="parent"></param>
+        public ExplosionsParticle(AnimationHandler animationHandler, IScreen parent) : base(animationHandler)
         {
             _animationHandler.OnAnimationComplete += AnimationHandlerOnOnAnimationComplete;
         }

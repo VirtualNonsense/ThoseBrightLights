@@ -66,15 +66,15 @@ namespace SE_Praktikum.Extensions
         public static float GetVectorRotation(Vector2 vector2)
         {
             var oneZeroVector = Vector2.UnitX;
-            var enominator = Vector2.Dot(vector2, oneZeroVector);
-            var denumerator = vector2.Length() * oneZeroVector.Length();
-            var rotation = (float) Math.Acos(enominator / denumerator);
+            var numerator = Vector2.Dot(vector2, oneZeroVector);
+            var denominator = vector2.Length() * oneZeroVector.Length();
+            var rotation = (float) Math.Acos(numerator / denominator);
             if (vector2.Y < 0)
                 rotation = Modulo2PiPositive(2 * (float) Math.PI - rotation);
             return rotation;
         }
 
-        public static float Modulo2PiPositive(float value)
+        private static float Modulo2PiPositive(float value)
         {
             var newValue = value;
             while (newValue >= 2 * Math.PI || newValue < 0)

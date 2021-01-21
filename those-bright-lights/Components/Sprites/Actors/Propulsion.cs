@@ -14,6 +14,17 @@ namespace SE_Praktikum.Components.Sprites.Actors
 {
     public class Propulsion : SpaceshipAddOn
     {
+        /// <summary>
+        /// class for propulsion, helps with implementing
+        /// </summary>
+        /// <param name="animationHandler"></param>
+        /// <param name="parent"></param>
+        /// <param name="relativePosition"></param>
+        /// <param name="relativeRotation"></param>
+        /// <param name="impactSound"></param>
+        /// <param name="health"></param>
+        /// <param name="maxHealth"></param>
+        /// <param name="scale"></param>
         public Propulsion(
             AnimationHandler animationHandler,
             Actor parent,

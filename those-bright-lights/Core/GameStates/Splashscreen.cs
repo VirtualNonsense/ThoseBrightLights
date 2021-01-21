@@ -53,11 +53,16 @@ namespace SE_Praktikum.Core.GameStates
 
             _p.Origin = _p.Vertices[0];
 
-            _teamName = new Sprite(_factory.GetAnimationHandler(tileset, settings,origin:new Vector2(tileset.TextureWidth/2f, tileset.TextureHeight/2f)));_factory.GetAnimationHandler(tileset, settings,origin:new Vector2(tileset.TextureWidth/2, tileset.TextureHeight/2));
+            _teamName = new Sprite(_factory.GetAnimationHandler(tileset, new List<AnimationSettings>(new[] {settings}),
+                origin: new Vector2(tileset.TextureWidth / 2f, tileset.TextureHeight / 2f)));
+            _factory.GetAnimationHandler(tileset, new List<AnimationSettings>(new []{settings}),
+                origin: new Vector2(tileset.TextureWidth / 2, tileset.TextureHeight / 2));
 
             settings = new AnimationSettings(1, isPlaying: false, layer: 1,scale:0.2f);
             tileset = new TileSet(_contentManager.Load<Texture2D>("MonoGame"));
-            _gameEngineLogo = new Sprite(_factory.GetAnimationHandler(tileset, settings, origin: new Vector2(tileset.TextureWidth / 2f, tileset.TextureHeight / 2f)));
+            _gameEngineLogo = new Sprite(_factory.GetAnimationHandler(tileset,
+                new List<AnimationSettings>(new[] {settings}),
+                origin: new Vector2(tileset.TextureWidth / 2f, tileset.TextureHeight / 2f)));
             _song = _contentManager.Load<Song>("Audio/Music/Intro_mp3");
             
             MediaPlayer.Play(_song);

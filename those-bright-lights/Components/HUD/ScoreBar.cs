@@ -49,18 +49,18 @@ namespace SE_Praktikum.Components.HUD
 
             if (digits < _handler.Count)
             {
-                for (int i = _handler.Count - 1; i >= 0; i--)
+                for (var i = _handler.Count - 1; i >= 0; i--)
                 {
                     _handler.RemoveAt(i);
                 }
             }
             else
             {
-                for (int i = _handler.Count; i < digits; i++)
+                for (var i = _handler.Count; i < digits; i++)
                 {
                     var posX = -i * (tileSet.TileDimX+margin)-margin;
 
-                    _handler.Add(ConstrucDigit(new Vector2(posX, 0)));
+                    _handler.Add(ConstructDigit(new Vector2(posX, 0)));
                 }
             }
         }
@@ -77,9 +77,11 @@ namespace SE_Praktikum.Components.HUD
         }
 
         // The seperate digits of the score were built
-        public AnimationHandler ConstrucDigit(Vector2 position)
+        public AnimationHandler ConstructDigit(Vector2 position)
         {
-            return animationHandlerFactory.GetAnimationHandler(tileSet, numberAnimationSettings, position, new Vector2(tileSet.TileDimX,0));
+            return animationHandlerFactory.GetAnimationHandler(tileSet,
+                new List<AnimationSettings>(new[] {numberAnimationSettings}), position,
+                new Vector2(tileSet.TileDimX, 0));
         }
     }
 }
