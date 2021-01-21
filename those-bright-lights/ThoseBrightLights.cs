@@ -34,14 +34,20 @@ namespace SE_Praktikum
         {
             // init logger
             _logger = LogManager.GetCurrentClassLogger();
+            
+            // init graphic device
             _graphics = new GraphicsDeviceManager(this);
+            
+            // setting target dir for content
             Content.RootDirectory = "Content";
-
+            
+            // window dimensions
             ScreenHeight = 720;
             ScreenWidth = 1280;
             
-            _logger.Debug("Constructor finished");
+            // setting class that will handle file interaction
             _saveHandler = saveHandler;
+            _logger.Debug("Constructor finished");
         }
         // #############################################################################################################
         // Properties
@@ -63,13 +69,18 @@ namespace SE_Praktikum
         // #############################################################################################################
         public void OnNext(GameState value)
         {
+            // setting up the next state that will be loaded in the update method
             _nextState = value;
             _logger.Debug("Preparing new state");
         }
 
+        /// <summary>
+        /// will be called when state machine reaches the exit point of its routine
+        /// </summary>
         public void OnCompleted()
         {
             _logger.Debug("OnCompleted(): shutting down");
+            // executing exit routine
             Exit();
         }
 
@@ -82,13 +93,18 @@ namespace SE_Praktikum
 
         public void Render(IComponent component)
         {
+            // setting up spritebatch with necessary settings
             _spriteBatch.Begin(SpriteSortMode.FrontToBack,
                 null,
                 SamplerState.PointClamp, // Sharp Pixel rendering
                 DepthStencilState.Default,
                 RasterizerState.CullCounterClockwise, // Render only the texture side that faces the camara to boost performance 
                 Camera.GetCameraEffect());
+            
+            // drawing component
             component.Draw(_spriteBatch);
+            
+            // ending drawing process
             _spriteBatch.End();
         }
 
@@ -125,6 +141,7 @@ namespace SE_Praktikum
             foreach (var pass in effect.CurrentTechnique.Passes)
             {
                 pass.Apply();
+                // drawing triangles 
                 effect.GraphicsDevice.DrawUserIndexedPrimitives(
                     type,
                     polygon.DrawAbleVertices, 
@@ -133,6 +150,8 @@ namespace SE_Praktikum
                     polygon.VertexDrawingOrder, 
                     0,
                     polygon.TriangleCount);
+                
+                // drawing triangles with reversed vertex order in case it was flipped
                 effect.GraphicsDevice.DrawUserIndexedPrimitives(
                     type,
                     polygon.DrawAbleVertices, 
@@ -191,16 +210,22 @@ namespace SE_Praktikum
         protected override void Initialize()
         {
             _logger.Debug("Start Initialisiation");
-            MediaPlayer.Volume = .3f;
             
+            //adapting graphic settings
             _graphics.PreferredBackBufferWidth = ScreenWidth;
             _graphics.PreferredBackBufferHeight = ScreenHeight;
             _graphics.ApplyChanges();
+            
+            // enabling mouse
             IsMouseVisible = true;
+            
+            // initializing camera class
             Camera = new Camera(new Vector3(0,0,150),
                 120, 
                 _graphics.GraphicsDevice.Viewport, 
                 new BasicEffect(_graphics.GraphicsDevice) {TextureEnabled = true});
+            
+            // call to base class which will finalize everything and prepare the next step
             base.Initialize();
         }
 
@@ -228,7 +253,6 @@ namespace SE_Praktikum
                 _nextState = null;
                 
             }
-            //_logger.Debug("Update!");
             _currentState?.Update(gameTime);
             _currentState?.PostUpdate(gameTime);
             base.Update(gameTime);
@@ -236,7 +260,9 @@ namespace SE_Praktikum
 
         protected override void Draw(GameTime gameTime)
         {
+            // setting background color
             GraphicsDevice.Clear(Color.Black);
+            
             _currentState.Draw();
 
             base.Draw(gameTime);
