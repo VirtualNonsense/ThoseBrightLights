@@ -24,7 +24,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
             SoundEffect impactSound,
             float health = 1,
             float? maxHealth = null,
-            float impactDamage = 5,
+            float impactDamage = 50,
             bool indestructible = false) : base(animationHandler, health: health)
         {
             Explosion = explosion;
