@@ -13,7 +13,7 @@ namespace SE_Praktikum.Components.Sprites.Actors
     public abstract class PowerUp : Actor 
     {
         //fields
-        private List<PowerUp> Powerups;
+        private List<PowerUp> _powerUps;
         
         
         //Constructor
@@ -21,7 +21,7 @@ namespace SE_Praktikum.Components.Sprites.Actors
             animationHandler, soundEffect)
         {
             Health = health;
-            Powerups = new List<PowerUp>();
+            _powerUps = new List<PowerUp>();
             
         }
        
