@@ -107,7 +107,10 @@ namespace SE_Praktikum.Services.Factories
                             case "WinningZone":
                                 if (WinningZone == null)
                                     WinningZone = new EventZone();
-                                WinningZone.Polygons.Add(ConvertObjectToPolygon(obj));
+                                var zone = ConvertObjectToPolygon(obj);
+                                zone.DrawAble = true;
+                                zone.Color = Color.LawnGreen;
+                                WinningZone.Polygons.Add(zone);
                                 break;
                             case "TurretSpawn":
                                 EnemySpawnpoints.Add((EnemyType.Turret, ConvertObjectToPolygon(obj).Center));
