@@ -27,17 +27,24 @@ namespace SE_Praktikum.Components.Sprites.Actors.Weapons
         /// <summary>
         /// Base class for all weapons with a magazine
         /// </summary>
-        /// <param name="Parent">Wielder of gun</param>
+        /// <param name="bulletSpawnPoint"></param>
         /// <param name="shotSoundEffect"></param>
         /// <param name="reloadSoundEffect"></param>
+        /// <param name="impactSound"></param>
         /// <param name="nameTag">Name of the Weapon</param>
         /// <param name="clipSize">Amount of bullets in magazine</param>
         /// <param name="clips">Amount of magazine</param>
-        /// <param name="shotCoolDown">in Milliseconds</param>
+        /// <param name="ammoUsage"></param>
         /// <param name="reloadTime">in Milliseconds</param>
+        /// <param name="maxHealth"></param>
         /// <param name="clipEmptySound"></param>
         /// <param name="weaponEmptySound"></param>
         /// <param name="initialBulletsInClip"></param>
+        /// <param name="animationHandler"></param>
+        /// <param name="parent"></param>
+        /// <param name="relativePosition"></param>
+        /// <param name="relativeRotation"></param>
+        /// <param name="health"></param>
         protected ClipWeapon(AnimationHandler animationHandler, 
                              Actor parent,   
                              Vector2 relativePosition,
