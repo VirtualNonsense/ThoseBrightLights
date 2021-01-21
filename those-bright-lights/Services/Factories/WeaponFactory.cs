@@ -242,8 +242,8 @@ namespace SE_Praktikum.Services.Factories
         /// <param name="maxHealth"></param>
         /// <returns></returns>
         public SingleShotWeapon GetTurretLaserGun(Actor owner,
-                                                 int clipSize = 2,
-                                                 int clips = 1,
+                                                 int clipSize = 5,
+                                                 int clips = 3,
                                                  int shotCooldown = 1000,
                                                  int reloadTime = 100,
                                                  float damage = 5,
@@ -332,7 +332,7 @@ namespace SE_Praktikum.Services.Factories
         } 
         
         /// <summary>
-        /// Boss Weapon p1
+        /// Shotgun
         /// </summary>
         /// <param name="owner"></param>
         /// <param name="clipSize"></param>
@@ -394,6 +394,12 @@ namespace SE_Praktikum.Services.Factories
             return m;
         }
 
+        /// <summary>
+        /// Generate random weapon for powerup
+        /// </summary>
+        /// <param name="owner"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
         public List<Weapon> GetRandomWeapon(Actor owner)
         {
             var i = _random.Next(4);
@@ -473,7 +479,7 @@ namespace SE_Praktikum.Services.Factories
             return m;
         } 
         /// <summary>
-        /// Shotgun
+        /// Boss gun p1
         /// </summary>
         /// <param name="owner"></param>
         /// <param name="clipSize"></param>
