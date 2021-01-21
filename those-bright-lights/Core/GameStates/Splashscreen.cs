@@ -26,7 +26,6 @@ namespace SE_Praktikum.Core.GameStates
         private readonly IGameEngine _engine;
         private AnimationHandlerFactory _factory;
         private Sprite _gameEngineLogo;
-        private Polygon _p;
 
         public Splashscreen(IGameEngine engine, IScreen _screen, ContentManager contentManager, AnimationHandlerFactory factory)
         {
@@ -43,15 +42,6 @@ namespace SE_Praktikum.Core.GameStates
             var settings = new AnimationSettings(1, isPlaying: false, layer: 1);
 
             var tileset = new TileSet(_contentManager.Load<Texture2D>("NWWP"));
-            _p = new Polygon(Vector2.Zero, Vector2.Zero, 0, new List<Vector2>
-            {
-                new Vector2(-1 * 100, 1* 100),
-                new Vector2(1* 100, 1* 100),
-                new Vector2(1* 100, -1* 100),
-                new Vector2(-1* 100, -1* 100),
-            });
-
-            _p.Origin = _p.Vertices[0];
 
             _teamName = new Sprite(_factory.GetAnimationHandler(tileset, new List<AnimationSettings>(new[] {settings}),
                 origin: new Vector2(tileset.TextureWidth / 2f, tileset.TextureHeight / 2f)));
@@ -84,7 +74,6 @@ namespace SE_Praktikum.Core.GameStates
                 _subject.OnNext(GameStateMachine.GameStateMachineTrigger.SkipSplashScreen);
             }
             _screen.Camera.Update(gameTime);
-            _p.Rotation += MathExtensions.DegToRad(1);
         }
 
         public override void PostUpdate(GameTime gameTime)
@@ -93,7 +82,6 @@ namespace SE_Praktikum.Core.GameStates
 
         public override void Draw()
         {
-            _engine.Render(_p);
             if(_elapsedTime>_splashscreenTime/2f)
             {
                 _engine.Render(_teamName);
