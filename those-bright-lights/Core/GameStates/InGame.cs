@@ -1,19 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Media;
-using Newtonsoft.Json;
 using NLog;
 using SE_Praktikum.Components;
 using SE_Praktikum.Components.Controls;
 using SE_Praktikum.Models;
-using SE_Praktikum.Models.Tiled;
 using SE_Praktikum.Services.Factories;
-using SE_Praktikum.Services.ParticleEmitter;
 using SE_Praktikum.Services.StateMachines;
 
 namespace SE_Praktikum.Core.GameStates
@@ -117,11 +111,16 @@ namespace SE_Praktikum.Core.GameStates
 
         public override void Update(GameTime gameTime)
         {
+            // check for keyboard input and set pause flag accordingly
             var state = Keyboard.GetState();
             if (_lastKeyboardState.IsKeyDown(Keys.Escape) && !state.IsKeyDown(Keys.Escape)) _pause = !_pause;
             _lastKeyboardState = state;
+            
+            // updates game when unpaused
             if(!_pause)
                 _levelContainer.SelectedLevel?.Update(gameTime);
+            
+            // updates menu when unpaused
             else
             {
                 _components.Position = new Vector2( _screen.Camera.Position.X, _screen.Camera.Position.Y);
@@ -139,9 +138,14 @@ namespace SE_Praktikum.Core.GameStates
 
         public override void Draw()
         {
+            // rendering origin marker (useful or debugging) 
             _engine.Render(_origin);
+            
+            // rendering level when unpaused
             if(!_pause)
                 _levelContainer.SelectedLevel?.Draw();
+            
+            // rendering menu when paused
             else
             {
                 _engine.Render(_components);
@@ -151,12 +155,12 @@ namespace SE_Praktikum.Core.GameStates
         // #############################################################################################################
         // private methods
         // #############################################################################################################
-        
-
         private void SaveAndQuit(object sender, EventArgs args)
         {
+            // checking if level was cleared bevor
             if (_levelContainer.SelectedLevel.LevelNumber >= saveGameHandler.SaveGame.clearedStage)
             {
+                // marking level as cleared and saving progress
                 saveGameHandler.SaveGame.clearedStage++;
                 saveGameHandler.Save();
             }
