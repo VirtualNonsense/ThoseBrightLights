@@ -16,17 +16,20 @@ namespace SE_Praktikum.Core.GameStates
 {
     public class Splashscreen : GameState
     {
+        private Song _song;
         private Logger _logger;
         private IScreen _screen;
-        private float _elapsedTime = 0;
-        private int _splashscreenTime = 10;
-        private Song _song;
-        private ContentManager _contentManager;
         private Sprite _teamName;
-        private readonly IGameEngine _engine;
-        private AnimationHandlerFactory _factory;
+        private float _elapsedTime;
         private Sprite _gameEngineLogo;
+        private int _splashscreenTime = 10;
+        private readonly IGameEngine _engine;
+        private ContentManager _contentManager;
+        private AnimationHandlerFactory _factory;
 
+        // #############################################################################################################
+        // Constructor
+        // #############################################################################################################
         public Splashscreen(IGameEngine engine, IScreen _screen, ContentManager contentManager, AnimationHandlerFactory factory)
         {
             _engine = engine;
@@ -36,23 +39,26 @@ namespace SE_Praktikum.Core.GameStates
             _contentManager = contentManager;
         }
         
+        // #############################################################################################################
+        // public methods
+        // #############################################################################################################
         public override void LoadContent()
         {
-
-            var settings = new AnimationSettings(1, isPlaying: false, layer: 1);
-
-            var tileset = new TileSet(_contentManager.Load<Texture2D>("NWWP"));
-
-            _teamName = new Sprite(_factory.GetAnimationHandler(tileset, new List<AnimationSettings>(new[] {settings}),
-                origin: new Vector2(tileset.TextureWidth / 2f, tileset.TextureHeight / 2f)));
-            _factory.GetAnimationHandler(tileset, new List<AnimationSettings>(new []{settings}),
-                origin: new Vector2(tileset.TextureWidth / 2, tileset.TextureHeight / 2));
-
-            settings = new AnimationSettings(1, isPlaying: false, layer: 1,scale:0.2f);
-            tileset = new TileSet(_contentManager.Load<Texture2D>("MonoGame"));
+            // loading monogamelogo
+            var settings = new AnimationSettings(1, isPlaying: false, layer: 1,scale:0.2f);
+            var tileset = new TileSet(_contentManager.Load<Texture2D>("MonoGame"));
             _gameEngineLogo = new Sprite(_factory.GetAnimationHandler(tileset,
                 new List<AnimationSettings>(new[] {settings}),
                 origin: new Vector2(tileset.TextureWidth / 2f, tileset.TextureHeight / 2f)));
+            
+            // loading teamlogo
+            settings = new AnimationSettings(1, isPlaying: false, layer: 1);
+            tileset = new TileSet(_contentManager.Load<Texture2D>("NWWP"));
+            _teamName = new Sprite(_factory.GetAnimationHandler(tileset, new List<AnimationSettings>(new[] {settings}),
+                origin: new Vector2(tileset.TextureWidth / 2f, tileset.TextureHeight / 2f)));
+            _factory.GetAnimationHandler(tileset, new List<AnimationSettings>(new []{settings}),
+                origin: new Vector2(tileset.TextureWidth / 2f, tileset.TextureHeight / 2f));
+
             _song = _contentManager.Load<Song>("Audio/Music/Intro_mp3");
             
             MediaPlayer.Play(_song);
