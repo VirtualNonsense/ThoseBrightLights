@@ -18,7 +18,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
 {
     public abstract class Spaceship : Actor
     {
-        public List<SpaceshipAddOn> Components;
+        public readonly List<SpaceshipAddOn> Components;
         private int _indexOfWeaponsOfTheSameType;
         protected readonly float MaxSpeed;
         protected readonly float Acceleration;
@@ -33,6 +33,18 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
         // #############################################################################################################
         // Constructor
         // #############################################################################################################
+        /// <summary>
+        /// base class for all actors in space
+        /// </summary>
+        /// <param name="animationHandler"></param>
+        /// <param name="maxSpeed"></param>
+        /// <param name="acceleration"></param>
+        /// <param name="rotationAcceleration"></param>
+        /// <param name="maxRotationSpeed"></param>
+        /// <param name="health"></param>
+        /// <param name="maxHealth"></param>
+        /// <param name="impactDamage"></param>
+        /// <param name="impactSound"></param>
         protected Spaceship(AnimationHandler animationHandler,
                          float maxSpeed = 3,
                          float acceleration = 5,
@@ -68,9 +80,9 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
         // #############################################################################################################
         // Properties
         // #############################################################################################################
-        
 
-        protected List<Weapon> AllWeapons { get; set; }
+
+        private List<Weapon> AllWeapons { get; set; }
 
         protected List<Weapon> CurrentWeapons { get; set; }
 
@@ -308,9 +320,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
                         ApproachDestination(other, 100);
                     _impactSound?.Play();
                     break;
-
             }
-
             _impactPolygon = null;
         }
 
