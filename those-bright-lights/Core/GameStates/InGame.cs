@@ -20,18 +20,21 @@ namespace SE_Praktikum.Core.GameStates
 {
     public class InGame : GameState
     {
-        private readonly IGameEngine _engine;
-        private IScreen _screen;
-        private Logger _logger;
-        private readonly ContentManager _contentManager;
         private bool _pause;
+        private Logger _logger;
+        private IScreen _screen;
+        private Polygon _origin;
+        private ComponentGrid _components;
+        private readonly IGameEngine _engine;
+        private KeyboardState _lastKeyboardState;
+        private readonly ContentManager _contentManager;
         private readonly ControlElementFactory _factory;
         private readonly ILevelContainer _levelContainer;
         private readonly ISaveGameHandler saveGameHandler;
-        private ComponentGrid _components;
-        private KeyboardState _lastKeyboardState;
-        private Polygon _origin;
 
+        // #############################################################################################################
+        // Constructor
+        // #############################################################################################################
         public InGame(IGameEngine engine, 
                       IScreen screen,
                       ContentManager contentManager,
@@ -56,6 +59,9 @@ namespace SE_Praktikum.Core.GameStates
             }, color: Color.Red);
         }
 
+        // #############################################################################################################
+        // public methods
+        // #############################################################################################################
         public override void LoadContent()
         {
             _pause = false;
@@ -63,7 +69,7 @@ namespace SE_Praktikum.Core.GameStates
             _levelContainer.SelectedLevel.OnLevelComplete += SaveAndQuit;
             _levelContainer.SelectedLevel.OnPlayerDead += PlayerDied;
 
-                // creating pause menu
+            // creating pause menu
             _components = new ComponentGrid(new Vector2(0,0), 
                 _screen.Camera.GetPerspectiveScreenWidth(),
                 _screen.Camera.GetPerspectiveScreenHeight(),
@@ -72,6 +78,19 @@ namespace SE_Praktikum.Core.GameStates
             uint width = (uint) (_screen.Camera.GetPerspectiveScreenWidth() / buttons);
             uint height = (uint) (_screen.Camera.GetPerspectiveScreenHeight() / buttons);
 
+            MenuButton continueButton = _factory.GetButton(
+                width,
+                height,
+                new Vector2(0, 0),
+                "Continue",
+                _screen.Camera);
+            continueButton.Click += (sender, args) =>
+            {
+                _logger.Debug("Coninueing the game");
+                _pause = false;
+            };
+            
+            _components.Add(continueButton);
             MenuButton backButton = _factory.GetButton(
                 width,
                 height,
@@ -128,6 +147,11 @@ namespace SE_Praktikum.Core.GameStates
                 _engine.Render(_components);
             }
         }
+        
+        // #############################################################################################################
+        // private methods
+        // #############################################################################################################
+        
 
         private void SaveAndQuit(object sender, EventArgs args)
         {
