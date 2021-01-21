@@ -17,27 +17,38 @@ using SE_Praktikum.Services.Factories;
 using SE_Praktikum.Extensions;
 using Microsoft.Xna.Framework.Media;
 using NLog.Targets;
+using SE_Praktikum.Services.Abilities;
 using SE_Praktikum.Services.ParticleEmitter;
 
 namespace SE_Praktikum.Core
 {
     public class Level 
     {
-        private readonly string _mapPath;
-        public readonly int LevelNumber;
-        private readonly MapFactory _mapFactory;
-        private readonly PlayerFactory _playerFactory;
-        private readonly ParticleFactory _particleFactory;
-        private readonly EnemyFactory _enemyFactory;
-        private readonly PowerUpFactory powerUpFactory;
-        private readonly IScreen _screen;
-        private readonly IGameEngine _gameEngine;
-        private readonly HUDFactory hUDFactory;
-        private readonly Song song;
-        private List<IComponent> _components;
-        private readonly Logger _logger;
-        private float _collisionLayer;
         private Map _map;
+        private readonly Song _song;
+        private float _collisionLayer;
+        private readonly Logger _logger;
+        public readonly int LevelNumber;
+        private readonly IScreen _screen;
+        private readonly string _mapPath;
+        private List<IComponent> _components;
+        private readonly HUDFactory _hudFactory;
+        private readonly MapFactory _mapFactory;
+        private readonly IGameEngine _gameEngine;
+        private readonly EnemyFactory _enemyFactory;
+        private readonly PlayerFactory _playerFactory;
+        private readonly PowerUpFactory _powerUpFactory;
+        private readonly TileSetFactory _tileSetFactory;
+        private readonly AnimationHandlerFactory _animationHandlerFactory;
+        private readonly ParticleFactory _particleFactory;
+
+        public Sprite _winningScreen;
+        public Sprite _gameOverScreen;
+        public Sprite _levelClearedScreen;
+
+        public Sprite _exitScreen;
+
+        private CastTimeAbility _exitScreenTimer;
 
         private ParticleEmitter _emitter;
         // #############################################################################################################
@@ -52,38 +63,53 @@ namespace SE_Praktikum.Core
                      PowerUpFactory powerUpFactory,
                      IScreen screen,
                      IGameEngine gameEngine,
-                     HUDFactory hUDFactory,
+                     HUDFactory hudFactory,
+                     TileSetFactory tileSetFactory,
+                     AnimationHandlerFactory animationHandlerFactory,
                      Song song = null
                      )
         {
             _logger = LogManager.GetCurrentClassLogger();
             _mapPath = mapPath;
-            this.LevelNumber = levelNumber;
+            LevelNumber = levelNumber;
             _mapFactory = mapFactory;
             _playerFactory = playerFactory;
             _particleFactory = particleFactory;
             _enemyFactory = enemyFactory;
-            this.powerUpFactory = powerUpFactory;
+            _powerUpFactory = powerUpFactory;
             _screen = screen;
             _gameEngine = gameEngine;
-            this.hUDFactory = hUDFactory;
-            this.song = song;
+            _hudFactory = hudFactory;
+            _tileSetFactory = tileSetFactory;
+            _animationHandlerFactory = animationHandlerFactory;
+            _song = song;
             _components = new List<IComponent>();
             _emitter = new StarEmitter(5, 700, _particleFactory);
+            _exitScreenTimer = new CastTimeAbility(2500, () => { });
         }
 
         // #############################################################################################################
         // Events
         // #############################################################################################################
         public event EventHandler OnLevelComplete;
-
         public event EventHandler OnPlayerDead;
+        // #############################################################################################################
+        // Properties
+        // #############################################################################################################
+        public bool OnEndScreen => _exitScreen != null;
+        
         // #############################################################################################################
         // public methods
         // #############################################################################################################
 
         public void Draw()
         {
+            if (_exitScreen != null)
+            {
+                _gameEngine.Render(_exitScreen);
+                return;
+            }
+            
             foreach (var actor in _components.OfType<Actor>())
             {
                 if(actor.IsCollideAble)
@@ -150,18 +176,20 @@ namespace SE_Praktikum.Core
             }
             _screen.Camera.Update(gameTime);
             _emitter.Update(gameTime);
+            _exitScreenTimer.Update(gameTime);
         }
         public void PostUpdate()
         {
-            CheckForCollisions();
             RemoveDeadActors();
         }
         public void LoadContent(ContentManager contentManager)
         {
-            if (song != null)
+            // play song if available
+            if (_song != null)
             {
-                MediaPlayer.Play(song);
+                MediaPlayer.Play(_song);
             }
+            // loading map
             _map = _mapFactory.LoadMap(_mapPath);
             if(_map.WinningZone != null)
             {
@@ -172,8 +200,8 @@ namespace SE_Praktikum.Core
             }
             _collisionLayer = _map.TopLayer;
             
+            // loading player
             var player = _playerFactory.GetInstance();
-
             player.Position = _map.PlayerSpawnPoint?.Center ?? new Vector2(0, 0);
             player.Layer = _collisionLayer;
             player.OnInvincibilityChanged += (sender, args) => ProcessLevelEvent(args);
@@ -188,13 +216,29 @@ namespace SE_Praktikum.Core
                 if (!(args is LevelEventArgs e)) return;
                 ProcessLevelEvent(e);
             };
-            var hud = hUDFactory.GetInstance(player);
+            var hud = _hudFactory.GetInstance(player);
             _components.Add(hud);
             _screen.Camera.Follow(player);
             _screen.Camera.Position += new Vector3(0, 0, player.Layer);
             _components.Add(player);
             SpawnPowerUps(player.Layer);
             SpawnEnemies(player.Layer);
+            
+            // loading end screens
+            var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\gameOver_48_27.json", 0);
+            var settings = new AnimationSettings(1, 10);
+            _gameOverScreen =
+                new Sprite(
+                    _animationHandlerFactory.GetAnimationHandler(tileSet, new List<AnimationSettings> {settings}));
+            tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\levelComplete_64_36.json", 0);
+            _levelClearedScreen =
+                new Sprite(
+                    _animationHandlerFactory.GetAnimationHandler(tileSet, new List<AnimationSettings> {settings}));
+            tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\youWin_48_27.json", 0);
+            _winningScreen =
+                new Sprite(
+                    _animationHandlerFactory.GetAnimationHandler(tileSet, new List<AnimationSettings> {settings}));
+            _exitScreen = null;
 
         }
 
@@ -221,11 +265,6 @@ namespace SE_Praktikum.Core
             }
         }
 
-        private void CheckForCollisions()
-        {
-
-        }
-
 
         private void ProcessLevelEvent(LevelEventArgs levelEventArgs)
         {
@@ -233,7 +272,12 @@ namespace SE_Praktikum.Core
             switch (levelEventArgs)
             {
                 case LevelEventArgs.WinningZoneReachedEventArgs _:
-                    InvokeOnLevelComplete();
+                    _exitScreen = _levelClearedScreen; 
+                    _screen.Camera.StopFollowing();
+                    _screen.Camera.Position = new Vector3(0, 0, 20);
+                    _screen.Camera.Follow(_exitScreen);
+                    _exitScreenTimer.Ability = InvokeOnLevelComplete;
+                    _exitScreenTimer.Fire();
                     return;
                 
                 //if player or enemy shoots the ShootBullet event triggers
@@ -263,11 +307,16 @@ namespace SE_Praktikum.Core
                     _emitter.TargetZones.Remove(i.Target);
                     break;
                 case LevelEventArgs.BossDiedEventArgs s:
+                    _exitScreen = _winningScreen;
+                    _screen.Camera.StopFollowing();
+                    _screen.Camera.Position = new Vector3(0, 0, 20);
+                    _screen.Camera.Follow(_exitScreen);
                     if (s.Aggressor is Player p1)
                     {
                         p1.Score += (int)s.Victim.MaxHealth;
                     }
-                    InvokeOnLevelComplete();
+                    _exitScreenTimer.Ability = InvokeOnLevelComplete;
+                    _exitScreenTimer.Fire();
                     break;
                 
                 case LevelEventArgs.EnemyDiedEventArgs enemyDiedEventArgs:
@@ -276,8 +325,13 @@ namespace SE_Praktikum.Core
                         p2.Score += (int) enemyDiedEventArgs.Victim.MaxHealth;
                     }
                     break;
-                case LevelEventArgs.PlayerDiedEventArgs playerDiedEventArgs:
-                    InvokeOnPlayerDead();                    
+                case LevelEventArgs.PlayerDiedEventArgs _:
+                    _exitScreen = _gameOverScreen;
+                    _screen.Camera.StopFollowing();
+                    _screen.Camera.Position = new Vector3(0, 0, 20);
+                    _screen.Camera.Follow(_exitScreen);
+                    _exitScreenTimer.Ability = InvokeOnPlayerDead;
+                    _exitScreenTimer.Fire();
                     break;
             }
 
@@ -301,7 +355,7 @@ namespace SE_Praktikum.Core
                 switch(p.Item1)
                 {
                     case PowerUpType.HealthPowerUp:
-                        var healthPowerUp = powerUpFactory.HealthGetInstance(10, new Vector2(0,0));
+                        var healthPowerUp = _powerUpFactory.HealthGetInstance(10, new Vector2(0,0));
                         healthPowerUp.Layer = layer;
                         healthPowerUp.Position = p.Item2;
                         healthPowerUp.OnDeath += (sender, args) => ProcessLevelEvent(args);
@@ -314,7 +368,7 @@ namespace SE_Praktikum.Core
                         break;
 
                     case PowerUpType.InstaDeathPowerUp:
-                        var instaDeathPowerUp = powerUpFactory.DeathGetInstance(new Vector2(0,0));
+                        var instaDeathPowerUp = _powerUpFactory.DeathGetInstance(new Vector2(0,0));
                         instaDeathPowerUp.Layer = layer;
                         instaDeathPowerUp.Position = p.Item2;
                         instaDeathPowerUp.OnDeath += (sender, args) => ProcessLevelEvent(args);
@@ -327,7 +381,7 @@ namespace SE_Praktikum.Core
                         break;
 
                     case PowerUpType.FullHealthPowerUp:
-                        var fullHealthPowerUp = powerUpFactory.FullHealthGetInstance(100, new Vector2(0,0));
+                        var fullHealthPowerUp = _powerUpFactory.FullHealthGetInstance(100, new Vector2(0,0));
                         fullHealthPowerUp.Layer = layer;
                         fullHealthPowerUp.Position = p.Item2;
                         fullHealthPowerUp.OnDeath += (sender, args) => ProcessLevelEvent(args);
@@ -340,7 +394,7 @@ namespace SE_Praktikum.Core
                         break;
 
                     case PowerUpType.ScoreBonusPowerUp:
-                        var scoreBonusPowerUp = powerUpFactory.ScoreBonusGetInstance(50, new Vector2(0,0));
+                        var scoreBonusPowerUp = _powerUpFactory.ScoreBonusGetInstance(50, new Vector2(0,0));
                         scoreBonusPowerUp.Layer = layer;
                         scoreBonusPowerUp.Position = p.Item2;
                         scoreBonusPowerUp.OnDeath += (sender, args) => ProcessLevelEvent(args);
@@ -353,7 +407,7 @@ namespace SE_Praktikum.Core
                         break;
 
                     case PowerUpType.InfAmmoPowerUp:
-                        var infAmmoPowerUp = powerUpFactory.InfAmmoGetInstance(200, new Vector2(0,0));
+                        var infAmmoPowerUp = _powerUpFactory.InfAmmoGetInstance(200, new Vector2(0,0));
                         infAmmoPowerUp.Layer = layer;
                         infAmmoPowerUp.Position = p.Item2;
                         infAmmoPowerUp.OnDeath += (sender, args) => ProcessLevelEvent(args);
@@ -366,7 +420,7 @@ namespace SE_Praktikum.Core
                         break;
                     
                     case PowerUpType.BonusClipPowerUp:
-                        var bonusClipPowerUp = powerUpFactory.BonusClipGetInstance(2, new Vector2(0, 0));
+                        var bonusClipPowerUp = _powerUpFactory.BonusClipGetInstance(2, new Vector2(0, 0));
                         bonusClipPowerUp.Layer = layer;
                         bonusClipPowerUp.Position = p.Item2;
                         bonusClipPowerUp.OnDeath += (sender, args) => ProcessLevelEvent(args);
@@ -379,7 +433,7 @@ namespace SE_Praktikum.Core
                         break;
 
                     case PowerUpType.StarPowerUp:
-                        var starPowerUp = powerUpFactory.StarGetInstance(30000,new Vector2(0, 0));
+                        var starPowerUp = _powerUpFactory.StarGetInstance(30000,new Vector2(0, 0));
                         starPowerUp.Layer = layer;
                         starPowerUp.Position = p.Item2;
                         starPowerUp.OnDeath += (sender, args) => ProcessLevelEvent(args);
@@ -392,7 +446,7 @@ namespace SE_Praktikum.Core
                         break;
 
                     case PowerUpType.WeaponPowerUp:
-                        var weaponPowerUp = powerUpFactory.GetRandomInstance(new Vector2(0, 0));
+                        var weaponPowerUp = _powerUpFactory.GetRandomInstance(new Vector2(0, 0));
                         weaponPowerUp.Layer = layer;
                         weaponPowerUp.Position = p.Item2;
                         weaponPowerUp.OnDeath += (sender, args) => ProcessLevelEvent(args);

@@ -15,6 +15,8 @@ namespace SE_Praktikum.Services.Factories
         private readonly IScreen _screen;
         private readonly IGameEngine _gameEngine;
         private readonly HUDFactory _hUdFactory;
+        private readonly TileSetFactory _tileSetFactory;
+        private readonly AnimationHandlerFactory _animationHandlerFactory;
 
         // #############################################################################################################
         // constructor
@@ -27,7 +29,9 @@ namespace SE_Praktikum.Services.Factories
             PowerUpFactory powerUpFactory,
             IScreen screen,
             IGameEngine gameEngine,
-            HUDFactory hUDFactory)
+            HUDFactory hUDFactory,
+            TileSetFactory tileSetFactory,
+            AnimationHandlerFactory animationHandlerFactory)
         {
             _mapFactory = mapFactory;
             _playerFactory = playerFactory;
@@ -37,6 +41,8 @@ namespace SE_Praktikum.Services.Factories
             _screen = screen;
             _gameEngine = gameEngine;
             _hUdFactory = hUDFactory;
+            _tileSetFactory = tileSetFactory;
+            _animationHandlerFactory = animationHandlerFactory;
         }
         // #############################################################################################################
         // public methods
@@ -60,7 +66,9 @@ namespace SE_Praktikum.Services.Factories
                 _screen,
                 _gameEngine,
                 _hUdFactory,
-                song);
+                _tileSetFactory,
+                _animationHandlerFactory,
+                song: song);
         }
     }
 }

@@ -113,7 +113,9 @@ namespace SE_Praktikum.Core.GameStates
         {
             // check for keyboard input and set pause flag accordingly
             var state = Keyboard.GetState();
-            if (_lastKeyboardState.IsKeyDown(Keys.Escape) && !state.IsKeyDown(Keys.Escape)) _pause = !_pause;
+            if (_lastKeyboardState.IsKeyDown(Keys.Escape) && !state.IsKeyDown(Keys.Escape) 
+                                                          && !_levelContainer.SelectedLevel.OnEndScreen) 
+                _pause = !_pause;
             _lastKeyboardState = state;
             
             // updates game when unpaused
