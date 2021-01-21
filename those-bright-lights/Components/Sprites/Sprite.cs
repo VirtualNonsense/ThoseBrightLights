@@ -10,9 +10,8 @@ namespace SE_Praktikum.Components
     // #################################################################################################################
     // Fields
     // #################################################################################################################
-    protected AnimationHandler _animationHandler;
-    private bool _isRemoveAble;
-    
+    protected readonly AnimationHandler _animationHandler;
+
 
     // #################################################################################################################
     // Constructor
@@ -40,7 +39,7 @@ namespace SE_Praktikum.Components
     /// <summary>
     /// Origin offset to the zero point in body coordinates
     /// </summary>
-    public virtual Vector2 Origin { 
+    protected virtual Vector2 Origin { 
       get => _animationHandler.Origin;
     }
     
@@ -102,7 +101,7 @@ namespace SE_Praktikum.Components
     public string NameTag
     {
       get;
-      set;
+      protected set;
     }
 
     /// <summary>
@@ -132,12 +131,8 @@ namespace SE_Praktikum.Components
     /// <summary>
     /// Property that's used to remove an object after it livecycle has ended
     /// </summary>
-    public virtual bool IsRemoveAble
-    {
-      get => _isRemoveAble;
-      set => _isRemoveAble = value;
-    }
-    
+    public virtual bool IsRemoveAble { get; set; }
+
     /// <summary>
     /// Speed vector
     /// </summary>
@@ -161,7 +156,7 @@ namespace SE_Praktikum.Components
 
     public virtual void Draw(SpriteBatch spriteBatch)
     {
-      // animation fram
+      // animation frame
       _animationHandler.Draw(spriteBatch);
     }
     protected virtual void InvokeOnPositionChanged()
