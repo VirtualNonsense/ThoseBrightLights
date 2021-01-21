@@ -24,7 +24,7 @@ namespace SE_Praktikum.Core.GameStates
         private readonly ContentManager contentManager;
         private readonly ControlElementFactory _factory;
         private readonly ISaveGameHandler _saveGameHandler;
-        private const string _levelPath = @".\Content\MetaData\Level\";
+        private const string _levelPath = @"./Content/MetaData/Level/";
 
         public LevelSelect(IGameEngine engine, IScreen screen, ControlElementFactory factory, ISaveGameHandler saveGameHandler, LevelFactory levelFactory, ContentManager contentManager)
         {
