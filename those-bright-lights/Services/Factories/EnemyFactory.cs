@@ -30,7 +30,7 @@ namespace SE_Praktikum.Services.Factories
             _particleFactory = particleFactory;
         }
 
-         public Alienship GetAlienship()
+         public Alienship GetAlienShip()
          {
              var impactSound = _contentManager.Load<SoundEffect>("Audio/Sound_Effects/Collusion/alien_impact");
              var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\alien_ship_65_65_4.json",0);
@@ -82,7 +82,7 @@ namespace SE_Praktikum.Services.Factories
         }
         public Enemy GetMines()
         {
-            SoundEffect impactSound = _contentManager.Load<SoundEffect>("Audio/Sound_Effects/Collusion/ClinkBell");
+            var impactSound = _contentManager.Load<SoundEffect>("Audio/Sound_Effects/Collusion/ClinkBell");
             var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\mine_35_35_8_2x.json", 0);         
             var idleAnimationSettings = new AnimationSettings(updateList:new List<(int, float)>
             {

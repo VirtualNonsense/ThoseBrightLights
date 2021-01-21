@@ -433,7 +433,7 @@ namespace SE_Praktikum.Core
                         _components.Add(turret);
                         break;
                     case EnemyType.Alienship:
-                        var alienship = _enemyFactory.GetAlienship(); 
+                        var alienship = _enemyFactory.GetAlienShip(); 
                         alienship.Layer = layer;
                         alienship.Position = enemySpawnPoint.Item2;
                         alienship.Rotation = (float)Math.PI;
