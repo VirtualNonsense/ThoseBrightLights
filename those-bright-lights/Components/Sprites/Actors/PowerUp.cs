@@ -13,11 +13,11 @@ namespace SE_Praktikum.Components.Sprites.Actors
     public abstract class PowerUp : Actor 
     {
         //fields
-        protected List<PowerUp> Powerups;
+        private List<PowerUp> Powerups;
         
         
         //Constructor
-        public PowerUp(AnimationHandler animationHandler, float health = 0.01f, SoundEffect soundEffect = null) : base(
+        protected PowerUp(AnimationHandler animationHandler, float health = 0.01f, SoundEffect soundEffect = null) : base(
             animationHandler, soundEffect)
         {
             Health = health;
