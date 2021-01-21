@@ -10,7 +10,24 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
 {
     public class Kamikaze : EnemyWithViewbox
     {
-        private Logger _logger;
+        private readonly Logger _logger;
+        
+        // #############################################################################################################
+        // Constructor
+        // #############################################################################################################
+        /// <summary>
+        /// Enemy that flies towards player and explodes on contact
+        /// </summary>
+        /// <param name="animationHandler"></param>
+        /// <param name="viewBox"></param>
+        /// <param name="acceleration"></param>
+        /// <param name="maxSpeed"></param>
+        /// <param name="rotationAcceleration"></param>
+        /// <param name="maxRotationSpeed"></param>
+        /// <param name="health"></param>
+        /// <param name="maxHealth"></param>
+        /// <param name="impactDamage"></param>
+        /// <param name="impactSound"></param>
         public Kamikaze(AnimationHandler animationHandler,
                         Polygon viewBox,
                         float acceleration = .1f,
@@ -20,19 +37,28 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
                         float health = 1,
                         float? maxHealth = null,
                         float impactDamage = 60,
-                        SoundEffect impactSound = null) : base(animationHandler, viewBox, maxSpeed, acceleration, rotationAcceleration, maxRotationSpeed, health, maxHealth, impactDamage, impactSound)
+                        SoundEffect impactSound = null) 
+            : base(animationHandler, viewBox, maxSpeed, acceleration, rotationAcceleration, maxRotationSpeed, health,
+                maxHealth, impactDamage, impactSound)
         {
             _logger = LogManager.GetCurrentClassLogger();
             Shoot = new CooldownAbility(500, _shootTarget);
         }
+        
+        // #############################################################################################################
+        // public Methods
+        // #############################################################################################################
 
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
             if (InterAction != InterAction.InView || Target == null)
             {
+                _animationHandler.Settings = _animationHandler.AllSettings[0];
                 return;
             }
+
+            _animationHandler.Settings = _animationHandler.AllSettings[1];
             var t = gameTime.ElapsedGameTime.Milliseconds/10f;
             var direction = Target.Position - Position;
             var velocity = Velocity;
@@ -53,8 +79,6 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
             
             DeltaPosition = Velocity * t;
             Position += DeltaPosition;
-
-
         }
     }
 }

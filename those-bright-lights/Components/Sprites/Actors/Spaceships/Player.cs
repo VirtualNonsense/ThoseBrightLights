@@ -13,15 +13,30 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
 {
     public class Player : Spaceship
     {
-        private Input _input;
-        private Logger _logger;
-        private KeyboardState CurrentKey;
-        private KeyboardState PreviousKey;
+        private readonly Input _input;
+        private readonly Logger _logger;
+        private KeyboardState _currentKey;
+        private KeyboardState _previousKey;
         private int _score;
-        private float omega;
+        private float _omega;
+        
         // #############################################################################################################
         // Constructor
         // #############################################################################################################
+        /// <summary>
+        /// class for the Player
+        /// </summary>
+        /// <param name="animationHandler"></param>
+        /// <param name="propulsion"></param>
+        /// <param name="input"></param>
+        /// <param name="acceleration"></param>
+        /// <param name="maxSpeed"></param>
+        /// <param name="rotationAcceleration"></param>
+        /// <param name="maxRotationSpeed"></param>
+        /// <param name="health"></param>
+        /// <param name="maxHealth"></param>
+        /// <param name="impactDamage"></param>
+        /// <param name="impactSound"></param>
         public Player(AnimationHandler animationHandler, 
                       AnimationHandler propulsion,
                       Input input=null,
@@ -33,7 +48,8 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
                       float? maxHealth = null,
                       float impactDamage = 5,
                       SoundEffect impactSound = null) 
-            : base(animationHandler, maxSpeed, acceleration, rotationAcceleration, maxRotationSpeed, health, maxHealth: maxHealth,  impactSound: impactSound, impactDamage: impactDamage)
+            : base(animationHandler, maxSpeed, acceleration, rotationAcceleration, maxRotationSpeed, health,
+                maxHealth: maxHealth, impactSound: impactSound, impactDamage: impactDamage)
         {
             Score = 0;
             _input = input;
@@ -46,12 +62,15 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
                     0,
                     null));
         }
+        
         // #############################################################################################################
         // Events
         // #############################################################################################################
-
         public event EventHandler OnScoreChanged;
 
+        // #############################################################################################################
+        // Properties
+        // #############################################################################################################
         public int Score 
         { 
             get => _score;
@@ -69,28 +88,23 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
         }
         
         // #############################################################################################################
-        // Properties
-        // #############################################################################################################
-        
-        
-        // #############################################################################################################
         // public Methods
         // #############################################################################################################
         public override void Update(GameTime gameTime)
         {
-            PreviousKey = CurrentKey;
-            CurrentKey = Keyboard.GetState();
+            _previousKey = _currentKey;
+            _currentKey = Keyboard.GetState();
             var t = gameTime.ElapsedGameTime.Milliseconds/10f;
 
             #region Movement
             var velocity = Velocity;
-            if (CurrentKey.IsKeyDown(_input.Left))
+            if (_currentKey.IsKeyDown(_input.Left))
             {
-                omega -= 0.5f * RotationAcceleration * t * t;
+                _omega -= 0.5f * RotationAcceleration * t * t;
             }
-            else if (CurrentKey.IsKeyDown(_input.Right))
+            else if (_currentKey.IsKeyDown(_input.Right))
             {
-                omega += 0.5f * RotationAcceleration * t * t;
+                _omega += 0.5f * RotationAcceleration * t * t;
             }
             // else
             // {
@@ -107,14 +121,14 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
             //     }
             // }
 
-            omega *= 0.85f * (1 - Math.Abs(omega / MaxRotationSpeed));
-            DeltaRotation = MathExtensions.DegToRad(omega*t);
+            _omega *= 0.85f * (1 - Math.Abs(_omega / MaxRotationSpeed));
+            DeltaRotation = MathExtensions.DegToRad(_omega*t);
             Rotation += DeltaRotation;
-            if (CurrentKey.IsKeyDown(_input.Down))
+            if (_currentKey.IsKeyDown(_input.Down))
             {
                 velocity.X -= Acceleration * t * t;
             }
-            if (CurrentKey.IsKeyDown(_input.Up))
+            if (_currentKey.IsKeyDown(_input.Up))
             {
                 velocity.X += Acceleration * t * t;
             }
@@ -137,7 +151,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
             
             #region Weapon
 
-            if (CurrentKey.IsKeyDown(_input.Shoot))
+            if (_currentKey.IsKeyDown(_input.Shoot))
             {
                 ShootCurrentWeapon();
             }
@@ -151,7 +165,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
         // private / protected methods
         // #############################################################################################################
 
-        protected void InvokeOnScoreChanged()
+        private void InvokeOnScoreChanged()
         {
             OnScoreChanged?.Invoke(this, EventArgs.Empty);
         }

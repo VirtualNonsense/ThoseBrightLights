@@ -17,7 +17,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Weapons
         protected readonly SoundEffect ShotSoundEffect;
 
         //private readonly CooldownAbility _shotAbility;
-        private Logger _logger;
+        private readonly Logger _logger;
 
         // #############################################################################################################
         // Constructor
@@ -37,7 +37,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Weapons
         /// <param name="maxHealth"></param>
         /// <param name="shotCoolDown">in milliseconds</param>
         /// <param name="health"></param>
-        public Weapon(
+        protected Weapon(
                 AnimationHandler animationHandler, 
                 Actor parent, 
                 Vector2 relativePosition,
@@ -99,7 +99,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Weapons
         /// <summary>
         /// Position is in space of Weapon, so relative position
         /// </summary>
-        public Vector2 BulletSpawnPoint { get; set; }
+        protected Vector2 BulletSpawnPoint { get; set; }
         
         // #############################################################################################################
         // public methods

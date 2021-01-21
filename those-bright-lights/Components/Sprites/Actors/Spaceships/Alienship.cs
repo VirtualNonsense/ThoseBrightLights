@@ -8,7 +8,23 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
 {
     public class Alienship : EnemyWithViewbox
     {
-        
+        // #############################################################################################################
+        // Constructor
+        // #############################################################################################################
+        /// <summary>
+        /// Enemy with the ship
+        /// </summary>
+        /// <param name="animationHandler"></param>
+        /// <param name="viewBox"></param>
+        /// <param name="propulsion"></param>
+        /// <param name="maxSpeed"></param>
+        /// <param name="acceleration"></param>
+        /// <param name="rotationAcceleration"></param>
+        /// <param name="maxRotationSpeed"></param>
+        /// <param name="health"></param>
+        /// <param name="maxHealth"></param>
+        /// <param name="impactDamage"></param>
+        /// <param name="impactSound"></param>
         public Alienship(AnimationHandler animationHandler,
                          Polygon viewBox,
                          AnimationHandler propulsion,
@@ -19,7 +35,9 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
                          float health = 50,
                          float? maxHealth = null,
                          float impactDamage = 5,
-                         SoundEffect impactSound = null) : base(animationHandler, viewBox, maxSpeed, acceleration,rotationAcceleration, maxRotationSpeed, health, maxHealth, impactDamage, impactSound)
+                         SoundEffect impactSound = null) 
+            : base(animationHandler, viewBox, maxSpeed, acceleration, rotationAcceleration, maxRotationSpeed, health,
+                maxHealth, impactDamage, impactSound)
         {
             Shoot = new CooldownAbility(1000, _shootTarget);
             RotateWeapon = false;
@@ -32,6 +50,9 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
                     null));
         }
 
+        // #############################################################################################################
+        // public Methods
+        // #############################################################################################################
         public override void Update(GameTime gameTime)
         {
             Shoot.Update(gameTime);

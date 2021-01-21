@@ -9,7 +9,7 @@ namespace SE_Praktikum.Components
         /// use this to draw e.g. explosion particle etc.
         /// </summary>
         /// <param name="animationHandler"></param>
-        public Particle(AnimationHandler animationHandler) : base(animationHandler)
+        protected Particle(AnimationHandler animationHandler) : base(animationHandler)
         {
         }
 

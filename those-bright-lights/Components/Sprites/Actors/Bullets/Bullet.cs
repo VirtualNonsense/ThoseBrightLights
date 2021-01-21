@@ -7,20 +7,55 @@ using SE_Praktikum.Services;
 
 namespace SE_Praktikum.Components.Sprites.Actors.Bullets
 {
-    public class Bullet : Actor
+    public abstract class Bullet : Actor
     {
         private Vector2 Direction => new Vector2((float)Math.Cos(Rotation),(float)Math.Sin(Rotation));
         protected float Acceleration;
         protected float MaxTime;
         private float _timeAlive;
         private readonly Logger _logger;
-        protected SoundEffect MidAirSound;
+        protected readonly SoundEffect MidAirSound;
         protected float MidAirSoundCooldown;
         protected float TimeSinceUsedMidAir;
         
-        // #################################################################################################################
+        // #############################################################################################################
+        // Constructor
+        // #############################################################################################################
+        /// <summary>
+        /// Base class for all Bullets
+        /// </summary>
+        /// <param name="animationHandler"></param>
+        /// <param name="parent"></param> Actor the bullet is shot from
+        /// <param name="explosion"></param>
+        /// <param name="midAirSound"></param>
+        /// <param name="impactSound"></param>
+        /// <param name="damage"></param>
+        /// <param name="health"></param>
+        /// <param name="maxHealth"></param>
+        /// <param name="indestructible"></param>
+        protected Bullet(AnimationHandler animationHandler,
+            Actor parent,
+            Particle explosion,
+            SoundEffect midAirSound,
+            SoundEffect impactSound,
+            float damage,
+            float health,
+            float? maxHealth,
+            bool indestructible) 
+            : base(animationHandler, impactSound, health: health, maxHealth: maxHealth, indestructible: indestructible)
+        {
+            Parent = parent;
+            Explosion = explosion;
+            Speed = 0;
+            Acceleration = 0;
+            MidAirSound = midAirSound;
+            _logger = LogManager.GetCurrentClassLogger();
+            Damage = damage;
+        }
+        
+        // #############################################################################################################
         // Properties
-        // #################################################################################################################
+        // #############################################################################################################
         public float Speed { get; set; }
     
 
@@ -57,26 +92,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Bullets
                 Explosion.Rotation = base.Rotation;
             }
         }
-
-        protected Bullet(AnimationHandler animationHandler,
-                         Actor parent,
-                         Particle explosion,
-                         SoundEffect midAirSound,
-                         SoundEffect impactSound,
-                         float damage,
-                         float health,
-                         float? maxHealth,
-                         bool indestructible) 
-            : base(animationHandler, impactSound, health: health, maxHealth: maxHealth, indestructible: indestructible)
-        {
-            Parent = parent;
-            Explosion = explosion;
-            Speed = 0;
-            Acceleration = 0;
-            MidAirSound = midAirSound;
-            _logger = LogManager.GetCurrentClassLogger();
-            Damage = damage;
-        }
+        
 
         public override bool IsRemoveAble
         {
@@ -89,6 +105,22 @@ namespace SE_Praktikum.Components.Sprites.Actors.Bullets
             }
         }
 
+        // #############################################################################################################
+        // public Methods
+        // #############################################################################################################
+        public override void Update(GameTime gameTime)
+        {
+            _timeAlive += gameTime.ElapsedGameTime.Milliseconds / 1000f;
+            if (_timeAlive >= MaxTime)
+            {
+                IsRemoveAble = true;
+            }
+            base.Update(gameTime);
+        }
+        
+        // #############################################################################################################
+        // protected/private Methods
+        // #############################################################################################################
         protected override bool InteractAble(Actor other)
         {
             if (Parent == other || Parent == other.Parent) return false;
@@ -102,16 +134,6 @@ namespace SE_Praktikum.Components.Sprites.Actors.Bullets
             return position;
         }
 
-        public override void Update(GameTime gameTime)
-        {
-            _timeAlive += gameTime.ElapsedGameTime.Milliseconds / 1000f;
-            //TODO: replace with CooldownAbility
-            if (_timeAlive >= MaxTime)
-            {
-                IsRemoveAble = true;
-            }
-            base.Update(gameTime);
-        }
         
         protected override void ExecuteInteraction(Actor other)
         {

@@ -150,7 +150,7 @@ namespace SE_Praktikum.Services.Factories
                     animationSettings.Layer = -.10f;
                     var handler = _animationHandlerFactory.GetAnimationHandler(
                         _buttonsAndSwitches, 
-                        animationSettings,
+                        new List<AnimationSettings>(new []{animationSettings}),
                         new Vector2(x * _tileWidth, y * _tileWidth),
                         Vector2.Zero
                     );
@@ -334,7 +334,7 @@ namespace SE_Praktikum.Services.Factories
                     animationSettings.Layer = -.10f;
                     var handler = _animationHandlerFactory.GetAnimationHandler(
                         _buttonsAndSwitches, 
-                        animationSettings,
+                        new List<AnimationSettings>(new []{animationSettings}),
                         new Vector2(x * _tileWidth, y * _tileWidth),
                         Vector2.Zero
                     );
@@ -420,7 +420,7 @@ namespace SE_Praktikum.Services.Factories
                 animationSettings.Layer = layer;
                 var handler = _animationHandlerFactory.GetAnimationHandler(
                     _buttonsAndSwitches, 
-                    animationSettings,
+                    new List<AnimationSettings>(new []{animationSettings}),
                     new Vector2(x * _tileWidth, 0),
                     Vector2.Zero
                 );
@@ -440,7 +440,7 @@ namespace SE_Praktikum.Services.Factories
             {
                 _animationHandlerFactory.GetAnimationHandler(
                     _buttonsAndSwitches, 
-                    sliderSettings,
+                    new List<AnimationSettings>(new []{sliderSettings}),
                     Vector2.Zero,
                     Vector2.Zero
                 )

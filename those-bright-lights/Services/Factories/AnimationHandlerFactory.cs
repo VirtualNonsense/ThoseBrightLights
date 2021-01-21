@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 using SE_Praktikum.Models;
 
 namespace SE_Praktikum.Services.Factories
@@ -18,7 +19,7 @@ namespace SE_Praktikum.Services.Factories
         /// <param name="origin">sets the zero position within the frame. will set to frame center when null</param>
         /// <returns></returns>
         public AnimationHandler GetAnimationHandler(TileSet animation,
-                                                    AnimationSettings settings,
+                                                    List<AnimationSettings> settings,
                                                     Vector2? position = null, 
                                                     Vector2? origin = null)
         {

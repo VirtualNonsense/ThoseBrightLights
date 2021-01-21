@@ -16,7 +16,7 @@ namespace SE_Praktikum.Components.Sprites.Actors
     public class Tile: Actor
     {
         //field
-        private Logger _logger;
+        private readonly Logger _logger;
 
         //Constructor
         public Tile(AnimationHandler animationHandler, TileModifier tileModifier = TileModifier.None, SoundEffect impactSound = null, float impactDamage = 5) : base(animationHandler, impactSound, impactDamage: impactDamage)
@@ -30,7 +30,7 @@ namespace SE_Praktikum.Components.Sprites.Actors
         }
 
         // tile modifications 
-        public void SetTileModifier(TileModifier tileModifier)
+        private void SetTileModifier(TileModifier tileModifier)
         {
             switch (tileModifier)
             {
@@ -58,16 +58,17 @@ namespace SE_Praktikum.Components.Sprites.Actors
                     _animationHandler.SpriteEffects = SpriteEffects.FlipHorizontally;
                     _animationHandler.Rotation = (float)(90 * Math.PI / 180); 
                     break;
+                case TileModifier.None:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(tileModifier), tileModifier, null);
             }
         }
 
         // Make tiles interactable with actors
         protected override bool InteractAble(Actor other)
         {
-            if(Indestructible)
-                return false;
-            return base.InteractAble(other);
-
+            return !Indestructible && base.InteractAble(other);
         }
         
         // Interaction with bullets and the ship
@@ -88,9 +89,6 @@ namespace SE_Praktikum.Components.Sprites.Actors
                     break;
             }
             _logger.Debug(Health);
-
-
-
         }
         
 
