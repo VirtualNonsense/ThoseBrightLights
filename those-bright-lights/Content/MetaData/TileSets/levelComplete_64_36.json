@@ -1,0 +1,14 @@
+{ "columns":1,
+ "image":"..\/..\/Artwork\/misc\/levelComplete_64_36.png",
+ "imageheight":36,
+ "imagewidth":64,
+ "margin":0,
+ "name":"levelComplete_64_36",
+ "spacing":0,
+ "tilecount":1,
+ "tiledversion":"1.4.2",
+ "tileheight":36,
+ "tilewidth":64,
+ "type":"tileset",
+ "version":1.4
+}

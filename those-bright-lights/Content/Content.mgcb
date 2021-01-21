@@ -349,6 +349,18 @@
 /processorParam:TextureFormat=Color
 /build:Artwork/misc/coordinatesystem.png
 
+#begin Artwork/misc/gameOver_48_27.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Artwork/misc/gameOver_48_27.png
+
 #begin Artwork/misc/heart_11_17.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -384,6 +396,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Artwork/misc/horizontalline.png
+
+#begin Artwork/misc/levelComplete_64_36.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Artwork/misc/levelComplete_64_36.png
 
 #begin Artwork/misc/moneymoneymoney.png
 /importer:TextureImporter
@@ -444,6 +468,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Artwork/misc/x.png
+
+#begin Artwork/misc/youWin_48_27.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Artwork/misc/youWin_48_27.png
 
 #begin Artwork/missing_texture.jpg
 /importer:TextureImporter
