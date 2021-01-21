@@ -1,37 +1,34 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Media;
-using Newtonsoft.Json;
 using NLog;
 using SE_Praktikum.Components;
 using SE_Praktikum.Components.Controls;
 using SE_Praktikum.Models;
-using SE_Praktikum.Models.Tiled;
 using SE_Praktikum.Services.Factories;
-using SE_Praktikum.Services.ParticleEmitter;
 using SE_Praktikum.Services.StateMachines;
 
 namespace SE_Praktikum.Core.GameStates
 {
     public class InGame : GameState
     {
-        private readonly IGameEngine _engine;
-        private IScreen _screen;
-        private Logger _logger;
-        private readonly ContentManager _contentManager;
         private bool _pause;
+        private Logger _logger;
+        private IScreen _screen;
+        private Polygon _origin;
+        private ComponentGrid _components;
+        private readonly IGameEngine _engine;
+        private KeyboardState _lastKeyboardState;
+        private readonly ContentManager _contentManager;
         private readonly ControlElementFactory _factory;
         private readonly ILevelContainer _levelContainer;
         private readonly ISaveGameHandler saveGameHandler;
-        private ComponentGrid _components;
-        private KeyboardState _lastKeyboardState;
-        private Polygon _origin;
 
+        // #############################################################################################################
+        // Constructor
+        // #############################################################################################################
         public InGame(IGameEngine engine, 
                       IScreen screen,
                       ContentManager contentManager,
@@ -56,6 +53,9 @@ namespace SE_Praktikum.Core.GameStates
             }, color: Color.Red);
         }
 
+        // #############################################################################################################
+        // public methods
+        // #############################################################################################################
         public override void LoadContent()
         {
             _pause = false;
@@ -63,7 +63,7 @@ namespace SE_Praktikum.Core.GameStates
             _levelContainer.SelectedLevel.OnLevelComplete += SaveAndQuit;
             _levelContainer.SelectedLevel.OnPlayerDead += PlayerDied;
 
-                // creating pause menu
+            // creating pause menu
             _components = new ComponentGrid(new Vector2(0,0), 
                 _screen.Camera.GetPerspectiveScreenWidth(),
                 _screen.Camera.GetPerspectiveScreenHeight(),
@@ -72,6 +72,19 @@ namespace SE_Praktikum.Core.GameStates
             uint width = (uint) (_screen.Camera.GetPerspectiveScreenWidth() / buttons);
             uint height = (uint) (_screen.Camera.GetPerspectiveScreenHeight() / buttons);
 
+            MenuButton continueButton = _factory.GetButton(
+                width,
+                height,
+                new Vector2(0, 0),
+                "Continue",
+                _screen.Camera);
+            continueButton.Click += (sender, args) =>
+            {
+                _logger.Debug("Coninueing the game");
+                _pause = false;
+            };
+            
+            _components.Add(continueButton);
             MenuButton backButton = _factory.GetButton(
                 width,
                 height,
@@ -98,11 +111,16 @@ namespace SE_Praktikum.Core.GameStates
 
         public override void Update(GameTime gameTime)
         {
+            // check for keyboard input and set pause flag accordingly
             var state = Keyboard.GetState();
             if (_lastKeyboardState.IsKeyDown(Keys.Escape) && !state.IsKeyDown(Keys.Escape)) _pause = !_pause;
             _lastKeyboardState = state;
+            
+            // updates game when unpaused
             if(!_pause)
                 _levelContainer.SelectedLevel?.Update(gameTime);
+            
+            // updates menu when unpaused
             else
             {
                 _components.Position = new Vector2( _screen.Camera.Position.X, _screen.Camera.Position.Y);
@@ -120,19 +138,29 @@ namespace SE_Praktikum.Core.GameStates
 
         public override void Draw()
         {
+            // rendering origin marker (useful or debugging) 
             _engine.Render(_origin);
+            
+            // rendering level when unpaused
             if(!_pause)
                 _levelContainer.SelectedLevel?.Draw();
+            
+            // rendering menu when paused
             else
             {
                 _engine.Render(_components);
             }
         }
-
+        
+        // #############################################################################################################
+        // private methods
+        // #############################################################################################################
         private void SaveAndQuit(object sender, EventArgs args)
         {
+            // checking if level was cleared bevor
             if (_levelContainer.SelectedLevel.LevelNumber >= saveGameHandler.SaveGame.clearedStage)
             {
+                // marking level as cleared and saving progress
                 saveGameHandler.SaveGame.clearedStage++;
                 saveGameHandler.Save();
             }

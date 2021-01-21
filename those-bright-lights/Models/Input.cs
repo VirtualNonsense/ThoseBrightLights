@@ -16,7 +16,6 @@ namespace SE_Praktikum.Models
         
         public Keys TurnRight { get; set; }
         
-        //TODO: make shoot nullable
         public Keys Shoot { get; set; }
 
         public Input(Keys up, Keys down, Keys left, Keys right, Keys turnLeft, Keys turnRight, Keys shoot)

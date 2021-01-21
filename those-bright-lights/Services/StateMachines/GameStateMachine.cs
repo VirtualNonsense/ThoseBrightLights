@@ -4,7 +4,6 @@ using System.Reactive.Subjects;
 using NLog;
 using SE_Praktikum.Core.GameStates;
 using Stateless;
-using Stateless.Graph;
 
 namespace SE_Praktikum.Services.StateMachines
 {
@@ -40,14 +39,13 @@ namespace SE_Praktikum.Services.StateMachines
 
             _machine.Configure(State.SaveSlotSelection).OnEntry(onEntry)
                 .Permit(GameStateMachineTrigger.SaveSlotSelected, State.Menu);
-            
             _machine.Configure(State.Menu).OnEntry(onEntry)
                 .Permit(GameStateMachineTrigger.StartLevelSelect, State.LevelSelect)
-                // .Permit(GameStateMachineTrigger.StartGame, State.InGame)
-                .Permit(GameStateMachineTrigger.QuitGame, State.Quit)
                 .Permit(GameStateMachineTrigger.StartSettings, State.Settings)
-                .Permit(GameStateMachineTrigger.BackToSaveSlotSelection, State.SaveSlotSelection);
-            
+                .Permit(GameStateMachineTrigger.Back, State.SaveSlotSelection)
+                .Permit(GameStateMachineTrigger.QuitGame, State.Quit);
+
+
             _machine.Configure(State.Settings).OnEntry(onEntry)
                 .Permit(GameStateMachineTrigger.Back, State.Menu);
             
@@ -56,7 +54,6 @@ namespace SE_Praktikum.Services.StateMachines
                 .Permit(GameStateMachineTrigger.StartGame, State.InGame);
             
             _machine.Configure(State.InGame).OnEntry(onEntry)
-                .Permit(GameStateMachineTrigger.SaveAndQuit, State.Quit)
                 .Permit(GameStateMachineTrigger.Back, State.LevelSelect);
             
             _machine.Configure(State.Quit).OnEntry(onComplete);
@@ -109,12 +106,9 @@ namespace SE_Praktikum.Services.StateMachines
         {
             SkipSplashScreen,
             SaveSlotSelected,
-            BackToSaveSlotSelection,
             StartGame,
             StartSettings,
             StartLevelSelect,
-            SaveAndQuit,
-            SaveAndBackToMenu,
             Back,
             QuitGame
         }
@@ -140,6 +134,5 @@ namespace SE_Praktikum.Services.StateMachines
                 _logger.Warn(e, $"Unable to Perform Transition From {_machine.State} with {value}");
             }
         }
-        public string DotGraph => UmlDotGraph.Format(_machine.GetInfo());
     }
 }

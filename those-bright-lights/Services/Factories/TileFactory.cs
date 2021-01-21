@@ -5,7 +5,6 @@ using SE_Praktikum.Models;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using SE_Praktikum.Components.Actors;
 using SE_Praktikum.Components.Sprites.Actors;
 using SE_Praktikum.Extensions;
 

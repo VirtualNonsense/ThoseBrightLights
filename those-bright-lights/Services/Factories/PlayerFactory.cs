@@ -4,7 +4,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using SE_Praktikum.Components.Actors;
 using SE_Praktikum.Components.Sprites.Actors;
 using SE_Praktikum.Components.Sprites.Actors.Spaceships;
 using SE_Praktikum.Models;

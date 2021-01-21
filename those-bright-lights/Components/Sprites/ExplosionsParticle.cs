@@ -3,8 +3,7 @@ using Microsoft.Xna.Framework;
 using SE_Praktikum.Models;
 using SE_Praktikum.Services;
 
-// TODO: Move namespace when everybody finished commenting
-namespace SE_Praktikum.Components.Actors
+namespace SE_Praktikum.Components.Sprites
 {
     public class ExplosionsParticle : Particle
     {

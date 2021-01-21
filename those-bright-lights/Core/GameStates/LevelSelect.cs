@@ -15,16 +15,16 @@ namespace SE_Praktikum.Core.GameStates
 {
     public class LevelSelect : GameState, ILevelContainer
     {
-        private readonly IGameEngine _engine;
+        private Logger _logger;
+        private ComponentGrid _buttons;
         private readonly IScreen _screen;
-        private readonly ControlElementFactory _factory;
-        private readonly ISaveGameHandler _saveGameHandler;
+        private readonly IGameEngine _engine;
+        private Dictionary<int,Song> _songSelection;
         private readonly LevelFactory _levelFactory;
         private readonly ContentManager contentManager;
-        private ComponentGrid _buttons;
-        private Logger _logger;
+        private readonly ControlElementFactory _factory;
+        private readonly ISaveGameHandler _saveGameHandler;
         private const string _levelPath = @".\Content\MetaData\Level\";
-        private Dictionary<int,Song> _songSelection;
 
         public LevelSelect(IGameEngine engine, IScreen screen, ControlElementFactory factory, ISaveGameHandler saveGameHandler, LevelFactory levelFactory, ContentManager contentManager)
         {
@@ -44,54 +44,74 @@ namespace SE_Praktikum.Core.GameStates
 
         public override void LoadContent()
         {
+            _logger.Debug("Level Selection: LoadingContent");
+            
+            // exit if buttons are already loaded
             if (_buttons != null) return;
 
+            // load song for different levels
             _songSelection = new Dictionary<int, Song>();
             _songSelection.Add(0, contentManager.Load<Song>("Audio/Music/Song3_remaster2_mp3"));
             _songSelection.Add(1, contentManager.Load<Song>("Audio/Music/Song2_remaster2_mp3"));
             _songSelection.Add(2, contentManager.Load<Song>("Audio/Music/Song4_remaster_mp3"));
-                
+
+            // set camera position
             _screen.Camera.Position = new Vector3(0, 0,150);
-            
-            _logger.Debug("LoadingContent");
+
+            // initializing button management component
             _buttons = new ComponentGrid(new Vector2(0,0), 
                 _screen.Camera.GetPerspectiveScreenWidth(),
                 _screen.Camera.GetPerspectiveScreenHeight(),
                 1);
+            
+            // load all level in directory
             var level = Directory.GetFiles(_levelPath, "*.json");
+            
+            // amount of level back button
             var buttons = level.Length + 1;
-            uint width = (uint) (_screen.Camera.GetPerspectiveScreenWidth()/3);
-            uint height = (uint) (_screen.Camera.GetPerspectiveScreenHeight() / buttons);
-            int c = 0;
+            
+            // rough button dimensions
+            uint buttonWidth = (uint) (_screen.Camera.GetPerspectiveScreenWidth()/3);
+            uint buttonHeight = (uint) (_screen.Camera.GetPerspectiveScreenHeight() / buttons);
+            
+            int levelCounter = 0;
             foreach (var path in level)
             {
-                var n = path.Split(".json")[0].Split("\\").Last();
+                // extracting levelname
+                var levelName = path.Split(".json")[0].Split("\\").Last();
                 
+                // creating button
                 var button = _factory.GetButton(
-                    width,
-                    height,
+                    buttonWidth,
+                    buttonHeight,
                     new Vector2(0, 0),
-                    n,
+                    levelName,
                     _screen.Camera);
-                var l = _levelFactory.GetInstance(path, c, _songSelection.ContainsKey(c)? _songSelection[c] : null);
-                //button.Enabled = _saveGameHandler.SaveGame.clearedStage >= c;
+
+                // checking save if level is accessible
+                button.Enabled = _saveGameHandler.SaveGame.clearedStage >= levelCounter;
+
+                var levelNumber = levelCounter;
                 button.Click += (sender, args) => 
                 {
-                    _logger.Debug($"starting {n}");
-                    SelectedLevel = l;
+                    _logger.Debug($"starting {levelName}");
+                    // loading level
+                    SelectedLevel = _levelFactory.GetInstance(path, levelNumber, _songSelection.ContainsKey(levelNumber)? _songSelection[levelNumber] : null);
+                    // progressing to gamestate
                     _subject.OnNext(GameStateMachine.GameStateMachineTrigger.StartGame);
                 };
+                // add button to grid
                 _buttons.Add(button);
-                c++;
+                levelCounter++;
             }
-            
+            // creating back button
             MenuButton b = _factory.GetButton(
-                width,
-                height,
+                buttonWidth,
+                buttonHeight,
                 new Vector2(0, 0),
                 "back to mainmenu",
                 _screen.Camera);
-
+            
             b.Click += (sender, args) => 
             {
                 _logger.Debug("back to mainmenu");

@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using SE_Praktikum.Components.Actors;
 using SE_Praktikum.Components.Sprites;
 using SE_Praktikum.Models;
 
