@@ -77,15 +77,15 @@ namespace SE_Praktikum.Components.Sprites.Actors.Bullets
                     if(s == Parent)
                         return;
                     Health -= other.Damage;
-                    _impactSound?.Play();
+                    ImpactSound?.Play();
                     break;
                 case Tile t:
                     Health -= other.Damage;
-                    _impactSound?.Play();
+                    ImpactSound?.Play();
                     break;
                 case SpaceshipAddOn spaceshipAddOn:
                     Health -= other.Damage;
-                    _impactSound?.Play();
+                    ImpactSound?.Play();
                     break;
                 
             }

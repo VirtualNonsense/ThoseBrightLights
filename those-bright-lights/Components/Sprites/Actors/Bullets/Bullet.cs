@@ -142,7 +142,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Bullets
                 default:
                     if (Parent == other) return;
                     Health -= other.Damage;
-                    _impactSound?.Play();
+                    ImpactSound?.Play();
                     break;
             }
         }

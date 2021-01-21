@@ -121,13 +121,13 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
                 {
                     if (FlippedHorizontal) return;
                     _animationHandler.SpriteEffects = SpriteEffects.FlipVertically;
-                    InvokeOnFlippedChange();
+                    InvokeOnFlippedChanged();
                     
                 }
                 else if (FlippedHorizontal)
                 {
                     _animationHandler.SpriteEffects = SpriteEffects.None;
-                    InvokeOnFlippedChange();
+                    InvokeOnFlippedChanged();
                 }
             }
         }
@@ -291,34 +291,34 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
             switch (other)
             {
                 case Bullet b:
-                    _lastAggressor = b.Parent;
-                    _tool = b;
+                    LastAggressor = b.Parent;
+                    Tool = b;
                     // bullet shouldn't damage it's parent
                     if (this == b.Parent) return;
                     Health -= b.Damage;
-                    _impactSound?.Play();
+                    ImpactSound?.Play();
                     break;
                 case Tile t :
-                    _lastAggressor = t;
-                    _tool = t;
+                    LastAggressor = t;
+                    Tool = t;
                     ApproachDestination(t, 100);
                     Velocity = Vector2.Zero;
                     Health -= Velocity.Length()/MaxSpeed * t.Damage;
-                    _impactSound?.Play();
+                    ImpactSound?.Play();
                     break;
                 case PowerUp p:
-                    _lastAggressor = p;
-                    _tool = p;
+                    LastAggressor = p;
+                    Tool = p;
                     ProcessPowerUp(p);
                     break;
                 case Spaceship s:
-                    _lastAggressor = s;
-                    _tool = s;
+                    LastAggressor = s;
+                    Tool = s;
                     Health -= s.Damage;
                     Velocity = Vector2.Zero;
                     if(this is Enemy && !(this is Boss))
                         ApproachDestination(other, 100);
-                    _impactSound?.Play();
+                    ImpactSound?.Play();
                     break;
             }
             _impactPolygon = null;
