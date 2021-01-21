@@ -50,7 +50,7 @@ namespace SE_Praktikum.Extensions
         /// <returns></returns>
         public static Polygon ToPolygon(this Rectangle rectangle)
         {
-            Polygon r = new Polygon(
+            var r = new Polygon(
                 new Vector2(rectangle.X, rectangle.Y),
                 new Vector2(rectangle.Width/2f, rectangle.Height/2f),
                 0,
@@ -96,7 +96,7 @@ namespace SE_Praktikum.Extensions
         public static Polygon[] MirrorHorizontal(this Polygon[] polygonArray, Vector2 mirrorPoint)
         {
             var newPolygonArray = new Polygon[polygonArray.Length];
-            for (int i = 0; i < newPolygonArray.Length; i++)
+            for (var i = 0; i < newPolygonArray.Length; i++)
             {
                 newPolygonArray[i] = polygonArray[i].MirrorSingleHorizontal(mirrorPoint);
             }
@@ -107,17 +107,16 @@ namespace SE_Praktikum.Extensions
         public static Polygon[] MirrorVertical(this Polygon[] polygonArray, Vector2 mirrorPoint)
         {
             var newPolygonArray = new Polygon[polygonArray.Length];
-            for (int i = 0; i < newPolygonArray.Length; i++)
+            for (var i = 0; i < newPolygonArray.Length; i++)
             {
                 newPolygonArray[i] = polygonArray[i].MirrorSingleVertical(mirrorPoint);
             }
 
             return newPolygonArray;
         }
-        
-        
 
-        public static Polygon MirrorSingleHorizontal(this Polygon p, Vector2 mirrorPoint)
+
+        private static Polygon MirrorSingleHorizontal(this Polygon p, Vector2 mirrorPoint)
         {
             var mirroredPolygon = (Polygon) p.Clone();
             var newVertices = mirroredPolygon.Vertices.Select(point => new Vector2(-point.X, point.Y)).ToList();
