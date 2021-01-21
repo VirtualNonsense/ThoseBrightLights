@@ -126,8 +126,8 @@ namespace SE_Praktikum.Services.Factories
                     new List<Vector2>
                     {
                         new Vector2(0, 0),
-                        new Vector2(100, -300),
-                        new Vector2(100, 300),
+                        new Vector2(1000, -300),
+                        new Vector2(1000, 300),
                     }),
                 propulsionHandler,
                 impactSound: impactSound)
