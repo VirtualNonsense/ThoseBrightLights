@@ -72,9 +72,13 @@ namespace SE_Praktikum.Core
         public Vector3 Position
         {
             get => _position;
-            set => _position = value;
+            set
+            {
+                _position = value;
+                if (_target != null)
+                    _logger.Warn($"camera won't be moved because it's still following {_target}");
+            }
         }
-        
         /// <summary>
         /// determines the area covered by the camera
         /// Set value in degrees
