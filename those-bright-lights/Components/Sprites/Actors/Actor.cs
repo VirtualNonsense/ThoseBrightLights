@@ -33,7 +33,7 @@ namespace SE_Praktikum.Components.Sprites.Actors
         /// <param name="maxHealth"></param>
         /// <param name="impactDamage"></param>
         /// <param name="indestructible"></param>
-        public Actor(AnimationHandler animationHandler,
+        protected Actor(AnimationHandler animationHandler,
                      SoundEffect impactSound,
                      float health = 100,
                      float? maxHealth = 100,
@@ -121,11 +121,10 @@ namespace SE_Praktikum.Components.Sprites.Actors
                 InvokeOnInvincibilityChanged();
             }
         }
+        
         // #############################################################################################################
         // Public Methods
         // #############################################################################################################
-
-
         public virtual void InterAct(Actor other)
         {
             if(InteractAble(other))
@@ -134,6 +133,7 @@ namespace SE_Praktikum.Components.Sprites.Actors
             if(other.InteractAble(this))
                 other.ExecuteInteraction(this);
         }
+        
         // #############################################################################################################
         // Protected/ Private Methods
         // #############################################################################################################
