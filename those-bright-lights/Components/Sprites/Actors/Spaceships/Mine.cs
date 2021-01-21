@@ -28,6 +28,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
             bool indestructible = false) : base(animationHandler, health: health)
         {
             Explosion = explosion;
+            Damage = impactDamage;
         }
 
         // #############################################################################################################
