@@ -178,7 +178,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Weapons
         /// <summary>
         /// Use this to Reload the gun manually
         /// </summary>
-        public virtual void Reload()
+        public void Reload()
         {
             if (_reloadDownTime.CastingInProgress) return;
             _reloadSoundEffect?.Play();
@@ -210,19 +210,19 @@ namespace SE_Praktikum.Components.Sprites.Actors.Weapons
             Clips--;
         }
 
-        protected virtual void InvokeOnClipEmpty()
+        private void InvokeOnClipEmpty()
         {
             _clipEmptySound?.Play();
             OnClipEmpty?.Invoke(this, EventArgs.Empty);
         }
 
-        protected virtual void InvokeOnWeaponEmpty()
+        private void InvokeOnWeaponEmpty()
         {
             _weaponEmptySound?.Play();
             OnWeaponEmpty?.Invoke(this, EventArgs.Empty);
         }
 
-        protected virtual void OnOnAmmoUsageChanged()
+        private void OnOnAmmoUsageChanged()
         {
             OnAmmoUsageChanged?.Invoke(this, EventArgs.Empty);
         }
