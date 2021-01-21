@@ -31,14 +31,14 @@ namespace SE_Praktikum.Components.Sprites.Actors
             switch(other)
             {
                 case Bullet b:
-                    _tool = b;
-                    _lastAggressor = b.Parent;
+                    Tool = b;
+                    LastAggressor = b.Parent;
                     Health -= b.Damage;
                     break;
                 
                 case Spaceship s:
                     IsRemoveAble = true;
-                    _impactSound?.Play();
+                    ImpactSound?.Play();
                     break;
             }
         }

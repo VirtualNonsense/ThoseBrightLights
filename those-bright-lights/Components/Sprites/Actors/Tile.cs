@@ -23,7 +23,7 @@ namespace SE_Praktikum.Components.Sprites.Actors
         {
             _logger = LogManager.GetCurrentClassLogger();
             SetTileModifier(tileModifier);
-            _indestructible = true;
+            Indestructible = true;
             _animationHandler.PointOfRotation =
                 new Vector2(_animationHandler.FrameWidth / 2f, _animationHandler.FrameHeight / 2f);
 
@@ -74,17 +74,17 @@ namespace SE_Praktikum.Components.Sprites.Actors
         // Interaction with bullets and the ship
         protected override void ExecuteInteraction(Actor other)
         {
-            if (_indestructible) return;
+            if (Indestructible) return;
             switch (other)
             {
                 case Bullet b:
-                    _lastAggressor = b;
-                    _tool = b;
+                    LastAggressor = b;
+                    Tool = b;
                     Health -= b.Damage;
                     break;
                 case Spaceship s:
-                    _lastAggressor = s;
-                    _tool = s;
+                    LastAggressor = s;
+                    Tool = s;
                     Health -= s.Damage;
                     break;
             }

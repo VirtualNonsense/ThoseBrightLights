@@ -11,15 +11,15 @@ namespace SE_Praktikum.Components.Sprites.Actors
 {
     public abstract class Actor : Sprite
     {
-        protected Actor _lastAggressor;
-        protected Actor _tool;
-        protected bool _indestructible;
+        protected Actor LastAggressor;
+        protected Actor Tool;
+        private bool _indestructible;
         protected Particle Explosion;
         private float _health;
         private float _maxHealth;
-        public bool CollisionEnabled = true;
-        private Logger _logger;
-        protected SoundEffect _impactSound;
+        public readonly bool CollisionEnabled = true;
+        private readonly Logger _logger;
+        protected SoundEffect ImpactSound;
         
         // #############################################################################################################
         // Constructor
@@ -43,7 +43,7 @@ namespace SE_Praktikum.Components.Sprites.Actors
             MaxHealth = maxHealth ?? health;
             Health = health;
             _logger = LogManager.GetCurrentClassLogger();
-            _impactSound = impactSound;
+            ImpactSound = impactSound;
             _indestructible = indestructible;
             Damage = impactDamage;
         }
@@ -198,7 +198,7 @@ namespace SE_Praktikum.Components.Sprites.Actors
 
         #region EventInvoker
 
-        protected virtual void InvokeExplosion()
+        protected void InvokeExplosion()
         {
             Explosion.Position = Position;
             Explosion.Layer = Layer;
@@ -209,32 +209,32 @@ namespace SE_Praktikum.Components.Sprites.Actors
         protected virtual void InvokeDeath()
         {
             var e = GetOnDeadEventArgs();
-            e.Aggressor = _lastAggressor;
-            e.Tool = _tool;
+            e.Aggressor = LastAggressor;
+            e.Tool = Tool;
             e.Victim = this;
             OnDeath?.Invoke(this, e);
         }
 
         protected abstract LevelEventArgs.ActorDiedEventArgs GetOnDeadEventArgs();
 
-        protected virtual void InvokeOnHealthChanged()
+        private void InvokeOnHealthChanged()
         {
             OnHealthChanged?.Invoke(this, EventArgs.Empty);
         }
 
-        protected virtual void InvokeOnMaxHealthChanged()
+        private void InvokeOnMaxHealthChanged()
         {
             OnMaxHealthChanged?.Invoke(this, EventArgs.Empty);
         }
         
-        protected virtual void InvokeOnFlippedChange()
+        protected void InvokeOnFlippedChanged()
         {
             OnFlippedChanged?.Invoke(this, EventArgs.Empty);
         }
 
         #endregion
 
-        protected virtual void InvokeOnInvincibilityChanged()
+        private void InvokeOnInvincibilityChanged()
         {
             OnInvincibilityChanged?.Invoke(this, new LevelEventArgs.InvincibilityChangedEventArgs(){Target = this});
         }

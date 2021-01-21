@@ -33,7 +33,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
                       SoundEffect impactSound = null) 
             : base(animationHandler, viewbox, maxSpeed, acceleration, health: health, maxHealth: maxHealth)
         {
-            _impactSound = impactSound;
+            ImpactSound = impactSound;
             _logger = LogManager.GetCurrentClassLogger();
             RotateWeapon = true;
         }
