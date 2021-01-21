@@ -2,7 +2,6 @@
 using System.Runtime.CompilerServices;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
-using SE_Praktikum.Components.Actors;
 using SE_Praktikum.Components.Sprites.Actors;
 using SE_Praktikum.Components.Sprites.Actors.Weapons;
 using SE_Praktikum.Models;

@@ -2,7 +2,6 @@
 using System.Reactive.Concurrency;
 using Microsoft.Xna.Framework;
 using NLog;
-using SE_Praktikum.Components.Actors;
 using SE_Praktikum.Components.Sprites.Actors;
 
 namespace SE_Praktikum.Extensions

@@ -55,14 +55,12 @@ namespace SE_Praktikum.Core.GameStates
             var soundEffectVolumeLabel = _factory.GetTextBoxByTiles(6, 1, Vector2.Zero, Color.Black, "FX Volume", _screen.Camera);
             
             var musicVolumeSlider = _factory.GetSlider(_saveGameHandler.SaveGame.musicVolume, 0 , 1, Vector2.Zero, width, _screen.Camera);
-            // TODO: SaveRoutine!
             musicVolumeSlider.OnValueChanged += (sender, args) => {
                 _saveGameHandler.SaveGame.musicVolume = musicVolumeSlider.Value;
                 MediaPlayer.Volume = musicVolumeSlider.Value;
             };
             
             var soundEffectVolumeSlider = _factory.GetSlider( _tmpSoundFxVolume,0 , 1, Vector2.Zero, width, _screen.Camera);
-            // TODO: SaveRoutine!
             soundEffectVolumeSlider.OnValueChanged += (sender, args) =>
             {
                 _tmpSoundFxVolume = soundEffectVolumeSlider.Value;
