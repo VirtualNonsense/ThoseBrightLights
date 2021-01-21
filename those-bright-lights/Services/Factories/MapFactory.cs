@@ -62,7 +62,7 @@ namespace SE_Praktikum.Services.Factories
                 }
                 catch (Exception e)
                 {
-                    _logger.Error(e);
+                    _logger.Error($"failed to load map at: {path}. Full log:\n{e}");
                     throw;
                 }
             }
