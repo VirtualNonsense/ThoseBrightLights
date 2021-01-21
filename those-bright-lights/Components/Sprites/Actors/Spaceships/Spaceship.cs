@@ -360,7 +360,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
                     break;
                 
                 case WeaponPowerUp r:
-                    foreach(var e in r.Weaponlist)
+                    foreach(var e in r.WeaponList)
                     {
                         AddWeapon(e);
                     }
