@@ -28,7 +28,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
                       Polygon viewbox,
                       float maxSpeed = 3,
                       float acceleration = 0,
-                      float health = 50,
+                      float health = 20,
                       float maxHealth = 50,
                       SoundEffect impactSound = null) 
             : base(animationHandler, viewbox, maxSpeed, acceleration, health: health, maxHealth: maxHealth)
