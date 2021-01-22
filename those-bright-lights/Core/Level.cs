@@ -358,6 +358,7 @@ namespace SE_Praktikum.Core
         private void InvokeOnLevelComplete()
         {
             _logger.Debug("LEVEL COMPLETE!");
+            MediaPlayer.Stop();
             OnLevelComplete?.Invoke(this, EventArgs.Empty);
         }
 
@@ -582,6 +583,7 @@ namespace SE_Praktikum.Core
 
         protected virtual void InvokeOnPlayerDead()
         {
+            MediaPlayer.Stop();
             OnPlayerDead?.Invoke(this, EventArgs.Empty);
         }
     }
