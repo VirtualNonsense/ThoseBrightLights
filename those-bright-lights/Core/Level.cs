@@ -42,6 +42,8 @@ namespace SE_Praktikum.Core
         private readonly AnimationHandlerFactory _animationHandlerFactory;
         private readonly ParticleFactory _particleFactory;
 
+        private Song _invincibilitySong;
+
         public Sprite _winningScreen;
         public Sprite _gameOverScreen;
         public Sprite _levelClearedScreen;
@@ -189,6 +191,9 @@ namespace SE_Praktikum.Core
             {
                 MediaPlayer.Play(_song);
             }
+            else
+                MediaPlayer.Stop();
+            
             // loading map
             _map = _mapFactory.LoadMap(_mapPath);
             if(_map.WinningZone != null)
@@ -223,6 +228,9 @@ namespace SE_Praktikum.Core
             _components.Add(player);
             SpawnPowerUps(player.Layer);
             SpawnEnemies(player.Layer);
+            
+            // loading remaining songs and effects
+            _invincibilitySong = contentManager.Load<Song>("Audio/Sound_effects/PowerUps/Invincible");
             
             // loading end screens
             var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\gameOver_48_27.json", 0);
@@ -297,11 +305,16 @@ namespace SE_Praktikum.Core
                 case LevelEventArgs.InvincibilityChangedEventArgs i:
                     if (i.Target.Indestructible)
                     {
+                        MediaPlayer.Play(_invincibilitySong);
                         if(_emitter.TargetZones.Contains(i.Target))
                             return;
                         _emitter.TargetZones.Add(i.Target);
                         return;
                     }
+                    if(_song != null)
+                        MediaPlayer.Play(_song);
+                    else
+                        MediaPlayer.Stop();
                     if(!_emitter.TargetZones.Contains(i.Target))
                         return;
                     _emitter.TargetZones.Remove(i.Target);
