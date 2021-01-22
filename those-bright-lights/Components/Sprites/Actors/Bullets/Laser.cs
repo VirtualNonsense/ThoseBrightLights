@@ -46,7 +46,6 @@ namespace SE_Praktikum.Components.Sprites.Actors.Bullets
             Acceleration = 0;
             _spaceShipVelocity = Vector2.Zero;
             MaxTime = 5;
-            Damage = 5;
             MidAirSoundCooldown = 1000;
             TimeSinceUsedMidAir = MidAirSoundCooldown;
         }
