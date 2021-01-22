@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 using NLog;
 using SE_Praktikum.Components;
 using SE_Praktikum.Components.Controls;
@@ -93,6 +94,7 @@ namespace SE_Praktikum.Core.GameStates
                 _screen.Camera);
             backButton.Click += (sender, args) =>
             {
+                MediaPlayer.Stop();
                 _logger.Debug("Back to main menu");
                 _subject.OnNext(GameStateMachine.GameStateMachineTrigger.Back);
             };
