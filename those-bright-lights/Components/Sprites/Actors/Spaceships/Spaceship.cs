@@ -186,7 +186,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
             base.Draw(spriteBatch);
         }
 
-        public virtual void AddWeapon(Weapon weapon)
+        public void AddWeapon(Weapon weapon)
         {
             weapon.Parent = this;
             weapon.OnEmitBullet += EmitBulletToOnShot;
@@ -208,7 +208,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
             _indexOfWeaponsOfTheSameType = CurrentWeapons.Count - 1;
         }
 
-        protected virtual void RemoveWeapon(Weapon weapon)
+        protected void RemoveWeapon(Weapon weapon)
         {
             if (!AllWeapons.Contains(weapon)) return;
             weapon.OnEmitBullet -= EmitBulletToOnShot;
@@ -223,7 +223,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
         // #############################################################################################################
         // protected / private Methods
         // #############################################################################################################
-        protected virtual void ShootCurrentWeapon()
+        protected void ShootCurrentWeapon()
         {
             if (AllWeapons.Count == 0) return;
             var previousWeapon = ((_indexOfWeaponsOfTheSameType - 1) +CurrentWeapons.Count)% CurrentWeapons.Count;
@@ -243,7 +243,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
                 weapon.Fire();
         }
         
-        protected virtual void InvokeOnWeaponChanged()
+        protected void InvokeOnWeaponChanged()
         {
             OnWeaponChanged?.Invoke(this, EventArgs.Empty);
         }
@@ -360,7 +360,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
                     break;
                 
                 case WeaponPowerUp r:
-                    foreach(var e in r.Weaponlist)
+                    foreach(var e in r.WeaponList)
                     {
                         AddWeapon(e);
                     }

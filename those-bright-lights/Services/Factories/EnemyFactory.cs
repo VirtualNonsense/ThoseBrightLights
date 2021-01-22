@@ -29,7 +29,7 @@ namespace SE_Praktikum.Services.Factories
             _particleFactory = particleFactory;
         }
 
-         public Alienship GetAlienShip()
+         public AlienShip GetAlienShip()
          {
              var impactSound = _contentManager.Load<SoundEffect>("Audio/Sound_Effects/Collusion/alien_impact");
              var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\alien_ship_65_65_4.json",0);
@@ -45,7 +45,7 @@ namespace SE_Praktikum.Services.Factories
                          75f,
                          isLooping: true)
                  }));
-             var e = new Alienship(_animationHandlerFactory.GetAnimationHandler(tileSet, animationSettings),
+             var e = new AlienShip(_animationHandlerFactory.GetAnimationHandler(tileSet, animationSettings),
                   viewBox:new Polygon(Vector2.Zero, Vector2.Zero, 0,
                       new List<Vector2>
                       {

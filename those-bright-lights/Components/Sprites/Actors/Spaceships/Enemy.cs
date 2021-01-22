@@ -80,7 +80,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
         // #############################################################################################################
         // protected/private Methods
         // #############################################################################################################
-        protected virtual void _shootTarget()
+        protected void _shootTarget()
         {
             if (InterAction != InterAction.InView || Target == null) return;
             var rotation = Rotation;

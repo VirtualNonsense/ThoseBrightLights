@@ -6,7 +6,7 @@ using SE_Praktikum.Services.Abilities;
 
 namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
 {
-    public class Alienship : EnemyWithViewbox
+    public class AlienShip : EnemyWithViewbox
     {
         // #############################################################################################################
         // Constructor
@@ -25,7 +25,7 @@ namespace SE_Praktikum.Components.Sprites.Actors.Spaceships
         /// <param name="maxHealth"></param>
         /// <param name="impactDamage"></param>
         /// <param name="impactSound"></param>
-        public Alienship(AnimationHandler animationHandler,
+        public AlienShip(AnimationHandler animationHandler,
                          Polygon viewBox,
                          AnimationHandler propulsion,
                          float maxSpeed = 3,

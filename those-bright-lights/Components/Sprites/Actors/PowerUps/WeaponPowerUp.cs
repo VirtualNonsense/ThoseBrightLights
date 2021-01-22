@@ -8,10 +8,10 @@ namespace SE_Praktikum.Components.Sprites.Actors.PowerUps
     // Weapon power up
     public class WeaponPowerUp : PowerUp
     {
-        public List <Weapon> Weaponlist;
-        public WeaponPowerUp(AnimationHandler animationHandler, List <Weapon> weaponlist, float health = 0.01f, SoundEffect soundEffect = null) : base(animationHandler, health, soundEffect)
+        public readonly List <Weapon> WeaponList;
+        public WeaponPowerUp(AnimationHandler animationHandler, List <Weapon> weaponList, float health = 0.01f, SoundEffect soundEffect = null) : base(animationHandler, health, soundEffect)
         {
-            Weaponlist = weaponlist;
+            WeaponList = weaponList;
         }
     }
 }
