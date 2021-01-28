@@ -1,0 +1,22 @@
+{ "columns":4,
+ "editorsettings":
+    {
+     "export":
+        {
+         "format":"",
+         "target":"."
+        }
+    },
+ "image":"..\/..\/Artwork\/Weapons\/bossweaponFire_20_16_4.png",
+ "imageheight":16,
+ "imagewidth":80,
+ "margin":0,
+ "name":"bossweaponFire_20_16_4",
+ "spacing":0,
+ "tilecount":4,
+ "tiledversion":"1.4.3",
+ "tileheight":16,
+ "tilewidth":20,
+ "type":"tileset",
+ "version":1.4
+}

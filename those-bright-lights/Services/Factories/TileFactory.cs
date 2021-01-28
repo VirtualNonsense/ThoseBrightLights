@@ -1,24 +1,32 @@
 ﻿using Microsoft.Xna.Framework;
 using NLog;
 using NVorbis.Ogg;
-using SE_Praktikum.Components.Sprites;
 using SE_Praktikum.Models;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using SE_Praktikum.Components.Sprites.Actors;
+using SE_Praktikum.Extensions;
 
 namespace SE_Praktikum.Services.Factories
 {
+    /// <summary>
+    /// created this field because I need to build tiles from tiled
+    /// </summary>
     public class TileFactory
     {
+        // Fields
         private ILogger _logger;
         private readonly AnimationHandlerFactory _factory;
 
+        // Constructor
         public TileFactory(AnimationHandlerFactory factory)
         {
             _factory = factory;
             _logger = LogManager.GetCurrentClassLogger();
         }
+
+        // Build a tile from desired tilesets
         public Tile GenerateTile(uint index, Vector2 position, float layer, List<TileSet> tilesets, float opacity, int width, int height)
         {
             var t = DecodeIndex(index);
@@ -27,20 +35,34 @@ namespace SE_Praktikum.Services.Factories
             {
                 if (index > tileset.StartEntry + tileset.Tiles-1)
                     continue;
-                var settings = new AnimationSettings(new List<(int, float)>{((int)index, 1f)}, isPlaying:false, opacity: opacity, layer: layer);
-                var handler = _factory.GetAnimationHandler(tileset, settings);
+                var indestructable = true;
+                var tileInfo = tileset.GetInfo((int)index);
+                if (tileInfo != null)
+                    indestructable = !tileInfo.Destructable;
+                var settings = new AnimationSettings(new List<(int, float)> {((int) index, 1f)}, isPlaying: false,
+                    opacity: opacity, layer: layer);
+                var handler = _factory.GetAnimationHandler(tileset, new List<AnimationSettings>(new[] {settings}),
+                    origin: Vector2.Zero);
                 handler.Position = position;
-                return new Tile(handler, t.Item1);
+                return new Tile(handler, t.Item1){Indestructible = indestructable, MaxHealth = 20, Health = 20};
                 
-                // return new Tile(tileset.Texture, tileset.GetFrame(index), position, layer, opacity, width, height, t.Item1);
+                
 
             }
 
             _logger.Warn("Tile not found!");
             throw new ArgumentOutOfRangeException();
         }
-
-        public List<Tile> GenerateTiles(List<uint> indices, float layer, List<TileSet> tilelist, int tilewidth, int tileheight, int rows, int columns, float layerOpacity)
+        // Better performance for tile generation with quadtree
+        public QuadTree<Tile> GenerateTiles(List<uint> indices,
+            float layer,
+            List<TileSet> tilelist,
+            int tilewidth,
+            int tileheight,
+            int rows,
+            int columns,
+            float layerOpacity,
+            Rectangle area)
         {
 
             if (indices.Count > rows * columns)
@@ -48,7 +70,7 @@ namespace SE_Praktikum.Services.Factories
                 _logger.Error("Indices out of range");
                 throw new IndexOutOfRangeException();
             }
-            List<Tile> list = new List<Tile>();
+            QuadTree<Tile> list = new QuadTree<Tile>(area);
             int row = 0;
             int column = 0;
 
@@ -57,7 +79,13 @@ namespace SE_Praktikum.Services.Factories
                 if (index != 0)
                 {
                     var p = new Vector2(column * tilewidth, row * tileheight);
-                    list.Add(GenerateTile(index, p, layer, tilelist, layerOpacity, tileheight, tilewidth));
+                    var tile = GenerateTile(index, p, layer, tilelist, layerOpacity, tileheight, tilewidth);
+                    tile.OnDeath += (sender, args) =>
+                    {
+                        list.Remove((Tile)sender);
+                    };
+                    var hitbox = tile.HitBox == null ? tile.Rectangle : tile.HitBox.GetBoundingRectangle();
+                    list.Insert(hitbox,tile);
                 }
                 column++;
                 if(column >= columns)
@@ -75,6 +103,12 @@ namespace SE_Praktikum.Services.Factories
             return list;
         }
 
+        private void Tile_OnDeath(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        // Get the orientaion from tile indices (last numbers of 32 bit reprentation)
         private (TileModifier, uint) DecodeIndex(uint codedIndex)
         {
             var mbits = (codedIndex >> 28);

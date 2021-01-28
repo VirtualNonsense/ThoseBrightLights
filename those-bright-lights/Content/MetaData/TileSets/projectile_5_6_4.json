@@ -1,0 +1,14 @@
+{ "columns":4,
+ "image":"..\/..\/Artwork\/Effects\/projectile_5_6_4.png",
+ "imageheight":6,
+ "imagewidth":20,
+ "margin":0,
+ "name":"projectile_5_6_4",
+ "spacing":0,
+ "tilecount":4,
+ "tiledversion":"1.4.3",
+ "tileheight":6,
+ "tilewidth":5,
+ "type":"tileset",
+ "version":1.4
+}

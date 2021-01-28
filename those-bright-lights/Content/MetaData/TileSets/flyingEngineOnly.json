@@ -1,0 +1,14 @@
+{ "columns":6,
+ "image":"..\/..\/Artwork\/Actors\/flyingEngineOnly.png",
+ "imageheight":25,
+ "imagewidth":90,
+ "margin":0,
+ "name":"flyingEngineOnly",
+ "spacing":0,
+ "tilecount":6,
+ "tiledversion":"1.4.3",
+ "tileheight":25,
+ "tilewidth":15,
+ "type":"tileset",
+ "version":1.4
+}

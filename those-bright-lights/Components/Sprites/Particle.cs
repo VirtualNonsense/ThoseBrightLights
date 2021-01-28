@@ -1,18 +1,16 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using SE_Praktikum.Models;
-using SE_Praktikum.Services;
-using SE_Praktikum.Services.Factories;
+﻿using SE_Praktikum.Services;
 
-namespace SE_Praktikum.Components.Sprites
+namespace SE_Praktikum.Components
 {
     public abstract class Particle : Sprite
     {
-        private IScreen _parent;
-
-        public Particle(AnimationHandler animationHandler, IScreen Parent) : base(animationHandler)
+        /// <summary>
+        /// simple visual effect class
+        /// use this to draw e.g. explosion particle etc.
+        /// </summary>
+        /// <param name="animationHandler"></param>
+        protected Particle(AnimationHandler animationHandler) : base(animationHandler)
         {
-            _parent = Parent;
         }
 
 

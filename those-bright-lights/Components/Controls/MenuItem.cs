@@ -16,6 +16,9 @@ namespace SE_Praktikum.Components.Controls
         public Vector2 _position;
         public Vector2 _origin;
 
+        // #############################################################################################################
+        // constructor
+        // #############################################################################################################
         public MenuItem(List<AnimationHandler> handler, Camera camera)
         {
             _handler = handler;
@@ -27,7 +30,10 @@ namespace SE_Praktikum.Components.Controls
             // consider rewriting it....
             Frame = GetRectangle();
         }
-
+        // #############################################################################################################
+        // Properties
+        // #############################################################################################################
+        public bool IsRemoveAble { get; set; }
         public virtual Vector2 Position
         {
             get => _position;
@@ -50,12 +56,12 @@ namespace SE_Praktikum.Components.Controls
 
         public virtual float Layer
         {
-            get => _handler.First().Settings.Layer;
+            get => _handler.First().Layer;
             set
             {
                 foreach (var animationHandler in _handler)
                 {
-                    animationHandler.Settings.Layer = value;
+                    animationHandler.Layer = value;
                 }
             }
         }
@@ -64,7 +70,21 @@ namespace SE_Praktikum.Components.Controls
         
         protected Vector2 Offset => _position - _origin;
         
+        // #############################################################################################################
+        // public methods
+        // #############################################################################################################
+        public  abstract void Draw(SpriteBatch spriteBatch);
         
+        public abstract void Update(GameTime gameTime);
+        
+        
+        // #############################################################################################################
+        // private methods
+        // #############################################################################################################
+        /// <summary>
+        /// This Method updates the position of all Rectangles in the background and returns the combined area as rectangle
+        /// </summary>
+        /// <returns></returns>
         private Rectangle GetRectangle()
         {
             // making sure an intersection between r and the other is impossible.
@@ -82,9 +102,5 @@ namespace SE_Praktikum.Components.Controls
             }
             return r;
         }
-        
-        public  abstract void Draw(GameTime gameTime, SpriteBatch spriteBatch);
-        public abstract void Update(GameTime gameTime);
-        public bool IsRemoveAble { get; set; }
     }
 }

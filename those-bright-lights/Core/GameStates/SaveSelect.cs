@@ -11,20 +11,28 @@ namespace SE_Praktikum.Core.GameStates
 {
     public class SaveSelect : GameState
     {
+        // Fields
+        private readonly IGameEngine _engine;
         private readonly IScreen _screen;
         private readonly ControlElementFactory _factory;
+        private readonly ISaveGameHandler _saveGameHandler;
         private ComponentGrid _components;
         private Logger _logger;
 
-        public SaveSelect(IScreen screen, ControlElementFactory factory)
+        // Constructor
+        public SaveSelect(IGameEngine engine, IScreen screen, ControlElementFactory factory, ISaveGameHandler saveGameHandler)
         {
             _logger = LogManager.GetCurrentClassLogger();
+            _engine = engine;
             _screen = screen;
             _factory = factory;
+            _saveGameHandler = saveGameHandler;
         }
         
+        // In LoadContent are the 3 different states with the representative buttons
         public override void LoadContent()
         {
+            // Arrangement
             if (!(_components is null))
                 return;
             var center = new Vector2(0, 0);
@@ -36,13 +44,67 @@ namespace SE_Praktikum.Core.GameStates
             var bWidth = width / 3;
             var bHeight = height / 3;
 
+            var slotExists = _saveGameHandler.SaveExists(SaveSlot.Slot1);
 
-            var slots1 = _factory.GetButton(bWidth, bHeight, Vector2.Zero, "Slot 1", _screen.Camera);
-            slots1.Click += (sender, args) => { _logger.Trace("slot one selected"); _subject.OnNext(GameStateMachine.GameStateMachineTrigger.SaveSlotSelected); };
-            var slots2 = _factory.GetButton(bWidth, bHeight, Vector2.Zero, "Slot 2", _screen.Camera);
-            slots2.Click += (sender, args) => { _logger.Trace("slot one selected"); _subject.OnNext(GameStateMachine.GameStateMachineTrigger.SaveSlotSelected); };
-            var slots3 = _factory.GetButton(bWidth, bHeight, Vector2.Zero, "Slot 3", _screen.Camera);
-            slots3.Click += (sender, args) => { _logger.Trace("slot one selected"); _subject.OnNext(GameStateMachine.GameStateMachineTrigger.SaveSlotSelected); };
+            // Button "one" - the print also changes when complete new game or a "Slot 1" when saving has been done
+            var slots1 = _factory.GetButton(bWidth, bHeight, Vector2.Zero, slotExists ? "Slot 1" : "New Game", _screen.Camera);
+            slots1.Click += (sender, args) => 
+            { 
+
+                _logger.Trace("slot one selected");
+                _saveGameHandler.SaveSlot = SaveSlot.Slot1;
+
+                if (_saveGameHandler.SaveExists(SaveSlot.Slot1))
+                {
+                    _saveGameHandler.Load();
+                }
+                else
+                {
+                    _saveGameHandler.CreateSave();
+                    _saveGameHandler.Save();
+                }
+                _subject.OnNext(GameStateMachine.GameStateMachineTrigger.SaveSlotSelected);
+            };
+
+            slotExists = _saveGameHandler.SaveExists(SaveSlot.Slot2);
+
+            // Button "two" - similiar idea to button "one"
+            var slots2 = _factory.GetButton(bWidth, bHeight, Vector2.Zero, slotExists ? "Slot 2" : "New Game", _screen.Camera);
+            slots2.Click += (sender, args) => 
+            { 
+                _logger.Trace("slot two selected");
+                _saveGameHandler.SaveSlot = SaveSlot.Slot2;
+                if (_saveGameHandler.SaveExists(SaveSlot.Slot2))
+                {
+                    _saveGameHandler.Load();
+                }
+                else
+                {
+                    _saveGameHandler.CreateSave();
+                    _saveGameHandler.Save();
+                }
+                _subject.OnNext(GameStateMachine.GameStateMachineTrigger.SaveSlotSelected); 
+            };
+
+            slotExists = _saveGameHandler.SaveExists(SaveSlot.Slot3);
+
+            // Button "three" - similiar idea to button "one"
+            var slots3 = _factory.GetButton(bWidth, bHeight, Vector2.Zero, slotExists ? "Slot 3" : "New Game", _screen.Camera);
+            slots3.Click += (sender, args) => 
+            { 
+                _logger.Trace("slot three selected");
+                _saveGameHandler.SaveSlot = SaveSlot.Slot3;
+                if (_saveGameHandler.SaveExists(SaveSlot.Slot3))
+                {
+                    _saveGameHandler.Load();
+                }
+                else
+                {
+                    _saveGameHandler.CreateSave();
+                    _saveGameHandler.Save();
+                }
+                _subject.OnNext(GameStateMachine.GameStateMachineTrigger.SaveSlotSelected); 
+            };
 
             _components.Add(slots1);
             _components.Add(slots2);
@@ -50,6 +112,7 @@ namespace SE_Praktikum.Core.GameStates
 
         }
 
+        // Monogame functions
         public override void UnloadContent()
         {
             _components = null;
@@ -67,19 +130,9 @@ namespace SE_Praktikum.Core.GameStates
         {
         }
 
-        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        public override void Draw()
         {
-            spriteBatch.Begin(SpriteSortMode.FrontToBack,
-                null,
-                SamplerState.PointClamp, // Sharp Pixel rendering
-                null,
-                RasterizerState.CullCounterClockwise, // Render only the texture side that faces the camara to boost performance 
-                _screen.Camera.GetCameraEffect());
-            foreach (var component in _components)
-            {
-                component.Draw(gameTime, spriteBatch);
-            }
-            spriteBatch.End();
+            _engine.Render(_components);
         }
     }
 }

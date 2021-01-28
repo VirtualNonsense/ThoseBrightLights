@@ -1,20 +1,21 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using SE_Praktikum.Models;
 using SE_Praktikum.Services;
-using SE_Praktikum.Services.Factories;
 
 namespace SE_Praktikum.Components.Sprites
 {
     public class ExplosionsParticle : Particle
     {
-        private readonly IScreen _parent;
-
-        public ExplosionsParticle(AnimationHandler animationHandler, IScreen Parent) : base(animationHandler, Parent)
+        /// <summary>
+        /// Simple class that represent an explosion
+        /// It will remove itself when the animation finished playing
+        /// </summary>
+        /// <param name="animationHandler"></param>
+        /// <param name="parent"></param>
+        public ExplosionsParticle(AnimationHandler animationHandler, IScreen parent) : base(animationHandler)
         {
             _animationHandler.OnAnimationComplete += AnimationHandlerOnOnAnimationComplete;
-            _parent = Parent;
         }
 
         private void AnimationHandlerOnOnAnimationComplete(object sender, EventArgs e)
@@ -30,7 +31,7 @@ namespace SE_Praktikum.Components.Sprites
 
         public override Particle Clone()
         {
-            return this.MemberwiseClone() as Particle;
+            return MemberwiseClone() as Particle;
         }
     }
 }

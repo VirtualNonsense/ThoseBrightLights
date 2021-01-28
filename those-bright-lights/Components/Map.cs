@@ -1,59 +1,94 @@
 ﻿using SE_Praktikum.Models;
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Text;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using SE_Praktikum.Components.Sprites;
-using System.Data;
 using System.Linq;
-using SE_Praktikum.Models.Tiled;
+using SE_Praktikum.Components.Sprites.Actors;
+using SE_Praktikum.Components.Sprites.Actors.Spaceships;
 
 namespace SE_Praktikum.Components
 {
-    public class Map: IComponent, IEnumerable<Tile>
+    public class Map
     {
-        private List<Tile> _tiles;
+        //fields
+        private Dictionary<float, QuadTree<Tile>> _tileContainer;
+
+        public Rectangle Area { get; }
         
-        public float TopLayer { get; }
+        public float TopLayer => _tileContainer.Keys.Max();
 
+        public Polygon PlayerSpawnPoint;
 
-        public Map (List<Tile> tileses)
+        public List<(EnemyType,Vector2)> EnemySpawnpoints;
+
+        public List<(PowerUpType, Vector2)> PowerUpSpawnpoints;
+
+        public EventZone WinningZone { get; set; }
+
+        //Constructor
+        public Map (Dictionary<float, QuadTree<Tile>> tiles, Rectangle area, EventZone winningZone, List<(EnemyType, Vector2)> enemySpawnPoints, List<(PowerUpType, Vector2)> powerUpSpawnpoints)
         {
-            _tiles = tileses;
-            TopLayer = 0;
-            foreach (var tile in _tiles.Where(tile => TopLayer < tile.Layer))
+            _tileContainer = tiles;
+            Area = area;
+            WinningZone = winningZone;
+            EnemySpawnpoints = enemySpawnPoints;
+            PowerUpSpawnpoints = powerUpSpawnpoints;
+            if (winningZone == null) return;
+            foreach(var p in winningZone.Polygons)
             {
-                TopLayer = tile.Layer;
+                p.Layer = TopLayer;
             }
         }
-
-        public Vector2 Position { get=>throw new NotImplementedException(); set=>throw new NotImplementedException(); }
-
-        public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        
+        // Get list of tiles
+        public List<Tile> RetrieveItems(float layer, Rectangle rect)
         {
-            foreach(var tile in _tiles)
+            if (_tileContainer.ContainsKey(layer))
             {
-                tile.Draw(gameTime, spriteBatch);
+                return _tileContainer[layer].Retrieve(rect);
             }
+
+            return new List<Tile>();
         }
 
-        public void Update(GameTime gameTime)
+        public List<Tile> RetrieveItems(Rectangle rect)
         {
-            //throw new NotImplementedException();
+            var list = new List<Tile>();
+
+            foreach (var item in _tileContainer)
+            {
+                list.AddRange(item.Value.Retrieve(rect));
+            }
+
+            return list;
         }
 
-        public bool IsRemoveAble { get; set; }
-        public IEnumerator<Tile> GetEnumerator()
+        public void ZoneUpdate(Player player)
         {
-            return _tiles.GetEnumerator();
+            WinningZone?.Update(player);
         }
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
+
     }
+
+    // Enumerations for map placing via tiled
+    public enum EnemyType
+    {
+        Turret, 
+        Alienship,
+        Boss,
+        Mines,
+        Kamikaze
+    }
+    public enum PowerUpType
+    {
+        HealthPowerUp,
+        FullHealthPowerUp,
+        InfAmmoPowerUp,
+        BonusClipPowerUp,
+        InstaDeathPowerUp,
+        ScoreBonusPowerUp,
+        StarPowerUp,
+        WeaponPowerUp
+    }
+    
 }

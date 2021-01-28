@@ -1,0 +1,14 @@
+{ "columns":5,
+ "image":"..\/..\/Artwork\/Effects\/minigunexplosions_8_10_5.png",
+ "imageheight":10,
+ "imagewidth":40,
+ "margin":0,
+ "name":"minigunexplosions_8_10_5",
+ "spacing":0,
+ "tilecount":5,
+ "tiledversion":"1.4.3",
+ "tileheight":10,
+ "tilewidth":8,
+ "type":"tileset",
+ "version":1.4
+}

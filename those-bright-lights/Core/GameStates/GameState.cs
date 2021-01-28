@@ -26,7 +26,7 @@ namespace SE_Praktikum.Core.GameStates
         public abstract void Update(GameTime gameTime);
 
         /// <summary>
-        /// For cleanup;
+        /// For cleanup or postprocessing;
         /// </summary>
         public abstract void PostUpdate(GameTime gameTime);
 
@@ -35,9 +35,13 @@ namespace SE_Praktikum.Core.GameStates
         /// </summary>
         /// <param name="gameTime"></param>
         /// <param name="spriteBatch"></param>
-        public abstract void Draw(GameTime gameTime, SpriteBatch spriteBatch);
+        public abstract void Draw();
 
-
+        /// <summary>
+        /// for state machine integration
+        /// </summary>
+        /// <param name="observer"></param>
+        /// <returns></returns>
         public IDisposable Subscribe(IObserver<GameStateMachine.GameStateMachineTrigger> observer)
         {
             return _subject.Subscribe(observer);

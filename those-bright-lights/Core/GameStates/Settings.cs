@@ -1,16 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Media;
 using NLog;
 using SE_Praktikum.Components.Controls;
 using SE_Praktikum.Models;
 using SE_Praktikum.Services.StateMachines;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.Xna.Framework.Audio;
 using SE_Praktikum.Components;
 using SE_Praktikum.Services.Factories;
 
@@ -20,11 +13,26 @@ namespace SE_Praktikum.Core.GameStates
     {
         private Logger _logger;
         private readonly IScreen _screen;
-        private readonly ControlElementFactory _factory;
         private ComponentGrid _components;
-        private float _tmpSoundFxVolume = .5f;
+        private readonly IGameEngine _engine;
+        private readonly ControlElementFactory _factory;
+        private readonly ISaveGameHandler _saveGameHandler;
 
+        // #############################################################################################################
+        // Constructor
+        // #############################################################################################################
+        public Settings(IGameEngine engine, IScreen screen, ControlElementFactory factory, ISaveGameHandler saveGameHandler)
+        {
+            _logger = LogManager.GetCurrentClassLogger();
+            _engine = engine;
+            _screen = screen;
+            _factory = factory;
+            _saveGameHandler = saveGameHandler;
+        }
 
+        // #############################################################################################################
+        // public methods
+        // #############################################################################################################
         public override void LoadContent()
         {
             if (_components != null)
@@ -42,19 +50,11 @@ namespace SE_Praktikum.Core.GameStates
             uint height = (uint) (_screen.Camera.GetPerspectiveScreenHeight() / buttons);
 
             var musicVolumeLabel = _factory.GetTextBoxByTiles(6, 1, Vector2.Zero, Color.Black, "Music Volume", _screen.Camera);
-            var soundEffectVolumeLabel = _factory.GetTextBoxByTiles(6, 1, Vector2.Zero, Color.Black, "FX Volume", _screen.Camera);
             
-            var musicVolumeSlider = _factory.GetSlider( MediaPlayer.Volume,0 , 1, Vector2.Zero, width, _screen.Camera);
-            // TODO: SaveRoutine!
+            var musicVolumeSlider = _factory.GetSlider(_saveGameHandler.SaveGame.musicVolume, 0 , 1, Vector2.Zero, width, _screen.Camera);
             musicVolumeSlider.OnValueChanged += (sender, args) => {
+                _saveGameHandler.SaveGame.musicVolume = musicVolumeSlider.Value;
                 MediaPlayer.Volume = musicVolumeSlider.Value;
-            };
-            
-            var soundEffectVolumeSlider = _factory.GetSlider( _tmpSoundFxVolume,0 , 1, Vector2.Zero, width, _screen.Camera);
-            // TODO: SaveRoutine!
-            soundEffectVolumeSlider.OnValueChanged += (sender, args) =>
-            {
-                _tmpSoundFxVolume = soundEffectVolumeSlider.Value;
             };
 
             MenuButton backButton = _factory.GetButton(
@@ -63,25 +63,20 @@ namespace SE_Praktikum.Core.GameStates
                 new Vector2(0, 0),
                 "Back to main menu",
                 _screen.Camera);
-            backButton.Click += (sender, args) => { _logger.Debug("Back to main menu"); _subject.OnNext(GameStateMachine.GameStateMachineTrigger.Back); };
+            backButton.Click += (sender, args) => 
+            {
+                _logger.Debug("Back to main menu");
+                _saveGameHandler.Save();
+                _subject.OnNext(GameStateMachine.GameStateMachineTrigger.Back);
+            };
+
             _components.Add(musicVolumeLabel);
-           // _components.Add(soundEffectVolumeLabel);
             _components.Add(backButton);
             _components.Add(musicVolumeSlider);
-           // _components.Add(soundEffectVolumeSlider);
         }
-
-        public Settings(IScreen screen, ControlElementFactory factory)
-        {
-            _logger = LogManager.GetCurrentClassLogger();
-            _screen = screen;
-            _factory = factory;
-        }
-
 
         public override void PostUpdate(GameTime gameTime)
         {
-            
         }
 
         public override void UnloadContent()
@@ -101,26 +96,14 @@ namespace SE_Praktikum.Core.GameStates
                 button.Update(gameTime);
             }
         }
-        
-        
-        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+   
+        public override void Draw()
         {
             if (_components == null)
             {
                 return;
             }
-            spriteBatch.Begin(SpriteSortMode.FrontToBack,
-                BlendState.AlphaBlend,
-                SamplerState.PointClamp, // Sharp Pixel rendering
-                DepthStencilState.DepthRead,
-                RasterizerState.CullCounterClockwise, // Render only the texture side that faces the camara to boost performance 
-                _screen.Camera.GetCameraEffect()
-            );
-            foreach (var button in _components)
-            {
-                button.Draw(gameTime, spriteBatch);
-            }
-            spriteBatch.End();
+            _engine.Render(_components);
         }
     }
 }

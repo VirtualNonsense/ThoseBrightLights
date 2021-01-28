@@ -1,0 +1,14 @@
+{ "columns":1,
+ "image":"..\/..\/Artwork\/misc\/youWin_48_27.png",
+ "imageheight":27,
+ "imagewidth":48,
+ "margin":0,
+ "name":"youWin_48_27",
+ "spacing":0,
+ "tilecount":1,
+ "tiledversion":"1.4.2",
+ "tileheight":27,
+ "tilewidth":48,
+ "type":"tileset",
+ "version":1.4
+}

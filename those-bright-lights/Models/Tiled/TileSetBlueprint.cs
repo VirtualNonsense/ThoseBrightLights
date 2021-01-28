@@ -4,6 +4,9 @@ using System.Text;
 
 namespace SE_Praktikum.Models.Tiled
 {
+    /// <summary>
+    /// Tileset fields
+    /// </summary>
    public class TileSetBlueprint
     {
         public int columns;
@@ -19,8 +22,10 @@ namespace SE_Praktikum.Models.Tiled
         public int tilewidth;
         public string type;
         public float version;
-
-        public TileSetBlueprint(int columns, string image, int imageheight, int imagewidth, int margin, string name, int spacing, int tilecount, string tiledversion, int tileheight, int tilewidth, string type, float version)
+        public TileBluePrint[] tiles;
+        
+        //Constructor
+        public TileSetBlueprint(int columns, string image, int imageheight, int imagewidth, int margin, string name, int spacing, int tilecount, string tiledversion, int tileheight, int tilewidth, string type, float version, TileBluePrint []tiles)
         {
             this.columns = columns;
             this.image = image;
@@ -35,6 +40,7 @@ namespace SE_Praktikum.Models.Tiled
             this.tilewidth = tilewidth;
             this.type = type;
             this.version = version;
+            this.tiles = tiles;
         }
 
 

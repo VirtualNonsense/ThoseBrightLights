@@ -1,76 +1,123 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
 using NLog;
 using SE_Praktikum.Components.Controls;
 using SE_Praktikum.Models;
-using System;
-using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Text;
+using SE_Praktikum.Components;
+using SE_Praktikum.Services.Factories;
 using SE_Praktikum.Services.StateMachines;
+using System.Collections.Generic;
+using Microsoft.Xna.Framework.Media;
+using Microsoft.Xna.Framework.Content;
 
 namespace SE_Praktikum.Core.GameStates
 {
-    public class LevelSelect : GameState
+    public class LevelSelect : GameState, ILevelContainer
     {
-        private readonly IScreen _screen;
-        private readonly ContentManager _contentManager;
-        private List<MenuButton> _buttons;
         private Logger _logger;
+        private ComponentGrid _buttons;
+        private readonly IScreen _screen;
+        private readonly IGameEngine _engine;
+        private Dictionary<int,Song> _songSelection;
+        private readonly LevelFactory _levelFactory;
+        private readonly ContentManager contentManager;
+        private readonly ControlElementFactory _factory;
+        private readonly ISaveGameHandler _saveGameHandler;
+        private const string _levelPath = @"./Content/MetaData/Level";
 
-        public LevelSelect(IScreen screen, ContentManager contentManager)
+        public LevelSelect(IGameEngine engine, IScreen screen, ControlElementFactory factory, ISaveGameHandler saveGameHandler, LevelFactory levelFactory, ContentManager contentManager)
         {
             _logger = LogManager.GetCurrentClassLogger();
+            _engine = engine;
             _screen = screen;
-            _contentManager = contentManager;
+            _factory = factory;
+            _saveGameHandler = saveGameHandler;
+            _levelFactory = levelFactory;
+            this.contentManager = contentManager;
         }
 
-        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        public override void Draw()
         {
-            spriteBatch.Begin();
-            foreach (var button in _buttons)
-            {
-                button.Draw(gameTime, spriteBatch);
-            }
-            spriteBatch.End();
+            _engine.Render(_buttons);
         }
 
         public override void LoadContent()
         {
+            _logger.Debug("Level Selection: LoadingContent");
+            
+            // exit if buttons are already loaded
             if (_buttons != null) return;
-            // {
-            //     Text = "Level 1",
-            //     Position = new Vector2(_screen.ScreenWidth / 2f, _screen.ScreenHeight / 4f - texture.Height),
-            //     TextColor = Color.White
-            // });
-            // _buttons.Last().Click += (sender, args) => { _logger.Debug("Level 1 selected"); };
-            // _buttons.Add(new Menubutton(texture, font)
-            // {
-            //     Text = "Level 2",
-            //     Position = new Vector2(_screen.ScreenWidth / 2f, _screen.ScreenHeight / 4f),
-            //     TextColor = Color.White
-            // });
-            // _buttons.Last().Click += (sender, args) => { _logger.Debug("Level 2 selected"); };
-            // _buttons.Add(new Menubutton(texture, font)
-            // {
-            //     Text = "Level 3",
-            //     Position = new Vector2(_screen.ScreenWidth / 2f, _screen.ScreenHeight / 4f + texture.Height),
-            //     TextColor = Color.White
-            // });
-            // _buttons.Last().Click += (sender, args) => { _logger.Debug("Level 3 selected"); };
-            // _buttons.Add(new Menubutton(texture, font)
-            // {
-            //     Text = "Back",
-            //     Position = new Vector2(_screen.ScreenWidth / 2f, _screen.ScreenHeight / 4f + 2*texture.Height),
-            //     TextColor = Color.White
-            // });
-            // _buttons.Last().Click += (sender, args) => { _logger.Debug("back"); _subject.OnNext(GameStateMachine.GameStateMachineTrigger.Back);};
-            _buttons = new List<MenuButton>();
-            _logger.Debug("LoadingContent");
-            var font = _contentManager.Load<SpriteFont>("Font/Font2");
-            var texture = _contentManager.Load<Texture2D>("Artwork/Controls/button");
-            // _buttons.Add(new Menubutton(texture, font)
+
+            // load song for different levels
+            _songSelection = new Dictionary<int, Song>();
+            _songSelection.Add(0, contentManager.Load<Song>("Audio/Music/Song3_remaster2_mp3"));
+            _songSelection.Add(1, contentManager.Load<Song>("Audio/Music/Song2_remaster2_mp3"));
+            _songSelection.Add(2, contentManager.Load<Song>("Audio/Music/Song4_remaster_mp3"));
+
+            // set camera position
+            _screen.Camera.Position = new Vector3(0, 0,150);
+
+            // initializing button management component
+            _buttons = new ComponentGrid(new Vector2(0,0), 
+                _screen.Camera.GetPerspectiveScreenWidth(),
+                _screen.Camera.GetPerspectiveScreenHeight(),
+                1);
+            
+            // load all level in directory
+            var level = Directory.GetFiles(_levelPath, "*.json");
+            
+            // amount of level back button
+            var buttons = level.Length + 1;
+            
+            // rough button dimensions
+            uint buttonWidth = (uint) (_screen.Camera.GetPerspectiveScreenWidth()/3);
+            uint buttonHeight = (uint) (_screen.Camera.GetPerspectiveScreenHeight() / buttons);
+            
+            int levelCounter = 0;
+            foreach (var path in level)
+            {
+                // extracting levelname
+                var levelName = path.Split(".json")[0].Split("\\").Last();
+                
+                // creating button
+                var button = _factory.GetButton(
+                    buttonWidth,
+                    buttonHeight,
+                    new Vector2(0, 0),
+                    levelName,
+                    _screen.Camera);
+
+                // checking save if level is accessible
+                button.Enabled = _saveGameHandler.SaveGame.clearedStage >= levelCounter;
+
+                var levelNumber = levelCounter;
+                button.Click += (sender, args) => 
+                {
+                    _logger.Debug($"starting {levelName}");
+                    // loading level
+                    SelectedLevel = _levelFactory.GetInstance(path, levelNumber, _songSelection.ContainsKey(levelNumber)? _songSelection[levelNumber] : null);
+                    // progressing to gamestate
+                    _subject.OnNext(GameStateMachine.GameStateMachineTrigger.StartGame);
+                };
+                // add button to grid
+                _buttons.Add(button);
+                levelCounter++;
+            }
+            // creating back button
+            MenuButton b = _factory.GetButton(
+                buttonWidth,
+                buttonHeight,
+                new Vector2(0, 0),
+                "back to mainmenu",
+                _screen.Camera);
+            
+            b.Click += (sender, args) => 
+            {
+                _logger.Debug("back to mainmenu");
+                _subject.OnNext(GameStateMachine.GameStateMachineTrigger.Back);
+            };
+            _buttons.Add(b);
         }
 
         public override void PostUpdate(GameTime gameTime)
@@ -90,5 +137,7 @@ namespace SE_Praktikum.Core.GameStates
                 button.Update(gameTime);
             }
         }
+
+        public Level SelectedLevel { get; private set; }
     }
 }

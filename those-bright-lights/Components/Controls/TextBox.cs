@@ -10,9 +10,19 @@ namespace SE_Praktikum.Components.Controls
     {
         private readonly SpriteFont _font;
         
-        public string Text { get; set; }
-        public Color TextColor { get; set; }
 
+        // #############################################################################################################
+        // constructor
+        // #############################################################################################################
+        /// <summary>
+        /// Simple text box class
+        /// </summary>
+        /// <param name="handler"></param>
+        /// <param name="font"></param>
+        /// <param name="position"></param>
+        /// <param name="textColor"></param>
+        /// <param name="camera"></param>
+        /// <param name="text"></param>
         public TextBox(List<AnimationHandler> handler, SpriteFont font, Vector2 position, Color textColor, Camera camera, string text) : base(handler, camera)
         {
             _font = font;
@@ -20,8 +30,14 @@ namespace SE_Praktikum.Components.Controls
             Text = text;
             TextColor = textColor;
         }
+        
+        // #############################################################################################################
+        // properties
+        // #############################################################################################################
+        public string Text { get; set; }
+        public Color TextColor { get; set; }
 
-        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        public override void Draw(SpriteBatch spriteBatch)
         {
             foreach (var animationHandler in _handler)
             {
