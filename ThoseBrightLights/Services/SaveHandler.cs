@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Text;
+using NLog;
 using ThoseBrightLights.Core;
 using ThoseBrightLights.Models;
 
@@ -9,12 +8,19 @@ namespace ThoseBrightLights.Services
 {
     public class SaveHandler
     {
+        private readonly Logger _logger;
+
+        public SaveHandler()
+        {
+            _logger = LogManager.GetCurrentClassLogger();
+        }
+
         // Mapping
         Dictionary<SaveSlot, string> _saveSlot = new Dictionary<SaveSlot, string>()
         {
-            { SaveSlot.Slot1,"Save/Savestate_1.txt" },
-            { SaveSlot.Slot2,"Save/Savestate_2.txt" },
-            { SaveSlot.Slot3,"Save/Savestate_3.txt" },
+            { SaveSlot.Slot1, "Save/Savestate_1.txt" },
+            { SaveSlot.Slot2, "Save/Savestate_2.txt" },
+            { SaveSlot.Slot3, "Save/Savestate_3.txt" },
         };
 
         // Save function: Writes a savefile
@@ -28,14 +34,14 @@ namespace ThoseBrightLights.Services
 
             using (StreamWriter sw = new StreamWriter(_saveSlot[slot]))
             {
-                sw.WriteLine($"Level_Passed:{saveGame.clearedStage}");
-                sw.WriteLine($"Damage:{saveGame.damage}");
-                sw.WriteLine($"Player_Position:{saveGame.playerPosition}");
-                sw.WriteLine($"Enemy_Position:{saveGame.enemyPosition}");
-                sw.WriteLine($"Weapon:{saveGame.weapon}");
-                sw.WriteLine($"Score:{saveGame.score}");
-                sw.WriteLine($"Music_Volume:{saveGame.musicVolume}");
-                sw.WriteLine($"Sessions_played:{saveGame.sessions}");
+                sw.Write($"Level_Passed:{saveGame.clearedStage};");
+                sw.Write($"Damage:{saveGame.damage};");
+                sw.Write($"Player_Position:{saveGame.playerPosition};");
+                sw.Write($"Enemy_Position:{saveGame.enemyPosition};");
+                sw.Write($"Weapon:{saveGame.weapon};");
+                sw.Write($"Score:{saveGame.score};");
+                sw.Write($"Music_Volume:{saveGame.musicVolume};");
+                sw.Write($"Sessions_played:{saveGame.sessions};");
             }
         }
 
@@ -46,9 +52,8 @@ namespace ThoseBrightLights.Services
 
             using (StreamReader sr = new StreamReader(_saveSlot[slot]))
             {
-
                 string s = sr.ReadToEnd().Trim();
-                foreach (var a in s.Split("\r\n"))
+                foreach (var a in s.Split(";"))
                 {
                     // Checks the value of all possible fields
                     var keyValuePair = a.Split(':');
@@ -79,11 +84,12 @@ namespace ThoseBrightLights.Services
                             saveGame.sessions = uint.Parse(keyValuePair[1]);
                             break;
                         default:
-                            Console.WriteLine("What??");
+                            _logger.Warn($"unknown keyword {keyValuePair}");
                             break;
                     }
                 }
             }
+
             return saveGame;
         }
 
@@ -92,7 +98,5 @@ namespace ThoseBrightLights.Services
         {
             return File.Exists(_saveSlot[saveSlot]);
         }
-
-
     }
 }
