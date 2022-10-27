@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text.RegularExpressions;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json;
@@ -49,9 +48,9 @@ namespace ThoseBrightLights.Services.Factories
 
                 try
                 {
-                    var tileSetPath = Path.GetFullPath(
-                        @"..\/"+tileSet.Source, // First part is necessary to get rid of the file in absPath
-                        absPath);
+                    var dirPath = Path.GetFullPath("..", absPath);
+                    
+                    var tileSetPath = Path.Join(dirPath, tileSet.Source);
                     tileSets.Add(_setFactory.GetInstance(tileSetPath, tileSet.FirstGId));
                 }
                 catch (ContentLoadException e)
