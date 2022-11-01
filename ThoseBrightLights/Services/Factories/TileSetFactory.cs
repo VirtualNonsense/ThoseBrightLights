@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json;
 using NLog;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Xna.Framework;
 using ThoseBrightLights.Models;
 using ThoseBrightLights.Models.Tiled;
@@ -32,6 +33,15 @@ namespace ThoseBrightLights.Services.Factories
         // Make tilesets from Tiled ready to use 
         public TileSet GetInstance(string jsonpath, int startindex)
         {
+            // TODO: this will break on windows now.
+            if (jsonpath[0]== '.')
+            {
+                jsonpath = jsonpath.Substring(2);
+                
+            }
+
+            jsonpath = jsonpath.Replace("\\", "/");
+            
             var TileSet = JsonConvert.DeserializeObject<TileSetBlueprint>(File.ReadAllText(jsonpath));
             var tileSetPath = TileSet.image.Split(".png")[0].Substring(6);
             var Texture = _contentManager.Load<Texture2D>(tileSetPath);

@@ -230,7 +230,7 @@ namespace ThoseBrightLights.Core
             SpawnEnemies(player.Layer);
             
             // loading remaining songs and effects
-            _invincibilitySong = contentManager.Load<Song>("Audio/Sound_effects/PowerUps/Invincible");
+            _invincibilitySong = contentManager.Load<Song>("Audio/Sound_Effects/PowerUps/Invincible");
             
             // loading end screens
             var tileSet = _tileSetFactory.GetInstance(@".\Content\MetaData\TileSets\gameOver_48_27.json", 0);
